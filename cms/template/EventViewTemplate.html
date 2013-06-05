@@ -1,0 +1,150 @@
+
+   $(function()
+	{
+
+		$("#addEventBtn").click(function(){
+
+			var $selectText = $('#eventSelect option:selected').text();
+			var $selectId = $("#eventSelect").val();
+			if($selectId <= 3){
+				$("#eventsTable tbody").append(
+					"<tr id='eventCell"+ $selectId  +"'>" +
+				  "<td style='line-height:100px; overflow:hidden;text-align:center;'>"+
+					"<lable>"+
+					$selectText + 
+					"</lable>"+
+					"<input id='eventCellId' type='hidden' value='" + $selectId + "'/>" + 
+				 " </td>"+
+				 " <td>"+
+				  	'<span style="display:inline-block">'+
+					"<label >日期</label>"+
+					"</span>"+
+					'<span style="display:inline-block">'+
+						'<input type="text" class="Wdate" id="d122" onFocus="WdatePicker({isShowWeek:true,onpicked:function()'+" {$dp.$('d122_1').value=$dp.cal.getP('W','W');$dp.$('d122_2').value=$dp.cal.getP('W','WW');}}"+')"/>'+
+					"</span>"+
+					 '<div class="remark">'+
+						'<textarea id="remark" rows="2" placeholder="备注" style="width:90%"> </textarea>'+
+					'</div>'+
+				"</td>" +
+				 " <td> "+
+				  "<button type='button' class='btn' src='./img/minus.png' onClick='deleteEvent("+ $selectId +")'><img src='./img/minus.png'></button> "+
+				 " </td>"+
+				"</tr>" +
+				"<style>" +
+				".btn" + "{" + 
+					"margin-top:0 auto;"+
+				"}"+
+				"</style>"
+				);
+			} else if($selectId <= 12) {
+				$("#eventsTable tbody").append(
+					"<tr id='eventCell"+ $selectId  +"'>" +
+					"<td style='line-height:100px; overflow:hidden;text-align:center;'>"+
+					"<lable>"+
+					$selectText + 
+					"</lable>"+
+					"<input id='eventCellId'  type='hidden' value='" + $selectId + "'/>" + 
+				 " </td>"+
+				 " <td>"+
+				  	'<span style="display:inline-block">'+
+					"<label >日期</label>"+
+					"</span>"+
+					'<span style="display:inline-block">'+
+						'<input type="text" class="Wdate" id="d122" onFocus="WdatePicker({isShowWeek:true,onpicked:function()'+" {$dp.$('d122_1').value=$dp.cal.getP('W','W');$dp.$('d122_2').value=$dp.cal.getP('W','WW');}}"+')"/>'+
+					"</span>"+
+					 '<div class="money">'+
+						'<div class="input-prepend input-append">'+
+						'<span class="add-on">￥</span>'+
+						 ' <input class="span2" id="appendedPrependedInput" type="text">'+
+						  '<span class="add-on">.00</span>'+
+						"</div>"+
+					"</div>"+
+				"</td>" +
+				 " <td> "+
+				  "<button type='button' class='btn' src='./img/minus.png' onClick='deleteEvent("+ $selectId +")'><img src='./img/minus.png'></button> "+
+				 " </td>"+
+				"</tr>" +
+				"<style>" +
+					".btn" + "{" + 
+					"margin-top:0 auto;"+
+				"}"+
+				"</style>"
+				);
+			} else {
+				$("#eventsTable tbody").append(
+				"<tr id='eventCell"+ $selectId  +"'>" +
+					"<td style='line-height:100px; overflow:hidden;text-align:center;'>"+
+					"<lable>"+
+					$selectText + 
+					"</lable>"+
+					"<input  id='eventCellId' type='hidden' value='" + $selectId + "'/>" + 
+				 " </td>"+
+				 " <td>"+
+				  	'<span style="display:inline-block">'+
+					"<label >日期</label>"+
+					"</span>"+
+					'<span style="display:inline-block">'+
+						'<input type="text" class="Wdate" id="d122" onFocus="WdatePicker({isShowWeek:true,onpicked:function()'+" {$dp.$('d122_1').value=$dp.cal.getP('W','W');$dp.$('d122_2').value=$dp.cal.getP('W','WW');}}"+')"/>'+
+					"</span>"+
+				"</td>" +
+				 " <td> "+
+				  "<button type='button' class='btn' src='./img/minus.png' onClick='deleteEvent("+ $selectId +")'><img src='./img/minus.png'></button> "+
+				 " </td>"+
+				"</tr>" +
+				"<style>" +
+					".btn" + "{" + 
+					"margin-top:0 auto;"+
+				"}"+
+				"</style>"
+				);
+			}
+
+		});
+
+		var $submitBtn = $(".submit");
+
+
+		$submitBtn.click(function(){
+
+			var $uploadDataObj = {}
+
+			//构建JSON提交合同数据
+			var $contractId = $("#contractId").text();
+			var $beginDate = $("#beginDate").text();
+			var $endDate = $("#endDate").text();
+			var $contractState = $("#contractState").text();
+			var $contractName = $("#contractName").text();
+
+			var $cells = $("tr[id^='eventCell']");//获取cell
+			$cells.each(function(i,val){
+
+				$eventObj = {};
+
+				$cell = $(val);
+				$eventId = $cell.find("#eventCellId").val();
+				$eventName = $cell.find("lable").text();
+				$date = $cell.find("#d122").val();
+
+
+				$eventObj.id = $eventId;
+				$eventObj.eventName = $eventName;
+				$eventObj.cdate = $date;
+
+				if($eventId <= 3) {
+					$remark = $cell.find("#remark").val();
+					$eventObj.remark = $remark;
+				} else if($eventId <= 12){
+					$price = $cell.find("#appendedPrependedInput").val();
+					$eventObj.price = $price;
+				} 
+
+				var eventJson = JSON.stringify($eventObj); 
+				console.info(eventJson);
+
+			});
+
+		});
+
+	});
+      
+    </script>

@@ -1,0 +1,20 @@
+<tr id="eventCellCustom">
+	<td contentEditable="true" style="line-height:20px; padding-top: 45px; overflow:hidden;text-align:center;">
+
+		<input id="eventCellId" type="hidden" value="1"></td>
+	<td>
+		<span style="display:inline-block">
+			<label>日期</label>
+		</span>
+		<span style="display:inline-block">
+			<input type="text" class="Wdate" id="d122" onfocus="WdatePicker({isShowWeek:true,onpicked:function() {$dp.$('d122_1').value=$dp.cal.getP('W','W');$dp.$('d122_2').value=$dp.cal.getP('W','WW');}})"></span>
+		<div class="remark">
+			<textarea id="remark" rows="2" placeholder="备注" style="width:90%"></textarea>
+		</div>
+	</td>
+	<td>
+		<button type="button" class="btn" src="./img/minus.png" onclick="deleteEvent(1)">
+			<img src="./img/minus.png"></button>
+	</td>
+</tr>
+

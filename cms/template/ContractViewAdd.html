@@ -1,0 +1,157 @@
+<style>
+      
+     .remark,.money {
+     	margin-left:40px;
+     }
+
+    .Wdate {
+    	margin-left:10px;
+    }
+
+
+    .finished {
+    		margin:5px 0;
+			padding-left:15px;
+
+    }
+
+
+    .btn1{
+			margin-top:38px;
+			padding-left:10px;
+			padding-right:10px;
+		
+    }
+    .btn2{
+			margin-top:30px;
+			padding-left:10px;
+			padding-right:10px;
+		
+    }
+    .btn3 {
+			margin-top:5px;
+			padding-left:10px;
+			padding-right:10px;
+		
+    }
+
+		.basicInfo {
+			
+			font-size:20px;
+			padding-left:15px;
+			
+		}
+		
+	   div.bs-docs-example {
+			padding-top:20px;
+	   }
+	   div.contract,  {
+			margin:4px;
+			padding:2px;
+	   }
+	   
+	  
+		.new {
+			font-size: 25px;
+			
+		}
+		.template{
+			
+			font-size: 20px;
+			
+		}
+		
+      
+    </style>
+
+<div class="contract">
+	<table>
+		<tr>
+			<th>
+				<label class="new">新建合同</label>
+			</th>
+			<th>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;</th>
+			<th>
+				<label class="template">合同模版</label>
+			</th>
+			<th>&nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;</th>
+			<th>
+				<select>
+					<option>Select One...</option>
+					<option>南航</option>
+					<option>深航</option>
+					<option>港交所</option>
+				</select>
+			</th>
+		</tr>
+	</table>
+</div>
+
+<div class="bs-docs-example">
+	<div>
+		<label class="basicInfo">基本信息</label>
+	</div>
+	<div class="basicTable" style="width: 500px;">
+		<table class="table table-bordered table-striped">
+			<colgroup>
+			<col class="span1">
+			<col class="span7"></colgroup>
+		<tbody>
+			<tr>
+				<td width="150px">合同编号</td>
+				<td contentEditable id="contractId"></td>
+			</tr>
+			<tr>
+				<td>合同名称</td>
+				<td contentEditable id="contractName"></td>
+			</tr>
+			<tr>
+				<td>开始日期</td>
+				<td contentEditable id="beginDate"></td>
+			</tr>
+			<tr>
+				<td>结束日期</td>
+				<td contentEditable id="endDate"></td>
+			</tr>
+			<tr>
+				<td>状态</td>
+				<td contentEditable id="contractState"></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</div>
+
+<div class="bs-docs-example"  style="width: 800px;">
+<div>
+	<div style="float:left;">
+		<label class="basicInfo">事件</label>
+	</div>
+	<div style="float:right;margin-left: 50px;">
+		<input class='btn' id="addEventBtn" type="button" value=" + "/>
+	</div>
+	<div style="float:right;">
+		<select id="eventSelect">
+			<option value="1">自定义事件</option>
+			<option value="2">回款事件</option>
+		</select>
+	</div>
+</div>
+
+<table  id="eventsTable" class="table table-bordered table-striped" style="width:800px;table-layout:fixed;">
+	<colgroup>
+	<col class="span1">
+	<col class="span7"></colgroup>
+<tbody>
+	<tr>
+		<th width="100" style="text-align:center;">事件名称</th>
+		<th width="200" style="text-align:center;">事件内容</th>
+		<th width="50" style="text-align:center;">操作</th>
+	</tr>
+
+</tbody>
+</table>
+<div class="finished" style="float:right;">
+<input type="submit" class="submit" value="完成"/>
+</div>
+</div>
