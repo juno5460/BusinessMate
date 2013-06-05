@@ -40,8 +40,8 @@ app.get('/contracts/:id', contract.show);
 app.get('/contracts/:id', contract.drop);
 app.post('/contracts', contract.create);
 app.get('/contracts/:id', contract.update);
-//app.put('/contracts/:id', contract.update);
-// app.destroy('/contracts', contract.list);
+///app.put('/contracts/:id', contract.update);
+/// app.destroy('/contracts', contract.list);
 
 
 http.createServer(app).listen(app.get('port'), function() {
