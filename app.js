@@ -1,14 +1,14 @@
-
 /**
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
-  , contract = require('./routes/contract')
-  , http = require('http')
-  , path = require('path');
+var express = require('express'),
+	routes = require('./routes'),
+	user = require('./routes/user'),
+	contract = require('./routes/contract'),
+	postdemo = require('./routes/postdemo'),
+	http = require('http'),
+	path = require('path');
 
 var app = express();
 
@@ -25,18 +25,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+	app.use(express.errorHandler());
 }
-
 app.get('/', routes.index);
 app.get('/users', user.list);
+
+debugger;
+console.log("aaa:" + postdemo.list);
+//posttest
+app.post('/postdemo', postdemo.list);
 //contracts
 app.get('/contracts', contract.list);
 app.get('/contracts/:id', contract.show);
+app.get('/contracts/:id', contract.drop);
 app.post('/contracts', contract.create);
-app.put('/contracts/:id', contract.update);
+app.get('/contracts/:id', contract.update);
+//app.put('/contracts/:id', contract.update);
 // app.destroy('/contracts', contract.list);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+
+http.createServer(app).listen(app.get('port'), function() {
+	console.log('Express server listening on port ' + app.get('port'));
 });

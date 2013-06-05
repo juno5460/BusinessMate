@@ -1,0 +1,1 @@
+module.exports = {  cookieSecret: 'microblogbyvoid',  db: 'Daniel',  host: 'localhost'};

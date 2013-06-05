@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "express": "3.2.5",
+    "connect-mongo": ">= 0.1.7",
     "mongodb": "*",
     "ejs": "*"
   }
