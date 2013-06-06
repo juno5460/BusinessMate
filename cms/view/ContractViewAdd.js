@@ -2,10 +2,12 @@ define([
 	"backbone",
 	"jquery",
 	"underscore",
+	"json2",
 	"view/EventView",
-	"text!template/ContractViewAdd.html"
+	"text!template/ContractViewAdd.html",
+	'model/EventCell'
 	],
-	function(Backbone,$,_,EventView,ContractViewAddHtml){
+	function(Backbone,$,_,json,EventView,ContractViewAddHtml,EventCell){
 
 	var ContactViewAdd = Backbone.View.extend({
 
@@ -16,18 +18,16 @@ define([
 		template:_.template(ContractViewAddHtml),
 
 		initialize: function(options){
+			this.eventsGroup = new Array();
 
 			this.render();
 		},
 
 		events : {
 			'click #addEventBtn' : 'onAddEventBtnClick',
-			'':'',
+			'click #submit' : 'submit',
 		},
 
-		open: function() {
-
-		},
 
 		render: function() {
 
@@ -38,16 +38,42 @@ define([
 
 		onAddEventBtnClick: function() {
 
+			var $type = $("#eventSelect").val();
+			var view = new EventView({type : $type,id : this.eventsGroup.length}); 
+			this.listenTo(view,'delete',this.removeEventCell);
+			this.eventsGroup.push(view);
+			this.$eventList.append(view.el);
+		},
 
-			var view = new EventView();
-			//var $eventCellCustom = $eventCellTemplate.find("#eventCellCustom");
-			//var $eventCellPrice = $eventCellTemplate.find("#eventCellPrice");
+		submit: function(){
+			var $contractId = $("#contractId").text();
+			var $beginDate = $("#beginDate").text();
+			var $endDate = $("#endDate").text();
+			var $contractState = $("#contractState").text();
+			var $contractName = $("#contractName").text();
 
-			//this.$eventList.append("<tr><td>1</td><td>2</td><td>3</td></tr>");
-			this.$eventList.append(view.render().el);
-			//console.info(view.render().el);
+			var events = [];
+			_.each(this.eventsGroup,function(view){
+				events.push(view.toJson());
+			});
+
+			$postBody = {};
+			$postBody.id = $contractId;
+			$postBody.businessname = $contractName;
+			$postBody.state = $contractState;
+			$postBody.beginDate = $beginDate;
+			$postBody.endDate = $endDate;
+			$postBody.completed = false;
+			$postBody.events = events;
 
 
+			$.post("http://10.108.1.67:3000/contracts",JSON.stringify($postBody));
+		},
+		removeEventCell:function(id){
+			this.eventsGroup = _.reject(this.eventsGroup,function(view){
+				return view.id == id;
+			});
+			console.info(this.eventsGroup);
 		}
 
 	});

@@ -14,27 +14,6 @@
 			padding-left:15px;
 
     }
-
-
-    .btn1{
-			margin-top:38px;
-			padding-left:10px;
-			padding-right:10px;
-		
-    }
-    .btn2{
-			margin-top:30px;
-			padding-left:10px;
-			padding-right:10px;
-		
-    }
-    .btn3 {
-			margin-top:5px;
-			padding-left:10px;
-			padding-right:10px;
-		
-    }
-
 		.basicInfo {
 			
 			font-size:20px;
@@ -63,6 +42,8 @@
 		
       
     </style>
+<link rel="stylesheet" type="text/css" href="./css/bootstrap-datetimepicker.min.css" />
+<script src="./js/bootstrap-datetimepicker.min.js"></script>    
 
 <div class="contract">
 	<table>
@@ -87,38 +68,60 @@
 	</table>
 </div>
 
-<div class="bs-docs-example">
+<div>
 	<div>
 		<label class="basicInfo">基本信息</label>
 	</div>
 	<div class="basicTable" style="width: 500px;">
-		<table class="table table-bordered table-striped">
-			<colgroup>
-			<col class="span1">
-			<col class="span7"></colgroup>
-		<tbody>
-			<tr>
-				<td width="150px">合同编号</td>
-				<td contentEditable id="contractId"></td>
-			</tr>
-			<tr>
-				<td>合同名称</td>
-				<td contentEditable id="contractName"></td>
-			</tr>
-			<tr>
-				<td>开始日期</td>
-				<td contentEditable id="beginDate"></td>
-			</tr>
-			<tr>
-				<td>结束日期</td>
-				<td contentEditable id="endDate"></td>
-			</tr>
-			<tr>
-				<td>状态</td>
-				<td contentEditable id="contractState"></td>
-			</tr>
-		</tbody>
-	</table>
+
+		<div class="input-prepend">
+		  <span class="add-on">合同编号</span>
+		  <input class="span3" id="prependedInput" type="text" id="contractId">
+		</div>
+		<br>
+		<div class="input-prepend">
+		  <span class="add-on">合同名称</span>
+		  <input class="span3" id="prependedInput" type="text" id="contractName">
+		</div>
+
+		<br>
+
+		  <div id="beginPicker" class="input-append input-prepend">
+			<span class="add-on">开始时间</span>
+		    <input data-format="yyyy-MM-dd" type="text" class="span3" id="beginDate"/>
+		    <span class="add-on">
+		      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+		    </span>
+		  </div>
+
+		  <div id="endPicker" class="input-append input-prepend">
+			<span class="add-on">结束时间</span>
+		    <input data-format="yyyy-MM-dd" type="text" class="span3" id="endDate"/>
+		    <span class="add-on">
+		      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+		    </span>
+		  </div>
+
+
+		<script type="text/javascript">
+		  $(function() {
+		    $('#beginPicker').datetimepicker({
+		      pickTime: false
+		    });
+		     $('#endPicker').datetimepicker({
+		      pickTime: false
+		    });
+		  });
+		</script>
+
+		<br>
+		<div class="input-prepend">
+		  <span class="add-on">&nbsp;&nbsp;状&nbsp;&nbsp;&nbsp;态&nbsp;&nbsp;</span>
+		  <input class="span3" id="prependedInput" type="text" id="contractState">
+		</div>
+
+
+
 </div>
 </div>
 
@@ -136,6 +139,16 @@
 			<option value="2">回款事件</option>
 		</select>
 	</div>
+	<div class="btn-group">
+        <button class="btn dropdown-toggle" data-toggle="dropdown">事件类型 <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+           <li><a href="#">自定义事件</a></li>
+           <li><a href="#">回款事件</a></li>
+        </ul>
+    </div>
+
+
+
 </div>
 
 <table  id="eventsTable" class="table table-bordered table-striped" style="width:800px;table-layout:fixed;">
@@ -152,6 +165,6 @@
 </tbody>
 </table>
 <div class="finished" style="float:right;">
-<input type="submit" class="submit" value="完成"/>
+<input type="submit" class="btn" id ="submit" value="完成"/>
 </div>
 </div>

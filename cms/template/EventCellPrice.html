@@ -1,4 +1,5 @@
-<tr id="eventCellPrice">
+
+
 	<td contentEditable="true" style="line-height:20px; padding-top: 45px; overflow:hidden;text-align:center;">
 		<input id="eventCellId" type="hidden" value="7"></td>
 	<td>
@@ -6,17 +7,17 @@
 			<label>日期</label>
 		</span>
 		<span style="display:inline-block">
-			<input type="text" class="Wdate" id="d122" onfocus="WdatePicker({isShowWeek:true,onpicked:function() {$dp.$('d122_1').value=$dp.cal.getP('W','W');$dp.$('d122_2').value=$dp.cal.getP('W','WW');}})"></span>
+			<input type="text" class="Wdate"  style="height: 30px;" id="d122" onfocus="WdatePicker({isShowWeek:true,onpicked:function() {$dp.$('d122_1').value=$dp.cal.getP('W','W');$dp.$('d122_2').value=$dp.cal.getP('W','WW');}})"></span>
 		<div class="money">
 			<div class="input-prepend input-append">
 				<span class="add-on">￥</span>
-				<input class="span2" id="appendedPrependedInput" type="text">
+				<input id="appendedPrependedInput" type="text" style="height: 30px;"/>
 				<span class="add-on">.00</span>
 			</div>
 		</div>
+		<textarea id="remark" rows="2" placeholder="备注" style="width:90%"></textarea>
 	</td>
 	<td>
-		<button type="button" class="btn" src="./img/minus.png" onclick="deleteEvent(7)">
+		<button type="button" class="btn" id="deleteBtn" src="./img/minus.png">
 			<img src="./img/minus.png"></button>
 	</td>
-</tr>

@@ -6,9 +6,12 @@ require.config({
 		underscore: 'js/underscore_amd',
 		backbone: 'js/backbone_amd',
 		text: 'js/text',
+		json2: 'js/json2',
 		'model' : 'model',
 		'view' : 'view',
-		'template' : 'template'
+		'template' : 'template',
+		'collections' : 'collections',
+		'model' :'model'
 	},
 	shim: {
 		backbone:{
