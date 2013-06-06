@@ -12,43 +12,47 @@ var db = new Db("Daniel", new Server("127.0.0.1", 27017, {}), {
 	w: 1
 });
 var newCollection = db.collection("users3");
-//var getTime = 123;
+
 ///insert Doc-data
 
-exports.insertDoc = function() {
+exports.insertDoc = function(recData) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
-		newCollection.insert(contractData1, {
+		newCollection.insert(recData, {
 			w: 1
 		}, function(err, result) {
 			console.log("insert contractData successfully");
 		});
+		db.close();
 	});
 };
 ///////check Doc-data
 
-exports.checkData = function() {
+exports.checkData = function(callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
 		newCollection.find({
 			Id: "CA123"
-		}).each(function(error, docu) {
-			if (docu) {
-				console.log("Doc from Each ");
-				console.dir(docu);
-				console.dir(docu.businessname);
-				console.dir(docu.events[2].date);
-			}
+		}).toArray(function(error, docu) {
+			//				console.log("Doc from Each ");
+			//				console.dir(docu);
+			//				console.dir(docu.businessname);
+			//				console.dir(docu.events[2].date);
+			db.close();
+			callback(docu);
 		});
+
 	});
 };
-exports.checkTimeOf = function() {
+/////跟踪合同开始日期结束日期
+exports.checkTimeOf = function(callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
 		newCollection.find({
 			Id: "CA123"
 		}).each(function(error, docu) {
 			if (docu) {
+				var getTime;
 				var startTime = docu.events[0].date;
 				var endTime = docu.events[0].date;
 				for (var i = 1; i < docu.events.length; i++) {
@@ -61,30 +65,31 @@ exports.checkTimeOf = function() {
 					//					console.dir(docu.businessname);
 					//					console.log(docu.events[i].date);
 				}
-				console.log(startTime);
-				console.log(endTime);
+				//				console.log(startTime);
+				//				console.log(endTime);
+				console.log("1: " + startTime + " " + endTime);
+				getTime = startTime + " " + endTime;
+				//				getTime="heooo";
+				db.close();
+				callback(getTime);
 			}
 		});
 	});
-	return ();
 };
 /////展示合同详情
-exports.showData = function() {
+exports.showData = function(callback) {
+	var result = null;
 	db.open(function(req, res) {
 		console.log("connect database successfully");
-		newCollection.find().each(function(err, docu) {
-			if (docu) {
-				console.log("合同编号:    " + docu.Id);
-				console.log("合同名称:    " + docu.Name);
-				console.log("合同事件:");
-				console.dir(docu.Events);
-			}
+		newCollection.find().toArray(function(err, docu) {
+			callback(docu);
+			db.close();
 		});
 	});
 };
 //////update Doc-data
 
-exports.updateData = function() {
+exports.updateData = function(callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
 		newCollection.update({
@@ -101,7 +106,9 @@ exports.updateData = function() {
 			newCollection.find(function(error, cursor) {
 				cursor.each(function(error, doc) {
 					if (doc) {
-						console.log("update successfully");
+						//						console.log("update successfully");
+						db.close();
+						callback(doc);
 					}
 				});
 			});
@@ -114,7 +121,7 @@ exports.updateData = function() {
    result = {"Events.$.complete": true};
 */
 
-exports.updateSymble = function(option, result) {
+exports.updateSymble = function(option, result, callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
 		newCollection.update(option, {
@@ -123,7 +130,9 @@ exports.updateSymble = function(option, result) {
 			newCollection.find(function(error, cursor) {
 				cursor.each(function(error, doc) {
 					if (doc) {
-						console.log("update successfully");
+						//						console.log("update successfully");
+						db.close();
+						callback(doc);
 					}
 				});
 			});
@@ -135,7 +144,7 @@ exports.updateSymble = function(option, result) {
 ////collection1.remove()是删除集合内的所有文档
 /////db.dropCollection(collectionName,claaback());是删除集合
 
-exports.removeDoc = function() {
+exports.removeDoc = function(callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
 		newCollection.remove({
@@ -146,7 +155,9 @@ exports.removeDoc = function() {
 			newCollection.find(function(error, cursor) {
 				cursor.each(function(error, doc) {
 					if (doc) {
-						console.log("remove document successfully!");
+						//					console.log("remove document successfully!");
+						db.close();
+						callback(doc);
 					}
 				});
 			});
@@ -155,7 +166,7 @@ exports.removeDoc = function() {
 };
 //////删除一个事件
 
-exports.removeEvent = function() {
+exports.removeEvent = function(callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
 		newCollection.update({
@@ -175,11 +186,12 @@ exports.removeEvent = function() {
 				});
 			});
 		});
+		db.close();
 	});
 };
 ///添加一个事件
 
-exports.addEvent = function() {
+exports.addEvent = function(callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
 		newCollection.update({
@@ -200,21 +212,23 @@ exports.addEvent = function() {
 				});
 			});
 		});
+		db.close();
 	});
 };
 
 ////计算文档集数目
 
-exports.allDoc = function() {
+exports.allDoc = function(callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
 		newCollection.count(function(err, count) {
 			console.log("collection have %d documents", count);
 		});
+		db.close();
 	});
 };
 /////计算符合条件的文档数目
-exports.getDoc = function() {
+exports.getDoc = function(callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
 		newCollection.count({
@@ -222,5 +236,6 @@ exports.getDoc = function() {
 		}, function(err, count) {
 			console.log("collection have %d document you want", count);
 		});
+		db.close();
 	});
 };
