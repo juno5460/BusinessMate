@@ -8,49 +8,48 @@ var get = require('../models/getData');
 //////////////test code//////////////
 
 //////////////test code//////////////
-exports.list = function(req, res) {
-  dataModel.checkTimeOf(function(data) {
-    console.log(data);
-    if (data != null)
-      res.send(data);
+exports.index = function(req, res) {
+  dataModel.showData(function(data) {
+    res.send(data);
   });
+  res.send("index");
+  /*
+  dataModel.checkTimeOf({
+    Id: "CA123"
+  }, function(data) {
+    res.send(data);
+  });
+*/
 };
 
 exports.show = function(req, res) {
-  res.send("respond with a resource");
+  console.log("啊啊啊啊啊啊啊啊" + req.params['contract']);
+  dataModel.showData(function(data) {
+    res.send(data);
+  });
+  res.send("show");
 };
 
 exports.create = function(req, res) {
-  //  console.log(req.body);
-  /*  var name = req.param('UserName');
-  var number = req.param('UserNumber');
-  //  console.info(req.param('UserName'));
-  //  console.info(req.param('UserNumber'));
-  getData = {
-    UserName: name,
-    UserNumber: number
-  };*/
-  /*
-  dataModel.checkTimeOf(function(data) {
-    console.log("2: " + data);
+  var rdata = req.body;
+  dataModel.insertDoc(rdata, function(data) {
+    res.send(data);
   });
-  dataModel.checkData(function(data) {
-    console.log(data);
-  });*/
-  dataModel.showData(function(data) {
-    console.log(data);
-  });
-  res.send("respond with a resource");
+  res.send("create");
 };
 
 exports.update = function(req, res) {
-  res.send("respond with a resource");
+  dataModel.showData(function(data) {
+    res.send(data);
+  });
+  res.send("update");
 };
-exports.drop = function(req, res) {
-  res.send("respond with a resource");
-};
-/*
+
 exports.destroy = function(req, res) {
-  res.send("respond with a resource");
+  dataModel.removeDoc({
+    Id: "CA123"
+  }, function(data) {
+    res.send(data);
+  });
+  res.send("destroy");
 };
-*/

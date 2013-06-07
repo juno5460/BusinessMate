@@ -3,6 +3,7 @@
  */
 
 var express = require('express'),
+	resource = require('express-resource'),
 	routes = require('./routes'),
 	user = require('./routes/user'),
 	contract = require('./routes/contract'),
@@ -35,13 +36,7 @@ console.log("aaa:" + postdemo.list);
 //posttest
 app.post('/postdemo', postdemo.list);
 //contracts
-app.get('/contracts', contract.list);
-app.get('/contracts/:id', contract.show);
-app.get('/contracts/:id', contract.drop);
-app.post('/contracts', contract.create);
-app.get('/contracts/:id', contract.update);
-//app.put('/contracts/:id', contract.update);
-// app.destroy('/contracts', contract.list);
+app.resource('contracts', contract);
 
 
 http.createServer(app).listen(app.get('port'), function() {
