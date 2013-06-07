@@ -1,5 +1,5 @@
-//定义数据模型
-///exmple ////
+//定义数据库操作接口
+///////
 ////
 var get = require('./getData');
 var contractData1 = get.returnData1(); //获取数据源
@@ -14,7 +14,7 @@ var db = new Db("Daniel", new Server("127.0.0.1", 27017, {}), {
 var newCollection = db.collection("users3");
 
 ///insert Doc-data
-
+//参数:(完整合同json对象,回调函数)
 exports.insertDoc = function(recData, callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
@@ -29,7 +29,7 @@ exports.insertDoc = function(recData, callback) {
 	});
 };
 ///////check Doc-data
-
+//参数:(合同id json对象,回调函数)
 exports.checkData = function(id, callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
@@ -40,8 +40,32 @@ exports.checkData = function(id, callback) {
 
 	});
 };
+//////check condition
+exports.checkCondition = function(id, callback) {
+	db.open(function(req, res) {
+		console.log("connect database successfully");
+		newCollection.find(id).each(function(error, docu) {
+			if (docu) {
+				var newCondition;
+				var newTime = docu.events[0].date;
+				for (var i = 0; i < docu.events.length; i++) {  //遍历该合同事件
+					if (docu.events[i].complete === true)       //假如存在完成状态的事件
+						if (docu.events[i].date >= newTime) {    //假如日期又是最新的
+							newTime = docu.events[i].date;      //更新最新日期
+							newCondition = {                    //更新最新事件状态
+								condition: docu.events[i]
+							};
+						}
+				}
+				db.close();
+				callback(newCondition);
+			}
+		});
+	});
+};
 /////跟踪合同开始日期结束日期
 //id:{Id: "CA123"}
+//参数:(合同id json对象,回调函数)
 exports.checkTimeOf = function(id, callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
@@ -55,10 +79,6 @@ exports.checkTimeOf = function(id, callback) {
 						startTime = docu.events[i].date;
 					if (endTime < docu.events[i].date)
 						endTime = docu.events[i].date;
-					//					console.log("Doc from Each ");
-					//					console.dir(docu);
-					//					console.dir(docu.businessname);
-					//					console.log(docu.events[i].date);
 				}
 				//				console.log(startTime);
 				//				console.log(endTime);
@@ -72,6 +92,7 @@ exports.checkTimeOf = function(id, callback) {
 	});
 };
 /////展示合同详情
+//参数:(回调函数)
 exports.showData = function(callback) {
 	var result = null;
 	db.open(function(req, res) {
@@ -113,7 +134,7 @@ exports.updateData = function(callback) {
    option = {Id: "CA123",events: {name: "收取尾款"}};
    result = {"Events.$.complete": true};
 */
-
+//参数(合同id json对象,查询条件json对象,修改目标json,回调函数)
 exports.updateSymble = function(id, opt, resu, callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
@@ -131,7 +152,7 @@ exports.updateSymble = function(id, opt, resu, callback) {
 /////删除文档数据,返回结果给终端 ,参数id为键值对:{Id: "CA123"}
 ////collection1.remove()是删除集合内的所有文档
 /////db.dropCollection(collectionName,claaback());是删除集合
-
+//参数(合同id json对象,回调函数)
 exports.removeDoc = function(id, callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
@@ -146,7 +167,7 @@ exports.removeDoc = function(id, callback) {
 	});
 };
 //////删除一个事件
-
+//参数:(合同id json对象,事件json,回调函数)
 exports.deleteEvent = function(id, events, callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
@@ -161,7 +182,7 @@ exports.deleteEvent = function(id, events, callback) {
 	});
 };
 ///添加一个事件
-
+//参数:(合同id json对象,事件json,回调函数)
 exports.addEvent = function(id, events, callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
@@ -175,18 +196,21 @@ exports.addEvent = function(id, events, callback) {
 		});
 	});
 };
-////计算文档集数目
+////计算文档集数目,待测
 
 exports.countDoc = function(callback) {
 	db.open(function(req, res) {
+		var cal;
 		console.log("connect database successfully");
 		newCollection.count(function(err, count) {
-			callback(count);
+			db.close();
+			cal = count;
+			console.log(count);
+			callback(cal);
 		});
-		db.close();
 	});
 };
-/////计算符合条件的文档数目
+/////计算符合条件的文档数目,待测
 exports.getDoc = function(callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");

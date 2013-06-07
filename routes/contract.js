@@ -13,15 +13,20 @@ exports.index = function(req, res) {
   var option = {
     Id: "CA123",
     events: {
-      name: "合同结束",
+      name: "收取尾款",
       date: "2013-12-20",
-      complete: true
+      complete: false
     }
   };
   var result = {
-    "events.$.complete": false
+    "events.$.complete": true
   };
   dataModel.updateSymble(id, option, result, function(data) {
+    res.send(data);
+  });
+  /************************pass*****************************/
+  /********************追踪合同状态测试**********************/
+  dataModel.checkCondition({Id:"CA123"},function(data) {
     res.send(data);
   });
   /************************pass*****************************/
@@ -78,9 +83,9 @@ exports.index = function(req, res) {
   };
   var events = {
     events: {
-      "name": "一次竞标",
-      "date": "2013-6-20",
-      "complete": false
+      "name": "一次竞标"
+      //      "date": "2013-6-20",
+      //      "complete": false
     }
   };
   dataModel.deleteEvent(id, events, function(data) {
@@ -89,7 +94,7 @@ exports.index = function(req, res) {
   /***************************pass***************************/
   /************************计算合同数目测试********************
   dataModel.countDoc(function(data) {
-    res.send(data);
+    res.send(data + "");
   });
   /***************************pass***************************/
 };
