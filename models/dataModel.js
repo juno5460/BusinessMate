@@ -15,29 +15,25 @@ var newCollection = db.collection("users3");
 
 ///insert Doc-data
 
-exports.insertDoc = function(recData) {
+exports.insertDoc = function(recData, callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
 		newCollection.insert(recData, {
 			w: 1
 		}, function(err, result) {
-			console.log("insert contractData successfully");
+			newCollection.find().toArray(function(err, docu) {
+				callback(docu);
+				db.close();
+			});
 		});
-		db.close();
 	});
 };
 ///////check Doc-data
 
-exports.checkData = function(callback) {
+exports.checkData = function(id, callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
-		newCollection.find({
-			Id: "CA123"
-		}).toArray(function(error, docu) {
-			//				console.log("Doc from Each ");
-			//				console.dir(docu);
-			//				console.dir(docu.businessname);
-			//				console.dir(docu.events[2].date);
+		newCollection.find(id).toArray(function(error, docu) {
 			db.close();
 			callback(docu);
 		});
@@ -45,12 +41,11 @@ exports.checkData = function(callback) {
 	});
 };
 /////跟踪合同开始日期结束日期
-exports.checkTimeOf = function(callback) {
+//id:{Id: "CA123"}
+exports.checkTimeOf = function(id, callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
-		newCollection.find({
-			Id: "CA123"
-		}).each(function(error, docu) {
+		newCollection.find(id).each(function(error, docu) {
 			if (docu) {
 				var getTime;
 				var startTime = docu.events[0].date;
@@ -94,23 +89,21 @@ exports.updateData = function(callback) {
 		console.log("connect database successfully");
 		newCollection.update({
 			Id: "CA123",
-			Events: {
-				eventName: "收取尾款",
-				cdate: "2013-12-20"
+			events: {
+				name: "收取尾款",
+				date: "2013-12-20",
+				complete: false
 			}
 		}, {
 			$set: {
-				"Events.$.cdate": "2013-11-20"
+				"events.$.date": "2013-11-20"
 			}
 		}, function(error, cursor) {
-			newCollection.find(function(error, cursor) {
-				cursor.each(function(error, doc) {
-					if (doc) {
-						//						console.log("update successfully");
-						db.close();
-						callback(doc);
-					}
-				});
+			newCollection.find({
+				Id: "CA123"
+			}).toArray(function(error, doc) {
+				db.close();
+				callback(doc);
 			});
 		});
 	});
@@ -121,108 +114,74 @@ exports.updateData = function(callback) {
    result = {"Events.$.complete": true};
 */
 
-exports.updateSymble = function(option, result, callback) {
+exports.updateSymble = function(id, opt, resu, callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
-		newCollection.update(option, {
-			$set: result
+		newCollection.update(opt, {
+			$set: resu
 		}, function(error, cursor) {
-			newCollection.find(function(error, cursor) {
-				cursor.each(function(error, doc) {
-					if (doc) {
-						//						console.log("update successfully");
-						db.close();
-						callback(doc);
-					}
-				});
+			newCollection.find(id).toArray(function(error, doc) {
+				db.close();
+				callback(doc);
 			});
 		});
 	});
 };
 ////////remove Doc-data
-/////删除文档数据,返回结果给终端 
+/////删除文档数据,返回结果给终端 ,参数id为键值对:{Id: "CA123"}
 ////collection1.remove()是删除集合内的所有文档
 /////db.dropCollection(collectionName,claaback());是删除集合
 
-exports.removeDoc = function(callback) {
+exports.removeDoc = function(id, callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
-		newCollection.remove({
-			Id: "CA123"
-		}, {
+		newCollection.remove(id, {
 			safe: true
 		}, function(error, cursor) {
-			newCollection.find(function(error, cursor) {
-				cursor.each(function(error, doc) {
-					if (doc) {
-						//					console.log("remove document successfully!");
-						db.close();
-						callback(doc);
-					}
-				});
+			newCollection.find().toArray(function(error, doc) {
+				db.close();
+				callback(doc);
 			});
 		});
 	});
 };
 //////删除一个事件
 
-exports.removeEvent = function(callback) {
+exports.deleteEvent = function(id, events, callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
-		newCollection.update({
-			Id: "CA123"
-		}, {
-			$pull: {
-				Events: {
-					eventName: "收取尾款"
-				}
-			}
+		newCollection.update(id, {
+			$pull: events
 		}, function(error, cursor) {
-			newCollection.find(function(error, cursor) {
-				cursor.each(function(error, doc) {
-					if (doc) {
-						console.log("remove Event successfully!");
-					}
-				});
+			newCollection.find(id).toArray(function(error, doc) {
+				callback(doc);
+				db.close();
 			});
 		});
-		db.close();
 	});
 };
 ///添加一个事件
 
-exports.addEvent = function(callback) {
+exports.addEvent = function(id, events, callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
-		newCollection.update({
-			Id: "CA123"
-		}, {
-			$addToSet: {
-				Events: {
-					eventName: "收取尾款",
-					cdate: "2013-11-20"
-				}
-			}
+		newCollection.update(id, {
+			$addToSet: events
 		}, function(error, cursor) {
-			newCollection.find(function(error, cursor) {
-				cursor.each(function(error, doc) {
-					if (doc) {
-						console.log("add Event successfully!");
-					}
-				});
+			newCollection.find(id).toArray(function(error, doc) {
+				callback(doc);
+				db.close();
 			});
 		});
-		db.close();
 	});
 };
-
 ////计算文档集数目
 
-exports.allDoc = function(callback) {
+exports.countDoc = function(callback) {
 	db.open(function(req, res) {
 		console.log("connect database successfully");
 		newCollection.count(function(err, count) {
-			console.log("collection have %d documents", count);
+			callback(count);
 		});
 		db.close();
 	});
