@@ -20,9 +20,9 @@ require.config({
 	}
 });
 
-require(['jquery','underscore','backbone','view/ContractViewAdd'],function($,_,Backbone,ContractViewAdd){
+require(['jquery','underscore','backbone','view/ContractListView'],function($,_,Backbone,ContractListView){
 
-	var view = new ContractViewAdd();
+	var view = new ContractListView();
 	console.info('Main Load finish!');
 
 });

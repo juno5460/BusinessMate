@@ -11,9 +11,8 @@ define([
 
 	var ContactViewAdd = Backbone.View.extend({
 
-		className:"contractaddView",
 
-		el:'.container',
+		tagName:  'div',
 
 		template:_.template(ContractViewAddHtml),
 
@@ -24,33 +23,24 @@ define([
 		},
 
 		events : {
-			'click #addEventBtn' : 'onAddEventBtnClick',
 			'click #submit' : 'submit',
+			'click #dropdown_customEvent' : 'onDropDownCusomEventClick',
+			'click #dropdown_priceEvent' : 'onDropDownPriceEventClick',
 		},
 
 
 		render: function() {
 
 			$(".container").append(this.template);
-			this.$eventList = this.$("#eventsTable tbody");
+			this.$eventList = this.$("#eventsBoard");
 			//console.info(this);
 		},
-
-		onAddEventBtnClick: function() {
-
-			var $type = $("#eventSelect").val();
-			var view = new EventView({type : $type,id : this.eventsGroup.length}); 
-			this.listenTo(view,'delete',this.removeEventCell);
-			this.eventsGroup.push(view);
-			this.$eventList.append(view.el);
-		},
-
 		submit: function(){
-			var $contractId = $("#contractId").text();
-			var $beginDate = $("#beginDate").text();
-			var $endDate = $("#endDate").text();
-			var $contractState = $("#contractState").text();
-			var $contractName = $("#contractName").text();
+			var $contractId = $("input[id^='contractId']").val();
+			var $beginDate = $("#beginDate").val();
+			var $endDate = $("#endDate").val();
+			var $contractState = $("input[id^='contractState']").val();
+			var $contractName = $("input[id^='contractName']").val();
 
 			var events = [];
 			_.each(this.eventsGroup,function(view){
@@ -74,6 +64,18 @@ define([
 				return view.id == id;
 			});
 			console.info(this.eventsGroup);
+		},
+		onDropDownCusomEventClick:function() {
+			var view = new EventView({type : 1,id : this.eventsGroup.length}); 
+			this.listenTo(view,'delete',this.removeEventCell);
+			this.eventsGroup.push(view);
+			this.$eventList.append(view.el);
+		},
+		onDropDownPriceEventClick:function(){
+			var view = new EventView({type : 2,id : this.eventsGroup.length}); 
+			this.listenTo(view,'delete',this.removeEventCell);
+			this.eventsGroup.push(view);
+			this.$eventList.append(view.el);
 		}
 
 	});

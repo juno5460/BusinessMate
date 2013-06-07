@@ -6,9 +6,9 @@ define(["backbone",
 	],function(Backbone,$,_,EventCellCustomHtml,EventCellPriceHtml){
 
 	var EventView = Backbone.View.extend({
-		tagName:"tr",
+		tagName:"div",
 
-		className:"eventView",
+		className:"form-signin",
 
 		initialize: function(options){
 
@@ -27,7 +27,7 @@ define(["backbone",
 		},
 
 		render: function() {
-			this.$el.html(this.template()); 
+			this.$el.html(this.template({id:this.id})); 
 			return this;
 		},
 
@@ -40,7 +40,8 @@ define(["backbone",
 
 			return {
 			'id':this.id,
-			'date': this.$el.find("#d122").val(),
+			'title':this.$el.find("input[id^='eventName']").val(),
+			'date': this.$el.find("#completedTime").val(),
 			'remark' : this.$el.find("#remark").val(),
 			'price' : this.$el.find("#appendedPrependedInput").val()
 				};

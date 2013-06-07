@@ -14,12 +14,13 @@
 			padding-left:15px;
 
     }
-		.basicInfo {
+	.basicInfo {
 			
 			font-size:20px;
 			padding-left:15px;
+			margin: 10px auto;
 			
-		}
+	}
 		
 	   div.bs-docs-example {
 			padding-top:20px;
@@ -34,16 +35,21 @@
 			font-size: 25px;
 			
 		}
-		.template{
+.template{
 			
-			font-size: 20px;
+	font-size: 20px;
 			
-		}
+}
+
+.eventsBoard{
+	width: 800px; 
+}
 		
       
     </style>
 <link rel="stylesheet" type="text/css" href="./css/bootstrap-datetimepicker.min.css" />
-<script src="./js/bootstrap-datetimepicker.min.js"></script>    
+<script src="./js/bootstrap-datetimepicker.min.js"></script>
+<script src="./js/bootstrap-dropdown.js"></script>
 
 <div class="contract">
 	<table>
@@ -75,33 +81,28 @@
 	<div class="basicTable" style="width: 500px;">
 
 		<div class="input-prepend">
-		  <span class="add-on">合同编号</span>
-		  <input class="span3" id="prependedInput" type="text" id="contractId">
-		</div>
+			<span class="add-on">合同编号</span>
+			<input class="span3" id="contractId prependedInput" type="text"></div>
 		<br>
 		<div class="input-prepend">
-		  <span class="add-on">合同名称</span>
-		  <input class="span3" id="prependedInput" type="text" id="contractName">
-		</div>
+			<span class="add-on">合同名称</span>
+			<input class="span3" id="contractName prependedInput" type="text"></div>
 
 		<br>
 
-		  <div id="beginPicker" class="input-append input-prepend">
+		<div id="beginPicker" class="input-append input-prepend">
 			<span class="add-on">开始时间</span>
-		    <input data-format="yyyy-MM-dd" type="text" class="span3" id="beginDate"/>
-		    <span class="add-on">
-		      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-		    </span>
-		  </div>
+			<input data-format="yyyy-MM-dd" type="text" class="span3" id="beginDate" />
+			<span class="add-on"> <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+			</span>
+		</div>
 
-		  <div id="endPicker" class="input-append input-prepend">
+		<div id="endPicker" class="input-append input-prepend">
 			<span class="add-on">结束时间</span>
-		    <input data-format="yyyy-MM-dd" type="text" class="span3" id="endDate"/>
-		    <span class="add-on">
-		      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-		    </span>
-		  </div>
-
+			<input data-format="yyyy-MM-dd" type="text" class="span3" id="endDate"/>
+			<span class="add-on"> <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+			</span>
+		</div>
 
 		<script type="text/javascript">
 		  $(function() {
@@ -116,55 +117,37 @@
 
 		<br>
 		<div class="input-prepend">
-		  <span class="add-on">&nbsp;&nbsp;状&nbsp;&nbsp;&nbsp;态&nbsp;&nbsp;</span>
-		  <input class="span3" id="prependedInput" type="text" id="contractState">
-		</div>
+			<span class="add-on">&nbsp;&nbsp;状&nbsp;&nbsp;&nbsp;态&nbsp;&nbsp;</span>
+			<input class="span3" id="contractState prependedInput" type="text"></div>
 
-
-
-</div>
+	</div>
 </div>
 
 <div class="bs-docs-example"  style="width: 800px;">
-<div>
-	<div style="float:left;">
-		<label class="basicInfo">事件</label>
+	<div style="height: 50px;">
+		<div style="float:left;">
+			<label class="basicInfo">事件</label>
+		</div>
+
+		<div class="btn-group" style="float:right;">
+			<button class="btn" >事件类型</button>
+			<button class="btn dropdown-toggle" data-toggle="dropdown">
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li>
+					<a data-target="#" id="dropdown_customEvent">自定义事件</a>
+				</li>
+				<li>
+					<a data-target="#" id="dropdown_priceEvent">回款事件</a>
+				</li>
+			</ul>
+		</div>
+
 	</div>
-	<div style="float:right;margin-left: 50px;">
-		<input class='btn' id="addEventBtn" type="button" value=" + "/>
+
+	<div class="eventsBoard" id="eventsBoard"></div>
+	<div class="finished" style="float:right;">
+		<input type="submit" class="btn" id ="submit" value="完成"/>
 	</div>
-	<div style="float:right;">
-		<select id="eventSelect">
-			<option value="1">自定义事件</option>
-			<option value="2">回款事件</option>
-		</select>
-	</div>
-	<div class="btn-group">
-        <button class="btn dropdown-toggle" data-toggle="dropdown">事件类型 <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-           <li><a href="#">自定义事件</a></li>
-           <li><a href="#">回款事件</a></li>
-        </ul>
-    </div>
-
-
-
-</div>
-
-<table  id="eventsTable" class="table table-bordered table-striped" style="width:800px;table-layout:fixed;">
-	<colgroup>
-	<col class="span1">
-	<col class="span7"></colgroup>
-<tbody>
-	<tr>
-		<th width="100" style="text-align:center;">事件名称</th>
-		<th width="200" style="text-align:center;">事件内容</th>
-		<th width="50" style="text-align:center;">操作</th>
-	</tr>
-
-</tbody>
-</table>
-<div class="finished" style="float:right;">
-<input type="submit" class="btn" id ="submit" value="完成"/>
-</div>
 </div>
