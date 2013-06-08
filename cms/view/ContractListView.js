@@ -37,21 +37,21 @@ define([
 		render: function() {
 
 			this.$el.html(this.template());
-			$.get("http://10.108.1.67:3000/contracts",function(data,status){
-				this.$contracts = data;
-				_.each(data,function(contract){
-					console.info(contract);
+			// $.get("http://10.108.1.67:3000/contracts",function(data,status){
+			// 	this.$contracts = data;
+			// 	_.each(data,function(contract){
+			// 		console.info(contract);
 
-					// this.$contractListTable.append(new ContractListCell({id:contract.id,
-					// 	id:contract.name,
-					// 	id:contract.beginDate,
-					// 	id:contract.endDate,
-					// 	id:contract.state
-					// }).el);
+			// 		// this.$contractListTable.append(new ContractListCell({id:contract.id,
+			// 		// 	id:contract.name,
+			// 		// 	id:contract.beginDate,
+			// 		// 	id:contract.endDate,
+			// 		// 	id:contract.state
+			// 		// }).el);
 
-				});
-				console.info(data);
-			});
+			// 	});
+			// 	console.info(data);
+			// });
 		},
 		presentView:function(view){
 			this.$containerView.append(view.el);
