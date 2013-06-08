@@ -59,7 +59,8 @@ var data2 = {
 			date: "2014-01-20",
 			completed: false
 		}
-	]
+	],
+	state:"合同结束"
 };
 exports.returnData1 = function() {
 	return data1;
