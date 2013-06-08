@@ -1,7 +1,7 @@
 
-      .form-signin {
-        max-width: 800px;
-        padding: 10px 29px 5px;
+.form-signin {
+        width: 800px;
+        padding: 10px 10px 5px 29px;
         margin: 0 auto 10px;
         background-color: #fff;
         border: 1px solid #e5e5e5;
@@ -24,4 +24,14 @@
 }
 .input-append input.search-query {
     width:50%
+}
+
+.form-signin {
+  list-style: none;
+}
+.form-signin  #destroy{
+    visibility: hidden;
+}
+.form-signin  :hover #destroy{
+   visibility: visible;
 }

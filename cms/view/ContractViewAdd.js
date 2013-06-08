@@ -4,10 +4,11 @@ define([
 	"underscore",
 	"json2",
 	"view/EventView",
+	'model/EventCell',
 	"text!template/ContractViewAdd.html",
-	'model/EventCell'
+	'view/ContractListView',
 	],
-	function(Backbone,$,_,json,EventView,ContractViewAddHtml,EventCell){
+	function(Backbone, $, _, json, EventView, EventCell, ContractViewAddHtml, ContractListView){
 
 	var ContactViewAdd = Backbone.View.extend({
 
@@ -17,9 +18,11 @@ define([
 		template:_.template(ContractViewAddHtml),
 
 		initialize: function(options){
-			this.eventsGroup = new Array();
 
+			this.$containerView = $("#container");
+			this.eventsGroup = new Array();
 			this.render();
+
 		},
 
 		events : {
@@ -31,9 +34,12 @@ define([
 
 		render: function() {
 
-			$(".container").append(this.template);
+			this.$el.html(this.template());
 			this.$eventList = this.$("#eventsBoard");
-			//console.info(this);
+		},
+		presentView:function(view){
+			this.$containerView.append(view.el);
+			this.remove(); 
 		},
 		submit: function(){
 			var $contractId = $("input[id^='contractId']").val();
@@ -57,7 +63,8 @@ define([
 			$postBody.events = events;
 
 
-			$.post("http://10.108.1.67:3000/contracts",JSON.stringify($postBody));
+			$.post("http://10.108.1.67:3000/contracts",$postBody);
+			//this.$containerView.append(new ContractListView().el);
 		},
 		removeEventCell:function(id){
 			this.eventsGroup = _.reject(this.eventsGroup,function(view){

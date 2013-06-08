@@ -6,9 +6,10 @@ define(["backbone",
 	],function(Backbone,$,_,EventCellCustomHtml,EventCellPriceHtml){
 
 	var EventView = Backbone.View.extend({
-		tagName:"div",
 
-		className:"form-signin",
+		tagName : 'li',
+
+		className : "form-signin",
 
 		initialize: function(options){
 
