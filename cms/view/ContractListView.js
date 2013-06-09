@@ -23,7 +23,6 @@ define([
 			$("#contracts").addClass("active");
 
 			this.$containerView = $("#container");
-			this.$contractListTable = $(".contractListTable");
 			this.$contractIdInput = $(".contractIdInput");
 			this.render();
 		},
@@ -37,28 +36,34 @@ define([
 		render: function() {
 
 			this.$el.html(this.template());
-			// $.get("http://10.108.1.67:3000/contracts",function(data,status){
-			// 	this.$contracts = data;
-			// 	_.each(data,function(contract){
-			// 		console.info(contract);
+			var $contractListTable = this.$el.find("#contractListTable tbody");
 
-			// 		// this.$contractListTable.append(new ContractListCell({id:contract.id,
-			// 		// 	id:contract.name,
-			// 		// 	id:contract.beginDate,
-			// 		// 	id:contract.endDate,
-			// 		// 	id:contract.state
-			// 		// }).el);
+			$.get("http://10.108.1.67:3000/contracts",function(data,status){
+				console.info(status);
+				this.$contracts = data;
+				_.each(data,function(contract){
+					console.info(contract);
 
-			// 	});
-			// 	console.info(data);
-			// });
+					$contractListTable.append(new ContractListCell(
+						{
+						id:contract.id,
+						cid:contract.cid,
+						name:contract.businessName,
+						beginDate:contract.beginDate,
+						endDate:contract.endDate,
+						state:contract.state
+					}).el);
+
+				});
+				console.info(data);
+			});
 		},
 		presentView:function(view){
 			this.$containerView.append(view.el);
 			this.remove(); 
 		},
 		onAddContractBtnClick:function(){
-			//this.presentView(new ContractViewAdd());
+
 
 		},
 		onSearchBtnClick:function(){

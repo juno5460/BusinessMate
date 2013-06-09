@@ -51,33 +51,16 @@
 </head>
 
 <body>
-	<li class="form-signin">
-		<div class="row-fluid">
-				<div class="span12">
-					<div class="span5">
-						<div class="input-prepend">
-							<span class="add-on">事件名称</span>
-							<input class="input-large" id="eventName prependedInput" type="text"></div>
+	<script type="text/javascript">
 
-						<div id="completedTime0" class="input-append input-prepend">
-							<span class="add-on">执行时间</span>
-							<input data-format="yyyy-MM-dd" type="text" class="input-large" id="completedTime">			
-							<span class="add-on"> <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar"></i>
-							</span>
-						</div>
-					</div>
-					<textarea class="span6" rows="3" placeholder="请输入事件" id="remark" style="margin-left: 60px;"></textarea>
-					<a class="icon-minus destroy" href="#" style="margin-left: 2px;"></a>
-				</div>
-</div>
-</li>
-<script type="text/javascript">
-	$(function() {
-		$('#completedTime0').datetimepicker({
-		      pickTime: false
-		  });
+				$.ajax({
+					type: "PUT",
+					url: "http://10.108.1.67:3000/contracts?id=1",
+					data: {id:123},
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+				});
+	</script>
 
-	});
-</script></li>
 </body>
 </html>

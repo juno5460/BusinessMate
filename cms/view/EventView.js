@@ -2,8 +2,9 @@ define(["backbone",
 	"jquery",
 	"underscore",
 	"text!template/EventCellCustom.html",
-	"text!template/EventCellPrice.html"
-	],function(Backbone,$,_,EventCellCustomHtml,EventCellPriceHtml){
+	"text!template/EventCellPrice.html",
+	"model/EventCell"
+	],function(Backbone,$,_,EventCellCustomHtml,EventCellPriceHtml,EventModel){
 
 	var EventView = Backbone.View.extend({
 
@@ -11,36 +12,37 @@ define(["backbone",
 
 		className : "form-signin",
 
-		initialize: function(options){
+		model:new EventModel(),
 
-			if(options.type == '1') {
+		initialize: function(){
+
+			if(this.model.get('type') == '1') {
 				this.template = _.template(EventCellCustomHtml);
 			} else {
 				this.template = _.template(EventCellPriceHtml);
 			}
 
-			this.id = options.id;
 			this.render();
 		},
 
 		events : {
-			'click #deleteBtn' : 'deleteEventCell'
+			'click #destroy' : 'deleteEventCell'
 		},
 
 		render: function() {
-			this.$el.html(this.template({id:this.id})); 
+			this.$el.html(this.template(this.model.toJSON())); 
 			return this;
 		},
 
 		deleteEventCell: function() {
-			this.trigger('delete',this.id);
+			this.trigger('delete',this.model.id);
 			this.remove();
 		},
 
 		toJson:function(){
 
 			return {
-			'id':this.id,
+			'id':this.model.id,
 			'title':this.$el.find("input[id^='eventName']").val(),
 			'date': this.$el.find("#completedTime").val(),
 			'remark' : this.$el.find("#remark").val(),

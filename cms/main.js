@@ -11,7 +11,8 @@ require.config({
 		'view': 'view',
 		'template': 'template',
 		'collections': 'collections',
-		'model': 'model'
+		'model': 'model',
+		'js':'js'
 	},
 	shim: {
 		backbone: {
@@ -31,25 +32,33 @@ require(['jquery', 'underscore', 'backbone', 'view/ContractListView', 'view/Cont
 			"":"index",
 			"desktop": "desktop",
 			"contracts": "contracts",
-			"addContract":"addContract"
+			"addContract":"addContract",
+			"editContract/:id":"editContract"
 		},
+		currentView:"",
 		index:function(){
-			$containerView.html("");
-			$containerView.append(new ContractListView().el);
+			this.switchView(new ContractListView());
 		},
 		desktop: function() {
 
-			
-
 		},
 		contracts: function() {
-
-			$containerView.html("");
-			$containerView.append(new ContractListView().el);
+			this.switchView(new ContractListView());
 		},
 		addContract:function(){
-			$containerView.html("");
-			$containerView.append(new ContractViewAdd().el);
+			this.switchView(new ContractViewAdd({mode:'add'}));
+		},
+		editContract:function(id){
+			this.switchView(new ContractViewAdd({mode:'edit',cid:id}));
+		},
+		switchView:function(view){
+
+			if(this.currentView != ""){
+				this.currentView.remove();
+			}
+
+			this.currentView = view;
+			$containerView.append(view.el);
 		}
 	});
 

@@ -3,16 +3,16 @@
 					<div class="span5">
 						<div class="input-prepend">
 							<span class="add-on">事件名称</span>
-							<input class="input-large" id="eventName prependedInput" type="text"></div>
+							<input class="input-large" id="eventName prependedInput" type="text" value="<%- title %>"></div>
 
 						<div id="completedTime<%- id %>" class="input-append input-prepend">
 							<span class="add-on">执行时间</span>
-							<input data-format="yyyy-MM-dd" type="text" class="input-large" id="completedTime">			
+							<input data-format="yyyy-MM-dd" type="text" class="input-large" id="completedTime" value="<%- date %>">			
 							<span class="add-on"> <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
 							</span>
 						</div>
 					</div>
-					<textarea class="span6" rows="3" placeholder="请输入事件" id="remark" style="margin-left: 60px;"></textarea>
+					<textarea class="span6" rows="3" placeholder="请输入事件" id="remark" style="margin-left: 60px;" ><%- remark %></textarea>
 					<a class="icon-remove" id="destroy" style="margin-left: 9px;"></a>
 				</div>
 </div>

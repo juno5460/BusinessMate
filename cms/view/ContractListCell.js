@@ -13,6 +13,7 @@ define([
 
 		initialize: function(options) {
 			this.$id 		= options.id;
+			this.$cid		= options.cid;
 			this.$name 		= options.name;
 			this.$beginDate = options.beginDate;
 			this.$endDate 	= options.endDate;
@@ -23,10 +24,11 @@ define([
 		render: function() {
 			this.$el.html(this.template({
 				id: this.$id,
+				cid: this.$cid,
 				name: this.$name,
 				beginDate: this.$beginDate,
 				endDate: this.$endDate,
-				state: $state
+				state: this.$state
 			}));
 		},
 	});

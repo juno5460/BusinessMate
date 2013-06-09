@@ -47,9 +47,6 @@
 		
       
     </style>
-<link rel="stylesheet" type="text/css" href="./css/bootstrap-datetimepicker.min.css" />
-<script src="./js/bootstrap-datetimepicker.min.js"></script>
-<script src="./js/bootstrap-dropdown.js"></script>
 
 <div class="contract">
 	<table>
@@ -82,24 +79,24 @@
 
 		<div class="input-prepend">
 			<span class="add-on">合同编号</span>
-			<input class="span3" id="contractId prependedInput" type="text"></div>
+			<input class="span3" id="contractId prependedInput" type="text" value="<%- id %>"></div>
 		<br>
 		<div class="input-prepend">
 			<span class="add-on">合同名称</span>
-			<input class="span3" id="contractName prependedInput" type="text"></div>
+			<input class="span3" id="contractName prependedInput" type="text" value="<%- businessName %>"></div>
 
 		<br>
 
 		<div id="beginPicker" class="input-append input-prepend">
 			<span class="add-on">开始时间</span>
-			<input data-format="yyyy-MM-dd" type="text" class="span3" id="beginDate" />
+			<input data-format="yyyy-MM-dd" type="text" class="span3" id="beginDate" value="<%- beginDate %>"/>
 			<span class="add-on"> <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
 			</span>
 		</div>
 
 		<div id="endPicker" class="input-append input-prepend">
 			<span class="add-on">结束时间</span>
-			<input data-format="yyyy-MM-dd" type="text" class="span3" id="endDate"/>
+			<input data-format="yyyy-MM-dd" type="text" class="span3" id="endDate" value="<%- endDate %>"/>
 			<span class="add-on"> <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
 			</span>
 		</div>
@@ -118,7 +115,7 @@
 		<br>
 		<div class="input-prepend">
 			<span class="add-on">&nbsp;&nbsp;状&nbsp;&nbsp;&nbsp;态&nbsp;&nbsp;</span>
-			<input class="span3" id="contractState prependedInput" type="text"></div>
+			<input class="span3" id="contractState prependedInput" type="text" value="<%- state %>"></div>
 
 	</div>
 </div>

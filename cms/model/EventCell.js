@@ -3,10 +3,12 @@ define([
 	'backbone'
 ], function( _, Backbone ) {
 
-	var TodoModel = Backbone.Model.extend({
+	var EventModel = Backbone.Model.extend({
 		// Default attributes for the todo
 		// and ensure that each todo created has `title` and `completed` keys.
 		defaults: {
+			id:'',
+			type:'',
 			title: '',
 			date: '',
 			price:'',
@@ -16,5 +18,5 @@ define([
 
 	});
 
-	return TodoModel;
+	return EventModel;
 });
