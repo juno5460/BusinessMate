@@ -8,8 +8,8 @@ var db = mongoose.connection;
 var contractSchema = mongoose.Schema({
 	id: String,
 	businessName: String,
-	beginDate:String,
-	endDate:String,
+	beginDate: String,
+	endDate: String,
 	events: Array,
 	state: String
 });
@@ -65,19 +65,40 @@ exports.removeData = function(callback) {
 ////////////////////////////////////////////////////////////////////////
 /////展示全部合同重要信息
 exports.checkInfo = function(callback) {
-	Contract.find({},{id:1,businessName:1,beginDate:1,endDate:1,state:1},function(err, docs) {
+	Contract.find({}, {
+		id: 1,
+		businessName: 1,
+		beginDate: 1,
+		endDate: 1,
+		state: 1
+	}, function(err, docs) {
 		callback(docs);
 		db.close();
 	});
 };
 /////根据指定id展示合同详细信息
-exports.checkIdData = function(id,callback) {
-	Contract.find(id,function(err, docs) {
+exports.checkIdData = function(id, callback) {
+	Contract.find(id, function(err, docs) {
 		callback(docs);
 		db.close();
 	});
 };
 ////修改事件完成标志位,随同会改变状态
-exports.updateSymble = function() {
-
+exports.updateSymble = function(id, eventId, callback) {
+	Contract.update({
+		id: "CA123",
+		"events.name": eventId
+	}, {
+		"$set": {
+			"events.$.completed": true,
+			state: eventId
+		}
+	}, function() {
+		Contract.find({
+			id: 'CA123'
+		}, function(err, docs) {
+			callback(docs);
+			db.close();
+		});
+	});
 };

@@ -25,6 +25,10 @@ exports.index = function(req, res) {
   /**************连接数据库操作********/
   userModel.connectDb();
 //  userModel.insertData(contractData2);
+userModel.updateSymble('CA123','二期收款',function(data){
+    res.send(data);
+  });
+/***********************************
  userModel.checkInfo(function(data){
     res.send(data);
   });
