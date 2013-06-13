@@ -13,8 +13,8 @@ module.exports = function function_name(app, config) {
 	app.use(express.cookieParser('your secret here'));
 	app.use(express.session());
 	app.use(app.router);
-	app.use(require('stylus').middleware(config.root + '/public'));
-	app.use(express.static(config.root + '/public'));
+	app.use(require('stylus').middleware(config.root + '/cms'));
+	app.use(express.static(config.root + '/cms'));
 
 
 	app.set('showStackError', true);
