@@ -7,10 +7,6 @@
   },
   "dependencies": {
     "express": "3.2.5",
-    "express-resource": "1.0.0",
-    "connect-mongo": ">= 0.1.7",
-    "mongodb": "*",
-    "mongoose": "3.6.11",
     "ejs": "*"
   }
 }
