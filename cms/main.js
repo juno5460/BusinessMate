@@ -12,7 +12,8 @@ require.config({
 		'template': 'template',
 		'collections': 'collections',
 		'model': 'model',
-		'js':'js'
+		'js': 'js',
+		'config': 'config'
 	},
 	shim: {
 		backbone: {
@@ -21,10 +22,13 @@ require.config({
 	}
 });
 
-require(['jquery', 'underscore', 'backbone', 'router/mainRouter'], 
-	function($, _, Backbone,MainRouter) {
+require(['jquery', 'underscore', 'backbone', 'router/mainRouter', 'config/config'], function($, _, Backbone, MainRouter, Config) {
 
-	$.ajaxSetup({cache:false});
+	console.info(Config.server);
+	
+	$.ajaxSetup({
+		cache: false
+	});
 
 	var $containerView = $("#container");
 
@@ -33,7 +37,9 @@ require(['jquery', 'underscore', 'backbone', 'router/mainRouter'],
 	var rootPath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/'));
 	console.log('start watch history, rootPath: ' + rootPath);
 
-	new MainRouter({containerView:$containerView});
+	new MainRouter({
+		containerView: $containerView
+	});
 
 	Backbone.history.start({
 		pushState: false,

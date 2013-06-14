@@ -10,8 +10,8 @@ define([
 		'model/EventCell',
 		'model/Contract',
 		'js/bootstrap-datetimepicker.min',
-		'js/bootstrap-dropdown'
-], function(Backbone, $, _, json, EventView, EventCell, ContractViewAddAndEditHtml, ContractListView, EventModel, ContractModel) {
+		'js/bootstrap-dropdown', 'config/config'
+], function(Backbone, $, _, json, EventView, EventCell, ContractViewAddAndEditHtml, ContractListView, EventModel, ContractModel, datetimepicker, dropdown, Config) {
 
 	var ContactViewAdd = Backbone.View.extend({
 
@@ -25,7 +25,7 @@ define([
 		initialize: function(options) {
 
 
-			this.$contractURL = "http://10.108.1.67:3000/contracts";
+			this.$contractURL = Config.server + "/contracts";
 
 			this.$containerView = $("#container");
 			this.eventsGroup = new Array();
@@ -40,7 +40,7 @@ define([
 					var c = data[0];
 					console.info(c.events.length);
 
-					if(c == null)
+					if (c == null)
 						return;
 
 					tmpModel.set({
@@ -77,27 +77,27 @@ define([
 
 
 			var events = this.model.get('events');
-			if(events != null){
+			if (events != null) {
 
 				this.eventsGroup = new Array();
 
 				for (var i = 0; i < events.length; i++) {
-						var view = new EventView({
-							model: new EventModel({
-								type: events[i].price ? 2 : 1,
-								id: events[i].id,
-								title: events[i].title,
-								price: events[i].price,
-								remark: events[i].remark,
-								date: events[i].date
-							})
-						});
-						this.listenTo(view, 'delete', this.removeEventCell);
-						this.eventsGroup.push(view);
-						this.$eventList.append(view.el);
-					}
+					var view = new EventView({
+						model: new EventModel({
+							type: events[i].price ? 2 : 1,
+							id: events[i].id,
+							title: events[i].title,
+							price: events[i].price,
+							remark: events[i].remark,
+							date: events[i].date
+						})
+					});
+					this.listenTo(view, 'delete', this.removeEventCell);
+					this.eventsGroup.push(view);
+					this.$eventList.append(view.el);
+				}
 			}
-		
+
 			return this;
 
 		},
@@ -126,7 +126,7 @@ define([
 			if (this.$mode == 'edit') {
 				$.ajax({
 					type: "PUT",
-					url: "http://10.108.1.67:3000/contracts/" + $postBody.cid,
+					url: Config.server + "/contracts/" + $postBody.cid,
 					data: $postBody
 				});
 			} else {
@@ -135,56 +135,56 @@ define([
 
 			//Backbone.Router.navigate('contracts', {trigger: true});
 		},
-			removeEventCell: function(id) {
-				this.eventsGroup = _.reject(this.eventsGroup, function(view) {
-					return view.model.id == id;
-				});
-				console.info(this.eventsGroup);
-			},
-			onDropDownCusomEventClick: function() {
-				var view = new EventView({
-					model: new EventModel({
-						type: 1,
-						id: this.eventsGroup.length
-					})
-				});
-				this.listenTo(view, 'delete', this.removeEventCell);
-				this.eventsGroup.push(view);
-				this.$eventList.append(view.el);
-			},
-			onDropDownPriceEventClick: function() {
-				var view = new EventView({
-					model: new EventModel({
-						type: 2,
-						id: this.eventsGroup.length
-					})
-				});
-				this.listenTo(view, 'delete', this.removeEventCell);
-				this.eventsGroup.push(view);
-				this.$eventList.append(view.el);
-			},
-			onModelChange: function() {
-				this.render();
-			},
-			onBackBtnClick: function() {
-				//Backbone.Router.navigate('contracts', {trigger: true});
-			},
-			encryption: function() {
+		removeEventCell: function(id) {
+			this.eventsGroup = _.reject(this.eventsGroup, function(view) {
+				return view.model.id == id;
+			});
+			console.info(this.eventsGroup);
+		},
+		onDropDownCusomEventClick: function() {
+			var view = new EventView({
+				model: new EventModel({
+					type: 1,
+					id: this.eventsGroup.length
+				})
+			});
+			this.listenTo(view, 'delete', this.removeEventCell);
+			this.eventsGroup.push(view);
+			this.$eventList.append(view.el);
+		},
+		onDropDownPriceEventClick: function() {
+			var view = new EventView({
+				model: new EventModel({
+					type: 2,
+					id: this.eventsGroup.length
+				})
+			});
+			this.listenTo(view, 'delete', this.removeEventCell);
+			this.eventsGroup.push(view);
+			this.$eventList.append(view.el);
+		},
+		onModelChange: function() {
+			this.render();
+		},
+		onBackBtnClick: function() {
+			//Backbone.Router.navigate('contracts', {trigger: true});
+		},
+		encryption: function() {
 
-				//生成唯一ID号
-				var date = new Date();
-				var times1970 = date.getTime();
-				var times = date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
-				var encrypt = times * times1970;
-				if (arguments.length == 1) {
-					return arguments[0] + encrypt;
-				} else {
-					return encrypt;
-				}
+			//生成唯一ID号
+			var date = new Date();
+			var times1970 = date.getTime();
+			var times = date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
+			var encrypt = times * times1970;
+			if (arguments.length == 1) {
+				return arguments[0] + encrypt;
+			} else {
+				return encrypt;
 			}
+		}
 
-		});
+	});
 
 	return ContactViewAdd;
 
-	});
+});
