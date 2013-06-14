@@ -6,6 +6,6 @@ module.exports = {
 	db: 'mongodb://localhost/contractDB',
 	root: rootPath,
 	app: {
-		name: 'Nodejs Express Mongoose Demo'
+		name: 'BusinessMate'
 	}
 };
