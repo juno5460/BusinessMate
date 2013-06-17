@@ -26,8 +26,12 @@ module.exports = function function_name(app, config) {
 		level: 9
 	}));
 
-	// development only
+	// development enviroment
 	if ('development' == app.get('env')) {
+		app.use(express.errorHandler());
+	}
+	// production enviroment
+	if ('production' == app.get('env')) {
 		app.use(express.errorHandler());
 	}
 

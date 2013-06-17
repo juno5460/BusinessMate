@@ -69,6 +69,24 @@ ContractSchema.methods = {
 				callback(docs);
 			});
 		});
+	},
+	updateSymble: function(id, eventId, callback) {
+		Contract = this.model('Contract');
+		Contract.update({
+			id: "CA123",
+			"events.name": "第一事件"
+		}, {
+			"$set": {
+				"events.$.completed": true,
+				state: eventId
+			}
+		}, function() {
+			Contract.find({
+				id: 'CA123'
+			}, function(err, docs) {
+				callback(docs);
+			});
+		});
 	}
 };
 

@@ -9,7 +9,10 @@ var express = require('express'),
 var app = express();
 
 //引入配置文件
-var config = require('./config/config');
+var env = process.env.NODE_ENV || 'development',
+	config = require('./config/config')[env];
+
+//var config = require('./config/config');
 
 //启动数据库连接
 mongoose.connect(config.db);
