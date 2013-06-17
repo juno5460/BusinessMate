@@ -5,8 +5,8 @@ define([
 		"json2",
 		"view/ContractViewAdd",
 		"text!template/ContractListView.html",
-		"view/ContractListCell"
-], function(Backbone, $, _, JSON, ContractViewAdd, ContractListViewHtml, ContractListCell) {
+		"view/ContractListCell", 'config/config'
+], function(Backbone, $, _, JSON, ContractViewAdd, ContractListViewHtml, ContractListCell, Config) {
 
 	var ContractListView = Backbone.View.extend({
 
@@ -42,7 +42,7 @@ define([
 			var $contractListTable = this.$el.find("#contractListTable tbody");
 
 
-			$.get("http://10.108.1.67:3000/contracts", function(data, status) {
+			$.get(Config.server + "/contracts", function(data, status) {
 
 				console.info("成功加载数据");
 

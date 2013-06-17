@@ -3,6 +3,7 @@ var path = require('path'),
 
 // 项目配置
 module.exports = {
+<<<<<<< HEAD
 	development: {
 		db: 'mongodb://localhost/contractDB',
 		root: rootPath,
@@ -16,5 +17,11 @@ module.exports = {
 		app: {
 			name: 'Nodejs Express Mongoose Demo'
 		}
+=======
+	db: 'mongodb://localhost/contractDB',
+	root: rootPath,
+	app: {
+		name: 'BusinessMate'
+>>>>>>> dec4c64354ee52e0921a28b3847a599d2dc85904
 	}
 };

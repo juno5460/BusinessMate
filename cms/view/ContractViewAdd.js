@@ -10,8 +10,8 @@ define([
 		'model/EventCell',
 		'model/Contract',
 		'js/bootstrap-datetimepicker.min',
-		'js/bootstrap-dropdown'
-], function(Backbone, $, _, json, EventView, EventCell, ContractViewAddAndEditHtml, ContractListView, EventModel, ContractModel) {
+		'js/bootstrap-dropdown', 'config/config'
+], function(Backbone, $, _, json, EventView, EventCell, ContractViewAddAndEditHtml, ContractListView, EventModel, ContractModel, datetimepicker, dropdown, Config) {
 
 	var ContactViewAdd = Backbone.View.extend({
 
@@ -25,7 +25,7 @@ define([
 		initialize: function(options) {
 
 
-			this.$contractURL = "http://10.108.1.67:3000/contracts";
+			this.$contractURL = Config.server + "/contracts";
 
 			this.$containerView = $("#container");
 			this.eventsGroup = new Array();
@@ -125,7 +125,7 @@ define([
 			if (this.$mode == 'edit') {
 				$.ajax({
 					type: "PUT",
-					url: "http://10.108.1.67:3000/contracts/" + $postBody.cid,
+					url: Config.server + "/contracts/" + $postBody.cid,
 					data: $postBody
 				});
 			} else {
