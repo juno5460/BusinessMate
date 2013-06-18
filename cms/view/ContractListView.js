@@ -43,7 +43,7 @@ define([
 			var $contractListTable = this.$el.find("#contractListTable tbody");
 
 
-			$.get(Config.ServerIp + "/" + Config.Contracts, function(data, status) {
+			$.get(Config.Server("contracts"), function(data, status) {
 
 				console.info("成功加载数据");
 

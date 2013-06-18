@@ -54,11 +54,12 @@ define(["backbone",
 		toJson:function(){
 
 			return {
-			'id':this.model.id,
-			'title':this.$el.find("input[id^='eventName']").val(),
-			'date': this.$el.find("#completedTime").val(),
-			'remark' : this.$el.find("#remark").val(),
-			'price' : this.$el.find("#appendedPrependedInput").val()
+			'id'			: this.model.get("id"),
+			'title'			: this.$el.find("input[id^='eventName']").val(),
+			'date'			: this.$el.find("#completedTime").val(),
+			'remark'		: this.$el.find("#remark").val(),
+			'price'			: this.$el.find("#appendedPrependedInput").val() == null ? -1 : this.$el.find("#appendedPrependedInput").val(),
+			'completed'		: this.model.get("completed")
 				};
 		}
 

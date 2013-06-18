@@ -46,21 +46,21 @@ define([
 			this.$mode = options.mode;
 			//判断是否是修改模式，如果是的话则从服务器获取数据，否则创建一个空白的模型。
 			if (this.$mode == 'edit') {
-				$.get(Config.Server( "/contracts/" + options.cid), function(data, status) {
+				$.get(Config.Server( "contracts/" + options.cid), function(data, status) {
 					var c = data[0];
-					console.info(c.events.length);
+					console.info(c);
 
 					if (c == null)
 						return;
 
 					tmpModel.set({
-						id: c.id,
-						cid: options.cid,
-						businessName: c.businessName,
-						beginDate: c.beginDate,
-						endDate: c.endDate,
-						state: c.state,
-						events: c.events
+						id 				: c.id,
+						cid 			: options.cid,
+						businessName 	: c.businessName,
+						beginDate 		: c.beginDate,
+						endDate 		: c.endDate,
+						state 			: c.state,
+						events 			: c.events
 					});
 				});
 			} else {
@@ -93,12 +93,13 @@ define([
 				for (var i = 0; i < events.length; i++) {
 					var view = new EventView({
 						model: new EventModel({
-							type	: events[i].price ? 2 : 1,
+							type	: events[i].price != -1 ? 2 : 1,
 							id 		: events[i].id,
 							title 	: events[i].title,
 							price 	: events[i].price,
 							remark 	: events[i].remark,
-							date 	: events[i].date
+							date 	: events[i].date,
+							completed: events[i].completed
 						})
 					});
 					this.listenTo(view, 'delete', this.removeEventCell);
@@ -139,12 +140,12 @@ define([
 				//如果是编辑模式，则用PUT方式提交数据，用作更新。
 				$.ajax({
 					type: "PUT",
-					url: Config.Server( "/contracts/"  + $postBody.cid),
+					url: Config.Server( "contracts/"  + $postBody.cid),
 					data: $postBody
 				});
 			} else {
 				//如果不是编辑模式，则用POST方法提交数据。
-				$.post(Config.ServerIp + "/" + Config.Contracts, $postBody);
+				$.post(Config.Server("contracts"), $postBody);
 			}
 
 			//Backbone.Router.navigate('contracts', {trigger: true});
