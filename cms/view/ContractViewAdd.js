@@ -42,11 +42,12 @@ define([
 
 			this.listenTo(this.model, 'change', this.onModelChange);
 
-			var tmpModel = this.model;
-			this.$mode = options.mode;
+			var tmpModel 	= this.model;
+			this.$mode 		= options.mode;
+
 			//判断是否是修改模式，如果是的话则从服务器获取数据，否则创建一个空白的模型。
 			if (this.$mode == 'edit') {
-				$.get(Config.Server( "contracts/" + options.cid), function(data, status) {
+				$.get(Config.Server( "contracts/" + options.id), function(data, status) {
 					var c = data[0];
 					console.info(c);
 
@@ -54,8 +55,8 @@ define([
 						return;
 
 					tmpModel.set({
-						id 				: c.id,
-						cid 			: options.cid,
+						_id				: c._id,
+						myId 			: c.myId,
 						businessName 	: c.businessName,
 						beginDate 		: c.beginDate,
 						endDate 		: c.endDate,
@@ -125,42 +126,28 @@ define([
 				events.push(view.toJson());
 			});
 
-			//构建请求体
-			$postBody 		= {};
-			$postBody.cid 	= this.model.get('cid') == '' ? this.encryption() : this.model.get('cid');
-			$postBody.id 	= $contractId;
-			$postBody.businessName 	= $contractName;
-			$postBody.state 		= $contractState;
-			$postBody.beginDate 	= $beginDate;
-			$postBody.endDate 		= $endDate;
-			$postBody.completed 	= false;
-			$postBody.events 		= events.length == 0 ? [] : events;
+			this.model.set('_id','111111000000');
+			this.model.set('myId',$contractId);
+			this.model.set('businessName',$contractName);
+			this.model.set('state',$contractState);
+			this.model.set('beginDate',$beginDate);
+			this.model.set('endDate',$endDate);
+			this.model.set('events',events.length == 0 ? [] : events);
 
-			if (this.$mode == 'edit') {
-				//如果是编辑模式，则用PUT方式提交数据，用作更新。
-				$.ajax({
-					type: "PUT",
-					url: Config.Server( "contracts/"  + $postBody.cid),
-					data: $postBody
-				});
-			} else {
-				//如果不是编辑模式，则用POST方法提交数据。
-				$.post(Config.Server("contracts"), $postBody);
-			}
-
+			this.model.save();
+			console.info("debugger");
 			//Backbone.Router.navigate('contracts', {trigger: true});
 		},
 		removeEventCell: function(id) {
 			this.eventsGroup = _.reject(this.eventsGroup, function(view) {
 				return view.model.id == id;
 			});
-			console.info(this.eventsGroup);
 		},
 		onDropDownCusomEventClick: function() {
 			var view = new EventView({
 				model: new EventModel({
 					type: 1,
-					id: this.eventsGroup.length
+					id: this.encryption(),
 				})
 			});
 			this.listenTo(view, 'delete', this.removeEventCell);
@@ -170,8 +157,8 @@ define([
 		onDropDownPriceEventClick: function() {
 			var view = new EventView({
 				model: new EventModel({
-					type: 2,
-					id: this.eventsGroup.length
+					type	: 2,
+					id 		: this.encryption(),
 				})
 			});
 			this.listenTo(view, 'delete', this.removeEventCell);

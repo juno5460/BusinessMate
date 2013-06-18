@@ -3,11 +3,12 @@ define([
 		"jquery",
 		"underscore",
 		"json2",
+		'config/config',
 		"view/ContractViewAdd",
 		"text!template/ContractListView.html",
 		"view/ContractListCell",
-		'config/config'
-], function(Backbone, $, _, JSON, ContractViewAdd, ContractListViewHtml, ContractListCell,Config) {
+		"model/Contract"
+], function(Backbone, $, _, JSON, Config,ContractViewAdd, ContractListViewHtml, ContractListCell, ContractModel) {
 
 	var ContractListView = Backbone.View.extend({
 
@@ -32,8 +33,8 @@ define([
 		},
 
 		events: {
-			'click #addContractBtn': 'onAddContractBtnClick',
-			'click #searchBtn': 'onSearchBtnClick',
+			'click #addContractBtn'			: 'onAddContractBtnClick',
+			'click #searchBtn'				: 'onSearchBtnClick',
 		},
 
 
@@ -49,14 +50,17 @@ define([
 
 				_.each(data, function(contract) {
 
-					$contractListTable.append(new ContractListCell({
-						id: contract.id,
-						cid: contract.cid,
-						name: contract.businessName,
-						beginDate: contract.beginDate,
-						endDate: contract.endDate,
-						state: contract.state
-					}).el);
+					$contractListTable.append(
+						new ContractListCell({
+							model : new ContractModel({
+							_id 		: contract._id,
+							myId  		: contract.myId,
+							name 		: contract.businessName,
+							beginDate 	: contract.beginDate,
+							endDate 	: contract.endDate,
+							state 		: contract.state}),
+							}	
+						).el);
 
 				});
 			});

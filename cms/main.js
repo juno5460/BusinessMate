@@ -24,10 +24,6 @@ require.config({
 
 require(['jquery', 'underscore', 'backbone', 'router/mainRouter', "config/config"], function($, _, Backbone, MainRouter, Config) {
 
-	$.ajaxSetup({
-		cache: false
-	});
-
 	var $containerView = $("#container");
 
 	var rootPath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/'));

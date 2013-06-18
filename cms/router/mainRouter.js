@@ -29,7 +29,7 @@ define(['view/ContractListView', 'view/ContractViewAdd'],function(ContractListVi
 			this.switchView(new ContractViewAdd({mode:'add'}));
 		},
 		editContract:function(id){
-			this.switchView(new ContractViewAdd({mode:'edit',cid:id}));
+			this.switchView(new ContractViewAdd({mode:'edit',id:id}));
 		},
 		switchView:function(view){
 

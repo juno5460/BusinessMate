@@ -2,8 +2,8 @@ define([
 		"backbone",
 		"jquery",
 		"underscore",
-		"text!template/ContractListCell.html"],
-		function(Backbone, $, _, ContractListCellHtml) {
+		"text!template/ContractListCell.html"
+], function(Backbone, $, _, ContractListCellHtml) {
 
 	var ContractListCell = Backbone.View.extend({
 
@@ -11,24 +11,21 @@ define([
 
 		template: _.template(ContractListCellHtml),
 
-		initialize: function(options) {
-			this.$id 		= options.id;
-			this.$cid		= options.cid;
-			this.$name 		= options.name;
-			this.$beginDate = options.beginDate;
-			this.$endDate 	= options.endDate;
-			this.$state 	= options.state;
+		model: null,
+
+		initialize: function() {
 			this.render();
 		},
 
 		render: function() {
-			this.$el.html(this.template({
-				id: 		this.$id,
-				cid: 		this.$cid,
-				name: 		this.$name,
-				beginDate: 	this.$beginDate,
-				endDate: 	this.$endDate,
-				state: 		this.$state
+			this.$el.html(
+				this.template({
+				_id 		: this.model.get("_id"),
+				myId  		: this.model.get("myId"),
+				name 		: this.model.get("name"),
+				beginDate 	: this.model.get("beginDate"),
+				endDate 	: this.model.get("endDate"),
+				state 		: this.model.get("state"),
 			}));
 		},
 	});
