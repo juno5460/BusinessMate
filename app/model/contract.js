@@ -6,15 +6,24 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	Repository = require('./repository');
 
+//事件子模型
+var EventsSchema = new Schema({
+	id:String,
+	title:String,
+	remark:String,
+	price:Number,
+	date:String,
+	completed:Boolean
+});
 
-
+//合同模型
 var ContractSchema = mongoose.Schema({ //创建合同模型对象
 	cid: String, //合同的存储id
 	id: String, //合同编号
 	businessName: String, //合同名称
 	beginDate: String, //开始日期
 	endDate: String, //结束日期
-	events: Array, //合同事件
+	events: [EventsSchema], //合同事件
 	state: String //合同状态
 });
 
