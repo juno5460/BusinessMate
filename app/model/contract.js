@@ -23,6 +23,7 @@ ContractSchema.methods = {
 	test: function() {
 		console.info("=======test");
 	},
+	//展示所有合同重要信息
 	checkInfo: function(callback) {
 		this.model('Contract').find({}, {
 			cid: 1,
@@ -35,17 +36,20 @@ ContractSchema.methods = {
 			callback(docs);
 		});
 	},
+	//根据id展示指定合同详细信息
 	checkIdData: function(id, callback) {
 		this.model('Contract').find(id, function(err, docs) {
 			console.log("====show===");
 			callback(docs);
 		});
 	},
+	//新建合同插入数据库
 	insertData: function(rdata) {
 		Contract = this.model('Contract');
 		var contract = new Contract(rdata);
 		contract.save();
 	},
+	//根据id修改指定合同
 	updateIdData: function(id, result, callback) {
 		Contract = this.model('Contract');
 		Contract.update({
@@ -58,6 +62,7 @@ ContractSchema.methods = {
 			});
 		});
 	},
+	//根据id删除指定合同
 	removeData: function(id, callback) {
 		Contract = this.model('Contract');
 		Contract.remove({
@@ -70,11 +75,12 @@ ContractSchema.methods = {
 			});
 		});
 	},
+	//修改合同事件完成标志,并同时更新合同状态
 	updateSymble: function(id, eventId, callback) {
 		Contract = this.model('Contract');
 		Contract.update({
-			id: "CA123",
-			"events.name": "第一事件"
+			cid: id,
+			"events.name": eventId
 		}, {
 			"$set": {
 				"events.$.completed": true,
@@ -82,7 +88,7 @@ ContractSchema.methods = {
 			}
 		}, function() {
 			Contract.find({
-				id: 'CA123'
+				cid: id
 			}, function(err, docs) {
 				callback(docs);
 			});

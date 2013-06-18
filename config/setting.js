@@ -26,11 +26,11 @@ module.exports = function function_name(app, config) {
 		level: 9
 	}));
 
-	// development enviroment
+	// development enviroment//启动 NODE_ENV=development node app.js
 	if ('development' == app.get('env')) {
 		app.use(express.errorHandler());
 	}
-	// production enviroment
+	// production enviroment//启动 NODE_ENV=production node app.js
 	if ('production' == app.get('env')) {
 		app.use(express.errorHandler());
 	}
