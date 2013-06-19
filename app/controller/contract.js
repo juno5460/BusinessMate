@@ -10,7 +10,11 @@ exports.index = function(req, res) {
 		res.send(data);
 	});
 	/******/
+
 };
+
+
+
 exports.show = function(req, res) {
 	var contract = new Contract();
 	console.log("啊啊啊啊啊啊啊啊" + req.params['contract']);
@@ -20,16 +24,23 @@ exports.show = function(req, res) {
 	};
 	console.log(getId);
 	contract.checkIdData(getId, function(data) {
-		res.send(data);
+		res.send(data[0]);
 	});
 };
+
+
+
 exports.create = function(req, res) {
 	var contract = new Contract();
-	console.log("create");
+	//	console.log("create");
 	var rdata = req.body;
 	console.log(rdata);
+	console.log("start====");
 	contract.insertData(rdata);
 };
+
+
+
 exports.update = function(req, res) {
 	var contract = new Contract();
 	console.log("update");
@@ -37,26 +48,50 @@ exports.update = function(req, res) {
 		_id: req.params['contract']
 	};
 	var get = req.body;
-	var getNew = {
+	/*	var getNew = { //重新构造对象是为了让可编辑字段去掉主键:_id
 		myId: get.myId,
+		partyA: get.partyA,
+		partyB: get.partyB,
+		amount: get.amount,
+		signDate: get.sigDate,
+		name: get.name,
 		beginDate: get.beginDate,
 		endDate: get.endDate,
-		businessName: get.businessName,
+		state: get.state,
 		events: get.events
+	};*/
+	var getNew = {
+		"myId": get.myId,
+		partyA: get.partyA,
+		partyB: get.partyB,
+		"name": get.name,
+		"beginDate": get.beginDate,
+		"endDate": get.endDate,
+		"state": get.state,
+		"events": get.events
 	};
 	if (getNew.events == null) {
 		getNew.events = [];
 	}
 	console.log(getId);
-	console.log(getNew);
+	console.log(get);
 	contract.updateIdData(getId, getNew, function(data) {
 		res.send(data);
 	});
 };
+
+
+
 exports.destroy = function(req, res) {
 	var contract = new Contract();
+	console.log("destroy");
 	var getId = "17979181781105635000";
+	/*
 	contract.removeData(getId, function(data) {
+		res.send(data);
+	});
+*/
+	contract.removeAllData(function(data) {
 		res.send(data);
 	});
 };

@@ -19,7 +19,11 @@ var EventsSchema = new Schema({
 //合同模型
 var ContractSchema = mongoose.Schema({ //创建合同模型对象
 	myId: String, //合同编号
-	businessName: String, //合同名称
+	partyA: String, //签署甲方
+	partyB: String, //签署乙方
+	amount: Number, //金额
+	signDate: String, //签署日期
+	name: String, //合同名称
 	beginDate: String, //开始日期
 	endDate: String, //结束日期
 	events: [EventsSchema], //合同事件
@@ -37,7 +41,7 @@ ContractSchema.methods = {
 			_id: 1,
 			myId: 1,
 			id: 1,
-			businessName: 1,
+			name: 1,
 			beginDate: 1,
 			endDate: 1,
 			state: 1
@@ -45,21 +49,65 @@ ContractSchema.methods = {
 			callback(docs);
 		});
 	},
+	//展示所有合同模版重要信息
+	checkTemplateInfo: function(callback) {
+		this.model('Template').find({}, {
+			_id: 1,
+			name: 1
+		}, function(err, docs) {
+			callback(docs);
+		});
+	},
 	//根据id展示指定合同详细信息
+	/*
+	 * id:合同id
+	 * callback:回调返回数据
+	 */
 	checkIdData: function(id, callback) {
 		this.model('Contract').find(id, function(err, docs) {
 			console.log("====show===");
-						console.log(docs);
+			console.log(docs);
+			callback(docs);
+		});
+	},
+	//根据id展示指定合同详细信息
+	/*
+	 * id:合同模版id
+	 * callback:回调返回数据
+	 */
+	checkIdTemplate: function(id, callback) {
+		this.model('Template').find(id, function(err, docs) {
+			console.log("====show===");
+			console.log(docs);
 			callback(docs);
 		});
 	},
 	//新建合同插入数据库
+	/*
+	 * rdata:要保存的合同对象
+	 */
 	insertData: function(rdata) {
 		Contract = this.model('Contract');
+		console.log("insert");
 		var contract = new Contract(rdata);
 		contract.save();
 	},
+	//新建合同模版插入模版数据库
+	/*
+	 * rdata:要保存的合同对象
+	 */
+	insertTemplate: function(rdata) {
+		Template = this.model('Template');
+		console.log("insert");
+		var template = new Template(rdata);
+		template.save();
+	},
 	//根据id修改指定合同
+	/*
+	 * id:合同id
+	 * result:传递要修改的字段JSON对象
+	 * callback:回调返回数据
+	 */
 	updateIdData: function(id, result, callback) {
 		Contract = this.model('Contract');
 		console.log(id);
@@ -69,7 +117,26 @@ ContractSchema.methods = {
 			});
 		});
 	},
+	//根据id修改指定合同模版
+	/*
+	 * id:合同模版id
+	 * result:传递要修改的字段JSON对象
+	 * callback:回调返回数据
+	 */
+	updateIdTemplate: function(id, result, callback) {
+		Template = this.model('Template');
+		console.log(id);
+		Template.update(id, result, function() {
+			Template.find(id, function(err, docs) {
+				callback(docs);
+			});
+		});
+	},
 	//根据id删除指定合同
+	/*
+	 * id:合同id
+	 * callback:回调返回数据
+	 */
 	removeData: function(id, callback) {
 		Contract = this.model('Contract');
 		Contract.remove({
@@ -78,6 +145,15 @@ ContractSchema.methods = {
 			Contract.find({
 				_id: id
 			}, function(err, docs) {
+				callback(docs);
+			});
+		});
+	},
+	//清空数据库接口
+	removeAllData: function(callback) {
+		Contract = this.model('Contract');
+		Contract.remove({}, function() {
+			Contract.find({}, function(err, docs) {
 				callback(docs);
 			});
 		});
@@ -126,10 +202,11 @@ ContractSchema.methods = {
 			});
 			callback(count);
 		});
-	},
+	}
 };
 
 
 Repository.enhanceSchema(ContractSchema);
 
-mongoose.model('Contract', ContractSchema); //创建新合同对象,并关联到模型
+mongoose.model('Contract', ContractSchema); //创建新合同对象,数据库中对应contracs容器
+mongoose.model('Template', ContractSchema); //创建合同模版对象,对应templates容器
