@@ -36,46 +36,10 @@
 </head>
 
 <body>
-<div class="input-append date" id="dp3" data-date="2013-01-01" data-format="yyyy-MM-dd">
-				<input class="span2" size="16" type="text" value="" readonly="">
-				<span class="add-on"><i class="icon-calendar"></i></span>
-</div>
-
-
-
-		<div id="beginPicker" class="input-append input-prepend date" data-date="" data-date-format="yyyy-mm-dd">
-			<span class="add-on">开始时间</span>
-			<input type="text" class="span3" id="beginDate" value="" readonly="">
-			<span class="add-on"> <i class="icon-calendar"></i>
-			</span>
-		</div>
-
-		<div id="endPicker" class="input-append input-prepend date" data-date="" data-date-format="yyyy-mm-dd">
-			<span class="add-on">结束时间</span>
-			<input type="text" class="span3" id="endDate" value="" readonly="">
-			<span class="add-on"> <i class="icon-calendar"></i>
-			</span>
-		</div>
-
-
-
-<script>
-		$(function(){
-	
-			$('#dp3').datepicker();
-			$('#dp3').datepicker().on('changeDate',function(env){
-					$('#dp3').datepicker('hide');
-			});
-			$('#beginPicker').datepicker();
-			$('#beginPicker').datepicker().on('changeDate',function(env){
-					$('#beginPicker').datepicker('hide');
-			});
-			$('#endPicker').datepicker();
-			$('#endPicker').datepicker().on('changeDate',function(env){
-					$('#endPicker').datepicker('hide');
-			});
-});
-
+	<script type="text/javascript">
+		var $test = {id:123,name:"cwlay"};
+		$test.id = null;
+		console.info($test);
 	</script>
 
 </body>

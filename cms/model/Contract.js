@@ -8,10 +8,9 @@ define([
 
 		urlRoot:Config.Server("contracts"),
 
-		//idAttribute: "_id",
+		idAttribute: "_id",
 
 		defaults: {
-			_id				:null,
 			myId 			:null,
 			businessName	:null,
 			beginDate 		:null,

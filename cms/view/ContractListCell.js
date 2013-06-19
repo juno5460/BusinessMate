@@ -20,7 +20,7 @@ define([
 		render: function() {
 			this.$el.html(
 				this.template({
-				_id 		: this.model.get("_id"),
+				_id 		: this.model.id,
 				myId  		: this.model.get("myId"),
 				name 		: this.model.get("name"),
 				beginDate 	: this.model.get("beginDate"),

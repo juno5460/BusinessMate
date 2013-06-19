@@ -126,7 +126,7 @@ define([
 				events.push(view.toJson());
 			});
 
-			this.model.set('_id','111111000000');
+			//this.model.set('_id','111111000000');
 			this.model.set('myId',$contractId);
 			this.model.set('businessName',$contractName);
 			this.model.set('state',$contractState);
