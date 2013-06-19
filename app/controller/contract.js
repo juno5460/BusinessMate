@@ -3,18 +3,20 @@ var async = require('async'),
 	Contract = mongoose.model('Contract');
 
 exports.index = function(req, res) {
+	/******/
 	var contract = new Contract();
 	contract.checkInfo(function(data) {
 		console.log('hello');
 		res.send(data);
 	});
+	/******/
 };
 exports.show = function(req, res) {
 	var contract = new Contract();
 	console.log("啊啊啊啊啊啊啊啊" + req.params['contract']);
 	console.log("show");
 	var getId = {
-		cid: req.params['contract']
+		_id: req.params['contract']
 	};
 	console.log(getId);
 	contract.checkIdData(getId, function(data) {
@@ -31,8 +33,17 @@ exports.create = function(req, res) {
 exports.update = function(req, res) {
 	var contract = new Contract();
 	console.log("update");
-	var getId = req.body.cid;
-	var getNew = req.body;
+	var getId = {
+		_id: req.params['contract']
+	};
+	var get = req.body;
+	var getNew = {
+		myId: get.myId,
+		beginDate: get.beginDate,
+		endDate: get.endDate,
+		businessName: get.businessName,
+		events: get.events
+	};
 	if (getNew.events == null) {
 		getNew.events = [];
 	}
