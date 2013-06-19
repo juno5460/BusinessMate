@@ -9,13 +9,7 @@
     }
 
 
-    .finished{
-    		margin:5px 0;
-			padding-left:15px;
-
-    }
-
-    .back{
+    .cmdBtn{
     	margin:5px 0;
 		padding-left:15px;
     }
@@ -90,9 +84,26 @@
 		<br>
 		<div class="input-prepend">
 			<span class="add-on">合同名称</span>
-			<input class="span3 prependedInput" id="contractName" type="text" value="<%- businessName %>"></div>
+			<input class="span3 prependedInput" id="name" type="text" value="<%- name %>"></div>
 
 		<br>
+		<div class="input-prepend">
+			<span class="add-on">&nbsp;&nbsp;甲&nbsp;&nbsp;&nbsp;方&nbsp;&nbsp;</span>
+			<input class="span3 prependedInput" id="partyA" type="text" value="<%- partyA%>"></div>
+
+		<br>
+		<div class="input-prepend">
+			<span class="add-on">&nbsp;&nbsp;乙&nbsp;&nbsp;&nbsp;方&nbsp;&nbsp;</span>
+			<input class="span3 prependedInput" id="partyB" type="text" value="<%- partyB%>""></div>
+
+		<br>
+
+		<div id="signPicker" class="input-append input-prepend date" data-date="" data-date-format="yyyy-mm-dd">
+			<span class="add-on">签订日期</span>
+			<input type="text" class="span3" id="signDate" value="<%- signDate%>"" readonly="">
+			<span class="add-on"> <i class="icon-calendar"></i>
+			</span>
+		</div>
 
 		<div id="beginPicker" class="input-append input-prepend date" data-date="" data-date-format="yyyy-mm-dd">
 			<span class="add-on">开始时间</span>
@@ -109,6 +120,10 @@
 		</div>
 
 		<script type="text/javascript">
+			$('#signPicker').datepicker();
+			$('#signPicker').datepicker().on('changeDate',function(env){
+			$('#signPicker').datepicker('hide');
+			});
 			$('#beginPicker').datepicker();
 			$('#beginPicker').datepicker().on('changeDate',function(env){
 					$('#beginPicker').datepicker('hide');
@@ -120,6 +135,13 @@
 		</script>
 
 		<br>
+
+		<div class="input-prepend">
+			<span class="add-on">&nbsp;&nbsp;金&nbsp;&nbsp;&nbsp;额&nbsp;&nbsp;</span>
+			<input class="span3 prependedInput" id="amount" type="text" value="<%- amount%>">
+		</div>
+
+		<br>
 		<div class="input-prepend">
 			<span class="add-on">&nbsp;&nbsp;状&nbsp;&nbsp;&nbsp;态&nbsp;&nbsp;</span>
 			<input class="span3 prependedInput" id="contractState" type="text" value="<%- state %>"></div>
@@ -127,7 +149,7 @@
 	</div>
 </div>
 
-<div class="bs-docs-example"  style="width: 800px;">
+<div class="bs-docs-example events-panel">
 	<div style="height: 50px;">
 		<div style="float:left;">
 			<label class="basicInfo">事件</label>
@@ -153,11 +175,14 @@
 
 	<ul class="eventsBoard" id="eventsBoard"></ul>
 
-	<div class="finished" style="float:right;">
+	<div class="cmdBtn" style="float:right;">
 		<a class="btn btn-success" id="submit" href="#/contracts">完成</a>
 	</div>
 
-	<div class="back" style="float:right;">
+	<div class="cmdBtn" style="float:right;">
 		<a class="btn" id="back" href="#/contracts">返回</a>
+	</div>
+	<div class="cmdBtn" style="float:right;">
+		<a class="btn btn-primary" id="saveAsTemplate">保存为模板</a>
 	</div>
 </div>

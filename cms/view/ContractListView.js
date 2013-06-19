@@ -55,7 +55,7 @@ define([
 							model : new ContractModel({
 							_id 		: contract._id,
 							myId  		: contract.myId,
-							name 		: contract.businessName,
+							name 		: contract.name,
 							beginDate 	: contract.beginDate,
 							endDate 	: contract.endDate,
 							state 		: contract.state}),

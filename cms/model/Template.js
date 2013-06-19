@@ -4,9 +4,9 @@ define([
 	'config/config'
 ], function( _, Backbone, Config) {
 
-	var ContractModel = Backbone.Model.extend({
+	var TemplateModel = Backbone.Model.extend({
 
-		urlRoot:Config.Server("contracts"),
+		urlRoot:Config.Server("templates"),
 
 		idAttribute: "_id",
 
@@ -26,5 +26,5 @@ define([
 
 	});
 
-	return ContractModel;
+	return TemplateModel;
 });

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Sign in · Twitter Bootstrap</title>
+	<title>CMS调试页面</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
 	<meta name="author" content="">
@@ -14,6 +14,7 @@
 	<link href="./css/cms.css" rel="stylesheet">
 	<script src="./js/jquery.js"></script>
 	<script src="./js/bootstrap-datepicker.js"></script>
+	<script src="./js/json2.js"></script>
 	  <link rel="stylesheet" type="text/css" href="./css/datepicker.css" />
 
 
@@ -36,10 +37,48 @@
 </head>
 
 <body>
+
+	<a class="btn" id="all">遍历合同表</a><br><br>
+	<a class="btn" id="allTemplate">遍历模板表</a><br><br>
+	<a class="btn" id="destroyAll">清空数据库</a>
+	<div id="outputPanel"></div>
+
 	<script type="text/javascript">
-		var $test = {id:123,name:"cwlay"};
-		$test.id = null;
-		console.info($test);
+		$("#all").click(function(){
+			$.get("http://10.108.1.67:3000/contracts",function(datas,status){
+				$("#outputPanel").html("");
+				for(var i = 0;i < datas.length;i++){
+					console.info(datas[i]);
+					$("#outputPanel").append(JSON.stringify(datas[i]));
+				}
+				
+			});
+		});
+
+			$("#allTemplate").click(function(){
+			$.get("http://10.108.1.67:3000/templates",function(datas,status){
+				$("#outputPanel").html("");
+				for(var i = 0;i < datas.length;i++){
+					console.info(datas[i]);
+					$("#outputPanel").append(JSON.stringify(datas[i]));
+				}
+				
+			});
+		});
+
+
+		$("#destroyAll").click(function(){
+			$.ajax({
+	    		url: 'http://10.108.1.67:3000/contracts/fuck',
+	    		type: 'DELETE',
+	    		success: function(result) {
+					$("#outputPanel").html("");
+					$("#outputPanel").append("成功清空数据库");
+	    		}
+		});
+		});
+
+
 	</script>
 
 </body>
