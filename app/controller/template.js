@@ -1,3 +1,9 @@
+/***
+*  合同模版接口
+*
+*
+****/
+
 var async = require('async'),
 	mongoose = require('mongoose'),
 	Template = mongoose.model('Template');
@@ -5,7 +11,7 @@ var async = require('async'),
 
 
 exports.index = function(req, res) {
-	/******/
+
 	var template = new Template();
 	console.log("template index");
 	template.checkTemplateInfo(function(data) {
@@ -33,7 +39,7 @@ exports.create = function(req, res) {
 
 	var template = new Template();
 	console.log("template create");
-	/*
+
 	var rdata = { //重新构造对象是为了让可编辑字段去掉主键:_id
 		myId: "CA123",
 		partyA: "get.partyA",
@@ -41,11 +47,12 @@ exports.create = function(req, res) {
 		amount: 1,
 		signDate: "2012-09-01",
 		name: "get.name",
+		tName: "get.name",
 		beginDate: "2012-09-08",
 		endDate: "2012-09-08",
 		state: "get.state",
 		events: []
-	};*/
+	};
 	var rdata = req.body;
 	console.log(rdata);
 	console.log("start====");

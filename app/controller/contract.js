@@ -1,3 +1,9 @@
+/***
+*  合同操作接口
+*
+*
+****/
+
 var async = require('async'),
 	mongoose = require('mongoose'),
 	Contract = mongoose.model('Contract');

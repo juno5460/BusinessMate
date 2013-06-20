@@ -61,12 +61,15 @@
 			</th>
 			<th>&nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;</th>
 			<th>
-				<select>
-					<option>Select One...</option>
-					<option>南航</option>
-					<option>深航</option>
-					<option>港交所</option>
-				</select>
+				<div class="btn-group">
+
+					<button class="btn dropdown-toggle" data-toggle="dropdown">
+						选择模板
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" id="templateList">
+					</ul>
+				</div>
 			</th>
 		</tr>
 	</table>
@@ -100,22 +103,26 @@
 
 		<div id="signPicker" class="input-append input-prepend date" data-date="" data-date-format="yyyy-mm-dd">
 			<span class="add-on">签订日期</span>
-			<input type="text" class="span3" id="signDate" value="<%- signDate%>"" readonly="">
+			<input type="text" class="span3" id="signDate" value="<%- signDate%>
+			"" readonly="">
 			<span class="add-on"> <i class="icon-calendar"></i>
 			</span>
 		</div>
 
 		<div id="beginPicker" class="input-append input-prepend date" data-date="" data-date-format="yyyy-mm-dd">
 			<span class="add-on">开始时间</span>
-			<input type="text" class="span3" id="beginDate" value="<%- beginDate %>" readonly="">
+			<input type="text" class="span3" id="beginDate" value="<%- beginDate %>
+			" readonly="">
 			<span class="add-on"> <i class="icon-calendar"></i>
 			</span>
 		</div>
 
 		<div id="endPicker" class="input-append input-prepend date" data-date="" data-date-format="yyyy-mm-dd">
 			<span class="add-on">结束时间</span>
-			<input type="text" class="span3" id="endDate" value="<%- endDate %>" readonly="">
-			<span class="add-on"> <i class="icon-calendar"></i>
+			<input type="text" class="span3" id="endDate" value="<%- endDate %>
+			" readonly="">
+			<span class="add-on">
+				<i class="icon-calendar"></i>
 			</span>
 		</div>
 
@@ -138,8 +145,7 @@
 
 		<div class="input-prepend">
 			<span class="add-on">&nbsp;&nbsp;金&nbsp;&nbsp;&nbsp;额&nbsp;&nbsp;</span>
-			<input class="span3 prependedInput" id="amount" type="text" value="<%- amount%>">
-		</div>
+			<input class="span3 prependedInput" id="amount" type="text" value="<%- amount%>"></div>
 
 		<br>
 		<div class="input-prepend">
