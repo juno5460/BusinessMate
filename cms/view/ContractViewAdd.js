@@ -10,6 +10,7 @@ define([
 		'model/EventCell',
 		'model/Contract',
 		'model/Template',
+		'collections/TemplateItems',
 		'config/config',
 		'js/bootstrap-datepicker',
 		'js/bootstrap'
@@ -25,6 +26,7 @@ define([
 	EventModel,
 	ContractModel,
 	TemplateModel,
+	TemplateItems,
 	Config) {
 
 	var ContactViewAdd = Backbone.View.extend({
@@ -42,9 +44,11 @@ define([
 
 			this.eventsGroup = new Array();
 
-			this.listenTo(this.model, 'change', this.onModelChange);
-
 			this.$mode = options.mode;
+
+
+			this.listenTo(this.model, 'change', this.onModelChange);
+			this.listenTo(TemplateItems, 'reset', this.onTemplateItemsLoaded);
 
 			//判断是否是修改模式，如果是的话则从服务器获取数据，否则创建一个空白的模型。
 			if (this.$mode == 'edit') {
@@ -53,7 +57,6 @@ define([
 			}
 
 			this.render();
-
 		},
 
 		events: {
@@ -61,7 +64,7 @@ define([
 			'click #dropdown_customEvent': 'onDropDownCusomEventClick',
 			'click #dropdown_priceEvent': 'onDropDownPriceEventClick',
 			'click #back': 'onBackBtnClick',
-			'click #saveAsTemplate' : 'onSaveAsTemplateClick',
+			'click #saveAsTemplate': 'onSaveAsTemplateClick',
 			'blur #contractId': 'idValidate'
 		},
 
@@ -69,6 +72,26 @@ define([
 		render: function() {
 
 			this.$el.html(this.template(this.model.toJSON()));
+			var self = this;
+			TemplateItems.fetch({
+				success: function(collection, response) {
+
+					$("#templateList").html("");
+
+					collection.each(function(item) {
+						$li = $("<li><a data-target='#'>" + item.get('tName') + "</a></li>");
+						$li.click(function() {
+							self.listenToOnce(item, 'change', self.onTemplateLoaded);
+							item.fetch();
+						});
+						$("#templateList").append($li);
+					});
+				},
+				error: function() {
+					alert('error');
+				}
+			});
+
 			this.$eventList = this.$("#eventsBoard");
 
 			var events = this.model.get('events');
@@ -104,17 +127,17 @@ define([
 			console.info("debugger");
 			//Backbone.Router.navigate('contracts', {trigger: true});
 		},
-		buildModel: function(model){
+		buildModel: function(model) {
 			//从网页中提取已经输入的数据
-			var $contractId 	= $("#contractId").val();
-			var $name 			= $("#name").val();
-			var $partyA 		= $("#partyA").val();
-			var $partyB 		= $("#partyB").val();
-			var $signDate 		= $("#signDate").val();
-			var $beginDate 		= $("#beginDate").val();
-			var $endDate 		= $("#endDate").val();
-			var $amount 		= $("#amount").val();
-			var $contractState 	= $("#contractState").val();
+			var $contractId = $("#contractId").val();
+			var $name = $("#name").val();
+			var $partyA = $("#partyA").val();
+			var $partyB = $("#partyB").val();
+			var $signDate = $("#signDate").val();
+			var $beginDate = $("#beginDate").val();
+			var $endDate = $("#endDate").val();
+			var $amount = $("#amount").val();
+			var $contractState = $("#contractState").val();
 
 			var events = []; //将动态添加的事件转成JSON数组用作提交
 			_.each(this.eventsGroup, function(view) {
@@ -171,7 +194,24 @@ define([
 		onSaveAsTemplateClick: function() {
 			var template = new TemplateModel();
 			this.buildModel(template);
+			template.set('tName', template.get('name'));
 			template.save();
+		},
+		onTemplateItemsLoaded: function(templateItem) {
+
+			$li = $("<li><a data-target='#'>" + templateItem.get('tName') + "</a></li>");
+			var self = this;
+			$li.click(function() {
+				self.listenTo(templateItem, 'change', self.onTemplateLoaded);
+				templateItem.fetch();
+			});
+			$("#templateList").append($li);
+
+		},
+		onTemplateLoaded: function(templateItem) {
+			this.model = templateItem.clone();
+			this.render();
+			console.log("a");
 		},
 		idValidate: function(val) {
 

@@ -11,6 +11,7 @@ define([
 		idAttribute: "_id",
 
 		defaults: {
+			tName			:null,
 			myId 			:null,
 			name			:null,
 			partyA 			:null,
