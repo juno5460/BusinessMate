@@ -24,6 +24,7 @@ var ContractSchema = mongoose.Schema({ //创建合同模型对象
 	amount: Number, //金额
 	signDate: String, //签署日期
 	name: String, //合同名称
+	tName: String, //合同模版名称
 	beginDate: String, //开始日期
 	endDate: String, //结束日期
 	events: [EventsSchema], //合同事件
@@ -42,8 +43,8 @@ ContractSchema.methods = {
 			myId: 1,
 			id: 1,
 			name: 1,
-			partyA:1,
-			partyB:1,
+			partyA: 1,
+			partyB: 1,
 			beginDate: 1,
 			endDate: 1,
 			state: 1
@@ -55,7 +56,7 @@ ContractSchema.methods = {
 	checkTemplateInfo: function(callback) {
 		this.model('Template').find({}, {
 			_id: 1,
-			name: 1
+			tName: 1
 		}, function(err, docs) {
 			callback(docs);
 		});
@@ -91,6 +92,7 @@ ContractSchema.methods = {
 	insertData: function(rdata) {
 		Contract = this.model('Contract');
 		console.log("insert");
+
 		var contract = new Contract(rdata);
 		contract.save();
 	},
@@ -101,6 +103,7 @@ ContractSchema.methods = {
 	insertTemplate: function(rdata) {
 		Template = this.model('Template');
 		console.log("insert");
+
 		var template = new Template(rdata);
 		template.save();
 	},
@@ -113,6 +116,7 @@ ContractSchema.methods = {
 	updateIdData: function(id, result, callback) {
 		Contract = this.model('Contract');
 		console.log(id);
+
 		Contract.update(id, result, function() {
 			Contract.find(id, function(err, docs) {
 				callback(docs);
@@ -128,6 +132,7 @@ ContractSchema.methods = {
 	updateIdTemplate: function(id, result, callback) {
 		Template = this.model('Template');
 		console.log(id);
+
 		Template.update(id, result, function() {
 			Template.find(id, function(err, docs) {
 				callback(docs);
@@ -141,6 +146,7 @@ ContractSchema.methods = {
 	 */
 	removeData: function(id, callback) {
 		Contract = this.model('Contract');
+
 		Contract.remove({
 			_id: id
 		}, function() {
@@ -151,7 +157,7 @@ ContractSchema.methods = {
 			});
 		});
 	},
-	//清空数据库接口
+	//清空contracts容器接口
 	removeAllData: function(callback) {
 		Contract = this.model('Contract');
 		Contract.remove({}, function() {
@@ -164,11 +170,12 @@ ContractSchema.methods = {
 	/*
 	 * id:合同id
 	 * eventId:事件id
-	 * eventName:事件名称 (方便跟踪合同状态)
+	 * eventName:事件名称 (或是状态名称,方便跟踪合同状态)
 	 * callback:回调返回数据
 	 */
 	updateSymble: function(id, eventId, eventName, callback) {
 		Contract = this.model('Contract');
+
 		Contract.update({
 			_id: id,
 			"events.id": eventId
@@ -196,13 +203,39 @@ ContractSchema.methods = {
 		Contract.find({}, function(err, docs) {
 			docs.forEach(function(doc) {
 				for (var i = 0; i < doc.events.length; i++) { //遍历单个合同的事件数组
-					if (doc.events[i].price > 0 && doc.events[i].completed == true)
-					///假如该事件已完成并且该事件为回款事件的话,获取回款金额
+					//	if (doc.events[i].price > 0 && doc.events[i].completed == true)
+					if (doc.events[i].price > 0)
 						count = count + doc.events[i].price;
 				}
 				console.log(doc.events);
 			});
+			console.log(count);
 			callback(count);
+		});
+	},
+	//根据合同id,展示所有未完成事件
+	/*
+	 *id:合同id
+	 *calback:回调返回数据
+	 */
+	checkUndoneEvents: function(id, callback) {
+		Contract = this.model('Contract');
+		var send = [];
+		var j = 0;
+
+		Contract.find({
+			_id: id
+		}, function(err, docs) {
+			docs.forEach(function(doc) {
+				for (var i = 0; i < doc.events.length; i++) { //遍历该合同数组
+					if (doc.events[i].completed == false) {
+						send[j] = doc.events[i]; //当状态为未完成状态,取出
+						j++;
+					}
+				}
+				console.log(send);
+				callback(send);
+			});
 		});
 	}
 };
