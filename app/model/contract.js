@@ -42,6 +42,8 @@ ContractSchema.methods = {
 			myId: 1,
 			id: 1,
 			name: 1,
+			partyA:1,
+			partyB:1,
 			beginDate: 1,
 			endDate: 1,
 			state: 1
