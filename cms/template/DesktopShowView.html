@@ -1,7 +1,7 @@
 <style>
       .tab-content{
         border-style: groove;
-        width: 750px; 
+        width: 760px; 
         height: 420px;
       }
       #container1, #container2{
@@ -9,7 +9,7 @@
           width: 350px; 
           height: 300px;
           float:left;
-          margin-right: 20px;
+          margin-right: 24px;
         }
       #container3 {
 
@@ -26,14 +26,14 @@
 <div class="tabbable tabs-left">
   <ul class="nav nav-tabs">
     <li class="active" id="BInfo">
-      <a href="#BusinessInfo" class="BusinessInfo">本周商务情况</a><!--  data-toggle="tab" -->
-    </li>
+      <a href="#BusinessInfo" class="BusinessInfo" data-toggle="tab">本周商务情况</a>
+      <!--  data-toggle="tab" --> </li>
     <li  id="BTrend">
-      <a href="#BusinessTrend" class="BusinessTrend">业务发展趋势</a><!-- data-toggle="tab" -->
-    </li>
+      <a href="#BusinessTrend" class="BusinessTrend" data-toggle="tab">业务发展趋势</a>
+      <!-- data-toggle="tab" --> </li>
   </ul>
   <div class="tab-content">
-    <div class="tab-pane" id="BusinessInfo" style="display:block">
+    <div class="tab-pane active" id="BusinessInfo" style="display:block">
       <p>
         <h4 id="title1"></h4>
         <div id="container1"></div>
@@ -42,19 +42,19 @@
       <p>
         <div id="part">
           <div id="partA">
-              <h4 id="content1"></h4>
+            <h4 id="content1"></h4>
           </div>
           <div id="partB">
-              <h4 id="content2"></h4>
+            <h4 id="content2"></h4>
           </div>
         </div>
-    </p>
+      </p>
+    </div>
+    <div class="tab-pane" id="BusinessTrend" style="display:block">
+
+      <div id="container3"></div>
+
+    </div>
   </div>
-  <div class="tab-pane active" id="BusinessTrend" style="display:block">
-   
-       <div id="container3"></div>
-   
-  </div>
-</div>
 
 </div>

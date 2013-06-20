@@ -1,5 +1,5 @@
-define(["backbone","jquery",'text!template/DesktopShowView.html','js/jquery.flot','js/jquery.flot.pie'
-], function(Backbone, $, DesktopShowViewHtml, JQFlot, JQFlotPie) {
+define(["backbone", "jquery", 'text!template/DesktopShowView.html', 'js/jquery.flot', 'js/jquery.flot.pie'], 
+    function(Backbone, $, DesktopShowViewHtml, JQFlot, JQFlotPie) {
 
     var DesktopShowView = Backbone.View.extend({
         tagName: 'div',

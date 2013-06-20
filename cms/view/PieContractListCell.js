@@ -26,6 +26,8 @@ define([
 				beginDate 	: this.model.get("beginDate"),
 				endDate 	: this.model.get("endDate"),
 				state 		: this.model.get("state"),
+				partyA		: this.model.get("partyA"),
+				partyB		: this.model.get("partyB")
 			}));
 		},
 	});

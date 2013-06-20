@@ -35,7 +35,7 @@ define([
 		},
 
 		render: function() {
-			console.info(this.id);
+			var airline = this.id;
 			this.$el.html(this.template());
 			var $contractListTable = this.$el.find("#contractListTable tbody");
 
@@ -43,10 +43,9 @@ define([
 			$.get(Config.Server("contracts"), function(data, status) {
 
 				_.each(data, function(contract) {
-
 					//这里找出id的所有合同并添加
-					if (contract.name = "a") {
-
+					if (contract.partyA == airline || contract.partyB == airline) {
+						console.info(airline);
 						$contractListTable.append(
 							new PieContractListCell({
 							model: new ContractModel({
@@ -55,7 +54,9 @@ define([
 								name: contract.name,
 								beginDate: contract.beginDate,
 								endDate: contract.endDate,
-								state: contract.state
+								state: contract.state,
+								partyA: contract.partyA,
+								partyB: contract.partyB
 							}),
 						}).el);
 					}
