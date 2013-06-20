@@ -14,10 +14,15 @@ define([
             },
             render: function(){
 
+            //计算各航空的合同数目
+            // var part = new Array();
+            // part.add("111");
+            // console.info(part.length());
+            console.info("test.....");
              $.get(Config.Server("contracts"), function(data, status) {
-                console.info(data);
+                //console.info(data);
                  _.each(data, function(contract) {
-                    console.info(contract);
+                    
                 });
             });   
 
