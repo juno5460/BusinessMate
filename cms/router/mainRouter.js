@@ -1,11 +1,15 @@
-define(['view/ContractListView', 'view/ContractViewAdd'],function(ContractListView,ContractViewAdd){
+define(['view/ContractListView', 'view/ContractViewAdd', 'view/DesktopShowView', 'view/ChartShow',
+	'view/PieDetailShow', 'view/ReturnedMoney'],
+	function(ContractListView,ContractViewAdd, DesktopShowView, ChartShow,PieDetailShow,ReturnedMoney){
 	var MainRouter = Backbone.Router.extend({
 		routes: {
 			"":"index",
-			"desktop": "desktop",
 			"contracts": "contracts",
 			"addContract":"addContract",
-			"editContract/:id":"editContract"
+			"editContract/:id":"editContract",
+			"BusinessInfo": "BusinessInfo",
+			"BusinessTrend":"BusinessTrend",
+			"pieDetial/:id": "PieDetail"
 		},
 
 		currentView:"",
@@ -17,10 +21,8 @@ define(['view/ContractListView', 'view/ContractViewAdd'],function(ContractListVi
 		},
 
 		index:function(){
-			this.switchView(new ContractListView());
-		},
-		desktop: function() {
-
+			this.switchView(new DesktopShowView());
+			new ChartShow();
 		},
 		contracts: function() {
 			this.switchView(new ContractListView());
@@ -30,6 +32,17 @@ define(['view/ContractListView', 'view/ContractViewAdd'],function(ContractListVi
 		},
 		editContract:function(id){
 			this.switchView(new ContractViewAdd({mode:'edit',id:id}));
+		},
+		BusinessInfo:function() {
+			this.switchView(new DesktopShowView());
+			new ChartShow();
+		},
+		BusinessTrend:function() {
+			this.switchView(new DesktopShowView());
+			new ReturnedMoney();
+		},
+		PieDetail:function(id) {
+			 this.switchView(new PieDetailShow({id:id}));
 		},
 		switchView:function(view){
 

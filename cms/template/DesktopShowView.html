@@ -1,0 +1,60 @@
+<style>
+      .tab-content{
+        border-style: groove;
+        width: 750px; 
+        height: 420px;
+      }
+      #container1, #container2{
+          /*border-style: groove;*/
+          width: 350px; 
+          height: 300px;
+          float:left;
+          margin-right: 20px;
+        }
+      #container3 {
+
+        padding-top: 0px;
+      }
+      
+      #partA, #partB{
+        padding-left:120px;
+        float:left;
+        margin-right: 160px;
+      }
+</style>
+
+<div class="tabbable tabs-left">
+  <ul class="nav nav-tabs">
+    <li class="active" id="BInfo">
+      <a href="#BusinessInfo" class="BusinessInfo">本周商务情况</a><!--  data-toggle="tab" -->
+    </li>
+    <li  id="BTrend">
+      <a href="#BusinessTrend" class="BusinessTrend">业务发展趋势</a><!-- data-toggle="tab" -->
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane" id="BusinessInfo" style="display:block">
+      <p>
+        <h4 id="title1"></h4>
+        <div id="container1"></div>
+        <div id="container2"></div>
+      </p>
+      <p>
+        <div id="part">
+          <div id="partA">
+              <h4 id="content1"></h4>
+          </div>
+          <div id="partB">
+              <h4 id="content2"></h4>
+          </div>
+        </div>
+    </p>
+  </div>
+  <div class="tab-pane active" id="BusinessTrend" style="display:block">
+   
+       <div id="container3"></div>
+   
+  </div>
+</div>
+
+</div>
