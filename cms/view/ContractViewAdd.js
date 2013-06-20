@@ -72,23 +72,21 @@ define([
 		render: function() {
 
 			this.$el.html(this.template(this.model.toJSON()));
+
 			var self = this;
+
 			TemplateItems.fetch({
 				success: function(collection, response) {
 
 					$("#templateList").html("");
 
 					collection.each(function(item) {
-						$li = $("<li><a data-target='#'>" + item.get('tName') + "</a></li>");
-						$li.click(function() {
-							self.listenToOnce(item, 'change', self.onTemplateLoaded);
-							item.fetch();
-						});
-						$("#templateList").append($li);
+						self.addTempleItem(item,self);
 					});
 				},
+
 				error: function() {
-					alert('error');
+					alert('加载模板列表失败.');
 				}
 			});
 
@@ -173,6 +171,8 @@ define([
 			this.listenTo(view, 'delete', this.removeEventCell);
 			this.eventsGroup.push(view);
 			this.$eventList.append(view.el);
+
+			this.scrollToBottom();
 		},
 		onDropDownPriceEventClick: function() {
 			var view = new EventView({
@@ -184,6 +184,7 @@ define([
 			this.listenTo(view, 'delete', this.removeEventCell);
 			this.eventsGroup.push(view);
 			this.$eventList.append(view.el);
+			this.scrollToBottom();
 		},
 		onModelChange: function() {
 			this.render();
@@ -197,13 +198,12 @@ define([
 			template.set('tName', template.get('name'));
 			template.save();
 		},
-		onTemplateItemsLoaded: function(templateItem) {
+		addTempleItem: function(item,self) {
 
-			$li = $("<li><a data-target='#'>" + templateItem.get('tName') + "</a></li>");
-			var self = this;
+			$li = $("<li><a data-target='#'>" + item.get('tName') + "</a></li>");
 			$li.click(function() {
-				self.listenTo(templateItem, 'change', self.onTemplateLoaded);
-				templateItem.fetch();
+				self.listenToOnce(item, 'change', self.onTemplateLoaded);
+				item.fetch();
 			});
 			$("#templateList").append($li);
 
@@ -211,7 +211,7 @@ define([
 		onTemplateLoaded: function(templateItem) {
 			this.model = templateItem.clone();
 			this.render();
-			console.log("a");
+			this.scrollToBottom();
 		},
 		idValidate: function(val) {
 
@@ -273,6 +273,9 @@ define([
 			} else {
 				return encrypt;
 			}
+		},
+		scrollToBottom: function(){
+			$('html, body, .container').animate({scrollTop: $(document).height()}, 300); 
 		}
 	});
 	return ContactViewAdd;
