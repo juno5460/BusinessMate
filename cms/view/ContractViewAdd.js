@@ -60,12 +60,13 @@ define([
 		},
 
 		events: {
-			'click #submit': 'submit',
-			'click #dropdown_customEvent': 'onDropDownCusomEventClick',
-			'click #dropdown_priceEvent': 'onDropDownPriceEventClick',
-			'click #back': 'onBackBtnClick',
-			'click #saveAsTemplate': 'onSaveAsTemplateClick',
-			'blur #contractId': 'idValidate'
+			'click #submit' 				: 'submit',
+			'click #dropdown_customEvent' 	: 'onDropDownCusomEventClick',
+			'click #dropdown_priceEvent'	: 'onDropDownPriceEventClick',
+			'click #back' 					: 'onBackBtnClick',
+			'click #saveAsTemplate' 		: 'onSaveAsTemplateClick',
+			'click #deleteContract'			: 'onDeleteContractBtnClick',
+			'blur #contractId' 				: 'idValidate'
 		},
 
 
@@ -192,6 +193,9 @@ define([
 		onBackBtnClick: function() {
 			//Backbone.Router.navigate('contracts', {trigger: true});
 		},
+		onDeleteContractBtnClick: function() {
+			this.model.destroy();
+		},
 		onSaveAsTemplateClick: function() {
 			var template = new TemplateModel();
 			this.buildModel(template);
@@ -200,7 +204,7 @@ define([
 		},
 		addTempleItem: function(item,self) {
 
-			$li = $("<li><a data-target='#'><span>" + item.get('tName') + 
+			$li = $("<li id='"+ item.get('tName') +"'><a data-target='#'><span>" + item.get('tName') + 
 				"</span><button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>" + 
 				"</a></li>");
 			$li.find("span").click(function() {
@@ -210,12 +214,13 @@ define([
 
 			$li.find("button").click(function(){
 				item.destroy();
+				$("#" + item.get('tName')).remove();
 			});
 			$("#templateList").append($li);
 
 		},
 		onTemplateLoaded: function(templateItem) {
-			this.model = templateItem.clone();
+			this.model.convertToContract(templateItem.clone());
 			this.render();
 		},
 		idValidate: function(val) {
