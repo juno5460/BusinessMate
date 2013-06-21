@@ -9,7 +9,8 @@ define(['view/ContractListView', 'view/ContractViewAdd', 'view/DesktopShowView',
 			"editContract/:id":"editContract",
 			"BusinessInfo": "BusinessInfo",
 			"BusinessTrend":"BusinessTrend",
-			"pieDetial/:id": "PieDetail"
+			"pieDetial/:id": "PieDetail",
+			"test":"test.html"
 		},
 
 		currentView:"",

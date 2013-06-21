@@ -66,6 +66,7 @@ define([
 			'click #back' 					: 'onBackBtnClick',
 			'click #saveAsTemplate' 		: 'onSaveAsTemplateClick',
 			'click #deleteContract'			: 'onDeleteContractBtnClick',
+			'click #selectTemplateBtn'		: 'onSelectTemplateBtnClick',
 			'blur #contractId' 				: 'idValidate'
 		},
 
@@ -74,22 +75,11 @@ define([
 
 			this.$el.html(this.template(this.model.toJSON()));
 
+			if(this.$mode == 'edit') {
+				$("#CmdBtnGroup").append("<div class='cmdBtn' style='float:left;'><a class='btn btn-danger' id='deleteContract' href='#/contracts'>删除合同(Test)</a></div>");
+			}
+
 			var self = this;
-
-			TemplateItems.fetch({
-				success: function(collection, response) {
-
-					$("#templateList").html("");
-
-					collection.each(function(item) {
-						self.addTempleItem(item,self);
-					});
-				},
-
-				error: function() {
-					alert('加载模板列表失败.');
-				}
-			});
 
 			this.$eventList = this.$("#eventsBoard");
 
@@ -202,8 +192,27 @@ define([
 			template.set('tName', template.get('name'));
 			template.save();
 		},
-		addTempleItem: function(item,self) {
+		onSelectTemplateBtnClick: function(){
+			//用户点击模板下拉列表时加载模板列表数据。
+			var self = this;
+			TemplateItems.fetch({
+				success: function(collection, response) {
 
+					$("#templateList").html("");
+
+					collection.each(function(item) {
+						//遍历模板列表数据，分别加入到列表中。
+						self.addTempleItem(item,self);
+					});
+				},
+
+				error: function() {
+					alert('加载模板列表失败.');
+				}
+			});
+		},
+		addTempleItem: function(item,self) {
+			//从服务器获取到模板列表后，将其加入到下拉列表选框中。
 			$li = $("<li id='"+ item.get('tName') +"'><a data-target='#'><span>" + item.get('tName') + 
 				"</span><button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>" + 
 				"</a></li>");
@@ -220,6 +229,7 @@ define([
 
 		},
 		onTemplateLoaded: function(templateItem) {
+			//当用户选定模板后，模板加载完成时将模板模型转换成合同模型，并刷新界面。
 			this.model.convertToContract(templateItem.clone());
 			this.render();
 		},

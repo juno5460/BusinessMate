@@ -63,7 +63,7 @@
 			<th>
 				<div class="btn-group">
 
-					<button class="btn dropdown-toggle" data-toggle="dropdown">
+					<button class="btn dropdown-toggle" id="selectTemplateBtn" data-toggle="dropdown">
 						选择模板
 						<span class="caret"></span>
 					</button>
@@ -97,30 +97,27 @@
 		<br>
 		<div class="input-prepend">
 			<span class="add-on">&nbsp;&nbsp;乙&nbsp;&nbsp;&nbsp;方&nbsp;&nbsp;</span>
-			<input class="span3 prependedInput" id="partyB" type="text" value="<%- partyB%>""></div>
+			<input class="span3 prependedInput" id="partyB" type="text" value="<%- partyB%>"></div>
 
 		<br>
 
 		<div id="signPicker" class="input-append input-prepend date" data-date="" data-date-format="yyyy-mm-dd">
 			<span class="add-on">签订日期</span>
-			<input type="text" class="span3" id="signDate" value="<%- signDate%>
-			"" readonly="">
+			<input type="text" class="span3" id="signDate" value="<%- signDate%>" readonly="">
 			<span class="add-on"> <i class="icon-calendar"></i>
 			</span>
 		</div>
 
 		<div id="beginPicker" class="input-append input-prepend date" data-date="" data-date-format="yyyy-mm-dd">
 			<span class="add-on">开始时间</span>
-			<input type="text" class="span3" id="beginDate" value="<%- beginDate %>
-			" readonly="">
+			<input type="text" class="span3" id="beginDate" value="<%- beginDate %>" readonly="">
 			<span class="add-on"> <i class="icon-calendar"></i>
 			</span>
 		</div>
 
 		<div id="endPicker" class="input-append input-prepend date" data-date="" data-date-format="yyyy-mm-dd">
 			<span class="add-on">结束时间</span>
-			<input type="text" class="span3" id="endDate" value="<%- endDate %>
-			" readonly="">
+			<input type="text" class="span3" id="endDate" value="<%- endDate %>" readonly="">
 			<span class="add-on">
 				<i class="icon-calendar"></i>
 			</span>
@@ -184,14 +181,12 @@
 	<div class="cmdBtn" style="float:right;">
 		<a class="btn btn-success" id="submit" href="#/contracts">完成</a>
 	</div>
-
+<div id="CmdBtnGroup">
 	<div class="cmdBtn" style="float:right;">
 		<a class="btn" id="back" href="#/contracts">返回</a>
 	</div>
 	<div class="cmdBtn" style="float:left;">
 		<a class="btn btn-primary" id="saveAsTemplate">保存为模板</a>
 	</div>
-	<div class="cmdBtn" style="float:left;">
-		<a class="btn btn-danger" id="deleteContract" href="#/contracts">删除合同(Test)</a>
-	</div>
+</div>
 </div>
