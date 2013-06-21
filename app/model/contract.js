@@ -24,7 +24,7 @@ var ContractSchema = mongoose.Schema({ //创建合同模型对象
 	amount: Number, //金额
 	returnRatio: Number, //回款比率
 	returnAmount: Number, //回款金额
-	lastReturnDate:String,//上次回款日期
+	lastReturnDate: String, //上次回款日期
 	signDate: String, //签署日期
 	name: String, //合同名称
 	tName: String, //合同模版名称
@@ -41,8 +41,6 @@ ContractSchema.methods = {
 	},
 	//展示所有合同重要信息
 	checkInfo: function(callback) {
-		occur = new Date();
-		console.log(occur);
 		this.model('Contract').find({}, {
 			_id: 1,
 			myId: 1,
@@ -51,6 +49,7 @@ ContractSchema.methods = {
 			amount: 1,
 			returnRatio: 1,
 			returnAmount: 1,
+			lastReturnDate: 1,
 			partyA: 1,
 			partyB: 1,
 			beginDate: 1,

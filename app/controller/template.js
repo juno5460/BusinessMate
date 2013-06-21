@@ -11,7 +11,8 @@ var async = require('async'),
 
 
 exports.index = function(req, res) {
-
+	var occur = new Date();
+	console.log(occur);
 	var template = new Template();
 	console.log("template index");
 	template.checkTemplateInfo(function(data) {
@@ -21,7 +22,8 @@ exports.index = function(req, res) {
 };
 
 exports.show = function(req, res) {
-
+	var occur = new Date();
+	console.log(occur);
 	console.log("template show");
 	var template = new Template();
 	console.log("啊啊啊啊啊啊啊啊" + req.params['contract']);
@@ -36,11 +38,12 @@ exports.show = function(req, res) {
 
 
 exports.create = function(req, res) {
-
+	var occur = new Date();
+	console.log(occur);
 	var template = new Template();
 	console.log("template create");
 
-	var rdata = { //重新构造对象是为了让可编辑字段去掉主键:_id
+/*	var rdata = { //重新构造对象是为了让可编辑字段去掉主键:_id
 		myId: "CA123",
 		partyA: "get.partyA",
 		partyB: "get.partyB",
@@ -52,15 +55,16 @@ exports.create = function(req, res) {
 		endDate: "2012-09-08",
 		state: "get.state",
 		events: []
-	};
-	var rdata = req.body;
+	};*/
+		var rdata = req.body;
 	console.log(rdata);
 	console.log("start====");
 	template.insertTemplate(rdata);
 };
 
 exports.update = function(req, res) {
-
+	var occur = new Date();
+	console.log(occur);
 	var template = new Template();
 	console.log("template update");
 	var getId = {
@@ -100,7 +104,8 @@ exports.update = function(req, res) {
 };
 
 exports.destroy = function(req, res) {
-
+	var occur = new Date();
+	console.log(occur);
 	var template = new Template();
 	console.log("template destroy");
 	//	var getId = "17979181781105635000";
@@ -112,7 +117,7 @@ exports.destroy = function(req, res) {
 		res.send(data);
 	});
 */
-	template.removeTemplate(getId,function(data) {
+	template.removeTemplate(getId, function(data) {
 		res.send(data);
 	});
 };

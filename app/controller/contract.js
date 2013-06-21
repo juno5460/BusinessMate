@@ -10,6 +10,8 @@ var async = require('async'),
 
 exports.index = function(req, res) {
 	/******/
+	var occur = new Date();
+	console.log(occur);
 	var contract = new Contract();
 	contract.checkInfo(function(data) {
 		console.log('hello');
@@ -22,6 +24,8 @@ exports.index = function(req, res) {
 
 
 exports.show = function(req, res) {
+	var occur = new Date();
+	console.log(occur);
 	var contract = new Contract();
 	console.log("啊啊啊啊啊啊啊啊" + req.params['contract']);
 	console.log("show");
@@ -37,6 +41,8 @@ exports.show = function(req, res) {
 
 
 exports.create = function(req, res) {
+	var occur = new Date();
+	console.log(occur);
 	var contract = new Contract();
 	//	console.log("create");
 	var rdata = req.body;
@@ -48,6 +54,8 @@ exports.create = function(req, res) {
 
 
 exports.update = function(req, res) {
+	var occur = new Date();
+	console.log(occur);
 	var contract = new Contract();
 	console.log("update");
 	var getId = {
@@ -89,6 +97,8 @@ exports.update = function(req, res) {
 
 
 exports.destroy = function(req, res) {
+	var occur = new Date();
+	console.log(occur);
 	var contract = new Contract();
 	console.log("destroy");
 	var getId = {
