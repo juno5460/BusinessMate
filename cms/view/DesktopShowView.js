@@ -1,9 +1,10 @@
-define(["backbone", "jquery", 'text!template/DesktopShowView.html', 'js/jquery.flot', 'js/jquery.flot.pie'], 
-    function(Backbone, $, DesktopShowViewHtml, JQFlot, JQFlotPie) {
+define([ "jquery", "underscore", "backbone", 'text!template/DesktopShowView.html','view/ChartShow', 'view/ReturnedMoney' ,'view/WaitBackMoney', 'view/ShouldGetMoney'], 
+    function($, _, Backbone, DesktopShowViewHtml, ChartShow, ReturnedMoney, WaitBackMoney,ShouldGetMoney) {
 
     var DesktopShowView = Backbone.View.extend({
-        tagName: 'div',
+
         template: _.template(DesktopShowViewHtml),
+
         initialize: function(options) {
             $(".active").removeClass();
             $("#desktop").addClass("active");
@@ -12,20 +13,33 @@ define(["backbone", "jquery", 'text!template/DesktopShowView.html', 'js/jquery.f
 
         events: {
             'click .BusinessInfo': 'BusinessInfo',
-            'click .BusinessTrend': 'BusinessTrend'
+            'click .BusinessTrend': 'BusinessTrend',
+            'click .WaitMoney': 'WaitMoney',
+            'click .ShouldGet': 'ShouldGet'
         },
+
         render: function() {
             this.$el.html(this.template());
+            new ChartShow();
             return this;
         },
+
         BusinessInfo: function() {
-            $("#BTrend").removeClass("active");
-            $("#BInfo").addClass("active");
+            
         },
+
         BusinessTrend: function() {
-            $("#BInfo").removeClass("active");
-            $("#BTrend").addClass("active");
+            new ReturnedMoney();
+        },
+
+        WaitMoney: function() {
+            new WaitBackMoney();
+        },
+
+        ShouldGet: function() {
+           new ShouldGetMoney();
         }
+
     });
     return DesktopShowView;
 });

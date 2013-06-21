@@ -96,7 +96,6 @@ define([
                         color: "#66CC00"
                     }
                 ];
-                $("#title1").text("合同进展情况");
                 $.plot($("#container1"), pieData1, optionPie1);
                 $("#container1").bind("plotclick", function(event, pos, obj) {
                     window.location.hash = "#pieDetial" + '/' + obj.series.label;
