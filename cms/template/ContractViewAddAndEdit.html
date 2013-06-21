@@ -186,7 +186,26 @@
 		<a class="btn" id="back" href="#/contracts">返回</a>
 	</div>
 	<div class="cmdBtn" style="float:left;">
-		<a class="btn btn-primary" id="saveAsTemplate">保存为模板</a>
+		<a class="btn btn-primary" id="saveAsTemplate" href="#saveModel">保存为模板</a>
 	</div>
 </div>
+</div>
+
+<!-- 模态对话框 -->
+
+<div id="saveModel" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">保存模板</h3>
+  </div>
+  <div class="modal-body">
+  		<span><label class="control-label">模板名称:</label></span>
+  		<span>
+  			<input type="text" id="modelName" placeholder="模板名称">
+  		</span>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">返回</button>
+    <button class="btn btn-primary">保存</button>
+  </div>
 </div>

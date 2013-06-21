@@ -36,9 +36,22 @@ define([
 
 		template: _.template(ContractViewAddAndEditHtml),
 
+		events: {
+			'click #submit' 				: 'submit',
+			'click #dropdown_customEvent' 	: 'onDropDownCusomEventClick',
+			'click #dropdown_priceEvent'	: 'onDropDownPriceEventClick',
+			'click #back' 					: 'onBackBtnClick',
+			'click #saveAsTemplate' 		: 'onSaveAsTemplateClick',
+			'click #deleteContract'			: 'onDeleteContractBtnClick',
+			'click #selectTemplateBtn'		: 'onSelectTemplateBtnClick',
+			'blur #contractId' 				: 'idValidate'
+		},
+
 		initialize: function(options) {
 
 			this.model = new ContractModel();
+
+			this.templateNameArray = [];//保存模板下拉列表的名称数组
 
 			this.$containerView = $("#container");
 
@@ -58,18 +71,6 @@ define([
 
 			this.render();
 		},
-
-		events: {
-			'click #submit' 				: 'submit',
-			'click #dropdown_customEvent' 	: 'onDropDownCusomEventClick',
-			'click #dropdown_priceEvent'	: 'onDropDownPriceEventClick',
-			'click #back' 					: 'onBackBtnClick',
-			'click #saveAsTemplate' 		: 'onSaveAsTemplateClick',
-			'click #deleteContract'			: 'onDeleteContractBtnClick',
-			'click #selectTemplateBtn'		: 'onSelectTemplateBtnClick',
-			'blur #contractId' 				: 'idValidate'
-		},
-
 
 		render: function() {
 
@@ -91,12 +92,12 @@ define([
 				for (var i = 0; i < events.length; i++) {
 					var view = new EventView({
 						model: new EventModel({
-							type: events[i].price != -1 ? 2 : 1,
-							id: events[i].id,
-							title: events[i].title,
-							price: events[i].price,
-							remark: events[i].remark,
-							date: events[i].date,
+							type 	: events[i].price != -1 ? 2 : 1,
+							id 		: events[i].id,
+							title 	: events[i].title,
+							price 	: events[i].price,
+							remark 	: events[i].remark,
+							date 	: events[i].date,
 							completed: events[i].completed
 						})
 					});
@@ -116,17 +117,18 @@ define([
 			console.info("debugger");
 			//Backbone.Router.navigate('contracts', {trigger: true});
 		},
+		//获取页面上的数据，并构建一个合同模型
 		buildModel: function(model) {
 			//从网页中提取已经输入的数据
-			var $contractId = $("#contractId").val();
-			var $name = $("#name").val();
-			var $partyA = $("#partyA").val();
-			var $partyB = $("#partyB").val();
-			var $signDate = $("#signDate").val();
-			var $beginDate = $("#beginDate").val();
-			var $endDate = $("#endDate").val();
-			var $amount = $("#amount").val();
-			var $contractState = $("#contractState").val();
+			var $contractId 	= $("#contractId").val();
+			var $name 			= $("#name").val();
+			var $partyA 		= $("#partyA").val();
+			var $partyB 		= $("#partyB").val();
+			var $signDate 		= $("#signDate").val();
+			var $beginDate 		= $("#beginDate").val();
+			var $endDate 		= $("#endDate").val();
+			var $amount 		= $("#amount").val();
+			var $contractState 	= $("#contractState").val();
 
 			var events = []; //将动态添加的事件转成JSON数组用作提交
 			_.each(this.eventsGroup, function(view) {
@@ -147,11 +149,13 @@ define([
 			console.info("提交的合同数据:", model);
 
 		},
+		//移除已添加的事件
 		removeEventCell: function(id) {
 			this.eventsGroup = _.reject(this.eventsGroup, function(view) {
 				return view.model.id == id;
 			});
 		},
+		//自定义事件增加按钮点击
 		onDropDownCusomEventClick: function() {
 			var view = new EventView({
 				model: new EventModel({
@@ -165,6 +169,7 @@ define([
 
 			this.scrollToBottom();
 		},
+		//回款事件增加按钮点击
 		onDropDownPriceEventClick: function() {
 			var view = new EventView({
 				model: new EventModel({
@@ -187,7 +192,13 @@ define([
 			this.model.destroy();
 		},
 		onSaveAsTemplateClick: function() {
+
+
+
+			//$('#saveModel').modal({backdrop:true});
+
 			var template = new TemplateModel();
+			template.set('_id',null);
 			this.buildModel(template);
 			template.set('tName', template.get('name'));
 			template.save();
@@ -199,10 +210,11 @@ define([
 				success: function(collection, response) {
 
 					$("#templateList").html("");
-
+					this.templateNameArray = [];//清空数组
 					collection.each(function(item) {
 						//遍历模板列表数据，分别加入到列表中。
 						self.addTempleItem(item,self);
+						this.templateNameArray.push(item.get('tName')); 
 					});
 				},
 
@@ -217,6 +229,7 @@ define([
 				"</span><button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>" + 
 				"</a></li>");
 			$li.find("span").click(function() {
+				//$("div[class^='datepicker']").remove();
 				self.listenToOnce(item, 'change', self.onTemplateLoaded);
 				item.fetch();
 			});
@@ -273,21 +286,21 @@ define([
 
 		},
 		validate: function() {
-			var $contractId = $("input[id^='contractId']").val();
-			var $beginDate = $("#beginDate").val();
-			var $endDate = $("#endDate").val();
-			var $contractState = $("input[id^='contractState']").val();
-			var $name = $("input[id^='name']").val();
+			var $contractId 	= $("input[id^='contractId']").val();
+			var $beginDate 		= $("#beginDate").val();
+			var $endDate 		= $("#endDate").val();
+			var $contractState 	= $("input[id^='contractState']").val();
+			var $name 			= $("input[id^='name']").val();
 
 
 		},
 		encryption: function() {
 
 			//生成唯一ID号
-			var date = new Date();
-			var times1970 = date.getTime();
-			var times = date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
-			var encrypt = times * times1970;
+			var date 		= new Date();
+			var times1970 	= date.getTime();
+			var times 		= date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
+			var encrypt 	= times * times1970;
 			if (arguments.length == 1) {
 				return arguments[0] + encrypt;
 			} else {
