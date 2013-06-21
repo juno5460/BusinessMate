@@ -1,8 +1,8 @@
 /***
-*  合同模版接口
-*
-*
-****/
+ *  合同模版接口
+ *
+ *
+ ****/
 
 var async = require('async'),
 	mongoose = require('mongoose'),
@@ -23,7 +23,7 @@ exports.index = function(req, res) {
 exports.show = function(req, res) {
 
 	console.log("template show");
-	var template = new Contract();
+	var template = new Template();
 	console.log("啊啊啊啊啊啊啊啊" + req.params['contract']);
 	var getId = {
 		_id: req.params['template']
@@ -61,7 +61,7 @@ exports.create = function(req, res) {
 
 exports.update = function(req, res) {
 
-	var template = new Contract();
+	var template = new Template();
 	console.log("template update");
 	var getId = {
 		_id: req.params['template']
@@ -94,22 +94,25 @@ exports.update = function(req, res) {
 	}
 	console.log(getId);
 	console.log(get);
-	template.updateIdData(getId, getNew, function(data) {
+	template.updateIdTemplate(getId, getNew, function(data) {
 		res.send(data);
 	});
 };
 
 exports.destroy = function(req, res) {
 
-	var template = new Contract();
+	var template = new Template();
 	console.log("template destroy");
-	var getId = "17979181781105635000";
+	//	var getId = "17979181781105635000";
+	var getId = {
+		_id: req.params['template']
+	};
 	/*
 	template.removeData(getId, function(data) {
 		res.send(data);
 	});
 */
-	template.removeAllData(function(data) {
+	template.removeTemplate(getId,function(data) {
 		res.send(data);
 	});
 };

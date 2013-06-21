@@ -22,6 +22,8 @@ var ContractSchema = mongoose.Schema({ //创建合同模型对象
 	partyA: String, //签署甲方
 	partyB: String, //签署乙方
 	amount: Number, //金额
+	returnRatio: Number, //回款比率
+	returnAmount: Number, //回款金额
 	signDate: String, //签署日期
 	name: String, //合同名称
 	tName: String, //合同模版名称
@@ -43,6 +45,9 @@ ContractSchema.methods = {
 			myId: 1,
 			id: 1,
 			name: 1,
+			amount: 1,
+			returnRatio: 1,
+			returnAmount: 1,
 			partyA: 1,
 			partyB: 1,
 			beginDate: 1,
@@ -63,7 +68,7 @@ ContractSchema.methods = {
 	},
 	//根据id展示指定合同详细信息
 	/*
-	 * id:合同id
+	 * id:合同<_id,id>
 	 * callback:回调返回数据
 	 */
 	checkIdData: function(id, callback) {
@@ -75,7 +80,7 @@ ContractSchema.methods = {
 	},
 	//根据id展示指定合同详细信息
 	/*
-	 * id:合同模版id
+	 * id:合同模版<_id,id>
 	 * callback:回调返回数据
 	 */
 	checkIdTemplate: function(id, callback) {
@@ -109,7 +114,7 @@ ContractSchema.methods = {
 	},
 	//根据id修改指定合同
 	/*
-	 * id:合同id
+	 * id:合同<_id,id>
 	 * result:传递要修改的字段JSON对象
 	 * callback:回调返回数据
 	 */
@@ -125,7 +130,7 @@ ContractSchema.methods = {
 	},
 	//根据id修改指定合同模版
 	/*
-	 * id:合同模版id
+	 * id:合同模版<_id,id>
 	 * result:传递要修改的字段JSON对象
 	 * callback:回调返回数据
 	 */
@@ -141,18 +146,30 @@ ContractSchema.methods = {
 	},
 	//根据id删除指定合同
 	/*
-	 * id:合同id
+	 * id:合同<_id,id>
 	 * callback:回调返回数据
 	 */
 	removeData: function(id, callback) {
 		Contract = this.model('Contract');
 
-		Contract.remove({
-			_id: id
-		}, function() {
+		Contract.remove(id, function() {
 			Contract.find({
 				_id: id
 			}, function(err, docs) {
+				callback(docs);
+			});
+		});
+	},
+	//根据id删除指定合同模版
+	/*
+	 * id:合同模版<_id,id>
+	 * callback:回调返回数据
+	 */
+	removeTemplate: function(id, callback) {
+		Template = this.model('Template');
+
+		Template.remove(id, function() {
+			Template.find(id, function(err, docs) {
 				callback(docs);
 			});
 		});
@@ -198,6 +215,7 @@ ContractSchema.methods = {
 	 */
 	countGetMoney: function(callback) {
 		var count = 0;
+		var allCount = 10000000;
 		Contract = this.model('Contract');
 
 		Contract.find({}, function(err, docs) {
@@ -209,7 +227,7 @@ ContractSchema.methods = {
 				}
 				console.log(doc.events);
 			});
-			console.log(count);
+			console.log(parseFloat(4 / 10));
 			callback(count);
 		});
 	},

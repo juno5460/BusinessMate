@@ -1,8 +1,8 @@
 /***
-*  合同操作接口
-*
-*
-****/
+ *  合同操作接口
+ *
+ *
+ ****/
 
 var async = require('async'),
 	mongoose = require('mongoose'),
@@ -91,7 +91,9 @@ exports.update = function(req, res) {
 exports.destroy = function(req, res) {
 	var contract = new Contract();
 	console.log("destroy");
-	var getId = "17979181781105635000";
+	var getId = {
+		_id: req.params['template']
+	};
 	/*
 	contract.removeData(getId, function(data) {
 		res.send(data);

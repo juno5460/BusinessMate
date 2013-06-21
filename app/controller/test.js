@@ -17,7 +17,7 @@ exports.index = function(req, res) {
 		res.send(data);
 	});
 	/*****************************************************/
-	/*****************统计已收回款接口测试通过***************
+	/*****************统计已收回款接口测试通过***************/
 	contract.countGetMoney(function(data) {
 		console.info("countGetMoney");
 		res.send(data+"");
@@ -32,7 +32,7 @@ exports.index = function(req, res) {
 		res.send(data);
 	});
 	/*****************************************************/
-	/*****************展示所有未完成事件测试通过*************/
+	/*****************展示所有未完成事件测试通过*************
 	var id="51c25fa5f7c9c98b03000005";
 	contract.checkUndoneEvents(id,function(data) {
 		console.info("checkUndoneEvents");
