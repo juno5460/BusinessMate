@@ -92,14 +92,15 @@ exports.destroy = function(req, res) {
 	var contract = new Contract();
 	console.log("destroy");
 	var getId = {
-		_id: req.params['template']
+		_id: req.params['contract']
 	};
-	/*
-	contract.removeData(getId, function(data) {
-		res.send(data);
-	});
-*/
-	contract.removeAllData(function(data) {
-		res.send(data);
-	});
+	if (req.params['contract'] != 'fuck') {
+		contract.removeData(getId, function(data) {
+			res.send(data);
+		});
+	} else {
+		contract.removeAllData(function(data) {
+			res.send(data);
+		});
+	}
 };
