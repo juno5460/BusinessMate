@@ -62,7 +62,7 @@ define([
                             radius: 'auto',
                             label: {
                                 show: true,
-                                radius: 0.9,
+                                radius: 1,
                                 formatter: function(label, slice) {
                                     return '<div style="font-size:x-small;text-align:center;padding:2px;color:' + slice.color + ';">' + '<br/>' + Math.round(slice.percent) + '%</div>';
                                 },
@@ -146,7 +146,6 @@ define([
                 $("#content1").text("甲方公司");
                 $("#content2").text("乙方公司");
             });
-
             return this;
         }
     });

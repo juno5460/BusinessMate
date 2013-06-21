@@ -2,14 +2,14 @@ define([
 		"backbone",
 		"jquery",
 		"underscore",
-		"text!template/ContractListCell.html"
-], function(Backbone, $, _, ContractListCellHtml) {
+		"text!template/ReturnedMoneyCell.html"
+], function(Backbone, $, _, ReturnedMoneyCellHtml) {
 
 	var ReturnedMoneyCell = Backbone.View.extend({
 
 		tagName: 'tr',
 
-		template: _.template(ContractListCellHtml),
+		template: _.template(ReturnedMoneyCellHtml),
 
 		model: null,
 
