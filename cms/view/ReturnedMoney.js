@@ -31,7 +31,10 @@ define(['jquery', 'underscore', 'backbone', 'text!template/ReturnedMoney.html', 
 							name 		: contract.name,
 							partyA		: contract.partyA,
 							partyB		: contract.partyB,
-							amount		: contract.amount
+							amount		: contract.amount,
+							returnAmount: contract.returnAmount,
+							returnRatio : contract.returnRatio,
+							lastReturnDate: contract.lastReturnDate
 							})
 							}	
 						).el);

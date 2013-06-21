@@ -25,10 +25,10 @@ define([
 				name 		: this.model.get("name"),
 				partyA		: this.model.get("partyA"),
 				partyB		: this.model.get("partyB"),
-				amount		: this.model.get("amount")
-				// reMoney     : this.model.get("reMoney"),
-				// reMoneyRate : this.model.get("reMoneyRate"),
-				// reDate		: this.model.get("reDate")
+				amount		: this.model.get("amount"),
+				returnAmount: this.model.get("returnAmount"),
+				returnRatio : this.model.get("returnRatio"),
+				lastReturnDate: this.model.get("lastReturnDate")
 			}));
 		},
 	});

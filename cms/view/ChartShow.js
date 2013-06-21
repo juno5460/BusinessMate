@@ -78,6 +78,7 @@ define([
                         clickable: true
                     }
                 };
+
                 var pieData1 = [{
                         label: "南航",
                         data: NH,
