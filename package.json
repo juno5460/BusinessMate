@@ -7,6 +7,14 @@
   },
   "dependencies": {
     "express": "3.2.5",
-    "ejs": "*"
+    "jade": "latest",
+    "mongoose": "latest",
+    "connect-mongo": "latest",
+    "notifier": "latest",
+    "underscore": "latest",
+    "async": "latest",
+    "view-helpers": "latest",
+    "express-resource": "latest",
+    "mu2": "latest"
   }
 }
