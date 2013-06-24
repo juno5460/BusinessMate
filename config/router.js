@@ -1,5 +1,6 @@
 var async = require('async'),
-	resource = require('express-resource');
+	resource = require('express-resource'),
+	generator = require('../app/generator/generator');
 
 ////////contract-router
 module.exports = function(app) {
@@ -17,7 +18,7 @@ module.exports = function(app) {
 	app.resource('tests',test);
 
 	app.get('/ace', function(req, res){
-		var generator = require('../app/generator/generator');
 		
+		res.send(generator.generate('index', {username: 'Justin'}));		
 	});
 };

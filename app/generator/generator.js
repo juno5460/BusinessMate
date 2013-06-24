@@ -5,8 +5,8 @@ var Sidenav_Class = require('./Sidenav');
 var engine = require('hogan.js');
 
 var path = {
- data : __dirname + '/../views/data',
- views : __dirname + '/../views',
+ data : __dirname + '/../../views/data',
+ views : __dirname + '/../../views',
  assets : 'assets',
  images : 'assets/images'
 };

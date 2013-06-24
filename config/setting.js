@@ -15,6 +15,7 @@ module.exports = function function_name(app, config) {
 	app.use(app.router);
 	app.use(require('stylus').middleware(config.root + '/cms'));
 	app.use(express.static(config.root + '/cms'));
+	app.use(express.static(config.root + '/public'));
 
 
 	// express/mongo session storage
