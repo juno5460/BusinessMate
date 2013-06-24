@@ -1,5 +1,6 @@
 var express = require('express'),
-	path = require('path');
+	path = require('path'),
+	mongoStore = require('connect-mongo')(express);
 
 module.exports = function function_name(app, config) {
 	// all environments
@@ -11,10 +12,19 @@ module.exports = function function_name(app, config) {
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	app.use(express.cookieParser('your secret here'));
-	app.use(express.session());
 	app.use(app.router);
 	app.use(require('stylus').middleware(config.root + '/cms'));
 	app.use(express.static(config.root + '/cms'));
+
+
+	// express/mongo session storage
+	app.use(express.session({
+		secret: 'noobjs',
+		store: new mongoStore({
+			url: config.db,
+			collection: 'sessions'
+		})
+	}));
 
 
 	app.set('showStackError', true);

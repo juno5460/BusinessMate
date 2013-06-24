@@ -12,8 +12,6 @@ var app = express();
 var env = process.env.NODE_ENV || 'development',
 	config = require('./config/config')[env];
 
-//var config = require('./config/config');
-
 //启动数据库连接
 mongoose.connect(config.db);
 
