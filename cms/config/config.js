@@ -1,6 +1,6 @@
 define([], function() {
 
-	var server = "10.108.1.65:3000";
+	var server = "localhost:3000";
 
 	return {
 		Server: function(path) {
