@@ -1,11 +1,11 @@
 define([], function() {
 
-	var server = "localhost:3000";
+	var server = "";//"http://localhost:3000";
 
 	return {
 		Server: function(path) {
-			return "http://" + server + "/" + path;
+			return server + "/" + path;
 		}
-	}
+	};
 
 });
