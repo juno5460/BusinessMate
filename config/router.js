@@ -15,4 +15,9 @@ module.exports = function(app) {
 ///系统测试接口
 	var test=require('../app/controller/test');
 	app.resource('tests',test);
+
+	app.get('/ace', function(req, res){
+		var generator = require('../app/generator/generator');
+		
+	});
 };
