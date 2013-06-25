@@ -4,7 +4,7 @@ $(function() {
 	var partyA = new Array(),
 		partyB = new Array();
 	var contractsCount = 0;
-	$.get("http://10.108.1.65:3000/contracts", function(data, status) {
+	$.get("http://10.108.1.65:3000/api/contracts", function(data, status) {
 
 		$.each(data, function(i, contract) {
 			partyA[contractsCount] = contract.partyA;
