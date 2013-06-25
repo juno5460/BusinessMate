@@ -1,0 +1,53 @@
+		.addevent{
+			width: 150px;
+			height: 45px;
+		}
+
+		.eventcell{
+			margin: 0 0 10px 0;
+
+		}
+
+
+		.cellgroup{
+			margin-bottom: 20px;
+		}
+
+		.cell-label{
+			float: left;
+			padding-top:5px; 
+		}
+
+		.cellcontrol{
+			margin-left: 80px;
+		}
+
+		.hiddenInput{
+			border-top:1px; 
+  			border-left:0px ; 
+  			border-right:1px;
+			border-bottom: 1px solid #CCC;
+			background-color:transparent;
+			outline:none;
+			color: #5090c1;
+			margin-right: 10px; 
+		}
+
+		.celltitle{
+			font-size: 15px;
+		}
+
+		.cellremark{
+			min-height: 30px;
+		}
+
+		.bottom-cmd{
+			margin-top: 10px;
+		}
+
+		.event-top-cmd{
+			margin-bottom: 10px;
+		}
+
+	<link rel="stylesheet" href="assets/css/datepicker.css" />
+	<link rel="stylesheet" href="assets/css/bootstrap-timepicker.css" />

@@ -23,7 +23,7 @@ $(function() {
 				lastReturnDate: contract.lastReturnDate
 			};
 
-			var template1 = "<tr><td>{{name}}</td><td>{{partyA}}</td><td>{{partyB}}</td><td>{{amount}}</td><td>{{returnAmount}}</td><td>{{returnRatio}}</td><td>{{lastReturnDate}}</td></tr>";
+			var template1 = "<tr><td>{{name}}</td><td class='hidden-480'>{{partyA}}</td><td class='hidden-480'>{{partyB}}</td><td>{{amount}}</td><td>{{returnAmount}}</td><td class='hidden-phone'>{{returnRatio}}</td><td class='hidden-480'>{{lastReturnDate}}</td></tr>";
 
 			var html1 = Mustache.to_html(template1, t1data);
 			$('#table1').append(html1);
@@ -38,7 +38,7 @@ $(function() {
 				lastReturnDate: contract.lastReturnDate
 			};
 
-			var template2 = "<tr><td>{{name}}</td><td>{{partyA}}</td><td>{{partyB}}</td><td>{{amount}}</td><td>{{returnAmount}}</td><td>{{returnRatio}}</td><td>{{lastReturnDate}}</td></tr>";
+			var template2 = "<tr><td>{{name}}</td><td class='hidden-480'>{{partyA}}</td><td class='hidden-480'>{{partyB}}</td><td>{{amount}}</td><td>{{returnAmount}}</td><td class='hidden-phone'>{{returnRatio}}</td><td class='hidden-phone'>{{lastReturnDate}}</td></tr>";
 
 			var html2 = Mustache.to_html(template2, t2data);
 			$('#table2').append(html2);
@@ -53,7 +53,7 @@ $(function() {
 				lastReturnDate: contract.lastReturnDate
 			};
 
-			var template3 = "<tr><td>{{name}}</td><td>{{partyA}}</td><td>{{partyB}}</td><td>{{amount}}</td><td>{{returnAmount}}</td><td>{{returnRatio}}</td><td>{{lastReturnDate}}</td></tr>";
+			var template3 = "<tr><td>{{name}}</td><td class='hidden-480'>{{partyA}}</td><td class='hidden-480'>{{partyB}}</td><td>{{amount}}</td><td>{{returnAmount}}</td><td class='hidden-phone'>{{returnRatio}}</td><td>{{lastReturnDate}}</td></tr>";
 
 			var html3 = Mustache.to_html(template3, t3data);
 			$('#table3').append(html3);
@@ -77,16 +77,17 @@ $(function() {
 						width: 2
 					},
 					startAngle: 2,
+					// radius:60,
 					label: {
-					    show: true,
-					    radius: 1,
-					    formatter: function(label, slice) {
-					        return '<div style="font-size:x-small;text-align:center;padding:2px;color:' + slice.color + ';">' + '<br/>' + Math.round(slice.percent) + '%</div>';
-					    },
-					    background: {
-					        opacity: 0,
-					        color: null
-					    }
+						show: true,
+						radius: 1,
+						formatter: function(label, slice) {
+							return '<div style="font-size:x-small;text-align:center;padding:2px;color:' + slice.color + ';">' + '<br/>' + Math.round(slice.percent) + '%</div>';
+						},
+						background: {
+							opacity: 0,
+							color: null
+						}
 					}
 				}
 			},
@@ -94,7 +95,7 @@ $(function() {
 				show: true,
 				position: "ne",
 				labelBoxBorderColor: null,
-				margin: [-30, 15]
+				margin: [-10, 60]
 			},
 			grid: {
 				hoverable: true,
@@ -112,7 +113,7 @@ $(function() {
 
 		for (var i = 0; i < contractsCount; i++) {
 			if (partyA[i] == null)
-					continue;
+				continue;
 			var countA = 1;
 			for (var j = i + 1; j < contractsCount; j++) {
 				if ((partyA[j] != null) && (partyA[j] == partyA[i])) {
@@ -130,14 +131,14 @@ $(function() {
 
 		for (var i = 0; i < contractsCount; i++) {
 			if (partyB[i] == null)
-					continue;
+				continue;
 			var countB = 1;
 			for (var j = i + 1; j < contractsCount; j++) {
 				if ((partyB[j] != null) && (partyB[j] == partyB[i])) {
 					countB++;
 					partyB[j] = null;
 				}
-		}
+			}
 
 			pieData2.push({
 				label: partyB[i],

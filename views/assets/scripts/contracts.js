@@ -1,4 +1,9 @@
 $(function(){
+
+	$("#addContractBtn").click(function(){
+		
+	});
+
 	$.get('http://10.108.1.65:3000/contracts',function(data, status){
 		console.info(data);
 		$.each(data,function(index,item){

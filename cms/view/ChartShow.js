@@ -63,23 +63,30 @@ define([
                 for(var i=0;i<contractsCount;i++) {
                     if(partyA[i] == 0)
                         continue;
-                    var countA = 1, countB = 1;
+                    var countA = 1;
                     for(var j=i+1;j<contractsCount;j++) {
                         if((partyA[j] != 0) && (partyA[j] == partyA[i])) {
                             countA++;
                             partyA[j] = 0;
                         }   
+                    }
+                    pieData1.push({label: partyA[i],
+                                data:countA,
+                                color:color[i]});
+                }
+                for(var i=0;i<contractsCount;i++) {
+                    if(partyB[i] == 0)
+                        continue;
+                    var countB = 1;
+                    for(var j=i+1;j<contractsCount;j++) {
                         if((partyB[j] != 0) && (partyB[j] == partyB[i])) {
                             countB++;
                             partyB[j] = 0;
                         }   
                     }
-                    pieData1.push({label: partyA[i],
-                                data:countA,
-                                color:color[i]});
                     pieData2.push({label: partyB[i],
                                 data:countB,
-                                color:color[i+3]});
+                                color:color[i+4]});
                 }
                
                 $.plot($("#container1"), pieData1, optionPie1);
