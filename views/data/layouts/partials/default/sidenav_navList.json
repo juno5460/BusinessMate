@@ -6,7 +6,7 @@
 		"submenu" :
 		[
 			{"link": "/contracts/new", "title": "合同录入"},
-			{"link": "/contracts", "title": "合同列表"}
+			{"link": "/contractss", "title": "合同列表"}
 		]
 	},
 

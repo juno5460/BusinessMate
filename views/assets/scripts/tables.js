@@ -1,3 +1,4 @@
+
 $(function() {
 	var oTable1 = $('#table_report').dataTable( {
 	"aoColumns": [

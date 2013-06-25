@@ -1,0 +1,7 @@
+{
+ "title" : "合同管理"
+ ,
+ "description" : "合同列表"
+ ,
+ "scripts" : ["jquery-ui" , "fullcalendar" , "bootbox"]
+}
