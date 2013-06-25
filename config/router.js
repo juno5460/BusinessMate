@@ -7,11 +7,11 @@ module.exports = function(app) {
 
 	///新建合同操作接口
 	var contract = require('../app/controller/contract');
-	app.resource('contracts', contract);
+	app.resource('api/contracts', contract);
 
 	///新建合同模版接口
 	var template = require('../app/controller/template');
-	app.resource('templates', template);
+	app.resource('api/templates', template);
 
 	///系统测试接口
 	var test = require('../app/controller/test');
@@ -31,7 +31,7 @@ module.exports = function(app) {
 		}));
 	});
 
-	app.get('/contractss', function(req, res) {
+	app.get('/contracts', function(req, res) {
 
 		res.send(generator.generate('contracts', {
 			username: 'Justin'
