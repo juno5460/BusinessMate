@@ -15,44 +15,17 @@ define([
         render: function() {
 
             //计算各航空的合同数目
-            var partA = new Array(),
-                partB = new Array();
-            var NH = 0,
-                SH = 0,
-                HH = 0,
-                GJS = 0,
-                HT = 0,
-                HTZ1 = 0,
-                HTZ2 = 0,
-                contractsCount = 0;
+            var partyA = new Array(),
+                partyB = new Array();
+            var contractsCount = 0;
 
             $.get(Config.Server("contracts"), function(data, status) {
                 _.each(data, function(contract) {
+                    partyA[contractsCount] = contract.partyA;
+                    partyB[contractsCount] = contract.partyB;
                     contractsCount++;
-                });
 
-                for (var i = 0; i < contractsCount; i++) {
-                    partA[i] = data[i].partyA;
-                    partB[i] = data[i].partyB;
-                }
-                for (var i in partA) {
-                    if (partA[i] == "南航")
-                        NH++;
-                    else if (partA[i] == "海航")
-                        HH++;
-                    else if (partA[i] == "深航")
-                        SH++;
-                    else if (partA[i] == "港交所")
-                        GJS++;
-                }
-                for (var i in partB) {
-                    if (partB[i] == "恒拓")
-                        HT++;
-                    else if (partB[i] == "恒拓子公司A")
-                        HTZ1++;
-                    else if (partB[i] == "恒拓子公司B")
-                        HTZ2++;
-                }
+                });
 
                 //根据统计的数据画出饼图
                 var optionPie1 = {
@@ -79,25 +52,36 @@ define([
                     }
                 };
 
-                var pieData1 = [{
-                        label: "南航",
-                        data: NH,
-                        color: "#FF0033"
-                    }, {
-                        label: "深航",
-                        data: SH,
-                        color: "#0066FF"
-                    }, {
-                        label: "海航",
-                        data: HH,
-                        color: "#FFFF33"
-                    }, {
-                        label: "港交所",
-                        data: GJS,
-                        color: "#66CC00"
+                //定义颜色数组
+                var color = new Array("#FF0033","#3300FF","#00CCFF","#FF00FF","#FF3300",
+                            "#00CC99","#33FF66","#66FF00","#00FFFF","#CC6666","#3399FF",
+                            "#00FF33","#CCFF99","#FFCC66","#CC3300","#FF33CC","#FF0066");
+
+                var pieData1 = new Array(),
+                    pieData2 = new Array();
+
+                for(var i=0;i<contractsCount;i++) {
+                    if(partyA[i] == 0)
+                        continue;
+                    var countA = 1, countB = 1;
+                    for(var j=i+1;j<contractsCount;j++) {
+                        if((partyA[j] != 0) && (partyA[j] == partyA[i])) {
+                            countA++;
+                            partyA[j] = 0;
+                        }   
+                        if((partyB[j] != 0) && (partyB[j] == partyB[i])) {
+                            countB++;
+                            partyB[j] = 0;
+                        }   
                     }
-                ];
-                //console.info($("#container1"),pieData1,optionPie1);
+                    pieData1.push({label: partyA[i],
+                                data:countA,
+                                color:color[i]});
+                    pieData2.push({label: partyB[i],
+                                data:countB,
+                                color:color[i+3]});
+                }
+               
                 $.plot($("#container1"), pieData1, optionPie1);
                 $("#container1").bind("plotclick", function(event, pos, obj) {
                     window.location.hash = "#pieDetial" + '/' + obj.series.label;
@@ -126,20 +110,7 @@ define([
                         clickable: true
                     }
                 };
-                var pieData2 = [{
-                        label: "恒拓",
-                        data: HT,
-                        color: "#FF3300"
-                    }, {
-                        label: "恒拓子公司A",
-                        data: HTZ1,
-                        color: "#CCFF00"
-                    }, {
-                        label: "恒拓子公司B",
-                        data: HTZ2,
-                        color: "#66FF66"
-                    }
-                ];
+               
                 $.plot($("#container2"), pieData2, optionPie2);
                 $("#container2").bind("plotclick", function(event, pos, obj) {
                     window.location.hash = "#pieDetial" + '/' + obj.series.label;
