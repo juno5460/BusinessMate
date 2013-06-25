@@ -50,6 +50,7 @@ ContractSchema.methods = {
 			returnRatio: 1,
 			returnAmount: 1,
 			lastReturnDate: 1,
+			signDate: 1,
 			partyA: 1,
 			partyB: 1,
 			beginDate: 1,
