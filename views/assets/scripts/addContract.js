@@ -15,7 +15,7 @@ $(function(){
 
 	$("#saveBtn").click(function(){
 		var item = buildModel();
-		$.post("http://10.108.1.65:3000/contracts",item,function(data,state){
+		$.post("api/contracts", item, function(data,state){
 
 		});
 	});
