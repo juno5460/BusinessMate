@@ -37,14 +37,15 @@ module.exports = function(app) {
 			username: 'Justin'
 		}));
 	});
-		app.get('/newContract', function(req, res) {
+	
+	app.get('/contracts/new', function(req, res) {
 
 		res.send(generator.generate('addContract', {
 			username: 'Justin'
 		}));
 	});
 
-	app.get('/editContract',function(req,res){
+	app.get('/contracts/:id/edit',function(req,res){
 		console.info(req.query.id);
 		res.send(generator.generate('editContract',{_id:req.query.id}));
 	});

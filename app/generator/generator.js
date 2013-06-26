@@ -7,8 +7,8 @@ var engine = require('hogan.js');
 var path = {
  data : __dirname + '/../../views/data',
  views : __dirname + '/../../views',
- assets : 'assets',
- images : 'assets/images'
+ assets : '/assets',
+ images : '/assets/images'
 };
 
 var site = JSON.parse(require('fs').readFileSync(path['data']+'/common/site.json' , 'utf-8'));//this site some basic site variables
