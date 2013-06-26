@@ -18,6 +18,13 @@ exports.index = function(req, res) {
 		res.send(data);
 	});
 	/*****************************************************/
+	/******************模糊搜索测试通过******************/
+	var get="CA";
+	template.fuzzySearch(get,function(data) {
+		console.log('fuzzySearch');
+		res.send(data);
+	});
+	/*****************************************************/
 	/******************查询合同信息接口测试通过******************
 	contract.checkInfo(function(data) {
 		console.log('checkInfo');
@@ -106,7 +113,7 @@ exports.index = function(req, res) {
 		res.send(data);
 	});
 	/*****************************************************/
-	/*****************展示所有未完成事件测试通过*************/
+	/*****************展示所有未完成事件测试通过*************
 	var id = "51ca71989e5eb47e0b000004";
 	contract.checkUndoneEvents(id, function(data) {
 		console.info("checkUndoneEvents");
