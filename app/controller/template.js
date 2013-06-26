@@ -59,7 +59,7 @@ exports.create = function(req, res) {
 		var rdata = req.body;
 	console.log(rdata);
 	console.log("start====");
-	template.insertTemplate(rdata);
+	template.insertTemplate(rdata,res);
 };
 
 exports.update = function(req, res) {

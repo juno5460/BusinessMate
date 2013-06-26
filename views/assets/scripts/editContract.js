@@ -63,6 +63,37 @@ $(function(){
 		scrollToBottom();
 	});
 
+	var templateTmp = "<li><a hre='#'>{{templateName}}</a></li>";
+
+	$("#templateBtn").click(function(){
+		$.get("http://10.108.1.65:3000/api/templates",function(data,status){
+			if(status == 'success') {
+				var $templates = $(data);
+				$templates.each(function(index,item){
+					var $cellHtlm = $(Mustache.to_html(templateTmp, {templateName:item.tName}));
+					$("#templateList").html('');
+					$("#templateList").append($cellHtlm);
+				});
+			}
+		});
+	});
+
+	//点击保存模板按钮时
+	$("#saveAsTemplateBtn").click(function(){
+		var item = buildModel();
+		item.tName = item.name;
+		$.ajax({
+			url: 'http://10.108.1.65:3000/api/templates',
+			type: 'POST',
+			data: item,
+			success: function(result) {
+				console.info(result);
+			},
+			error: function(result){
+				alert("保存合同模板失败！");
+			}
+		});
+	});
 
 	//保存按钮点击时
 	$("#saveBtn").click(function(){
@@ -115,7 +146,12 @@ $(function(){
 			dateID:datePickerID}));
 
 		$cellHtlm.find("#delete").click(function(){
-			$cellHtlm.remove();
+			$cellHtlm.animate({opacity: '0'});
+
+			 var t = setTimeout(function(){
+			 	$cellHtlm.remove();
+			 	clearTimeout(t);	
+			 },400);
 		});
 		$('#eventsList').append($cellHtlm);
 		$('#date' + datePickerID).datepicker();
@@ -143,7 +179,13 @@ $(function(){
 			dateID:datePickerID}));
 
 		$cellHtlm.find("#delete").click(function(){
-			$cellHtlm.remove();
+			$cellHtlm.animate({opacity: '0'});
+
+			 var t = setTimeout(function(){
+			 	$cellHtlm.remove();
+			 	clearTimeout(t);	
+			 },400);
+			
 	});
 		$('#eventsList').append($cellHtlm);
 		$('#date' + datePickerID).datepicker();

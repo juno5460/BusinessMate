@@ -118,12 +118,15 @@ ContractSchema.methods = {
 	/*
 	 * rdata:要保存的合同对象
 	 */
-	insertTemplate: function(rdata) {
+	insertTemplate: function(rdata,res) {
 
 		Template = this.model('Template');
 		console.log("insert");
 		var template = new Template(rdata);
 		template.save();
+		res.send({
+			hello: "success insert"
+		});
 
 	},
 	//根据id修改指定合同
@@ -309,8 +312,8 @@ ContractSchema.methods = {
 		var year = occur.getFullYear();
 		var month = occur.getMonth() + 1;
 		var day = occur.getDate(); ///
-		day=day<10?"0"+day:day;
-		month=month<10?"0"+month:month;
+		day = day < 10 ? "0" + day : day;
+		month = month < 10 ? "0" + month : month;
 		var getOccur = year + "-" + month + "-" + day;
 		//转换成标准时间格式
 		var getTemp;
@@ -354,7 +357,7 @@ ContractSchema.methods = {
 					next = "合同已结束";
 				}
 				willSend = {
-					"name":doc.name,
+					"name": doc.name,
 					"undone": send,
 					"next": next
 				};
@@ -362,6 +365,28 @@ ContractSchema.methods = {
 				callback(willSend);
 			});
 		});
+	},
+	/*模糊查询
+	 *get:获取查询字符串
+	 *callback:返回数据
+	 */
+	fuzzySearch: function(get, callback) {
+
+		Contract = this.model('Contract');
+		var q = new RegExp("A"); //所有以传入参数开始的
+		Contract.find({
+			myId: {
+				'$all': [q]
+			}
+		}, function(err, results) {
+			if (err) {
+				console.log(err);
+			} else {
+				callback(results);
+			}
+		});
+
+
 	}
 };
 
