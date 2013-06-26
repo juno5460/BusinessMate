@@ -31,6 +31,14 @@ module.exports = function(app) {
 		}));
 	});
 
+	//回款
+	app.get('/fund', function(req, res) {
+
+		res.send(generator.generate('fund', {
+			username: 'Justin'
+		}));
+	});
+
 	app.get('/contracts', function(req, res) {
 
 		res.send(generator.generate('contracts', {
