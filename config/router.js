@@ -46,7 +46,6 @@ module.exports = function(app) {
 		}));
 	});
 	app.get('/contracts/new', function(req, res) {
-
 		res.send(generator.generate('addContract', {
 			username: 'Justin'
 		}));
@@ -58,4 +57,5 @@ module.exports = function(app) {
 			_id: req.params.id
 		}));
 	});
+
 };
