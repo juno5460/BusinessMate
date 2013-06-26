@@ -31,7 +31,7 @@ exports.index = function(req, res) {
 		partyB: "恒拓",
 		amount: 1000000,
 		signDate: "2013-06-01",
-		name: "商务移动2013",
+		name: "商务移动标准合同",
 		beginDate: "2013-06-01",
 		endDate: "2013-06-29",
 		state: "开启",
@@ -45,17 +45,38 @@ exports.index = function(req, res) {
 			}, {
 				"id": "289744791239205060",
 				"title": "首款",
-				"date": "2013-06-03",
+				"date": "2013-06-29",
 				"remark": "好的",
 				"price": 10000,
 				"completed": false
 			}, {
 				"id": "289744791239205061",
 				"title": "二期回款",
-				"date": "2013-06-03",
+				"date": "2013-07-03",
 				"remark": "很好的",
 				"price": 50000,
 				"completed": true
+			}, {
+				"id": "289744791239205062",
+				"title": "二期收款",
+				"date": "2013-06-28",
+				"remark": "好的",
+				"price": 20000,
+				"completed": false
+			},{
+				"id": "289744791239205063",
+				"title": "开发单",
+				"date": "2013-06-10",
+				"remark": "好的",
+				"price": 10000,
+				"completed": true
+			},{
+				"id": "289744791239205064",
+				"title": "三期协商",
+				"date": "2013-06-20",
+				"remark": "好的",
+				"price": -1,
+				"completed": false
 			}
 		]
 	};
@@ -68,7 +89,7 @@ exports.index = function(req, res) {
 		res.send(data+"");
 	});
 	/*****************************************************/
-	/*****************统计单个合同已收回款接口测试通过***************/
+	/*****************统计单个合同已收回款接口测试通过***************
 	var id="51ca5258332913d206000004";
 	contract.countOneGetMoney(id,function(data) {
 		console.info("countOneGetMoney");
@@ -85,8 +106,8 @@ exports.index = function(req, res) {
 		res.send(data);
 	});
 	/*****************************************************/
-	/*****************展示所有未完成事件测试通过*************
-	var id="51c25fa5f7c9c98b03000005";
+	/*****************展示所有未完成事件测试通过*************/
+	var id="51ca71989e5eb47e0b000004";
 	contract.checkUndoneEvents(id,function(data) {
 		console.info("checkUndoneEvents");
 		res.send(data);

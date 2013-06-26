@@ -97,12 +97,16 @@ ContractSchema.methods = {
 	/*
 	 * rdata:要保存的合同对象
 	 */
-	insertData: function(rdata) {
+	insertData: function(rdata, res) {
 		Contract = this.model('Contract');
 		console.log("insert");
-
 		var contract = new Contract(rdata);
 		contract.save();
+		/*
+		res.send({
+			hello: "success insert"
+		});*/
+		//	res.end();
 	},
 	//新建合同模版插入模版数据库
 	/*
@@ -111,9 +115,9 @@ ContractSchema.methods = {
 	insertTemplate: function(rdata) {
 		Template = this.model('Template');
 		console.log("insert");
-
 		var template = new Template(rdata);
 		template.save();
+
 	},
 	//根据id修改指定合同
 	/*
@@ -275,7 +279,7 @@ ContractSchema.methods = {
 			callback(getData);
 		});
 	},
-	//根据合同id,展示所有未完成事件
+	//根据合同id,展示所有未完成事件以及下一个待办事件
 	/*
 	 *id:合同id
 	 *calback:回调返回数据
@@ -283,20 +287,58 @@ ContractSchema.methods = {
 	checkUndoneEvents: function(id, callback) {
 		Contract = this.model('Contract');
 		var send = []; //用数组来存储未完成事件
-		var j = 0;
+		var j = 0; //未完成事件数组下标控制器
+		var m = 0; //大于当前时间数组下标控制器
+		var occur = new Date();
+		var year = occur.getFullYear();
+		var month = occur.getMonth() + 1;
+		if (month < 10)
+			monthStr = '0' + month;
+		var date = occur.getDate();
+		var bigger = [];
+		var getOccur = (year + "-" + monthStr + "-" + date).toString();
+		var getTemp;
+		var flag = 0; //找到第一个比当前执行日期大的事件标志位
+		var canGet = 0; //还有下一步事件标志位
+		var next;
+		var willSend;
 
 		Contract.find({
 			_id: id
 		}, function(err, docs) {
 			docs.forEach(function(doc) {
 				for (var i = 0; i < doc.events.length; i++) { //遍历该合同数组
-					if (doc.events[i].completed == false) {
+					if (doc.events[i].completed == false && doc.events[i].date < getOccur) {
+						console.log(doc.events[i].date);
+						console.log(getOccur);
 						send[j] = doc.events[i]; //当状态为未完成状态,取出
 						j++; //下标移动
 					}
 				}
-				console.log(send);
-				callback(send);
+				console.log(getOccur);
+				for (var k = 0; k < doc.events.length; k++) {
+					if (flag == 0 && doc.events[k].date > getOccur) {
+						//找到第一个比当前时间大的事件
+						getTemp = doc.events[k].date; //把该事件的执行日期赋给临时时间
+						next = doc.events[k];
+						flag = 1;
+						canGet = 1;
+					}
+					if (flag == 1 && doc.events[k].date > getOccur && doc.events[k].date < getTemp) {
+						//之后要是存在比当前时间大并且比临时时间小的时间,更新临时时间,并且更新下一步执行事件
+						getTemp = doc.events[k].date;
+						next = doc.events[k];
+					}
+				}
+				if (canGet == 0) {
+					console.log("can't get next event");
+				}
+				willSend = {
+					"undone": send,
+					"next": next
+				};
+				console.log(willSend);
+				callback(willSend);
 			});
 		});
 	}
