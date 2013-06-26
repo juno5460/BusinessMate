@@ -31,6 +31,13 @@ module.exports = function(app) {
 		}));
 	});
 
+	app.get('/pieDetail/:id', function(req, res) {
+		console.info(req.params.id);
+		res.send(generator.generate('pieDetail', {
+			_id: req.params.id
+		}));
+	});
+
 	//回款
 	app.get('/fund', function(req, res) {
 

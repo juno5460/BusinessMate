@@ -103,7 +103,7 @@ $(function() {
 
 		$.plot(placeholder1, pieData1, optionPie);
 		placeholder1.bind("plotclick", function(event, pos, obj) {
-			window.location.href = "http://localhost:3000/#pieDetial" + '/' + obj.series.label;
+			window.location.href = "pieDetial" + '/' + obj.series.label;
 		});
 
 		var placeholder2 = $('#placeholder2').css({
@@ -112,7 +112,7 @@ $(function() {
 		});
 		$.plot(placeholder2, pieData2, optionPie);
 		placeholder2.bind("plotclick", function(event, pos, obj) {
-			window.location.href = "http://localhost:3000/#pieDetial" + '/' + obj.series.label;
+			window.location.href = "pieDetial" + '/' + obj.series.label;
 		});
 
 
