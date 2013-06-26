@@ -36,11 +36,13 @@ var ContractSchema = mongoose.Schema({ //创建合同模型对象
 
 
 ContractSchema.methods = {
+
 	test: function() {
 		console.info("=======test");
 	},
 	//展示所有合同重要信息
 	checkInfo: function(callback) {
+
 		this.model('Contract').find({}, {
 			_id: 1,
 			myId: 1,
@@ -55,6 +57,7 @@ ContractSchema.methods = {
 			partyB: 1,
 			beginDate: 1,
 			endDate: 1,
+			events: 1,
 			state: 1
 		}, function(err, docs) {
 			callback(docs);
@@ -62,6 +65,7 @@ ContractSchema.methods = {
 	},
 	//展示所有合同模版重要信息
 	checkTemplateInfo: function(callback) {
+
 		this.model('Template').find({}, {
 			_id: 1,
 			tName: 1
@@ -75,6 +79,7 @@ ContractSchema.methods = {
 	 * callback:回调返回数据
 	 */
 	checkIdData: function(id, callback) {
+
 		this.model('Contract').find(id, function(err, docs) {
 			console.log("====show===");
 			console.log(docs);
@@ -87,6 +92,7 @@ ContractSchema.methods = {
 	 * callback:回调返回数据
 	 */
 	checkIdTemplate: function(id, callback) {
+
 		this.model('Template').find(id, function(err, docs) {
 			console.log("====show===");
 			console.log(docs);
@@ -97,23 +103,28 @@ ContractSchema.methods = {
 	/*
 	 * rdata:要保存的合同对象
 	 */
-	insertData: function(rdata) {
+	insertData: function(rdata, res) {
+
 		Contract = this.model('Contract');
 		console.log("insert");
-
 		var contract = new Contract(rdata);
 		contract.save();
+		res.send({
+			hello: "success insert"
+		});
+		//	res.end();
 	},
 	//新建合同模版插入模版数据库
 	/*
 	 * rdata:要保存的合同对象
 	 */
 	insertTemplate: function(rdata) {
+
 		Template = this.model('Template');
 		console.log("insert");
-
 		var template = new Template(rdata);
 		template.save();
+
 	},
 	//根据id修改指定合同
 	/*
@@ -122,6 +133,7 @@ ContractSchema.methods = {
 	 * callback:回调返回数据
 	 */
 	updateIdData: function(id, result, callback) {
+
 		Contract = this.model('Contract');
 		console.log(id);
 
@@ -138,6 +150,7 @@ ContractSchema.methods = {
 	 * callback:回调返回数据
 	 */
 	updateIdTemplate: function(id, result, callback) {
+
 		Template = this.model('Template');
 		console.log(id);
 
@@ -153,6 +166,7 @@ ContractSchema.methods = {
 	 * callback:回调返回数据
 	 */
 	removeData: function(id, callback) {
+
 		Contract = this.model('Contract');
 
 		Contract.remove(id, function() {
@@ -169,6 +183,7 @@ ContractSchema.methods = {
 	 * callback:回调返回数据
 	 */
 	removeTemplate: function(id, callback) {
+
 		Template = this.model('Template');
 
 		Template.remove(id, function() {
@@ -179,6 +194,7 @@ ContractSchema.methods = {
 	},
 	//清空contracts容器接口
 	removeAllData: function(callback) {
+
 		Contract = this.model('Contract');
 		Contract.remove({}, function() {
 			Contract.find({}, function(err, docs) {
@@ -194,6 +210,7 @@ ContractSchema.methods = {
 	 * callback:回调返回数据
 	 */
 	updateSymble: function(id, eventId, eventName, callback) {
+
 		Contract = this.model('Contract');
 
 		Contract.update({
@@ -217,52 +234,141 @@ ContractSchema.methods = {
 	 *calback:回调返回数据
 	 */
 	countGetMoney: function(callback) {
-		var count = 0;
-		var allCount = 10000000;
+
+		var count = 0; //存储所有合同已回款总额
+		var allCount = 0; //存储所有合同总金额
+		var getData;
 		Contract = this.model('Contract');
 
 		Contract.find({}, function(err, docs) {
 			docs.forEach(function(doc) {
+				allCount = allCount + doc.amount;
 				for (var i = 0; i < doc.events.length; i++) { //遍历单个合同的事件数组
-					//	if (doc.events[i].price > 0 && doc.events[i].completed == true)
-					if (doc.events[i].price > 0)
+					if (doc.events[i].price > 0 && doc.events[i].completed == true)
+					//					if (doc.events[i].price > 0)
 						count = count + doc.events[i].price;
 				}
+				getData = {
+					"allCount": allCount,
+					"count": count,
+					"ratio": parseFloat(count / allCount)
+				};
 				console.log(doc.events);
 			});
 			console.log(parseFloat(4 / 10));
-			callback(count);
+			//			callback(count);
+			callback(getData);
 		});
 	},
-	//根据合同id,展示所有未完成事件
+	//计算单个合同的事件回收金额
+	/*
+	 *calback:回调返回数据
+	 */
+	countOneGetMoney: function(id, callback) {
+
+		var count = 0; //存储该合同已回款总额
+		var allCount = 0; //存储该合同总金额
+		var getData;
+		Contract = this.model('Contract');
+
+		Contract.find({
+			_id: id
+		}, function(err, docs) {
+			docs.forEach(function(doc) {
+				allCount = doc.amount;
+				for (var i = 0; i < doc.events.length; i++) { //遍历该合同的事件数组
+					if (doc.events[i].price > 0 && doc.events[i].completed == true)
+						count = count + doc.events[i].price;
+				}
+				getData = {
+					"oneAllCount": allCount, //该合同总金额
+					"returnCount": count, //已回款
+					"unreturnCount": allCount - count, //未回款
+					"returnRatio": parseFloat(count / allCount), //已回款比率
+					"unreturnRatio": parseFloat((allCount - count) / allCount) //未回款比率
+				};
+				console.log(doc.events);
+			});
+			console.log(parseFloat(4 / 10));
+			//			callback(count);
+			callback(getData);
+		});
+	},
+	//根据合同id,展示所有未完成事件以及下一个待办事件
 	/*
 	 *id:合同id
 	 *calback:回调返回数据
 	 */
 	checkUndoneEvents: function(id, callback) {
+
 		Contract = this.model('Contract');
-		var send = [];
-		var j = 0;
+		var send = []; //用数组来存储未完成事件
+		var j = 0; //未完成事件数组下标控制器
+		var m = 0; //大于当前时间数组下标控制器
+		var occur = new Date();
+		var year = occur.getFullYear();
+		var month = occur.getMonth() + 1;
+		var day = occur.getDate(); ///
+		day=day<10?"0"+day:day;
+		month=month<10?"0"+month:month;
+		var getOccur = year + "-" + month + "-" + day;
+		//转换成标准时间格式
+		var getTemp;
+		var flag = 0;
+		//找到第一个比当前执行日期大的事件标志位
+		var canGet = 0;
+		//存在下一步事件标志位
+		var next;
+		//存储下一步执行事件
+		var willSend;
+		//存储发送数据
 
 		Contract.find({
 			_id: id
 		}, function(err, docs) {
 			docs.forEach(function(doc) {
 				for (var i = 0; i < doc.events.length; i++) { //遍历该合同数组
-					if (doc.events[i].completed == false) {
+					if (doc.events[i].completed == false && doc.events[i].date < getOccur) {
+						console.log(doc.events[i].date);
+						console.log(getOccur);
 						send[j] = doc.events[i]; //当状态为未完成状态,取出
-						j++;
+						j++; //下标移动
 					}
 				}
-				console.log(send);
-				callback(send);
+				console.log(getOccur);
+				for (var k = 0; k < doc.events.length; k++) {
+					if (flag == 0 && doc.events[k].date > getOccur) {
+						//找到第一个比当前时间大的事件
+						getTemp = doc.events[k].date; //把该事件的执行日期赋给临时时间
+						next = doc.events[k];
+						flag = 1;
+						canGet = 1;
+					}
+					if (flag == 1 && doc.events[k].date > getOccur && doc.events[k].date < getTemp) {
+						//之后要是存在比当前时间大并且比临时时间小的时间,更新临时时间,并且更新下一步执行事件
+						getTemp = doc.events[k].date;
+						next = doc.events[k];
+					}
+				}
+				if (canGet == 0) {
+					next = "合同已结束";
+				}
+				willSend = {
+					"name":doc.name,
+					"undone": send,
+					"next": next
+				};
+				console.log(willSend);
+				callback(willSend);
 			});
 		});
 	}
 };
 
 
+
 Repository.enhanceSchema(ContractSchema);
+
 
 mongoose.model('Contract', ContractSchema); //创建新合同对象,数据库中对应contracs容器
 mongoose.model('Template', ContractSchema); //创建合同模版对象,对应templates容器

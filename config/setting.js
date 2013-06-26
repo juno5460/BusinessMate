@@ -1,6 +1,7 @@
 var express = require('express'),
 	path = require('path'),
-	mongoStore = require('connect-mongo')(express);
+	mongoStore = require('connect-mongo')(express),
+	connectTimeout = require('connect-timeout');
 
 module.exports = function function_name(app, config) {
 	// all environments
@@ -13,10 +14,19 @@ module.exports = function function_name(app, config) {
 	app.use(express.methodOverride());
 	app.use(express.cookieParser('your secret here'));
 	app.use(app.router);
+
+	//设置超时时间
+	app.use(connectTimeout({
+		time: 10000
+	}));
+
 	app.use(require('stylus').middleware(config.root + '/cms'));
 	app.use(express.static(config.root + '/cms'));
 	app.use(express.static(config.root + '/public'));
 
+	app.set('view options', {
+		pretty: true
+	});
 
 	// express/mongo session storage
 	app.use(express.session({

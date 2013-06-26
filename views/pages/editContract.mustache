@@ -1,5 +1,6 @@
 	<link rel="stylesheet" href="{{{path.assets}}}/css/bootstrap-timepicker.css" />	
 	<link rel="stylesheet" href="{{{path.assets}}}/css/datepicker.css" />	
+	<input id="contractID" type="hidden" value="{{params._id}}">
 	<h3 class="header smaller lighter green">合同基本信息</h3>
 	<div class="row-fluid">
 		<div class="form-horizontal">
@@ -105,17 +106,15 @@
 	</div>
 
 	<div id="eventsList">
-		<div class="alert alert-warning" id="blankWarn">
-			<button type="button" class="close" data-dismiss="alert"> <i class="icon-remove"></i>
-			</button>
-			当前事件列表为空。
-			<br></div>
 	</div>
 
 	<div class="row-fluid bottom-cmd">
-		<div class="span8 hidden-phone"></div>
+		<div class="span6 hidden-phone"></div>
 		<div class="span2">
-			<button id="saveAsTemplate" class="btn btn-primary span12">保存为模板</button>
+			<button id="deleteContractBtn" class="btn btn-primary btn-danger span12">删除合同(Test)</button>
+		</div>
+		<div class="span2">
+			<button id="saveAsTemplateBtn" class="btn btn-primary span12">保存为模板</button>
 		</div>
 		<div class="span2">
 			<button id="saveBtn" class="btn btn-success span12">保存合同</button>
