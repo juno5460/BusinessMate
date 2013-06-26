@@ -201,7 +201,7 @@ $(function(){
 			'date'	:$event.date,
 			'price'	:$event.price,
 			'remark':$event.remark,
-			'completed':false,
+			'completed':$event.completed
 		};
 			$eventsArray.push($event);
 		});
