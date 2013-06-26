@@ -43,4 +43,9 @@ module.exports = function(app) {
 			username: 'Justin'
 		}));
 	});
+
+	app.get('/editContract',function(req,res){
+		console.info(req.query.id);
+		res.send(generator.generate('editContract',{_id:req.query.id}));
+	});
 };

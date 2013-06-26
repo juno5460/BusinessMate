@@ -76,8 +76,8 @@ $(function() {
 						color: '#fff',
 						width: 2
 					},
-					startAngle: 2,
-					// radius:60,
+					//startAngle: 2,
+					radius:100,
 					label: {
 						show: true,
 						radius: 1,
