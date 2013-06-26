@@ -31,13 +31,20 @@ module.exports = function(app) {
 		}));
 	});
 
+	//回款
+	app.get('/fund', function(req, res) {
+
+		res.send(generator.generate('fund', {
+			username: 'Justin'
+		}));
+	});
+
 	app.get('/contracts', function(req, res) {
 
 		res.send(generator.generate('contracts', {
 			username: 'Justin'
 		}));
 	});
-	
 	app.get('/contracts/new', function(req, res) {
 
 		res.send(generator.generate('addContract', {
@@ -45,8 +52,10 @@ module.exports = function(app) {
 		}));
 	});
 
-	app.get('/contracts/:id/edit',function(req,res){
+	app.get('/contracts/:id/edit', function(req, res) {
 		console.info(req.params.id);
-		res.send(generator.generate('editContract',{_id:req.params.id}));
+		res.send(generator.generate('editContract', {
+			_id: req.params.id
+		}));
 	});
 };

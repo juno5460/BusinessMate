@@ -1,31 +1,65 @@
-<li class="grey">
-	<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-		<i class="icon-tasks"></i>
-		<span class="badge badge-grey">{{layout.topbar_tasks.count}}</span>
+<li class="grey open">
+	<a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="icon-tasks"></i>
+		<span class="badge badge-grey">代办任务</span>
 	</a>
 
-	<ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-closer">
-		<li class="nav-header">
-			<i class="icon-ok"></i> {{layout.topbar_tasks.count}} Tasks to complete
-		</li>
-
-		{{#layout.topbar_tasks.latest}}
-		<li>
-			<a href="#">
-				<div class="clearfix">
-					<span class="pull-left">{{title}}</span>
-					<span class="pull-right">{{percentage}}%</span>
-				</div>
-				<div class="progress progress-mini {{progress-class}}"><div style="width:{{percentage}}%" class="bar"></div></div>
-			</a>
-		</li>
-		{{/layout.topbar_tasks.latest}}
+	<ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-closer"  style="width:350px; height: relative">
 
 		<li>
-			<a href="#">
-				See tasks with details
-				<i class="icon-arrow-right"></i>
-			</a>
+
+			<div id="task-tab" class="tab-pane active">
+				<h4 class="smaller lighter green"> <i class="icon-list"></i>
+					Task to finish
+				</h4>
+
+				<div id="taskToFinish"></div>
+			</div>
 		</li>
 	</ul>
 </li>
+
+<script src='{{{path.assets}}}/js/jquery-1.9.1.min.js'></script>
+<script>
+$(function() {
+	$.get("http://10.108.1.65:3000/tests", function(data, status) {
+
+		$.each(data, function(i, contract) {
+
+			var tdata = {
+				name			: 	data.name,
+				title			:   data.next.title,
+				date 			:   data.next.date
+			};
+
+			var template="<ul class='item-list'><li class='item-orange'><label>" + 						"<input type='checkbox' id='checkbox'><span class='lbl'>"+ 						tdata.name+ " -> " +  tdata.title + "  " + ":" + " " +							tdata.date + "</span></label></li></ul>";
+
+			$('#taskToFinish').append(template);
+
+			$('#checkbox').bind("click", function() {
+					$('#checkbox').attr("checked", true);	
+					var checkValue = document.getElementById("checkbox").checked;
+
+					var postData = {
+							_id 	    : contract._id,
+							id  	    : contract.id,
+							title     : contract.title,
+							completed : checkValue
+					};
+console.info(postData);
+					$.ajax({
+							url: 'http://10.108.1.65:3000/tests' + '/' + contract.id,
+							type: 'put',
+							data: postData,
+							error: function(){
+								console.info('Error loading PHP document');
+							},
+							success: function(result){}
+
+							});
+				});
+
+		});
+	});
+});
+
+</script>
