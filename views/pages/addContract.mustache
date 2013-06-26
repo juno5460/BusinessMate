@@ -1,6 +1,22 @@
 	<link rel="stylesheet" href="{{{path.assets}}}/css/bootstrap-timepicker.css" />	
 	<link rel="stylesheet" href="{{{path.assets}}}/css/datepicker.css" />	
-	<h3 class="header smaller lighter green">合同基本信息</h3>
+	
+		<div class="widget-box transparent">
+		<div class="widget-header">
+			<h3 class="smaller lighter green">合同基本信息</h3>
+			<div class="widget-toolbar no-border">
+				<div clas="btn-group">
+					<button id="templateBtn" data-toggle="dropdown" class="btn btn-small btn-info dropdown-toggle span12"> 
+						使用模板 
+						<i class="icon-angle-down icon-on-right"></i>
+					</button>
+
+					<ul id="templateList" class="dropdown-menu pull-right"></ul>
+
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="row-fluid">
 		<div class="form-horizontal">
 			<div class="control-group">
@@ -81,7 +97,7 @@
 
 	<div class="widget-box transparent">
 		<div class="widget-header">
-			<h3 class="smaller lighter green">合同基本信息</h3>
+			<h3 class="smaller lighter green">合同事件列表</h3>
 			<div class="widget-toolbar no-border">
 				<div clas="btn-group">
 					<button data-toggle="dropdown" class="btn btn-small btn-info dropdown-toggle span12"> 
