@@ -1,8 +1,8 @@
 /***
-*  系统测试接口
-*
-*
-****/
+ *  系统测试接口
+ *
+ *
+ ****/
 
 var async = require('async'),
 	mongoose = require('mongoose'),
@@ -10,14 +10,57 @@ var async = require('async'),
 	Template = mongoose.model('Template');
 
 exports.index = function(req, res) {
-
+	var template = new Template();
 	var contract = new Contract();
-	/******************查询信息接口测试通过******************/
+	/******************查询模版信息接口测试通过******************
+	template.checkTemplateInfo(function(data) {
+		console.log('checkInfo');
+		res.send(data);
+	});
+	/*****************************************************/
+	/******************查询合同信息接口测试通过******************
 	contract.checkInfo(function(data) {
 		console.log('checkInfo');
 		res.send(data);
 	});
 	/*****************************************************/
+	/************************插入合同*************************
+	var getNew = {
+		myId: "BD123",
+		partyA: "南航",
+		partyB: "恒拓",
+		amount: 1000000,
+		signDate: "2013-06-01",
+		name: "商务移动2013",
+		beginDate: "2013-06-01",
+		endDate: "2013-06-29",
+		state: "开启",
+		events: [{
+				"id": "2897269523664280600",
+				"title": "竞标",
+				"date": "2013-06-01",
+				"remark": "嗯嗯",
+				"price": -1,
+				"completed": false
+			}, {
+				"id": "289744791239205060",
+				"title": "首款",
+				"date": "2013-06-03",
+				"remark": "好的",
+				"price": 10000,
+				"completed": false
+			}, {
+				"id": "289744791239205061",
+				"title": "二期回款",
+				"date": "2013-06-03",
+				"remark": "很好的",
+				"price": 50000,
+				"completed": true
+			}
+		]
+	};
+	contract.insertData(getNew);
+	/*******************************************************/
 	/*****************统计所有合同已收回款接口测试通过***************
 	contract.countGetMoney(function(data) {
 		console.info("countGetMoney");
@@ -25,8 +68,8 @@ exports.index = function(req, res) {
 		res.send(data+"");
 	});
 	/*****************************************************/
-	/*****************统计单个合同已收回款接口测试通过***************
-	var id="51c8ed2aed2b43c501000079";
+	/*****************统计单个合同已收回款接口测试通过***************/
+	var id="51ca5258332913d206000004";
 	contract.countOneGetMoney(id,function(data) {
 		console.info("countOneGetMoney");
 		console.log(data);
