@@ -17,9 +17,9 @@ module.exports = function(app) {
 	var test = require('../app/controller/test');
 	app.resource('tests', test);
 
-	app.get('/ace', function(req, res) {
+	app.get('/', function(req, res) {
 
-		res.send(generator.generate('index', {
+		res.send(generator.generate('desktop', {
 			username: 'Justin'
 		}));
 	});
@@ -46,7 +46,7 @@ module.exports = function(app) {
 	});
 
 	app.get('/contracts/:id/edit',function(req,res){
-		console.info(req.query.id);
-		res.send(generator.generate('editContract',{_id:req.query.id}));
+		console.info(req.params.id);
+		res.send(generator.generate('editContract',{_id:req.params.id}));
 	});
 };

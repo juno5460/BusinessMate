@@ -12,7 +12,7 @@ $(function(){
 			var $trHtlm = $(Mustache.to_html(trTemplate, item));
 			$trHtlm.click(function(){
 				console.info(item._id);
-				window.location.href = "/editContract?id=" + item._id;
+				window.location.href = "/contracts/" + item._id + "/edit";
 			});
 			$('#contractsTbody').append($trHtlm);
 
