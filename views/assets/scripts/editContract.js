@@ -74,7 +74,7 @@ $(function(){
 			type: 'PUT',
 			data: item,
 			success: function(result) {
-				window.location.href = "contracts";
+				window.location.href = "/contracts";
 				console.info(result);
 			},
 			error: function(result){
@@ -88,7 +88,7 @@ $(function(){
 			url: 'http://10.108.1.65:3000/api/contracts/' + getItemID(),
 			type: 'DELETE',
 			success: function(result) {
-				window.location.href = "contracts";
+				window.location.href = "/contracts";
 				console.info(result);
 			},
 			error: function(result){
