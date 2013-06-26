@@ -37,7 +37,7 @@ module.exports = function(app) {
 			username: 'Justin'
 		}));
 	});
-		app.get('/new', function(req, res) {
+		app.get('/newContract', function(req, res) {
 
 		res.send(generator.generate('addContract', {
 			username: 'Justin'
