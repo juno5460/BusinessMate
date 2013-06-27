@@ -193,27 +193,33 @@ $(function(){
 
 	//保存按钮点击时
 	$("#saveBtn").click(function(){
-		var item = buildModel();
-		console.info(item);
+		// 对表单做出校验，校验通过则上传数据
+		if ($('#validateForm').valid()) {
+			var item = buildModel();
+			console.info(item);
 
-		$.ajax({
-			url: '/api/contracts/' + getItemID(),
-			type: 'PUT',
-			data: item,
-			success: function(result) {
-				console.info(result);
-				$.globalMessenger().post({
-					message: "合同修改成功",
-					type: "success",
-				});
-				doActionAferSecond(function() {
-					window.location.href = "/contracts";
-				}, 1);
-			},
-			error: function(result){
-				alert("新建合同失败");
-			}
-		});
+			$.ajax({
+				url: '/api/contracts/' + getItemID(),
+				type: 'PUT',
+				data: item,
+				success: function(result) {
+					console.info(result);
+					$.globalMessenger().post({
+						message: "合同修改成功",
+						type: "success",
+					});
+					doActionAferSecond(function() {
+						window.location.href = "/contracts";
+					}, 1);
+				},
+				error: function(result) {
+					alert("新建合同失败");
+				}
+			});
+		} else {
+			showAlert("合同数据有误，请确认后重新保存。","error",4);
+			scrollToTop();
+		}
 	});
 
 	$("#deleteContractBtn").click(function(){
@@ -364,9 +370,17 @@ $(function(){
 		return $("#contractID").val();
 	}
 
-	var scrollToBottom = function(){
-			$('html, body, .container').animate({scrollTop: $(document).height()}, 600); 
-		}
+	var scrollToBottom = function() {
+		$('html, body, .container').animate({
+			scrollTop: $(document).height()
+		}, 600);
+	}
+
+	var scrollToTop = function() {
+		$('html, body, .container').animate({
+			scrollTop: 0
+		}, 600);
+	}
 
 	var generateID = function() {
 
@@ -388,6 +402,117 @@ $(function(){
 			 	clearTimeout(t);	
 			 },delay * 1000);
 	}
+
+	 //弹出底部提示框
+	var showAlert = function(message,type,delay){
+		$.globalMessenger().post({
+			message: message,
+			hideAfter: delay,
+			type: type,
+		});
+	}
+
+	// //校验测试代码
+	// $('#saveBtn').click(function(){
+	// 	$('#validateForm').valid();
+	// });
+	
+	$('#validateForm').validate({
+					errorElement: 'span',
+					errorClass: 'help-inline warn-tip',
+					focusInvalid: true,
+					rules:{
+						myId: {
+							required:true,
+							minlength: 5,
+							maxlength: 20,
+						},
+						name: {
+							required:true,
+						},
+						partyA: {
+							required:true,
+						},
+						partyB: {
+							required:true,
+						},
+						signPicker: {
+							required:true,
+							date:true,
+						},
+						beginPicker: {
+							required:true,
+							date:true,
+						},
+						endPicker: {
+							required:true,
+							date:true,
+						},
+						amount: {
+							required:true,
+							digits:true,
+						},
+						state: {
+							required:true,
+						}
+					},
+					highlight: function (e) {
+						$(e).closest('.control-group').removeClass('success').addClass('error');
+					},
+			
+					success: function (e) {
+						$(e).closest('.control-group').removeClass('error').addClass('success');
+						$(e).remove();
+					},
+			
+					errorPlacement: function (error, element) {
+						if(element.is(':checkbox') || element.is(':radio')) {
+							var controls = element.closest('.controls');
+							if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+							else error.insertAfter(element.nextAll('.lbl').eq(0));
+						} 
+						else if(element.is('.chzn-select')) {
+							console.info(element);
+							error.insertAfter(element.nextAll('[class*="chzn-container"]').eq(0));
+						}
+						else {error.insertAfter(element.parent());}
+					},
+
+					messages: {
+						myId: {
+							required: "合同编号不能为空.",
+							minlength: "合同编号长度小于5."
+						},
+						name: {
+							required: "合同名称不能为空.",
+						},
+						partyA: {
+							required: "甲方信息不能为空.",
+						},
+						partyB: {
+							required: "乙方信息不能为空.",
+						},
+						signPicker: {
+							required: "请选定具体日期.",
+							date: "请选定具体日期."
+						},
+						beginPicker: {
+							required: "请选定具体日期.",
+							date: "请选定具体日期."
+						},
+						endPicker: {
+							required: "请选定具体日期.",
+							date: "请输入合同编号."
+						},
+						state: {
+							required: "合同状态不能为空.",
+						},
+						amount: {
+							required: "请输入合同总金额.",
+							digits: "请输入正确的金额数."
+						},
+				},
+		});
 
 });
 
