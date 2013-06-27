@@ -7,7 +7,7 @@
 		"link" : null, "title" : "统计分析" , "icon" : "icon-dashboard",
 		"submenu" :
 		[
-		{ "link" : "/fund"} ,
+		{ "link" : "/fund","title" : "回款统计"} ,
 
 		{ "link" : "/report/buttons" , "title" : "本周商务情况" } ,
 

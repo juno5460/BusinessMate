@@ -14,11 +14,31 @@ $(function() {
 				lastReturnDate: contract.lastReturnDate
 			};
 
-			var template1 = "<tr><td>{{name}}</td><td class='hidden-480'>{{partyA}}</td><td class='hidden-480'>{{partyB}}</td><td>{{amount}}</td><td>{{returnAmount}}</td><td class='hidden-phone'>{{returnRatio}}</td><td class='hidden-480'>{{lastReturnDate}}</td></tr>";
+			var test = "<div class='easy-pie-chart percentage easyPieChart' data-size='30' data-color='#ECCB71' data-percent='42' style='width: 30px; height: 30px; line-height: 30px;'>"+
+															"	<span class='percent'>42</span>%" +
+															"<canvas width='30' height='30'></canvas></div>";
+			var template1 = "<tr><td>{{name}}</td><td class='hidden-480'>{{partyA}}</td><td class='hidden-480'>{{partyB}}</td><td>{{amount}}</td><td>{{returnAmount}}</td><td class='hidden-phone'>"+test+"</td><td class='hidden-480'>{{lastReturnDate}}</td></tr>";
 
 			var html1 = Mustache.to_html(template1, t1data);
 			$('#table1').append(html1);
 
+
+
+			$('.easy-pie-chart.percentage').each(function(){
+
+					var barColor = $(this).data('color') ;
+					var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' : '#E2E2E2';
+					var size = parseInt($(this).data('size')) || 50;
+					$(this).easyPieChart({
+						barColor: barColor,
+						trackColor: trackColor,
+						scaleColor: false,
+						lineCap: 'butt',
+						lineWidth: parseInt(size/10),
+						animate: false,
+						size: size
+					});
+				})
 			var t2data = {
 				name						: contract.name,
 				partyA					: contract.partyA,
