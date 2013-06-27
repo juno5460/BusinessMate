@@ -3,7 +3,9 @@
  ,
  "description" : "添加合同"
  ,
- "scripts" : ["jquery-ui" , "slimscroll" , "easy-pie-chart" , "sparkline" , "flot" , "flot.pie" , "flot.resize"]
+ "no-header" : true
+ ,
+  "scripts" : ["jquery-ui" , "underscore" , "backbone" , "bootbox" , "validate"]
  ,
  "ie_scripts" : [{"version":8, "name":"excanvas"}]
 }

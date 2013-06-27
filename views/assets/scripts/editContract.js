@@ -161,7 +161,7 @@ $(function(){
 
 					if (!isExist) {
 						var item = buildModel();
-						item.tName = item.name;
+						item.tName = result;
 						delete item._id;
 						$.ajax({
 							url: '/api/templates',
@@ -228,6 +228,15 @@ $(function(){
 				alert("删除合同失败");
 			}
 		});
+
+		// $.gritter.add({
+		// 	// (string | mandatory) the heading of the notification
+		// 	title: '通知',
+		// 	// (string | mandatory) the text inside the notification
+		// 	text: '合同编辑成功',
+		// 	time: 2000,
+		// 	class_name: 'gritter-success' +  ' gritter-light'
+		// });
 	});
 
 	var addCustomEvent = function(data){

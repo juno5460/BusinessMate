@@ -4,6 +4,7 @@
 
 
 	<input id="contractID" type="hidden" value="{{params._id}}">
+	<form id="validateForm">
 	<div class="widget-box transparent">
 		<div class="widget-header">
 			<h3 class="smaller lighter green">合同基本信息</h3>
@@ -25,35 +26,35 @@
 				<label class="control-label">合同编号</label>
 				<div class="controls">
 					<div class="span4">
-						<input id="myId" type="text"  class="span12" placeholder="合同编号"></div>
+						<input id="myId" name="myId" type="text"  class="span12" placeholder="合同编号"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">合同名称</label>
 				<div class="controls">
 					<div class="span4">
-						<input id="name" type="text"  class="span12" placeholder="合同名称"></div>
+						<input id="name" name="name" type="text"  class="span12" placeholder="合同名称"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">甲方</label>
 				<div class="controls">
 					<div class="span4">
-						<input id="partyA" type="text"  class="span12" placeholder="甲方"></div>
+						<input id="partyA" name="partyA" type="text"  class="span12" placeholder="甲方"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">乙方</label>
 				<div class="controls">
 					<div class="span4">
-						<input id="partyB" type="text"  class="span12" placeholder="乙方"></div>
+						<input id="partyB" name="partyB" type="text"  class="span12" placeholder="乙方"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">签订日期</label>
 				<div class="controls">
 					<div class="row-fluid input-append date">
-						<input class="date-picker" id="signPicker" type="text" data-date-format="yyyy-mm-dd" readonly="true">	
+						<input name="signPicker" class="date-picker" id="signPicker" type="text" data-date-format="yyyy-mm-dd" readonly="true">	
 						<span class="add-on"> <i class="icon-calendar"></i>
 						</span>
 					</div>
@@ -63,7 +64,7 @@
 				<label class="control-label">开始日期</label>
 				<div class="controls">
 					<div class="row-fluid input-append date">
-						<input class="date-picker" id="beginPicker" type="text" data-date-format="yyyy-mm-dd" readonly="true">	
+						<input name="beginPicker" class="date-picker" id="beginPicker" type="text" data-date-format="yyyy-mm-dd" readonly="true">	
 						<span class="add-on"> <i class="icon-calendar"></i>
 						</span>
 					</div>
@@ -73,7 +74,7 @@
 				<label class="control-label">结束日期</label>
 				<div class="controls">
 					<div class="row-fluid input-append date span4">
-						<input class="date-picker" id="endPicker" type="text" data-date-format="yyyy-mm-dd" readonly="true">	
+						<input name="endPicker" class="date-picker" id="endPicker" type="text" data-date-format="yyyy-mm-dd" readonly="true">	
 						<span class="add-on">
 							<i class="icon-calendar"></i>
 						</span>
@@ -84,14 +85,14 @@
 				<label class="control-label">金额</label>
 				<div class="controls">
 					<div class="span4">
-						<input  id="amount" type="text"  class="span12" placeholder="金额"></div>
+						<input  name="amount" id="amount" type="text"  class="span12" placeholder="金额"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">状态</label>
 				<div class="controls">
 					<div class="span4">
-						<input  id="state" type="text"  class="span12" placeholder="状态"></div>
+						<input name="state"  id="state" type="text"  class="span12" placeholder="状态"></div>
 				</div>
 			</div>
 		</div>
@@ -124,13 +125,13 @@
 
 	<div id="eventsList">
 	</div>
-
+</form>
 	<div class="row-fluid bottom-cmd">
 		<div class="span8 hidden-phone"></div>
 		<div class="span2">
 			<button id="saveAsTemplateBtn" class="btn btn-primary span12">保存为模板</button>
 		</div>
 		<div class="span2">
-			<button id="saveBtn" class="btn btn-success span12">保存合同</button>
+			<button id="saveBtn" class="btn btn-success span12" data-last="Finish">保存合同</button>
 		</div>
 	</div>
