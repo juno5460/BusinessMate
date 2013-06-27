@@ -62,11 +62,13 @@ $(function() {
 				title: contract.events[lastIndex].title,
 				date: lastDate
 			};
-			var t1 = "<ul class='item-list ui-sortable'><li class='"+liColor[idIndex]+"'><label class='inline'>";
+
+			var t1 = "<tr><td><ul style='height:100%' class='item-list ui-sortable'><li class='"+liColor[idIndex]+"'><label class='inline'>";
 			var t2 = "<input  type='checkbox' id='" + checkboxId[idIndex] + "'>";
-			var t3 = "  " + "<span class='lbl'>"+tdata.name +">>"+"<span class='tdname'>"+tdata.title+"</span>";
-			var t4 = ":" + tdata.date + "</span></label></li></ul>";
-			var template = t1 + t2 + t3 + t4;
+			var t3 = "<span class='lbl'>"+tdata.name +":"+tdata.date;
+			var t4 = "~"+tdata.title + "</span></label></li></ul></td>";
+			var t5 = "<td><textarea id='taskRemark' class='span6 cellremark' placeholder='备注'></textarea></td></tr>";
+			var template = t1 + t2 + t3 + t4 +t5;
 
 			$('#taskToFinish').append(template);
 
@@ -237,7 +239,7 @@ $(function() {
 
 		$.plot(placeholder1, pieData1, optionPie);
 		placeholder1.bind("plotclick", function(event, pos, obj) {
-			window.location.href = "pieDetial" + '/' + obj.series.label;
+			window.location.href = "/#pieDetial" + '/' + obj.series.label;
 		});
 
 		var placeholder2 = $('#placeholder2').css({
@@ -246,7 +248,7 @@ $(function() {
 		});
 		$.plot(placeholder2, pieData2, optionPie);
 		placeholder2.bind("plotclick", function(event, pos, obj) {
-			window.location.href = "pieDetial" + '/' + obj.series.label;
+			window.location.href = "/#pieDetial" + '/' + obj.series.label;
 		});
 
 
