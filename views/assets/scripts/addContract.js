@@ -3,14 +3,17 @@ $(function() {
 	$('#signPicker').datepicker();
 	$('#signPicker').datepicker().on('changeDate', function(env) {
 		$('#signPicker').datepicker('hide');
+		$('#signPicker').blur()
 	});
 	$('#beginPicker').datepicker();
 	$('#beginPicker').datepicker().on('changeDate', function(env) {
 		$('#beginPicker').datepicker('hide');
+		$('#beginPicker').blur()
 	});
 	$('#endPicker').datepicker();
 	$('#endPicker').datepicker().on('changeDate', function(env) {
 		$('#endPicker').datepicker('hide');
+		$('#endPicker').blur()
 	});
 
 
@@ -130,7 +133,7 @@ $(function() {
 
 					if (!isExist) {
 						var item = buildModel();
-						item.tName = item.name;
+						item.tName = result;
 						delete item._id;
 						$.ajax({
 							url: '/api/templates',
@@ -342,5 +345,110 @@ $(function() {
 			clearTimeout(t);
 		}, delay * 1000);
 	}
+
+
+	///校验测试代码
+	// $('#saveBtn').click(function(){
+	// 	$('#validateForm').valid();
+	// });
+	
+	$('#validateForm').validate({
+					errorElement: 'span',
+					errorClass: 'help-inline',
+					focusInvalid: false,
+					rules:{
+						myId: {
+							required:true,
+							minlength: 5,
+							maxlength: 20,
+						},
+						name: {
+							required:true,
+						},
+						partyA: {
+							required:true,
+						},
+						partyB: {
+							required:true,
+						},
+						signPicker: {
+							required:true,
+							date:true,
+						},
+						beginPicker: {
+							required:true,
+							date:true,
+						},
+						endPicker: {
+							required:true,
+							date:true,
+						},
+						amount: {
+							required:true,
+							digits:true,
+						},
+						state: {
+							required:true,
+						}
+					},
+					highlight: function (e) {
+						$(e).closest('.control-group').removeClass('success').addClass('error');
+					},
+			
+					success: function (e) {
+						$(e).closest('.control-group').removeClass('error').addClass('success');
+						$(e).remove();
+					},
+			
+					errorPlacement: function (error, element) {
+						if(element.is(':checkbox') || element.is(':radio')) {
+							var controls = element.closest('.controls');
+							if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+							else error.insertAfter(element.nextAll('.lbl').eq(0));
+						} 
+						else if(element.is('.chzn-select')) {
+							error.insertAfter(element.nextAll('[class*="chzn-container"]').eq(0));
+						}
+						else error.insertAfter(element);
+					},
+
+					messages: {
+						myId: {
+							required: "合同编号不能为空.",
+							minlength: "合同编号长度小于5."
+						},
+						name: {
+							required: "合同名称不能为空.",
+						},
+						partyA: {
+							required: "甲方信息不能为空.",
+						},
+						partyB: {
+							required: "乙方信息不能为空.",
+						},
+						signPicker: {
+							required: "请选定具体日期.",
+							date: "请选定具体日期."
+						},
+						beginPicker: {
+							required: "请选定具体日期.",
+							date: "请选定具体日期."
+						},
+						endPicker: {
+							required: "请选定具体日期.",
+							date: "请输入合同编号."
+						},
+						state: {
+							required: "合同状态不能为空.",
+						},
+						amount: {
+							required: "请输入合同总金额.",
+							digits: "请输入正确的金额数."
+						},
+				},
+		});
+
+
+	///
 
 });

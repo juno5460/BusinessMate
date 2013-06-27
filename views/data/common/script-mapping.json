@@ -57,5 +57,9 @@
  
  "markdown" : ["markdown/markdown.min.js", "markdown/bootstrap-markdown.min.js"],
  
- "wysiwyg" : ["jquery.hotkeys.min.js", "bootstrap-wysiwyg.min.js"]
+ "wysiwyg" : ["jquery.hotkeys.min.js", "bootstrap-wysiwyg.min.js"],
+
+ "backbone" : "backbone-min.js",
+
+ "underscore" : "underscore-min.js"
 }

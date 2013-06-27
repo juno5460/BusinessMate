@@ -17,12 +17,13 @@ module.exports = function(app) {
 	var test = require('../app/controller/test');
 	app.resource('tests', test);
 
-	app.get('/', function(req, res) {
+	app.get('/ace', function(req, res) {
 
-		res.send(generator.generate('desktop', {
+		res.send(generator.generate('index', {
 			username: 'Justin'
 		}));
 	});
+
 
 	app.get('/desktop', function(req, res) {
 
