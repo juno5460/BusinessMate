@@ -17,7 +17,7 @@ $(function(){
 	var initialize = function(){
 		var id = $("#contractID").val();
 		console.info(id);
-		$.get("http://10.108.1.65:3000/api/contracts/" + id,function(data,status){
+		$.get("/api/contracts/" + id,function(data,status){
 			console.info(data);
 			if(status == 'success') {
 
@@ -66,24 +66,70 @@ $(function(){
 	var templateTmp = "<li><a hre='#'>{{templateName}}</a></li>";
 
 	$("#templateBtn").click(function(){
-		$.get("http://10.108.1.65:3000/api/templates",function(data,status){
+		$.get("/api/templates",function(data,status){
 			if(status == 'success') {
+
 				var $templates = $(data);
+
+				$("#templateList").html('');
+
 				$templates.each(function(index,item){
+
 					var $cellHtlm = $(Mustache.to_html(templateTmp, {templateName:item.tName}));
-					$("#templateList").html('');
+
+					$cellHtlm.click(function(){
+
+						loadTempalteAndRenderToHtml(item._id);
+
+					});
+
 					$("#templateList").append($cellHtlm);
 				});
 			}
 		});
 	});
 
+	var loadTempalteAndRenderToHtml = function(id){
+		$.get("/api/templates/" + id,function(data,status){
+			if(status == "success") {
+
+				$("#myId").val(data.myId);
+				$("#name").val(data.name);
+				$("#partyA").val(data.partyA);
+				$("#partyB").val(data.partyB);
+				$("#signPicker").val(data.signDate);
+				$("#beginPicker").val(data.beginDate);
+				$("#endPicker").val(data.endDate);
+				$("#amount").val(data.amount);
+				$("#state").val(data.state);
+
+				var $events = $(data.events);
+				if ($events.length != null) {
+
+					$("#eventsList").html("");
+
+					$events.each(function(index, item) {
+						if (item.price == -1) {
+							addCustomEvent(item);
+						} else {
+							addPriceEvent(item);
+						}
+					});
+				}
+
+			} else {
+				alert("获取模板失败！");
+			}
+		});
+	}
+
 	//点击保存模板按钮时
 	$("#saveAsTemplateBtn").click(function(){
 		var item = buildModel();
 		item.tName = item.name;
+		delete item._id;
 		$.ajax({
-			url: 'http://10.108.1.65:3000/api/templates',
+			url: '/api/templates',
 			type: 'POST',
 			data: item,
 			success: function(result) {
@@ -101,7 +147,7 @@ $(function(){
 		console.info(item);
 
 		$.ajax({
-			url: 'http://10.108.1.65:3000/api/contracts/' + getItemID(),
+			url: '/api/contracts/' + getItemID(),
 			type: 'PUT',
 			data: item,
 			success: function(result) {
@@ -116,7 +162,7 @@ $(function(){
 
 	$("#deleteContractBtn").click(function(){
 			$.ajax({
-			url: 'http://10.108.1.65:3000/api/contracts/' + getItemID(),
+			url: '/api/contracts/' + getItemID(),
 			type: 'DELETE',
 			success: function(result) {
 				window.location.href = "/contracts";
@@ -192,8 +238,6 @@ $(function(){
 		$('#date' + datePickerID).datepicker().on('changeDate',function(env){
 			$('#date' + datePickerID).datepicker('hide');
 		});
-
-
 	}
 
 	//获取页面上的数据，并构建一个合同模型
