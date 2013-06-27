@@ -4,7 +4,7 @@ $(function() {
 	var partyA = new Array(),
 		partyB = new Array();
 	var contractsCount = 0;
-	$.get("http://10.108.1.65:3000/api/contracts", function(data, status) {
+	$.get("api/contracts", function(data, status) {
 
 		$.each(data, function(i, contract) {
 			partyA[contractsCount] = contract.partyA;
@@ -103,7 +103,7 @@ $(function() {
 
 		$.plot(placeholder1, pieData1, optionPie);
 		placeholder1.bind("plotclick", function(event, pos, obj) {
-			window.location.href = "pieDetial" + '/' + obj.series.label;
+			window.location.href = "http://localhost:3000/#pieDetial" + '/' + obj.series.label;
 		});
 
 		var placeholder2 = $('#placeholder2').css({
@@ -112,7 +112,7 @@ $(function() {
 		});
 		$.plot(placeholder2, pieData2, optionPie);
 		placeholder2.bind("plotclick", function(event, pos, obj) {
-			window.location.href = "pieDetial" + '/' + obj.series.label;
+			window.location.href = "http://localhost:3000/#pieDetial" + '/' + obj.series.label;
 		});
 
 
