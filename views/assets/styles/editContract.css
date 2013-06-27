@@ -49,5 +49,8 @@
 			margin-bottom: 10px;
 		}
 
+		.warn-tip{
+			padding-top: 5px;
+		}
 	<link rel="stylesheet" href="assets/css/datepicker.css" />
 	<link rel="stylesheet" href="assets/css/bootstrap-timepicker.css" />

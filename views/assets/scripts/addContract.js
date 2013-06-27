@@ -165,27 +165,34 @@ $(function() {
 
 	//保存按钮点击时
 	$("#saveBtn").click(function(){
-		var item = buildModel();
-		console.info(item);
+		// 对表单做出校验，校验通过则上传数据
+		if($('#validateForm').valid()) {
+			var item = buildModel();
+			console.info(item);
 
-		$.ajax({
-			url: '/api/contracts',
-			type: 'POST',
-			data: item,
-			success: function(result) {
-				console.info(result);
-				$.globalMessenger().post({
-					message: "合同保存成功",
-					type: "success",
-				});
-				doActionAferSecond(function() {
-					window.location.href = "/contracts";
-				}, 1);
-			},
-			error: function(result){
-				alert("新建合同失败");
-			}
-		});
+			$.ajax({
+				url: '/api/contracts',
+				type: 'POST',
+				data: item,
+				success: function(result) {
+					console.info(result);
+					$.globalMessenger().post({
+						message: "合同保存成功",
+						type: "success",
+					});
+					doActionAferSecond(function() {
+						window.location.href = "/contracts";
+					}, 1);
+				},
+				error: function(result) {
+					alert("新建合同失败");
+				}
+			});
+		} else {
+			showAlert("合同数据有误，请确认后重新保存。","error",4);
+			scrollToTop();
+		}
+
 	});
 
 	//获取页面上的数据，并构建一个合同模型
@@ -325,6 +332,12 @@ $(function() {
 		}, 600);
 	}
 
+	var scrollToTop = function() {
+		$('html, body, .container').animate({
+			scrollTop: 0
+		}, 600);
+	}
+
 	var generateID = function() {
 
 		//生成唯一ID号
@@ -346,15 +359,24 @@ $(function() {
 		}, delay * 1000);
 	}
 
+	 //弹出底部提示框
+	var showAlert = function(message,type,delay){
+		$.globalMessenger().post({
+			message: message,
+			hideAfter: delay,
+			type: type,
+		});
+	}
 
-	///校验测试代码
+
+	// //校验测试代码
 	// $('#saveBtn').click(function(){
-	// 	$('#validateForm').valid();
+	// 	console.info($('#validateForm').valid());
 	// });
 	
 	$('#validateForm').validate({
 					errorElement: 'span',
-					errorClass: 'help-inline',
+					errorClass: 'help-inline warn-tip',
 					focusInvalid: false,
 					rules:{
 						myId: {
@@ -407,9 +429,10 @@ $(function() {
 							else error.insertAfter(element.nextAll('.lbl').eq(0));
 						} 
 						else if(element.is('.chzn-select')) {
+							console.info(element);
 							error.insertAfter(element.nextAll('[class*="chzn-container"]').eq(0));
 						}
-						else error.insertAfter(element);
+						else {error.insertAfter(element.parent());}
 					},
 
 					messages: {
