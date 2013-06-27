@@ -1,5 +1,7 @@
 $(function(){
 
+
+
 	$('#signPicker').datepicker();
 	$('#signPicker').datepicker().on('changeDate',function(env){
 	$('#signPicker').datepicker('hide');
@@ -12,6 +14,11 @@ $(function(){
 	$('#endPicker').datepicker().on('changeDate',function(env){
 	$('#endPicker').datepicker('hide');
 	});
+
+	//初始化弹出框样式
+	$._messengerDefaults = {
+	extraClasses: 'messenger-fixed messenger-theme-block messenger-on-bottom'
+	};
 
 
 	var initialize = function(){
@@ -49,8 +56,8 @@ $(function(){
 	//从服务器拉取数据并初始化网页数据
 	initialize();
 
-	var customEventTmp 	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}''></span></div><div class='widget-toolbar event-date'><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remark' class='span12 cellremark' placeholder='请输入备注信息' value='{{remark}}'></textarea></div></div></div>";
-	var priceEventTmp	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>回款金额：</span><span><input id='price' class='hiddenInput' id='price' value='{{price}}'></span><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remak' class='span12 cellremark' placeholder='请输入备注信息' value='{{remark}}'></textarea></div></div></div>";
+	var customEventTmp 	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}''></span></div><div class='widget-toolbar event-date'><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remark' class='span12 cellremark' placeholder='请输入备注信息' value='{{remark}}'></textarea></div></div></div>";
+	var priceEventTmp	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>回款金额：</span><span><input id='price' class='hiddenInput' id='price' value='{{price}}'></span><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remak' class='span12 cellremark' placeholder='请输入备注信息' value='{{remark}}'></textarea></div></div></div>";
 
 	//添加自定义事件
 	$("#customEventBtn").click(function(){
@@ -125,20 +132,63 @@ $(function(){
 
 	//点击保存模板按钮时
 	$("#saveAsTemplateBtn").click(function(){
-		var item = buildModel();
-		item.tName = item.name;
-		delete item._id;
-		$.ajax({
-			url: '/api/templates',
-			type: 'POST',
-			data: item,
-			success: function(result) {
-				console.info(result);
-			},
-			error: function(result){
-				alert("保存合同模板失败！");
-			}
+
+		//模板保存时的弹出框
+		bootbox.prompt("请填写模板名", function(result) {
+			
+			if(result === null)
+				return;
+
+			//
+			$.get("/api/templates", function(data, status) {
+				if (status == 'success') {
+
+					var $templates = $(data);
+					var isExist = false;
+					$templates.each(function(index, item) {
+						if (item.tName == result) {
+
+							$.globalMessenger().post({
+									message: "当前模板命名已存在，请重新命名!",
+									hideAfter: 3,
+									type: "error",
+								});
+
+							isExist = true;
+							return false;
+						}
+					});
+
+					if (!isExist) {
+						var item = buildModel();
+						item.tName = item.name;
+						delete item._id;
+						$.ajax({
+							url: '/api/templates',
+							type: 'POST',
+							data: item,
+							success: function(result) {
+								$.globalMessenger().post({
+									message: "模板保存成功",
+									hideAfter: 1.5,
+									type: "success",
+								});
+							},
+							error: function(result) {
+								$.globalMessenger().post({
+									message: "模板保存失败",
+									hideAfter: 1.5,
+									type: "error",
+								});
+							}
+						});
+					}
+				}
+			});
+			//
 		});
+	
+
 	});
 
 	//保存按钮点击时
@@ -151,8 +201,14 @@ $(function(){
 			type: 'PUT',
 			data: item,
 			success: function(result) {
-				window.location.href = "/contracts";
 				console.info(result);
+				$.globalMessenger().post({
+					message: "合同修改成功",
+					type: "success",
+				});
+				doActionAferSecond(function() {
+					window.location.href = "/contracts";
+				}, 1);
 			},
 			error: function(result){
 				alert("新建合同失败");
@@ -316,6 +372,13 @@ $(function(){
 				return encrypt;
 			}
 		}
+
+	var doActionAferSecond = function(func,delay){
+		var t = setTimeout(function(){
+			 	func();
+			 	clearTimeout(t);	
+			 },delay * 1000);
+	}
 
 });
 
