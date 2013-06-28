@@ -17,13 +17,12 @@ module.exports = function(app) {
 	var test = require('../app/controller/test');
 	app.resource('tests', test);
 
-	app.get('/ace', function(req, res) {
+	app.get('/', function(req, res) {
 
-		res.send(generator.generate('index', {
+		res.send(generator.generate('desktop', {
 			username: 'Justin'
 		}));
 	});
-
 
 	app.get('/desktop', function(req, res) {
 
@@ -32,7 +31,7 @@ module.exports = function(app) {
 		}));
 	});
 
-	app.get('/pieDetail/:id', function(req, res) {
+	app.get('/desktop/:id/pieDetail', function(req, res) {
 		console.info(req.params.id);
 		res.send(generator.generate('pieDetail', {
 			_id: req.params.id
@@ -53,6 +52,7 @@ module.exports = function(app) {
 			username: 'Justin'
 		}));
 	});
+	
 	app.get('/contracts/new', function(req, res) {
 		res.send(generator.generate('addContract', {
 			username: 'Justin'

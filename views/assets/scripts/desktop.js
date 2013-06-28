@@ -236,10 +236,9 @@ $(function() {
 			});
 		}
 
-
 		$.plot(placeholder1, pieData1, optionPie);
 		placeholder1.bind("plotclick", function(event, pos, obj) {
-			window.location.href = "/#pieDetial" + '/' + obj.series.label;
+			window.location.href = "/desktop" + '/' + obj.series.label + "/pieDetail";
 		});
 
 		var placeholder2 = $('#placeholder2').css({
@@ -248,9 +247,8 @@ $(function() {
 		});
 		$.plot(placeholder2, pieData2, optionPie);
 		placeholder2.bind("plotclick", function(event, pos, obj) {
-			window.location.href = "/#pieDetial" + '/' + obj.series.label;
+			window.location.href = "/desktop" + '/' + obj.series.label + "/pieDetail";
 		});
-
 
 	});
 

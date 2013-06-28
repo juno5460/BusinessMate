@@ -15,8 +15,6 @@ $(function(){
 				window.location.href = "/contracts/" + item._id + "/edit";
 			});
 			$('#contractsTbody').append($trHtlm);
-
-
 		});
 	});
 });

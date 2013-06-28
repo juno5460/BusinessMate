@@ -2,7 +2,7 @@ $(function() {
 		var airline = $('#pieID').val();
 		console.info(airline);
 
-		$.get("http://10.108.1.65:3000/api/contracts", function(data, status) {
+		$.get("/api/contracts", function(data, status) {
 
 			$.each(data, function(i, contract) {
 				//这里找出id的所有合同并添加
@@ -16,7 +16,7 @@ $(function() {
 							state   : contract.state
 						};
 
-						var template = "<tr><td>{{name}}</td><td>{{partyA}}</td><td>{{partyB}}</td><td>{{amount}}</td><td>{{state}}</td></tr>";
+						var template = "<tr><td class='center'>{{name}}</td><td class='center'>{{partyA}}</td><td class='center'>{{partyB}}</td><td class='center'>{{amount}}</td><td class='center'>{{state}}</td></tr>";
 
 						var html = Mustache.to_html(template, tdata);
 						$('#pieTable').append(html);
