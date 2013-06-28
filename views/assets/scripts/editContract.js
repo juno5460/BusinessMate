@@ -148,11 +148,7 @@ $(function(){
 					$templates.each(function(index, item) {
 						if (item.tName == result) {
 
-							$.globalMessenger().post({
-									message: "当前模板命名已存在，请重新命名!",
-									hideAfter: 3,
-									type: "error",
-								});
+							showAlert("当前模板命名已存在，请重新命名!","error",3);
 
 							isExist = true;
 							return false;
@@ -168,18 +164,10 @@ $(function(){
 							type: 'POST',
 							data: item,
 							success: function(result) {
-								$.globalMessenger().post({
-									message: "模板保存成功",
-									hideAfter: 1.5,
-									type: "success",
-								});
+								showAlert("模板保存成功","success",2);
 							},
 							error: function(result) {
-								$.globalMessenger().post({
-									message: "模板保存失败",
-									hideAfter: 1.5,
-									type: "error",
-								});
+								showAlert("模板保存失败","error",2);
 							}
 						});
 					}
@@ -204,16 +192,13 @@ $(function(){
 				data: item,
 				success: function(result) {
 					console.info(result);
-					$.globalMessenger().post({
-						message: "合同修改成功",
-						type: "success",
-					});
-					doActionAferSecond(function() {
+					showAlert("合同修改成功","success",2,
+						doActionAferSecond(function() {
 						window.location.href = "/contracts";
-					}, 1);
+					}, 1));
 				},
 				error: function(result) {
-					alert("新建合同失败");
+					showAlert("编辑合同失败","err",2);
 				}
 			});
 		} else {
@@ -231,18 +216,10 @@ $(function(){
 				console.info(result);
 			},
 			error: function(result){
-				alert("删除合同失败");
+				showAlert("删除合同失败","error",2);
 			}
 		});
 
-		// $.gritter.add({
-		// 	// (string | mandatory) the heading of the notification
-		// 	title: '通知',
-		// 	// (string | mandatory) the text inside the notification
-		// 	text: '合同编辑成功',
-		// 	time: 2000,
-		// 	class_name: 'gritter-success' +  ' gritter-light'
-		// });
 	});
 
 	var addCustomEvent = function(data){
@@ -264,11 +241,7 @@ $(function(){
 
 		$cellHtlm.find("#delete").click(function(){
 			$cellHtlm.animate({opacity: '0'});
-
-			 var t = setTimeout(function(){
-			 	$cellHtlm.remove();
-			 	clearTimeout(t);	
-			 },400);
+			 doActionAferSecond(clearTimeout(t),0.4);
 		});
 		$('#eventsList').append($cellHtlm);
 		$('#date' + datePickerID).datepicker();
@@ -297,12 +270,7 @@ $(function(){
 
 		$cellHtlm.find("#delete").click(function(){
 			$cellHtlm.animate({opacity: '0'});
-
-			 var t = setTimeout(function(){
-			 	$cellHtlm.remove();
-			 	clearTimeout(t);	
-			 },400);
-			
+			 doActionAferSecond(clearTimeout(t),0.4);
 	});
 		$('#eventsList').append($cellHtlm);
 		$('#date' + datePickerID).datepicker();
@@ -404,12 +372,16 @@ $(function(){
 	}
 
 	 //弹出底部提示框
-	var showAlert = function(message,type,delay){
+	var showAlert = function(message,type,delay,callback){
 		$.globalMessenger().post({
 			message: message,
 			hideAfter: delay,
 			type: type,
 		});
+
+		if(callback) {
+			callback();
+		}
 	}
 
 	// //校验测试代码
