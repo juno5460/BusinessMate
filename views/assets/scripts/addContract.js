@@ -119,13 +119,7 @@ $(function() {
 					var isExist = false;
 					$templates.each(function(index, item) {
 						if (item.tName == result) {
-
-							$.globalMessenger().post({
-									message: "当前模板命名已存在，请重新命名!",
-									hideAfter: 3,
-									type: "error",
-								});
-
+							showAlert("当前模板命名已存在，请重新命名!","error",3);
 							isExist = true;
 							return false;
 						}
@@ -140,18 +134,10 @@ $(function() {
 							type: 'POST',
 							data: item,
 							success: function(result) {
-								$.globalMessenger().post({
-									message: "模板保存成功",
-									hideAfter: 1.5,
-									type: "success",
-								});
+								showAlert("模板保存成功","success",2);
 							},
 							error: function(result) {
-								$.globalMessenger().post({
-									message: "模板保存失败",
-									hideAfter: 1.5,
-									type: "error",
-								});
+								showAlert("模板保存失败","error",2);
 							}
 						});
 					}
@@ -176,16 +162,13 @@ $(function() {
 				data: item,
 				success: function(result) {
 					console.info(result);
-					$.globalMessenger().post({
-						message: "合同保存成功",
-						type: "success",
-					});
-					doActionAferSecond(function() {
+					showAlert("合同添加成功","success",2,
+						doActionAferSecond(function() {
 						window.location.href = "/contracts";
-					}, 1);
+					}, 1));
 				},
 				error: function(result) {
-					alert("新建合同失败");
+					showAlert("合同添加失败","error",2);
 				}
 			});
 		} else {
@@ -270,14 +253,8 @@ $(function() {
 		}));
 
 		$cellHtlm.find("#delete").click(function() {
-			$cellHtlm.animate({
-				opacity: '0'
-			});
-
-			var t = setTimeout(function() {
-				$cellHtlm.remove();
-				clearTimeout(t);
-			}, 400);
+			$cellHtlm.animate({opacity: '0'});
+			 doActionAferSecond(clearTimeout(t),0.4);0);
 		});
 		$('#eventsList').append($cellHtlm);
 		console.info($cellHtlm);
@@ -352,20 +329,24 @@ $(function() {
 		}
 	}
 
-	var doActionAferSecond = function(func, delay) {
-		var t = setTimeout(function() {
-			func();
-			clearTimeout(t);
-		}, delay * 1000);
+	var doActionAferSecond = function(func,delay){
+		var t = setTimeout(function(){
+			 	func();
+			 	clearTimeout(t);	
+			 },delay * 1000);
 	}
 
 	 //弹出底部提示框
-	var showAlert = function(message,type,delay){
+	var showAlert = function(message,type,delay,callback){
 		$.globalMessenger().post({
 			message: message,
 			hideAfter: delay,
 			type: type,
 		});
+
+		if(callback) {
+			callback();
+		}
 	}
 
 
