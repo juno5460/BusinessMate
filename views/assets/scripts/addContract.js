@@ -254,7 +254,7 @@ $(function() {
 
 		$cellHtlm.find("#delete").click(function() {
 			$cellHtlm.animate({opacity: '0'});
-			 doActionAferSecond(clearTimeout(t),0.4);0);
+			 doActionAferSecond(clearTimeout(t),0.4);
 		});
 		$('#eventsList').append($cellHtlm);
 		console.info($cellHtlm);

@@ -53,5 +53,9 @@
 			padding-top: 5px;
 		}
 
+		.dropdown-menu li {
+			cursor:pointer;
+		}
+
 	<link rel="stylesheet" href="assets/css/datepicker.css" />
 	<link rel="stylesheet" href="assets/css/bootstrap-timepicker.css" />
