@@ -82,15 +82,15 @@ $(function(){
 
 				$templates.each(function(index,item){
 
-					var $cellHtlm = $(Mustache.to_html(templateTmp, {templateName:item.tName}));
+					var $cellHtml = $(Mustache.to_html(templateTmp, {templateName:item.tName}));
 
-					$cellHtlm.click(function(){
+					$cellHtml.click(function(){
 
 						loadTempalteAndRenderToHtml(item._id);
 
 					});
 
-					$("#templateList").append($cellHtlm);
+					$("#templateList").append($cellHtml);
 				});
 			}
 		});
@@ -231,7 +231,7 @@ $(function(){
 
 		var datePickerID = generateID();
 
-		var $cellHtlm = $(Mustache.to_html(customEventTmp, {
+		var $cellHtml = $(Mustache.to_html(customEventTmp, {
 			id:data.id,
 			title:data.title,
 			date:data.date,
@@ -239,11 +239,16 @@ $(function(){
 			remark:data.remark,
 			dateID:datePickerID}));
 
-		$cellHtlm.find("#delete").click(function(){
-			$cellHtlm.animate({opacity: '0'});
-			 doActionAferSecond(clearTimeout(t),0.4);
+		$cellHtml.find("#delete").click(function() {
+			$cellHtml.animate({
+				opacity: '0'
+			});
+			doActionAfterSecond(function() {
+				$cellHtml.remove();
+			}, 0.4);
 		});
-		$('#eventsList').append($cellHtlm);
+
+		$('#eventsList').append($cellHtml);
 		$('#date' + datePickerID).datepicker();
 		$('#date' + datePickerID).datepicker().on('changeDate',function(env){
 			$('#date' + datePickerID).datepicker('hide');
@@ -260,7 +265,7 @@ $(function(){
 
 		var datePickerID = generateID();
 
-		var $cellHtlm = $(Mustache.to_html(priceEventTmp, 
+		var $cellHtml = $(Mustache.to_html(priceEventTmp, 
 			{id:data.id,
 			title:data.title,
 			date:data.date,
@@ -268,11 +273,16 @@ $(function(){
 			remark:data.remark,
 			dateID:datePickerID}));
 
-		$cellHtlm.find("#delete").click(function(){
-			$cellHtlm.animate({opacity: '0'});
-			 doActionAferSecond(clearTimeout(t),0.4);
-	});
-		$('#eventsList').append($cellHtlm);
+		$cellHtml.find("#delete").click(function() {
+			$cellHtml.animate({
+				opacity: '0'
+			});
+			doActionAfterSecond(function() {
+				$cellHtml.remove();
+			}, 0.4);
+		});
+
+		$('#eventsList').append($cellHtml);
 		$('#date' + datePickerID).datepicker();
 		$('#date' + datePickerID).datepicker().on('changeDate',function(env){
 			$('#date' + datePickerID).datepicker('hide');
@@ -364,7 +374,7 @@ $(function(){
 			}
 		}
 
-	var doActionAferSecond = function(func,delay){
+	var doActionAfterSecond = function(func,delay){
 		var t = setTimeout(function(){
 			 	func();
 			 	clearTimeout(t);	
@@ -392,7 +402,7 @@ $(function(){
 	$('#validateForm').validate({
 					errorElement: 'span',
 					errorClass: 'help-inline warn-tip',
-					focusInvalid: true,
+					focusInvalid: false,
 					rules:{
 						myId: {
 							required:true,
