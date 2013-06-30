@@ -31,14 +31,13 @@ module.exports = function(app) {
 		}));
 	});
 
-	app.get('/desktop/:id/pieDetail', function(req, res) {
+	app.get('/desktop/:id', function(req, res) {
 		console.info(req.params.id);
 		res.send(generator.generate('pieDetail', {
 			_id: req.params.id
 		}));
 	});
 
-	//回款
 	app.get('/fund', function(req, res) {
 
 		res.send(generator.generate('fund', {

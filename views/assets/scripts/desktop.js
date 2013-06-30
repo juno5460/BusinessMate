@@ -63,12 +63,12 @@ $(function() {
 				date: lastDate
 			};
 
-			var t1 = "<tr><td><ul style='height:100%' class='item-list ui-sortable'><li class='"+liColor[idIndex]+"'><label class='inline'>";
+			var t1 = "<tr><td><ul style='height:100%' class='item-list ui-sortable'><li class='" + liColor[idIndex] + "'><label class='inline'>";
 			var t2 = "<input  type='checkbox' id='" + checkboxId[idIndex] + "'>";
-			var t3 = "<span class='lbl'>"+tdata.name +":"+tdata.date;
-			var t4 = "~"+tdata.title + "</span></label></li></ul></td>";
-			var t5 = "<td><textarea id='taskRemark' class='span6 cellremark' placeholder='备注'></textarea></td></tr>";
-			var template = t1 + t2 + t3 + t4 +t5;
+			var t3 = "<span class='lbl'>" + tdata.name + ":" + tdata.date;
+			var t4 = "~" + tdata.title + "</span></label></li></ul></td></tr>";
+			// var t5 = "<td><textarea id='taskRemark' class='span6 cellremark' placeholder='备注'></textarea></td></tr>";
+			var template = t1 + t2 + t3 + t4;
 
 			$('#taskToFinish').append(template);
 
@@ -118,22 +118,35 @@ $(function() {
 			else if (tempIDValue == 't')
 				tempID = $("#t");
 
-
 			tempID.bind("click", function() {
 
 				var tID = this.id;
-
 				var dom = document.getElementById(tID);
 				var checkValue = dom.checked;
-				$(this).prop("checked", true);
-				checkValue = true;
-				$(this).closest('li').addClass('selected');
+				var remark;
+				var $taskObj = $(this);
+
+				if(checkValue) {
+					bootbox.prompt("亲，留下点备注信息吧!", function(result) {
+						if(result == null) {
+							$taskObj.prop("checked", false);
+							return;
+						}
+
+						checkValue = true;
+						remark = result;
+						$taskObj.closest('li').addClass('selected');
+
+					});
+				}
+				$taskObj.prop("checked", true);
 
 				var postData = {
 					_id: contract._id,
 					id: contract.id,
 					title: tdata.title,
-					completed: checkValue
+					completed: checkValue,
+					remark: remark
 				};
 
 				// $.ajax({
@@ -238,7 +251,7 @@ $(function() {
 
 		$.plot(placeholder1, pieData1, optionPie);
 		placeholder1.bind("plotclick", function(event, pos, obj) {
-			window.location.href = "/desktop" + '/' + obj.series.label + "/pieDetail";
+			window.location.href = "/desktop" + '/' + obj.series.label;
 		});
 
 		var placeholder2 = $('#placeholder2').css({
@@ -247,7 +260,7 @@ $(function() {
 		});
 		$.plot(placeholder2, pieData2, optionPie);
 		placeholder2.bind("plotclick", function(event, pos, obj) {
-			window.location.href = "/desktop" + '/' + obj.series.label + "/pieDetail";
+			window.location.href = "/desktop" + '/' + obj.series.label;
 		});
 
 	});
