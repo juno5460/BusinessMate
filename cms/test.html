@@ -42,11 +42,12 @@
 	<a class="btn" id="all">遍历合同表</a><br><br>
 	<a class="btn" id="allTemplate">遍历模板表</a><br><br>
 	<a class="btn" id="destroyAll">清空数据库</a>
+	<a class="btn" id="putTests">Todo Put测试</a>
 	<div id="outputPanel"></div>
 
 	<script type="text/javascript">
 
-	var url = "http://localhost:3000";
+	var url = "http://10.108.1.67:3000";
 		$("#all").click(function(){
 			$.get(url + "/api/contracts",function(datas,status){
 				$("#outputPanel").html("");
@@ -80,6 +81,22 @@
 	    		}
 		});
 		});
+
+		$("#putTests").click(function(){
+			$.ajax({
+				url: url + '/tests/' + 123,
+				type: 'PUT',
+				data: {1:123},
+				success: function(result) {
+					console.info(result);
+				},
+				error: function(result) {
+					console.info('error');
+				}
+			});
+		});
+
+				
 
 
 	</script>
