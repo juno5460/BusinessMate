@@ -198,9 +198,9 @@ $(function(){
 				success: function(result) {
 					console.info(result);
 					showAlert("合同修改成功","success",2,
-						doActionAferSecond(function() {
+						doActionAfterSecond(function() {
 						window.location.href = "/contracts";
-					}));
+					},2));
 				},
 				error: function(result) {
 					showAlert("编辑合同失败","err",2);
@@ -280,7 +280,7 @@ $(function(){
 			price:data.price,
 			remark:data.remark,
 			dateID:datePickerID,
-			completed:data.completed
+			completed:data == null ? false : data.completed
 		}));
 
 		$cellHtml.find("#delete").click(function() {
@@ -340,8 +340,9 @@ $(function(){
 			$event.date 	= $cell.find("input[id^='date']").val();
 			$event.price 	= $cell.find("#price").val() == null ? -1 : $(element).find("#price").val();
 			$event.remark 	= $cell.find("#remark").val();
-			$event.completed = $cell.find("completed").val();
+			$event.completed = $cell.find("#completed").val();
 
+			console.info($event.completed);
 			$event = {
 			'id'	:$event.id,
 			'title'	:$event.title,
