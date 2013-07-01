@@ -322,7 +322,7 @@ $(function() {
 
 		//生成唯一ID号
 		var date = new Date();
-		var times1970 = date.getTime();
+		var times1970 = date.getTime() - Math.floor(Math.random() * 11);
 		var times = date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
 		var encrypt = times * times1970;
 		if (arguments.length == 1) {
