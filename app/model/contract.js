@@ -275,6 +275,15 @@ ContractSchema.methods = {
 		var count = 0; //存储该合同已回款总额
 		var allCount = 0; //存储该合同总金额
 		var getData;
+		var flag = 0;
+		var lastDate=0;
+		var occur = new Date();
+		var year = occur.getFullYear();
+		var month = occur.getMonth() + 1;
+		var day = occur.getDate(); ///
+		day = day < 10 ? "0" + day : day;
+		month = month < 10 ? "0" + month : month;
+		var getOccur = year + "-" + month + "-" + day;
 		Contract = this.model('Contract');
 
 		Contract.find({
@@ -285,8 +294,16 @@ ContractSchema.methods = {
 				for (var i = 0; i < doc.events.length; i++) { //遍历该合同的事件数组
 					if (doc.events[i].price > 0 && doc.events[i].completed == true)
 						count = count + doc.events[i].price;
+					if (flag == 0 && doc.events[i].price > 0 && doc.events[i].completed == true && doc.events[i].date < getOccur) {
+						lastDate = doc.events[i].date;
+						flag = 1;
+					}
+					if (flag == 1 && doc.events[i].price > 0 && doc.events[i].completed == true && doc.events[i].date < getOccur && doc.events[i].date > lastDate) {
+						lastDate = doc.events[i].date;
+					}
 				}
 				getData = {
+					"lastDate": lastDate, //上次回款日期
 					"oneAllCount": allCount, //该合同总金额
 					"returnCount": count, //已回款
 					"unreturnCount": allCount - count, //未回款
@@ -404,8 +421,8 @@ ContractSchema.methods = {
 			docs.forEach(function(doc) {
 				for (var i = 0; i < doc.events.length; i++) { //遍历该合同数组
 					if (doc.events[i].completed == false && doc.events[i].date < getOccur) {
-//						console.log(doc.events[i].date);
-//						console.log(getOccur);
+						//						console.log(doc.events[i].date);
+						//						console.log(getOccur);
 						send[j] = doc.events[i]; //当状态为未完成状态,取出
 						j++; //下标移动
 					}
@@ -460,7 +477,6 @@ ContractSchema.methods = {
 				callback(results);
 			}
 		});
-
 	}
 };
 
