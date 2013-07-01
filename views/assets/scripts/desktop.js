@@ -20,148 +20,6 @@ $(function() {
 			partyA[contractsCount] = contract.partyA;
 			partyB[contractsCount] = contract.partyB;
 			contractsCount++;
-<<<<<<< HEAD
-=======
-
-			//代办任务
-
-			<!--日期格式化start-->
-			Date.prototype.format = function(fmt) { //author: meizz   
-				var o = {
-					"M+": this.getMonth() + 1, //月份   
-					"d+": this.getDate(), //日   
-					"h+": this.getHours(), //小时   
-					"m+": this.getMinutes(), //分   
-					"s+": this.getSeconds(), //秒   
-					"q+": Math.floor((this.getMonth() + 3) / 3), //季度   
-					"S": this.getMilliseconds() //毫秒   
-				};
-				if (/(y+)/.test(fmt))
-					fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-				for (var k in o)
-					if (new RegExp("(" + k + ")").test(fmt))
-						fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-				return fmt;
-			}
-			<!--日期格式化end-->
-
-			var nowDate = new Date().format("yyyy-MM-dd");
-
-			var taskEvents = contract.events;
-			var lastDate = taskEvents[0].date;
-			var lastIndex = 0;
-			for (var i = 1; i < taskEvents.length; i++) {
-				if (lastDate >= nowDate) {
-					if (lastDate > taskEvents[i].date) {
-						lastDate = taskEvents[i].date;
-						lastIndex = i;
-					}
-				}
-			}
-
-			var tdata = {
-				name: contract.name,
-				title: contract.events[lastIndex].title,
-				date: lastDate
-			};
-
-			var t1 = "<tr><td><ul style='height:100%' class='item-list ui-sortable'><li class='" + liColor[idIndex] + "'><label class='inline'>";
-			var t2 = "<input  type='checkbox' id='" + checkboxId[idIndex] + "'>";
-			var t3 = "<span class='lbl'>" + tdata.name + ":" + tdata.date;
-			var t4 = "~" + tdata.title + "</span></label></li></ul></td></tr>";
-			// var t5 = "<td><textarea id='taskRemark' class='span6 cellremark' placeholder='备注'></textarea></td></tr>";
-			var template = t1 + t2 + t3 + t4;
-
-			$('#taskToFinish').append(template);
-
-			idIndex++;
-
-			var tempIDValue = checkboxId[idIndex - 1];
-			var tempID;
-
-			if (tempIDValue == 'a')
-				tempID = $("#a");
-			else if (tempIDValue == 'b')
-				tempID = $("#b");
-			else if (tempIDValue == 'c')
-				tempID = $("#c");
-			else if (tempIDValue == 'd')
-				tempID = $("#d");
-			else if (tempIDValue == 'e')
-				tempID = $("#e");
-			else if (tempIDValue == 'f')
-				tempID = $("#f");
-			else if (tempIDValue == 'g')
-				tempID = $("#g");
-			else if (tempIDValue == 'h')
-				tempID = $("#h");
-			else if (tempIDValue == 'i')
-				tempID = $("#i");
-			else if (tempIDValue == 'j')
-				tempID = $("#j");
-			else if (tempIDValue == 'k')
-				tempID = $("#k");
-			else if (tempIDValue == 'l')
-				tempID = $("#l");
-			else if (tempIDValue == 'm')
-				tempID = $("#m");
-			else if (tempIDValue == 'n')
-				tempID = $("#n");
-			else if (tempIDValue == 'o')
-				tempID = $("#o");
-			else if (tempIDValue == 'p')
-				tempID = $("#p");
-			else if (tempIDValue == 'q')
-				tempID = $("#q");
-			else if (tempIDValue == 'r')
-				tempID = $("#r");
-			else if (tempIDValue == 's')
-				tempID = $("#s");
-			else if (tempIDValue == 't')
-				tempID = $("#t");
-
-			tempID.bind("click", function() {
-
-				var tID = this.id;
-				var dom = document.getElementById(tID);
-				var checkValue = dom.checked;
-				var remark;
-				var $taskObj = $(this);
-
-				if(checkValue) {
-					bootbox.prompt("亲，留下点备注信息吧!", function(result) {
-						if(result == null) {
-							$taskObj.prop("checked", false);
-							return;
-						}
-
-						checkValue = true;
-						remark = result;
-						$taskObj.closest('li').addClass('selected');
-
-					});
-				}
-				$taskObj.prop("checked", true);
-
-				var postData = {
-					_id: contract._id,
-					id: contract.id,
-					title: tdata.title,
-					completed: checkValue,
-					remark: remark
-				};
-
-				// $.ajax({
-				// 		url: 'http://localhost:3000/tests' + '/' + contract.id,
-				// 		type: 'put',
-				// 		data: postData,
-				// 		error: function(){
-				// 			console.info('Error loading PHP document');
-				// 		},
-				// 		success: function(result){}
-				// });
-			});
->>>>>>> 5d913080aa841f2994f6fd5daf3d793f5a0eb228
 		});
 
 		var placeholder1 = $('#placeholder1').css({
@@ -268,7 +126,6 @@ $(function() {
 
 	});
 
-<<<<<<< HEAD
 	//代办任务
 	$.get("http://10.108.1.67:3000/tests", function(data, status) {
 
@@ -382,6 +239,4 @@ $(function() {
 		});
 
 	});
-=======
->>>>>>> 5d913080aa841f2994f6fd5daf3d793f5a0eb228
 });
