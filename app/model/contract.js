@@ -31,7 +31,8 @@ var ContractSchema = mongoose.Schema({ //创建合同模型对象
 	beginDate: String, //开始日期
 	endDate: String, //结束日期
 	events: [EventsSchema], //合同事件
-	state: String //合同状态
+	state: String, //合同状态
+	next: String //待办任务
 });
 
 
@@ -58,7 +59,8 @@ ContractSchema.methods = {
 			beginDate: 1,
 			endDate: 1,
 			events: 1,
-			state: 1
+			state: 1,
+			next: 1
 		}, function(err, docs) {
 			callback(docs);
 		});
@@ -118,7 +120,7 @@ ContractSchema.methods = {
 	/*
 	 * rdata:要保存的合同对象
 	 */
-	insertTemplate: function(rdata,res) {
+	insertTemplate: function(rdata, res) {
 
 		Template = this.model('Template');
 		console.log("insert");
@@ -212,7 +214,7 @@ ContractSchema.methods = {
 	 * eventName:事件名称 (或是状态名称,方便跟踪合同状态)
 	 * callback:回调返回数据
 	 */
-	updateSymble: function(id, eventId, eventName, callback) {
+	updateSymble: function(id, eventId, checkValue, remark, eventName, callback) {
 
 		Contract = this.model('Contract');
 
@@ -221,7 +223,8 @@ ContractSchema.methods = {
 			"events.id": eventId
 		}, {
 			"$set": {
-				"events.$.completed": true,
+				"events.$.completed": checkValue,
+				"events.$.remark": remark,
 				state: eventName
 			}
 		}, function() {
@@ -340,15 +343,15 @@ ContractSchema.methods = {
 				}
 				console.log(getOccur);
 				for (var k = 0; k < doc.events.length; k++) {
-					if (flag == 0 && doc.events[k].date > getOccur) {
-						//找到第一个比当前时间大的事件
+					if (flag == 0 && doc.events[k].date > getOccur && doc.events[k].completed == false) {
+						//找到第一个比当前时间大的事件而且还没完成的事件
 						getTemp = doc.events[k].date; //把该事件的执行日期赋给临时时间
 						next = doc.events[k];
 						flag = 1;
 						canGet = 1;
 					}
-					if (flag == 1 && doc.events[k].date > getOccur && doc.events[k].date < getTemp) {
-						//之后要是存在比当前时间大并且比临时时间小的时间,更新临时时间,并且更新下一步执行事件
+					if (flag == 1 && doc.events[k].date > getOccur && doc.events[k].date < getTemp && doc.events[k].completed == false) {
+						//之后要是存在比当前时间大并且比临时时间小的而且还没完成的事件,更新临时时间,并且更新下一步执行事件
 						getTemp = doc.events[k].date;
 						next = doc.events[k];
 					}
@@ -385,7 +388,6 @@ ContractSchema.methods = {
 				callback(results);
 			}
 		});
-
 
 	}
 };

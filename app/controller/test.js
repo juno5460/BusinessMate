@@ -18,9 +18,9 @@ exports.index = function(req, res) {
 		res.send(data);
 	});
 	/*****************************************************/
-	/******************模糊搜索测试通过******************/
-	var get="CA";
-	template.fuzzySearch(get,function(data) {
+	/******************模糊搜索测试通过******************
+	var get = "CA";
+	template.fuzzySearch(get, function(data) {
 		console.log('fuzzySearch');
 		res.send(data);
 	});
@@ -113,47 +113,59 @@ exports.index = function(req, res) {
 		res.send(data);
 	});
 	/*****************************************************/
-	/*****************展示所有未完成事件测试通过*************
-	var id = "51ca71989e5eb47e0b000004";
+	/*****************展示所有未完成事件测试通过*************/
+	var id = "51d0da38203a68c404000008";
 	contract.checkUndoneEvents(id, function(data) {
 		console.info("checkUndoneEvents");
 		res.send(data);
 	});
 	/*****************************************************/
 };
-exports.update = function(req, res) {
-	var occur = new Date();
-	console.log(occur);
-	var contract = new Contract();
-	console.log("update");
-	var getId = {
-		_id: req.params['contract']
-	};
-	var get = req.body;
-	var id = get._id;
-	var eventId = get.id;
-	var eventName = get.title;
 
-	//updateSymble: function(id, eventId, eventName, callback)
-	var getNew = {
-		"myId": get.myId,
-		partyA: get.partyA,
-		partyB: get.partyB,
-		"name": get.name,
-		"beginDate": get.beginDate,
-		"endDate": get.endDate,
-		"state": get.state,
-		"events": get.events
-	};
-	if (getNew.events == null) {
-		getNew.events = [];
-	}
-	console.log(get);
-	console.log(id);
-	console.log(eventId);
-	console.log(eventName);
-	console.log(getId);
-	contract.updateSymble(id, eventId, eventName, function(data) {
+exports.show = function(req, res) {
+	var id = "51d0da38203a68c404000008";
+	contract.checkUndoneEvents(id, function(data) {
+		console.info("checkUndoneEvents");
 		res.send(data);
-	});
+	};
 };
+
+	exports.update = function(req, res) {
+		var occur = new Date();
+		console.log(occur);
+		var contract = new Contract();
+		console.log("update");
+		var getId = {
+			_id: req.params['contract']
+		};
+		var get = req.body;
+		var id = get._id;
+		var eventId = get.id;
+		var eventName = get.title;
+		var checkValue = get.completed;
+		var remark = get.remark;
+
+		//updateSymble: function(id, eventId, eventName, callback)
+		var getNew = {
+			"myId": get.myId,
+			partyA: get.partyA,
+			partyB: get.partyB,
+			"name": get.name,
+			"beginDate": get.beginDate,
+			"endDate": get.endDate,
+			"state": get.state,
+			"events": get.events
+		};
+		if (getNew.events == null) {
+			getNew.events = [];
+		}
+		console.log(get);
+		console.log(id);
+		console.log(eventId);
+		console.log(eventName);
+		console.log(checkValue);
+		console.log(remark);
+		contract.updateSymble(id, eventId, checkValue, remark, eventName, function(data) {
+			res.send(data);
+		});
+	};
