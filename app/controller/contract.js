@@ -10,6 +10,7 @@ var async = require('async'),
 
 exports.index = function(req, res) {
 	/******/
+	console.log('index');
 	var occur = new Date();
 	console.log(occur);
 	var contract = new Contract();
@@ -24,6 +25,7 @@ exports.index = function(req, res) {
 
 
 exports.show = function(req, res) {
+	/*
 	var occur = new Date();
 	console.log(occur);
 	var contract = new Contract();
@@ -32,16 +34,27 @@ exports.show = function(req, res) {
 	var getId = {
 		_id: req.params['contract']
 	};
+	console.log(getId);
+	contract.checkIdData(getId, function(data) {
+		res.send(data[0]);
+	});*/
+	var occur = new Date();
+	console.log(occur);
+	var contract = new Contract();
+	console.log("show");
 	if (req.params.keyword == null) {
+		var getId = {
+			_id: req.params['contract']
+		};
 		console.log(getId);
 		contract.checkIdData(getId, function(data) {
 			res.send(data[0]);
 		});
 	}
-	else{
-		contract.fuzzySearch(req.params.keyword,function(data){
+	if (req.params.keyword == null) {
+		contract.fuzzySearch(req.params.keyword, function(data) {
 			res.send(data[0]);
-		});
+		})
 	}
 };
 
