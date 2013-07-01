@@ -73,6 +73,11 @@ $(function(){
 	var templateTmp = "<li><a hre='#'>{{templateName}}</a></li>";
 
 	$("#templateBtn").click(function(){
+
+		if($('#templateList').text() == "") {
+			$('#templateList').append($(Mustache.to_html(templateTmp, {'当前暂无合同'}));
+		}
+
 		$.get("/api/templates",function(data,status){
 			if(status == 'success') {
 
