@@ -14,12 +14,14 @@ $(function() {
 	var liColor = new Array('item-orange', 'item-red', 'item-default', 'item-blue',
 		'item-grey', 'item-green', 'item-pink', 'item-orange', 'item-red', 'item-default', 'item-blue', 'item-grey', 'item-green', 'item-pink', 'item-orange', 'item-red', 'item-default', 'item-blue', 'item-grey', 'item-green', 'item-pink');
 
-	$.get("api/contracts", function(data, status) {
+	$.get("http://10.108.1.67:3000/api/contracts", function(data, status) {
 
 		$.each(data, function(i, contract) {
 			partyA[contractsCount] = contract.partyA;
 			partyB[contractsCount] = contract.partyB;
 			contractsCount++;
+<<<<<<< HEAD
+=======
 
 			//代办任务
 
@@ -159,6 +161,7 @@ $(function() {
 				// 		success: function(result){}
 				// });
 			});
+>>>>>>> 5d913080aa841f2994f6fd5daf3d793f5a0eb228
 		});
 
 		var placeholder1 = $('#placeholder1').css({
@@ -265,4 +268,120 @@ $(function() {
 
 	});
 
+<<<<<<< HEAD
+	//代办任务
+	$.get("http://10.108.1.67:3000/tests", function(data, status) {
+
+		$.each(data, function(i, contract) {
+			
+			var tdata = {
+				name: contract.name,
+				title: contract.next.title,
+				date: contract.next.date
+			};
+
+			var t1 = "<tr><td><ul style='height:100%' class='item-list ui-sortable'><li class='" + liColor[idIndex] + "'><label class='inline'>";
+			var t2 = "<input  type='checkbox' id='" + checkboxId[idIndex] + "'>";
+			var t3 = "<span class='lbl'>" + tdata.name + ":" + tdata.date;
+			var t4 = "~" + tdata.title + "</span></label></li></ul></td></tr>";
+			// var t5 = "<td><textarea id='taskRemark' class='span6 cellremark' placeholder='备注'></textarea></td></tr>";
+			var template = t1 + t2 + t3 + t4;
+
+			$('#taskToFinish').append(template);
+
+			idIndex++;
+
+			var tempIDValue = checkboxId[idIndex - 1];
+			var tempID;
+
+			if (tempIDValue == 'a')
+				tempID = $("#a");
+			else if (tempIDValue == 'b')
+				tempID = $("#b");
+			else if (tempIDValue == 'c')
+				tempID = $("#c");
+			else if (tempIDValue == 'd')
+				tempID = $("#d");
+			else if (tempIDValue == 'e')
+				tempID = $("#e");
+			else if (tempIDValue == 'f')
+				tempID = $("#f");
+			else if (tempIDValue == 'g')
+				tempID = $("#g");
+			else if (tempIDValue == 'h')
+				tempID = $("#h");
+			else if (tempIDValue == 'i')
+				tempID = $("#i");
+			else if (tempIDValue == 'j')
+				tempID = $("#j");
+			else if (tempIDValue == 'k')
+				tempID = $("#k");
+			else if (tempIDValue == 'l')
+				tempID = $("#l");
+			else if (tempIDValue == 'm')
+				tempID = $("#m");
+			else if (tempIDValue == 'n')
+				tempID = $("#n");
+			else if (tempIDValue == 'o')
+				tempID = $("#o");
+			else if (tempIDValue == 'p')
+				tempID = $("#p");
+			else if (tempIDValue == 'q')
+				tempID = $("#q");
+			else if (tempIDValue == 'r')
+				tempID = $("#r");
+			else if (tempIDValue == 's')
+				tempID = $("#s");
+			else if (tempIDValue == 't')
+				tempID = $("#t");
+
+			tempID.bind("click", function() {
+
+				var tID = this.id;
+				var dom = document.getElementById(tID);
+				var checkValue = dom.checked;
+				var remark = null;
+				var $taskObj = $(this);
+
+				if(checkValue) {
+					bootbox.prompt("亲，留下点备注信息吧!", function(result) {
+						if(result == null) {
+							$taskObj.prop("checked", false);
+							return;
+						}
+
+						checkValue = true;
+						remark = result;
+						$taskObj.closest('li').addClass('selected');
+
+						var postData = {
+							_id: contract.next._id,
+							id: contract.next.id,
+							title: tdata.title,
+							completed: checkValue,
+							remark: remark
+						};
+						console.info(postData);
+						$.ajax({
+								url: 'http://10.108.1.67:3000/tests' + '/' + contract.next.id,
+								type: 'PUT',
+								data: postData,
+								error: function(){
+									console.info('error');
+								},
+								success: function(result){
+									console.info('success');
+								}
+						});
+					});
+				}
+				$taskObj.prop("checked", true);
+
+				
+			});
+		});
+
+	});
+=======
+>>>>>>> 5d913080aa841f2994f6fd5daf3d793f5a0eb228
 });
