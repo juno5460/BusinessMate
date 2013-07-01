@@ -137,9 +137,9 @@ exports.update = function(req, res) {
 	console.log(occur);
 	var contract = new Contract();
 	console.log("update");
-	var getId = {
-		_id: req.params['contract']
-	};
+	/*var getId = {
+		_id: req.params['tests']
+	};*/
 	var get = req.body;
 	var id = get._id;
 	var eventId = get.id;

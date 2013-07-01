@@ -404,8 +404,8 @@ ContractSchema.methods = {
 			docs.forEach(function(doc) {
 				for (var i = 0; i < doc.events.length; i++) { //遍历该合同数组
 					if (doc.events[i].completed == false && doc.events[i].date < getOccur) {
-						console.log(doc.events[i].date);
-						console.log(getOccur);
+//						console.log(doc.events[i].date);
+//						console.log(getOccur);
 						send[j] = doc.events[i]; //当状态为未完成状态,取出
 						j++; //下标移动
 					}
@@ -430,10 +430,11 @@ ContractSchema.methods = {
 				}
 				willSend = {
 					"name": doc.name,
+					"_id": doc._id,
 					"undone": send,
 					"next": next
 				};
-				console.log(willSend);
+				//				console.log(willSend);
 				allWillSend[s] = willSend;
 				s++;
 			});
@@ -447,7 +448,7 @@ ContractSchema.methods = {
 	fuzzySearch: function(get, callback) {
 
 		Contract = this.model('Contract');
-		var q = new RegExp("A"); //所有以传入参数开始的
+		var q = new RegExp(get); //所有以传入参数开始的
 		Contract.find({
 			myId: {
 				'$all': [q]

@@ -32,10 +32,17 @@ exports.show = function(req, res) {
 	var getId = {
 		_id: req.params['contract']
 	};
-	console.log(getId);
-	contract.checkIdData(getId, function(data) {
-		res.send(data[0]);
-	});
+	if (req.params.keyword == null) {
+		console.log(getId);
+		contract.checkIdData(getId, function(data) {
+			res.send(data[0]);
+		});
+	}
+	else{
+		contract.fuzzySearch(req.params.keyword,function(data){
+			res.send(data[0]);
+		});
+	}
 };
 
 
@@ -48,8 +55,8 @@ exports.create = function(req, res) {
 	var rdata = req.body;
 	console.log(rdata);
 	console.log("start====");
-	contract.insertData(rdata,res);
-//	res.send("insert successfully");
+	contract.insertData(rdata, res);
+	//	res.send("insert successfully");
 };
 
 
