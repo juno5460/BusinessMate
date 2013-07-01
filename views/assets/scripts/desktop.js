@@ -212,7 +212,7 @@ $(function() {
 						$taskObj.closest('li').addClass('selected');
 
 						var postData = {
-							_id: contract.next._id,
+							_id: contract._id,
 							id: contract.next.id,
 							title: tdata.title,
 							completed: checkValue,
@@ -233,10 +233,7 @@ $(function() {
 					});
 				}
 				$taskObj.prop("checked", true);
-
-				
 			});
 		});
-
 	});
 });
