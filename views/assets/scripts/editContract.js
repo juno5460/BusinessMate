@@ -56,8 +56,8 @@ $(function(){
 	//从服务器拉取数据并初始化网页数据
 	initialize();
 
-	var customEventTmp 	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}''></span></div><div class='widget-toolbar event-date'><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remark' class='span12 cellremark' placeholder='请输入备注信息' value='{{remark}}'></textarea></div></div></div>";
-	var priceEventTmp	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>回款金额：</span><span><input id='price' class='hiddenInput' id='price' value='{{price}}'></span><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remak' class='span12 cellremark' placeholder='请输入备注信息' value='{{remark}}'></textarea></div></div></div>";
+	var customEventTmp 	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}''></span></div><div class='widget-toolbar event-date'><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remark' class='span12 cellremark' placeholder='请输入备注信息' value='{{remark}}'></textarea><input type='hidden' id='completed' value={{completed}}></div></div></div>";
+	var priceEventTmp	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>回款金额：</span><span><input id='price' class='hiddenInput' id='price' value='{{price}}'></span><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remak' class='span12 cellremark' placeholder='请输入备注信息' value='{{remark}}'></textarea><input type='hidden' id='completed' value={{completed}}></div></div></div>";
 
 	//添加自定义事件
 	$("#customEventBtn").click(function(){
@@ -75,7 +75,7 @@ $(function(){
 	$("#templateBtn").click(function(){
 
 		if($('#templateList').text() == "") {
-			$('#templateList').append($(Mustache.to_html(templateTmp, {'当前暂无合同'}));
+			$('#templateList').append($(Mustache.to_html(templateTmp, {templateName: '当前无可以模板'})));
 		}
 
 		$.get("/api/templates",function(data,status){
@@ -200,7 +200,7 @@ $(function(){
 					showAlert("合同修改成功","success",2,
 						doActionAferSecond(function() {
 						window.location.href = "/contracts";
-					}, 1));
+					}));
 				},
 				error: function(result) {
 					showAlert("编辑合同失败","err",2);
@@ -217,8 +217,9 @@ $(function(){
 			url: '/api/contracts/' + getItemID(),
 			type: 'DELETE',
 			success: function(result) {
-				window.location.href = "/contracts";
-				console.info(result);
+				showAlert("删除合同成功","success",2,doActionAfterSecond(function(){
+					window.location.href = "/contracts";
+				},2));
 			},
 			error: function(result){
 				showAlert("删除合同失败","error",2);
@@ -242,7 +243,9 @@ $(function(){
 			date:data.date,
 			price:data.price,
 			remark:data.remark,
-			dateID:datePickerID}));
+			dateID:datePickerID,
+			completed:data.completed
+		}));
 
 		$cellHtml.find("#delete").click(function() {
 			$cellHtml.animate({
@@ -276,7 +279,9 @@ $(function(){
 			date:data.date,
 			price:data.price,
 			remark:data.remark,
-			dateID:datePickerID}));
+			dateID:datePickerID,
+			completed:data.completed
+		}));
 
 		$cellHtml.find("#delete").click(function() {
 			$cellHtml.animate({
@@ -329,11 +334,13 @@ $(function(){
 		var $cellList 	= $("#eventsList").find(".widget-box");
 		$cellList.each(function(index,element){
 			var $event 		= [];
+			$cell 			= $(element);
 			$event.id 		=  generateID();
-			$event.title 	= $(element).find("#title").val();
-			$event.date 	= $(element).find("input[id^='date']").val();
-			$event.price 	= $(element).find("#price").val() == null ? -1 : $(element).find("#price").val();
-			$event.remark 	= $(element).find("#remark").val();
+			$event.title 	= $cell.find("#title").val();
+			$event.date 	= $cell.find("input[id^='date']").val();
+			$event.price 	= $cell.find("#price").val() == null ? -1 : $(element).find("#price").val();
+			$event.remark 	= $cell.find("#remark").val();
+			$event.completed = $cell.find("completed").val();
 
 			$event = {
 			'id'	:$event.id,
