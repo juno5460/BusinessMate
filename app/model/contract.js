@@ -216,6 +216,8 @@ ContractSchema.methods = {
 	 */
 	updateSymble: function(id, eventId, checkValue, remark, eventName, callback) {
 
+		console.log('updateSymble');
+		console.log(checkValue);
 		Contract = this.model('Contract');
 
 		Contract.update({
@@ -224,7 +226,7 @@ ContractSchema.methods = {
 		}, {
 			"$set": {
 				"events.$.completed": checkValue,
-				"events.$.remark": remark,
+//				"events.$.remark": remark,
 				state: eventName
 			}
 		}, function() {
@@ -276,7 +278,7 @@ ContractSchema.methods = {
 		var allCount = 0; //存储该合同总金额
 		var getData;
 		var flag = 0;
-		var lastDate=0;
+		var lastDate = 0;
 		var occur = new Date();
 		var year = occur.getFullYear();
 		var month = occur.getMonth() + 1;

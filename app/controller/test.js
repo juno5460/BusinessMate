@@ -72,6 +72,7 @@ exports.update = function(req, res) {//修改待办任务完成标志位
 	console.log(checkValue);
 	console.log(remark);
 	contract.updateSymble(id, eventId, checkValue, remark, eventName, function(data) {
+		console.log(data);
 		res.send(data);
 	});
 };
