@@ -45,7 +45,9 @@ exports.show = function(req, res) {
 	var getId = {
 			_id: req.params['contract']
 		};
-	if (getId.length == 24) {
+	var get=req.params['contract'];
+	console.log(getId);
+	if (get.length == 24) {
 		console.log("checkIdData");
 		contract.checkIdData(getId, function(data) {
 			res.send(data[0]);
