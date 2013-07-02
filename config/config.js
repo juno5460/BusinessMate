@@ -11,7 +11,7 @@ module.exports = {
 		}
 	},
 	production: {
-		db: 'mongodb://localhost/test',
+		db: 'mongodb://localhost/BusinessMate',
 		root: rootPath,
 		app: {
 			name: 'BusinessMate'
