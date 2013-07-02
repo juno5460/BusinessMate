@@ -278,7 +278,7 @@ ContractSchema.methods = {
 		var allCount = 0; //存储该合同总金额
 		var getData;
 		var flag = 0;
-		var lastDate = 0;
+		var lastDate = "无";
 		var occur = new Date();
 		var year = occur.getFullYear();
 		var month = occur.getMonth() + 1;
