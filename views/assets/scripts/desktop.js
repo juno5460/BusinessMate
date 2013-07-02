@@ -14,7 +14,7 @@ $(function() {
 	var liColor = new Array('item-orange', 'item-red', 'item-default', 'item-blue',
 		'item-grey', 'item-green', 'item-pink', 'item-orange', 'item-red', 'item-default', 'item-blue', 'item-grey', 'item-green', 'item-pink', 'item-orange', 'item-red', 'item-default', 'item-blue', 'item-grey', 'item-green', 'item-pink');
 
-	$.get("http://10.108.1.67:3000/api/contracts", function(data, status) {
+	$.get("/api/contracts", function(data, status) {
 
 		$.each(data, function(i, contract) {
 			partyA[contractsCount] = contract.partyA;
@@ -127,21 +127,27 @@ $(function() {
 	});
 
 	//代办任务
-	$.get("http://10.108.1.67:3000/tests", function(data, status) {
+	$.get("/tests", function(data, status) {
 
 		$.each(data, function(i, contract) {
-			
 			var tdata = {
 				name: contract.name,
 				title: contract.next.title,
 				date: contract.next.date
 			};
 
-			var t1 = "<tr><td><ul style='height:100%' class='item-list ui-sortable'><li class='" + liColor[idIndex] + "'><label class='inline'>";
-			var t2 = "<input  type='checkbox' id='" + checkboxId[idIndex] + "'>";
-			var t3 = "<span class='lbl'>" + tdata.name + ":" + tdata.date;
-			var t4 = "~" + tdata.title + "</span></label></li></ul></td></tr>";
-			// var t5 = "<td><textarea id='taskRemark' class='span6 cellremark' placeholder='备注'></textarea></td></tr>";
+			var t1,t2,t3,t4;
+			t1 = "<tr><td><ul style='height:100%' class='item-list ui-sortable'><li class='" + liColor[idIndex] + "'><label class='inline'>";
+			t2 = "<input  type='checkbox' id='" + checkboxId[idIndex] + "'>";
+			if(contract.next.id == 0) {
+				
+				 t3 = "<span class='lbl'>" + tdata.name + ":" + "合同已完成";
+				 t4 = "</span></label></li></ul></td></tr>";
+			}else {
+				 t3 = "<span class='lbl'>" + tdata.name + ":" + tdata.date;
+				 t4 = "~" + tdata.title + "</span></label></li></ul></td></tr>";
+			}
+			
 			var template = t1 + t2 + t3 + t4;
 
 			$('#taskToFinish').append(template);
@@ -220,8 +226,8 @@ $(function() {
 						};
 						console.info(postData);
 						$.ajax({
-								url: 'http://10.108.1.67:3000/tests' + '/' + contract.next.id,
-								type: 'PUT',
+								url: '/tests' + '/' + contract.next.id,
+								type: 'put',
 								data: postData,
 								error: function(){
 									console.info('error');
