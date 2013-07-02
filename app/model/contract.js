@@ -444,7 +444,7 @@ ContractSchema.methods = {
 						flag = 1;
 						canGet = 1;
 					}
-					if (flag == 1 && doc.events[k].date > getOccur && doc.events[k].date < getTemp && doc.events[k].completed == false) {
+					if (flag == 1 && (doc.events[k].date > getOccur || doc.events[k].date == getOccur) && doc.events[k].date < getTemp && doc.events[k].completed == false) {
 						//之后要是存在比当前时间大并且比临时时间小的而且还没完成的事件,更新临时时间,并且更新下一步执行事件
 						getTemp = doc.events[k].date;
 						next = doc.events[k];
