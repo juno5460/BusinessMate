@@ -296,7 +296,7 @@ ContractSchema.methods = {
 				for (var i = 0; i < doc.events.length; i++) { //遍历该合同的事件数组
 					if (doc.events[i].price > 0 && doc.events[i].completed == true)
 						count = count + doc.events[i].price;
-					if (flag == 0 && doc.events[i].price > 0 && doc.events[i].completed == true && (doc.events[i].date < getOccur||doc.events[i].date == getOccur)) {
+					if (flag == 0 && doc.events[i].price > 0 && doc.events[i].completed == true && (doc.events[i].date < getOccur || doc.events[i].date == getOccur)) {
 						lastDate = doc.events[i].date;
 						flag = 1;
 					}
@@ -376,7 +376,7 @@ ContractSchema.methods = {
 					}
 				}
 				if (canGet == 0) {
-					next = 0;  //合同已经结束
+					next = 0; //合同已经结束
 				}
 				willSend = {
 					"name": doc.name,
@@ -412,7 +412,13 @@ ContractSchema.methods = {
 		//找到第一个比当前执行日期大的事件标志位
 		var canGet = 0;
 		//存在下一步事件标志位
-		var next;
+		var next = {
+			"id": 0,
+			"title": 0,
+			"date": 0,
+			"price": 0,
+			"completed": 0
+		};
 		//存储下一步执行事件
 		var willSend;
 		//存储单个合同数据
@@ -444,9 +450,11 @@ ContractSchema.methods = {
 						next = doc.events[k];
 					}
 				}
+				/*
 				if (canGet == 0) {
-					next = 0;   //合同已经结束
+					next = 0; //合同已经结束
 				}
+				*/
 				willSend = {
 					"name": doc.name,
 					"_id": doc._id,
@@ -464,7 +472,7 @@ ContractSchema.methods = {
 	 *get:获取查询字符串
 	 *callback:返回数据
 	 */
-	fuzzySearch: function(get, callback) {
+	/*	fuzzySearch: function(get, callback) {
 
 		Contract = this.model('Contract');
 		var q = new RegExp(get); //所有以传入参数开始的
@@ -479,7 +487,39 @@ ContractSchema.methods = {
 				callback(results);
 			}
 		});
+	},*/
+	fuzzySearch: function(get, callback) {
+
+		Contract = this.model('Contract');
+		var send = [];
+		var i = 0;
+		var q = new RegExp(get); //所有以传入参数开始的
+		Contract.find({
+			$or: [{
+					name: {
+						'$all': [q]
+					}
+				}, {
+					myId: {
+						'$all': [q]
+					}
+				}, {
+					partyA: {
+						'$all': [q]
+					}
+				}, {
+					partyB: {
+						'$all': [q]
+					}
+				}
+			]
+		}, function(err, results1) {
+			send[i] = results1;
+			i++;
+			callback(send);
+		});
 	}
+
 };
 
 
