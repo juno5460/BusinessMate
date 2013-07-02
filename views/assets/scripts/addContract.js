@@ -19,7 +19,7 @@ $(function() {
 
 	//初始化弹出框样式
 	$._messengerDefaults = {
-	extraClasses: 'messenger-fixed messenger-theme-block messenger-on-bottom'
+		extraClasses: 'messenger-fixed messenger-theme-block messenger-on-bottom'
 	};
 
 	// //事件数组
@@ -208,25 +208,27 @@ $(function() {
 	}
 
 	var buildEventsModel = function() {
-		var $eventsArray = [];
-		var $cellList = $("#eventsList").find(".widget-box");
+
+		var $eventsArray 	= [];
+		var $cellList 		= $("#eventsList").find(".widget-box");
+
 		$cellList.each(function(index, element) {
-			var $event = [];
-			$event.id = generateID();
-			$event.type = $(element).find("#price").val() == null ? 1 : 2; //判断事件类型
-			$event.title = $(element).find("#title").val();
-			$event.date = $(element).find("input[id^='date']").val();
-			$event.price = $(element).find("#price").val() == null ? -1 : $(element).find("#price").val();
-			$event.remark = $(element).find("#remark").val();
+			var $event  	= [];
+			$event.id   	= generateID();
+			$event.type 	= $(element).find("#price").val() == null ? 1 : 2; //判断事件类型
+			$event.title 	= $(element).find("#title").val();
+			$event.date 	= $(element).find("input[id^='date']").val();
+			$event.price 	= $(element).find("#price").val() == null ? -1 : $(element).find("#price").val();
+			$event.remark 	= $(element).find("#remark").val();
 
 			$event = {
-				'id': $event.id,
-				'type': $event.type,
-				'title': $event.title,
-				'date': $event.date,
-				'price': $event.price,
-				'remark': $event.remark,
-				'completed': false,
+				'id' 		: $event.id,
+				'type' 		: $event.type,
+				'title' 	: $event.title,
+				'date' 		: $event.date,
+				'price' 	: $event.price,
+				'remark' 	: $event.remark,
+				'completed' : false,
 			};
 			$eventsArray.push($event);
 		});
@@ -321,15 +323,7 @@ $(function() {
 	var generateID = function() {
 
 		//生成唯一ID号
-		var date = new Date();
-		var times1970 = date.getTime() - Math.floor(Math.random() * 11);
-		var times = date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
-		var encrypt = times * times1970;
-		if (arguments.length == 1) {
-			return arguments[0] + encrypt;
-		} else {
-			return encrypt;
-		}
+		return new UUID().toString();
 	}
 
 	var doActionAfterSecond = function(func,delay){

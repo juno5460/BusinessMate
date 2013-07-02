@@ -5,7 +5,7 @@
  ,
  "no-header" : true
  ,
-  "scripts" : ["jquery-ui" , "underscore" , "backbone" , "bootbox" , "validate"]
+  "scripts" : ["jquery-ui" , "underscore" , "backbone" , "bootbox" , "validate" , "common"]
  ,
  "ie_scripts" : [{"version":8, "name":"excanvas"}]
 }

@@ -375,18 +375,9 @@ $(function(){
 
 	var generateID = function() {
 
-			//生成唯一ID号
-			var date 		= new Date();
-			var times1970 = date.getTime() - Math.floor(Math.random() * 11);
-			var times 		= date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
-			var encrypt 	= times * times1970;
-			if (arguments.length == 1) {
-				return arguments[0] + encrypt;
-			} else {
-				return encrypt;
-			}
-		}
-
+		//生成唯一ID号
+		return new UUID().toString();
+	}
 	var doActionAfterSecond = function(func,delay){
 		var t = setTimeout(function(){
 			 	func();

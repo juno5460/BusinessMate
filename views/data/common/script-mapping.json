@@ -61,5 +61,7 @@
 
  "backbone" : "backbone-min.js",
 
- "underscore" : "underscore-min.js"
+ "underscore" : "underscore-min.js",
+
+ "common" : "common/common.js"
 }
