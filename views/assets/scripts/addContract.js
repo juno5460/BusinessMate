@@ -25,8 +25,8 @@ $(function() {
 	// //事件数组
 	// var $eventsArray = [];
 
-	var customEventTmp 	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}''></span></div><div class='widget-toolbar event-date'><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remark' class='span12 cellremark' placeholder='请输入备注信息' value='{{remark}}'></textarea></div></div></div>";
-	var priceEventTmp	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>回款金额：</span><span><input id='price' class='hiddenInput' id='price' value='{{price}}'></span><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remak' class='span12 cellremark' placeholder='请输入备注信息' value='{{remark}}'></textarea></div></div></div>";
+	var customEventTmp 	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}''></span></div><div class='widget-toolbar event-date'><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remark' class='span12 cellremark' placeholder='请输入备注信息' value='{{remark}}'></textarea><input type='hidden' id='completed' value={{completed}}></div></div></div>";
+	var priceEventTmp	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>回款金额：</span><span><input id='price' class='hiddenInput' id='price' value='{{price}}'></span><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remak' class='span12 cellremark' placeholder='请输入备注信息' value='{{remark}}'></textarea><input type='hidden' id='completed' value={{completed}}></div></div></div>";
 
 	//添加自定义事件
 	$("#customEventBtn").click(function() {
@@ -89,9 +89,9 @@ $(function() {
 					$events.each(function(index, item) {
 						console.info(item);
 						if (item.price == -1) {
-							addCustomEvent(item);
+							addCustomEvent(item,'template');
 						} else {
-							addPriceEvent(item);
+							addPriceEvent(item,'template');
 						}
 					});
 				}
@@ -214,12 +214,13 @@ $(function() {
 
 		$cellList.each(function(index, element) {
 			var $event  	= [];
+			$cell 			= $(element);
 			$event.id   	= generateID();
-			$event.type 	= $(element).find("#price").val() == null ? 1 : 2; //判断事件类型
-			$event.title 	= $(element).find("#title").val();
-			$event.date 	= $(element).find("input[id^='date']").val();
-			$event.price 	= $(element).find("#price").val() == null ? -1 : $(element).find("#price").val();
-			$event.remark 	= $(element).find("#remark").val();
+			$event.type 	= $cell .find("#price").val() == null ? 1 : 2; //判断事件类型
+			$event.title 	= $cell .find("#title").val();
+			$event.date 	= $cell .find("input[id^='date']").val();
+			$event.price 	= $cell .find("#price").val() == null ? -1 : $(element).find("#price").val();
+			$event.remark 	= $cell .find("#remark").val();
 
 			$event = {
 				'id' 		: $event.id,
@@ -236,7 +237,7 @@ $(function() {
 		return $eventsArray;
 	}
 
-	var addCustomEvent = function(data) {
+	var addCustomEvent = function(data,type) {
 
 		data = data == null ? [] : data;
 
@@ -246,7 +247,7 @@ $(function() {
 		var datePickerID = generateID();
 
 		var $cellHtml = $(Mustache.to_html(customEventTmp, {
-			id 		: data.id,
+			id 		: type == 'template' ? generateID() : data.id,
 			title 	: data.title,
 			date 	: data.date,
 			price 	: data.price,
@@ -270,7 +271,7 @@ $(function() {
 		});
 	}
 
-	var addPriceEvent = function(data) {
+	var addPriceEvent = function(data,type) {
 
 		data = data == null ? [] : data;
 
@@ -281,12 +282,12 @@ $(function() {
 		var datePickerID = generateID();
 
 		var $cellHtml = $(Mustache.to_html(priceEventTmp, {
-			id: data.id,
-			title: data.title,
-			date: data.date,
-			price: data.price,
-			remark: data.remark,
-			dateID: datePickerID
+			id 		: type == 'template' ? generateID() : data.id,
+			title 	: data.title,
+			date 	: data.date,
+			price 	: data.price,
+			remark 	: data.remark,
+			dateID 	: datePickerID
 		}));
 
 		$cellHtml.find("#delete").click(function() {
