@@ -4,16 +4,24 @@ $(function(){
 		
 	});
 
-	$("#searchBtn").click(function(){
+	$("#keyword").keypress(function(event){
+		if(event.keyCode==13) {
+			onSearch();
+		}
+	});
 
+	$("#searchBtn").click(function(){
+		onSearch();
+	});
+
+	var onSearch = function(){
 		var $keyword = $("#keyword").val();
 
 		$.get('/api/contracts/' + $keyword,function(data, status){
 			$('#contractsTbody').html("");
 			showList(data);
 		});
-
-	});
+	}
 
 	$.get('/api/contracts',function(data, status){
 		showList(data);
@@ -22,6 +30,15 @@ $(function(){
 
 	var showList = function(data) {
 		console.info(data);
+
+		if(data == "") {
+			$('#tip').html("<div class='alert alert-warning'>未能搜索到相关合同信息</div>");
+			$('#table_bug_report').css('display','none');
+			return;
+		} else {
+			$('#tip').html("");
+			$('#table_bug_report').css('display','table');
+		}
 
 		//判断data是单个元素还是多个元素，不然后面的遍历操作会将单个元素的对象所有属性遍历出来。
 		if(!isArray(data)) {
