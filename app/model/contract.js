@@ -399,7 +399,7 @@ ContractSchema.methods = {
 		var j = 0; //未完成事件数组下标控制器
 		var m = 0; //大于当前时间数组下标控制器
 		var s = 0; //合同待办事件数组下标控制器
-		var occur = new Date();//
+		var occur = new Date(); //
 		var year = occur.getFullYear();
 		var month = occur.getMonth() + 1;
 		var day = occur.getDate(); ///
@@ -461,7 +461,8 @@ ContractSchema.methods = {
 					"undone": send,
 					"next": next
 				};
-				//				console.log(willSend);
+				console.log(doc.name);
+				console.log(next);
 				allWillSend[s] = willSend;
 				s++;
 			});
