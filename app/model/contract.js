@@ -226,7 +226,7 @@ ContractSchema.methods = {
 		}, {
 			"$set": {
 				"events.$.completed": checkValue,
-//				"events.$.remark": remark,
+				//				"events.$.remark": remark,
 				state: eventName
 			}
 		}, function() {
@@ -296,7 +296,7 @@ ContractSchema.methods = {
 				for (var i = 0; i < doc.events.length; i++) { //遍历该合同的事件数组
 					if (doc.events[i].price > 0 && doc.events[i].completed == true)
 						count = count + doc.events[i].price;
-					if (flag == 0 && doc.events[i].price > 0 && doc.events[i].completed == true && doc.events[i].date < getOccur) {
+					if (flag == 0 && doc.events[i].price > 0 && doc.events[i].completed == true && (doc.events[i].date < getOccur||doc.events[i].date == getOccur)) {
 						lastDate = doc.events[i].date;
 						flag = 1;
 					}
@@ -362,8 +362,8 @@ ContractSchema.methods = {
 				}
 				console.log(getOccur);
 				for (var k = 0; k < doc.events.length; k++) {
-					if (flag == 0 && doc.events[k].date > getOccur && doc.events[k].completed == false) {
-						//找到第一个比当前时间大的事件而且还没完成的事件
+					if (flag == 0 && (doc.events[k].date > getOccur || doc.events[k].date == getOccur) && doc.events[k].completed == false) {
+						//找到第一个大于或等于当前时间的事件而且还没完成的事件
 						getTemp = doc.events[k].date; //把该事件的执行日期赋给临时时间
 						next = doc.events[k];
 						flag = 1;
@@ -376,7 +376,7 @@ ContractSchema.methods = {
 					}
 				}
 				if (canGet == 0) {
-					next = "合同已结束";
+					next = 0;  //合同已经结束
 				}
 				willSend = {
 					"name": doc.name,
@@ -431,8 +431,8 @@ ContractSchema.methods = {
 				}
 				console.log(getOccur);
 				for (var k = 0; k < doc.events.length; k++) {
-					if (flag == 0 && doc.events[k].date > getOccur && doc.events[k].completed == false) {
-						//找到第一个比当前时间大的事件而且还没完成的事件
+					if (flag == 0 && (doc.events[k].date > getOccur || doc.events[k].date == getOccur) && doc.events[k].completed == false) {
+						//找到第一个大于或等于当前时间的事件而且还没完成的事件
 						getTemp = doc.events[k].date; //把该事件的执行日期赋给临时时间
 						next = doc.events[k];
 						flag = 1;
@@ -445,7 +445,7 @@ ContractSchema.methods = {
 					}
 				}
 				if (canGet == 0) {
-					next = "合同已结束";
+					next = 0;   //合同已经结束
 				}
 				willSend = {
 					"name": doc.name,
