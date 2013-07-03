@@ -508,6 +508,15 @@ ContractSchema.methods = {
 	fuzzySearch: function(get, callback) {
 
 		Contract = this.model('Contract');
+		//
+		var occur = new Date(); //
+		var year = occur.getFullYear();
+		var month = occur.getMonth() + 1;
+		var day = occur.getDate(); ///
+		day = day < 10 ? "0" + day : day;
+		month = month < 10 ? "0" + month : month;
+		var getOccur = year + "-" + month + "-" + day;
+		//
 		var send = [];
 		var i = 0;
 		var idFlag = 0;
@@ -522,6 +531,11 @@ ContractSchema.methods = {
 		var q = new RegExp(obj.keyword); //所有以传入参数开始的
 		var getBeginDate = obj.beginDate;
 		var getEndDate = obj.endDate;
+		if (getEndDate == "") {
+			getEndDate = getOccur;
+		}
+		console.log(getEndDate);
+		console.log(getOccur);
 		if (idFlag == 1 && nameFlag == 1) {
 			console.log("1");
 			Contract.find({
