@@ -137,21 +137,20 @@ $(function() {
 				date: contract.next.date
 			};
 
-			var t1,t2,t3,t4;
+			var t1,t2,t3,t4,template;
 			t1 = "<tr><td><ul style='height:100%' class='item-list ui-sortable'><li class='" + liColor[idIndex] + "'><label class='inline'>";
 			t2 = "<input class='test' type='checkbox' id='" + checkboxId[idIndex] + "'>";
 			if(contract.next.title == 0) {
-				 t3 = "<span class='lbl'>" + tdata.name + ":" + "合同已完成";
-				 t4 = "</span></label></li></ul></td></tr>";
+				 // t3 = "<span class='lbl'>" + tdata.name + ":" + "合同已完成";
+				 // t4 = "</span></label></li></ul></td></tr>";
+				 template = null;
 			}else {
 				 t3 = "<span class='lbl'>" + tdata.name + ":" + tdata.date;
 				 t4 = "~" + tdata.title + "</span></label></li></ul></td></tr>";
+				 template = t1 + t2 + t3 + t4;
+				 $('#taskToFinish').append(template);
 			}
 			
-			var template = t1 + t2 + t3 + t4;
-
-			$('#taskToFinish').append(template);
-
 			idIndex++;
 
 			var tempIDValue = checkboxId[idIndex - 1];
@@ -207,7 +206,7 @@ $(function() {
 				var $taskObj = $(this);
 
 				if(checkValue) {
-					bootbox.prompt("亲，留下点备注信息吧!", function(result) {
+					bootbox.prompt("提示（备注信息）", function(result) {
 						if(result == null) {
 							$taskObj.prop("checked", false);
 							return;
