@@ -491,7 +491,7 @@ ContractSchema.methods = {
 		var nameFlag = 0;
 		var remarkFlag = 0;
 		var dateFlag = 0;
-		var obj = JSON.parse(get);   //转化成json
+		var obj = JSON.parse(get); //转化成json
 		if (obj.id == true)
 			idFlag = 1;
 		if (obj.name == true)
@@ -609,6 +609,9 @@ ContractSchema.methods = {
 				i++;
 				callback(send);
 			});
+		}
+		if (idFlag == 0 && nameFlag == 0) {
+			callback(send);
 		}
 	}
 
