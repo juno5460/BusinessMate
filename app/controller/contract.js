@@ -42,20 +42,19 @@ exports.show = function(req, res) {
 	console.log(occur);
 	var contract = new Contract();
 	console.log("show");
-	var getId = {
-			_id: req.params['contract']
-		};
-	var get=req.params['contract'];
-	console.log(getId);
+	var get = req.params['contract'];
+	console.log(get);
 	if (get.length == 24) {
+		var getId = {
+			_id: get
+		};
 		console.log("checkIdData");
 		contract.checkIdData(getId, function(data) {
 			res.send(data[0]);
 		});
-	}
-	else {
+	} else {
 		console.log("fuzzySearch");
-		contract.fuzzySearch(req.params['contract'], function(data) {
+		contract.fuzzySearch(get, function(data) {
 			res.send(data[0]);
 		});
 	}
