@@ -46,6 +46,13 @@ $(function(){
 		isDropDown = false;
 	});
 
+
+
+	$.get('/api/contracts',function(data, status){
+			$('#contractsTbody').html("");
+			showList(data);
+		});
+
 	var onSearch = function(){
 
 		var $keyword = $("#keyword").val();
@@ -78,7 +85,6 @@ $(function(){
 		$postJson.beginDate  	= $("#beginDate").val();
 		$postJson.endDate 		= $("#endDate").val();
 
-		console.info(JSON.stringify($postJson));
 
 		$.get('/api/contracts/' + JSON.stringify($postJson), function(data, status) {
 			$('#contractsTbody').html("");
