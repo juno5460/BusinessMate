@@ -139,7 +139,7 @@ $(function() {
 
 			var t1,t2,t3,t4;
 			t1 = "<tr><td><ul style='height:100%' class='item-list ui-sortable'><li class='" + liColor[idIndex] + "'><label class='inline'>";
-			t2 = "<input  type='checkbox' id='" + checkboxId[idIndex] + "'>";
+			t2 = "<input class='test' type='checkbox' id='" + checkboxId[idIndex] + "'>";
 			if(contract.next.title == 0) {
 				 t3 = "<span class='lbl'>" + tdata.name + ":" + "合同已完成";
 				 t4 = "</span></label></li></ul></td></tr>";

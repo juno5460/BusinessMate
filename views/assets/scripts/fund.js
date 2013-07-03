@@ -41,7 +41,7 @@ $(function() {
 					var curRatio1 = changeTwoDecimal((t1data.returnRatio)*100);
 					var easypieRatio1 = "<div style='margin:0px;padding:1px' class='progress' data-percent='"+curRatio1+"%'><div class='bar' style='width:"+curRatio1+"%;'></div></div>";
 					var template1 = "<tr><td class='center'>{{name}}</td><td class='hidden-480 center'>{{partyA}}</td><td class='hidden-480 center'>{{partyB}}</td><td  class='center'>{{amount}}</td><td class='center'>{{returnAmount}}</td><td class='hidden-phone center'>"+easypieRatio1+"</td><td class='hidden-480 center'>{{lastReturnDate}}</td></tr>";
-console.info(curRatio1);
+
 					var html1 = Mustache.to_html(template1, t1data);
 					$('#table1').append(html1);
 
