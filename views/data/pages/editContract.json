@@ -7,7 +7,7 @@
  ,
  "scripts" : ["jquery-ui" , "underscore" , "backbone" , "bootbox" , "validate" , "common"]
  ,
- "styles" : ["jquery-ui" , "gritter"]
+ "styles" : ["jquery-ui" , "gritter" , "bootstrap-timepicker" , "datepicker"]
  ,
  "ie_scripts" : [{"version":8, "name":"excanvas"}]
 }

@@ -17,5 +17,7 @@
 
  "jquery-ui" : "jquery-ui-1.10.3.custom.min.css",
 
- "prettify" : "prettify.css"
+ "prettify" : "prettify.css",
+
+ "datepicker" : "datepicker.css"
 }
