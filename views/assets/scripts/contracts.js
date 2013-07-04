@@ -1,13 +1,20 @@
 $(function(){
 
-	$('#beginDate').datepicker();
-	$('#beginDate').datepicker().on('changeDate', function(env) {
-		$('#beginDate').datepicker('hide');
+	var today = new Date();
+	var todayFormat = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDay();
+	console.info(todayFormat);
+	$('#beginDate').datepicker({
+		autoclose:true,
+		todayBtn:true,
+		endDate:todayFormat
 	});
-	$('#endDate').datepicker();
-	$('#endDate').datepicker().on('changeDate', function(env) {
-		$('#endDate').datepicker('hide');
+	$('#endDate').datepicker({
+		autoclose:true,
+		todayBtn:true,
+		endDate:todayFormat
 	});
+
+	$('#endDate').val(todayFormat);
 
 	var isDropDown = false;
 
@@ -33,16 +40,16 @@ $(function(){
 	$("#drowdown").click(function(){
 		if(!isDropDown){
 			isDropDown = true;
-			$("#customSearchPanel").css("display","block");
+			$("#custom_search_panel").css("display","block");
 		} else {
 			isDropDown = false;
-			$("#customSearchPanel").css("display","none");
+			$("#custom_search_panel").css("display","none");
 		}
 		
 	});
 
 	$("#removeBtn").click(function(){
-		$("#customSearchPanel").css("display","none");
+		$("#custom_search_panel").css("display","none");
 		isDropDown = false;
 	});
 

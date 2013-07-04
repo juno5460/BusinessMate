@@ -1,7 +1,7 @@
 [
-	{"link": "desktop", "title": "桌面", "icon": "icon-desktop"},
+	{"link": "/desktop", "title": "桌面", "icon": "icon-desktop"},
 
-	{"link": "contracts", "title": "合同管理", "icon": "icon-edit"},
+	{"link": "/contracts", "title": "合同管理", "icon": "icon-edit"},
 
 	{
 		"link" : null, "title" : "统计分析" , "icon" : "icon-dashboard",
