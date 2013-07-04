@@ -4,4 +4,6 @@
  "title" : "Login Page"
  ,
  "description" : "User login page"
+
+ , "scripts" : ["validate"]
 }

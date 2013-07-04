@@ -144,16 +144,16 @@ $(function() {
 			if(contract.next.title == 0) {
 				 t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right'>"+tdata.name+"</span>";
 				 t4 = "<span class='lbl label label-success arrowed-in'>"+ "合同已完成" +"</span>" +"</span></label></li></ul></td></tr>";
-				 // template = null;
+				 template = null;
 				 // template = t1 + t2 + t3 + t4;
 				 // $('#taskToFinish').append(template);
 
 			}else {
 				 t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right'>"+tdata.name+"</span>"+ "<span class='lbl label label-info arrowed-right arrowed-in'>"+ tdata.date+"</span>";
 				 t4 = "<span class='lbl label label-success arrowed-in'>"+ tdata.title +"</span>" +"</span></label></li></ul></td></tr>";
+				 template = t1 + t2 + t3 + t4;
 			}
 			
-			template = t1 + t2 + t3 + t4;
 			$('#taskToFinish').append(template);
 			idIndex++;
 

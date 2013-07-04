@@ -22,17 +22,17 @@
 			
 			<div class="space-6"></div>
 			
-			<form>
+			<form id="loadForm">
 				 <fieldset>
 					<label>
 						<span class="block input-icon input-icon-right">
-							<input type="text" id="loadUsername" class="span12" placeholder="用户名" />
+							<input type="text" id="loadUsername" name="loadUsername" class="span12" placeholder="用户名" />
 							<i class="icon-user"></i>
 						</span>
 					</label>
 					<label>
 						<span class="block input-icon input-icon-right">
-							<input type="password" id="loadPassword" class="span12" placeholder="密码" />
+							<input type="password" id="loadPassword" name="loadPassword" class="span12" placeholder="密码" />
 							<i class="icon-lock"></i>
 						</span>
 					</label>
@@ -72,7 +72,7 @@
 			<p>
 				请输入登录邮箱
 			</p>
-			<form>
+			<form id="retrieveForm">
 				 <fieldset>
 					<label>
 						<span class="block input-icon input-icon-right">
@@ -107,29 +107,29 @@
 			<h4 class="header green lighter bigger"><i class="icon-group blue"></i> 新用户注册</h4>
 			<div class="space-6"></div>
 
-			<form>
+			<form id="registerForm">
 				 <fieldset>
 					<label>
 						<span class="block input-icon input-icon-right">
-							<input type="email" class="span12" id="registerEmail" placeholder="常用邮箱" />
+							<input type="email" class="span12" id="registerEmail" name="registerEmail" placeholder="常用邮箱" />
 							<i class="icon-envelope"></i>
 						</span>
 					</label>
 					<label>
 						<span class="block input-icon input-icon-right">
-							<input type="text" class="span12" id="registerUsername" placeholder="用户名" />
+							<input type="text" class="span12" id="registerUsername" name="registerUsername" placeholder="用户名" />
 							<i class="icon-user"></i>
 						</span>
 					</label>
 					<label>
 						<span class="block input-icon input-icon-right">
-							<input type="password" class="span12" id="registerPassword" placeholder="密码" />
+							<input type="password" class="span12" id="registerPassword" name="registerPassword" placeholder="密码" />
 							<i class="icon-lock"></i>
 						</span>
 					</label>
 					<label>
 						<span class="block input-icon input-icon-right">
-							<input type="password" class="span12" id="registerPasswordChecked" placeholder="确认密码" />
+							<input type="password" class="span12" id="registerPasswordChecked" name="registerPasswordChecked" placeholder="确认密码" />
 							<i class="icon-retweet"></i>
 						</span>
 					</label>
