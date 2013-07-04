@@ -1,20 +1,23 @@
 $(function() {
 
 	$('#signPicker').datepicker({
-		todayBtn:true
+		todayBtn:true,
+		autoclose:true,
 	});
 	$('#signPicker').datepicker().on('changeDate', function(env) {
 		$('#signPicker').datepicker('hide');
 		$('#signPicker').blur()
 	});
 	$('#beginPicker').datepicker({
-		todayBtn:true
+		todayBtn:true,
+		autoclose:true,
 	});
 	$('#beginPicker').datepicker().on('changeDate', function(env) {
 		$('#beginPicker').blur()
 	});
 	$('#endPicker').datepicker({
-		todayBtn:true
+		todayBtn:true,
+		autoclose:true,
 	});
 	$('#endPicker').datepicker().on('changeDate', function(env) {
 		$('#endPicker').blur()

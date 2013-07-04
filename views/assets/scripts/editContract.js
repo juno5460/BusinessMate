@@ -3,7 +3,8 @@ $(function(){
 
 
 	$('#signPicker').datepicker({
-		todayBtn:true
+		todayBtn:true,
+		autoclose:true,
 	});
 	$('#signPicker').datepicker().on('changeDate',function(env){
 		$('#signPicker').datepicker('hide');
@@ -11,7 +12,8 @@ $(function(){
 	});
 
 	$('#beginPicker').datepicker({
-		todayBtn:true
+		todayBtn:true,
+		autoclose:true,
 	});
 	$('#beginPicker').datepicker().on('changeDate',function(env){
 		$('#beginPicker').datepicker('hide');
@@ -19,7 +21,8 @@ $(function(){
 	});
 
 	$('#endPicker').datepicker({
-		todayBtn:true
+		todayBtn:true,
+		autoclose:true,
 	});
 	$('#endPicker').datepicker().on('changeDate',function(env){
 		$('#endPicker').datepicker('hide');
@@ -184,7 +187,7 @@ $(function(){
 						item.tName 		= result;
 						item.amount 	= '';
 						delete item._id;
-						
+
 						$.ajax({
 							url: '/api/templates',
 							type: 'POST',
@@ -277,7 +280,8 @@ $(function(){
 
 		$('#eventsList').append($cellHtml);
 		$('#date' + datePickerID).datepicker({
-			todayBtn: true
+			todayBtn: true,
+			autoclose:true,
 		});
 		$('#date' + datePickerID).datepicker().on('changeDate',function(env){
 			$('#date' + datePickerID).datepicker('hide');
@@ -315,7 +319,8 @@ $(function(){
 
 		$('#eventsList').append($cellHtml);
 		$('#date' + datePickerID).datepicker({
-			todayBtn: true
+			todayBtn: true,
+			autoclose:true,
 		});
 		$('#date' + datePickerID).datepicker().on('changeDate',function(env){
 			$('#date' + datePickerID).datepicker('hide');
