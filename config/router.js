@@ -14,8 +14,8 @@ module.exports = function(app) {
 	app.resource('api/templates', template);
 
 	///系统测试接口
-	var test = require('../app/controller/test');
-	app.resource('tests', test);
+	var test = require('../app/controller/task');
+	app.resource('tasks', task);
 
 	app.get('/', function(req, res) {
 

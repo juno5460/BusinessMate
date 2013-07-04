@@ -412,14 +412,13 @@ ContractSchema.methods = {
 		//找到第一个比当前执行日期大的事件标志位
 		var canGet = 0;
 		//存在下一步事件标志位
-		var next = {
+		var next = {//初始化下步执行事件变量
 			"id": 0,
 			"title": 0,
 			"date": 0,
 			"price": 0,
 			"completed": 0
 		};
-		//存储下一步执行事件
 		var willSend;
 		//存储单个合同数据
 		var allWillSend = [];
