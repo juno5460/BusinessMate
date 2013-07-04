@@ -127,7 +127,7 @@ $(function() {
 	});
 
 	//代办任务
-	$.get("/tasks", function(data, status) {
+	$.get("/api/tasks", function(data, status) {
 
 		$.each(data, function(i, contract) {
 			
@@ -138,7 +138,7 @@ $(function() {
 			};
 
 			var t1,t2,t3,t4,template;
-			t1 = "<tr><td><ul style='height:100%' class='item-list ui-sortable'><li class='" + liColor[idIndex] + "'><label class='inline'>";
+			t1 = "<tr><td><ul style='height:100%' class='item-list ui-sortable'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'>";
 			t2 = "<input class='test' type='checkbox' id='" + checkboxId[idIndex] + "'>";
 			console.info(contract.next.title);
 			if(contract.next.title == 0) {
@@ -147,6 +147,7 @@ $(function() {
 				 // template = null;
 				 // template = t1 + t2 + t3 + t4;
 				 // $('#taskToFinish').append(template);
+
 			}else {
 				 t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right'>"+tdata.name+"</span>"+ "<span class='lbl label label-info arrowed-right arrowed-in'>"+ tdata.date+"</span>";
 				 t4 = "<span class='lbl label label-success arrowed-in'>"+ tdata.title +"</span>" +"</span></label></li></ul></td></tr>";
@@ -229,7 +230,7 @@ $(function() {
 						console.info(postData);
 
 						$.ajax({
-								url: '/tasks/'+ contract.next.id,
+								url: '/api/tasks/'+ contract.next.id,
 								type: 'put',
 								data: postData,
 								error: function(){
