@@ -1,5 +1,5 @@
 /***
- *  合同操作接口
+ *  用户注册登录接口
  *
  *
  ****/
@@ -38,6 +38,7 @@ exports.create = function(req, res) {
 			email: rdata.email,
 			password: rdata.password
 		};
+		console.log(getData);
 		user.insertUserData(getData);
 	});
 };
