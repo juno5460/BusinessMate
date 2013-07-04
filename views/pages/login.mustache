@@ -26,13 +26,13 @@
 				 <fieldset>
 					<label>
 						<span class="block input-icon input-icon-right">
-							<input type="text" class="span12" placeholder="用户名" />
+							<input type="text" id="loadUsername" class="span12" placeholder="用户名" />
 							<i class="icon-user"></i>
 						</span>
 					</label>
 					<label>
 						<span class="block input-icon input-icon-right">
-							<input type="password" class="span12" placeholder="密码" />
+							<input type="password" id="loadPassword" class="span12" placeholder="密码" />
 							<i class="icon-lock"></i>
 						</span>
 					</label>
@@ -41,7 +41,7 @@
 						<label class="span8">
 							<input type="checkbox"><span class="lbl"> 记住帐号</span>
 						</label>
-						<button onclick="return false;" class="span4 btn btn-small btn-primary"><i class="icon-key"></i> 登录</button>
+						<button onclick="return loadCount();" class="span4 btn btn-small btn-primary"><i class="icon-key"></i> 登录</button>
 					</div>
 					
 				  </fieldset>
@@ -60,11 +60,6 @@
 		</div><!--/widget-body-->
 
 	</div><!--/login-box-->
-	
-	
-	
-	
-	
 	
 	<div id="forgot-box" class="widget-box no-border">
 

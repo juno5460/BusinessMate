@@ -67,9 +67,9 @@ $(function() {
 		};
 
 		//定义颜色数组
-		var color = new Array("#FF0033", "#3300FF", "#00CCFF", "#FF00FF", "#FF3300",
-			"#00CC99", "#33FF66", "#66FF00", "#00FFFF", "#CC6666", "#3399FF",
-			"#00FF33", "#CCFF99", "#FFCC66", "#CC3300", "#FF33CC", "#FF0066");
+		var color = new Array("#00CCFF", "#4DFF00", "#FF4747", "#47A3FF", "#FF0066",
+			"#FF85FF", "#47FF47", "#FF8FB4", "#8BFF52", "#FF85FF", "#FFF27A",
+			"#F27AFF", "#88FF7A", "#F27AFF", "#F27AFF", "#FF33CC", "#85FFFF");
 
 		var pieData1 = new Array(),
 			pieData2 = new Array();
@@ -142,14 +142,14 @@ $(function() {
 			t2 = "<input class='test' type='checkbox' id='" + checkboxId[idIndex] + "'>";
 			console.info(contract.next.title);
 			if(contract.next.title == 0) {
-				 t3 = "<span class='lbl'>" + "<span class='label arrowed-right'>"+tdata.name+"</span>";
-				 t4 = "<span class='label label-success arrowed-in'>"+ "合同已完成" +"</span>" +"</span></label></li></ul></td></tr>";
+				 t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right'>"+tdata.name+"</span>";
+				 t4 = "<span class='lbl label label-success arrowed-in'>"+ "合同已完成" +"</span>" +"</span></label></li></ul></td></tr>";
 				 // template = null;
 				 // template = t1 + t2 + t3 + t4;
 				 // $('#taskToFinish').append(template);
 			}else {
-				 t3 = "<span class='lbl'>" + "<span class='label arrowed-right'>"+tdata.name+"</span>"+ "<span class='label label-info arrowed-right arrowed-in'>"+ tdata.date+"</span>";
-				 t4 = "<span class='label label-success arrowed-in'>"+ tdata.title +"</span>" +"</span></label></li></ul></td></tr>";
+				 t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right'>"+tdata.name+"</span>"+ "<span class='lbl label label-info arrowed-right arrowed-in'>"+ tdata.date+"</span>";
+				 t4 = "<span class='lbl label label-success arrowed-in'>"+ tdata.title +"</span>" +"</span></label></li></ul></td></tr>";
 			}
 			
 			template = t1 + t2 + t3 + t4;
@@ -227,9 +227,10 @@ $(function() {
 							remark: remark
 						};
 						console.info(postData);
+
 						$.ajax({
-								url: '/tasks' + '/' + contract.next.id,
-								type: 'PUT',
+								url: '/tasks/'+ contract.next.id,
+								type: 'put',
 								data: postData,
 								error: function(){
 									console.info('error');
