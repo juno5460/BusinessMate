@@ -18,6 +18,7 @@ var EventsSchema = new Schema({
 
 //合同模型
 var ContractSchema = mongoose.Schema({ //创建合同模型对象
+	uid: String, //用户id
 	myId: String, //合同编号
 	partyA: String, //签署甲方
 	partyB: String, //签署乙方
@@ -412,7 +413,7 @@ ContractSchema.methods = {
 		//找到第一个比当前执行日期大的事件标志位
 		var canGet = 0;
 		//存在下一步事件标志位
-		var next = {//初始化下步执行事件变量
+		var next = { //初始化下步执行事件变量
 			"id": 0,
 			"title": 0,
 			"date": 0,

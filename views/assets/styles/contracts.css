@@ -2,42 +2,59 @@ td{
 	cursor:pointer;
 }
 
-#customSearchPanel {
-	margin-top: 10px;
-	min-height: 100px;
+.search_input1{
+	width: 213px;
+}
+#custom_search_panel {
+	margin-top: 5px;
 	display: none;
 }
 
-.search_title{
-	margin-bottom: 5px;
-	margin-left: 10px;
-}
-.baseBox {
-	position: relative;
+.basebox {
 	border:1px solid #d5d5d5;
 	padding: 10px;
-	height: 160px;
-	border-radius: 1px;
+	position: relative;
 }
 
-.baseBox a{
+.basebox a{
 	text-decoration: none;
 	color: #a0a0a0;
 	font-size: 12px;
 	cursor:pointer;
 }
 
-.baseBox .remove{
+#removeBtn {
 	position: absolute;
-	right: 8px;
 	top: 5px;
+	right: 10px;
 }
 
-.baseBox .title {
-	padding-top: 5px;
+.type_item {
+	margin-right: 20px;
 }
-.search_title {
-	font-weight: 700;
-	line-height: 1.125;
-	margin-bottom: 6px;
+
+
+.group_right {
+	margin-left: 35px;
+}
+
+.search_group{
+	margin-left: 8px;
+	margin-top: 5px;
+}
+
+.search_input {
+	width: 200px;
+	margin-top: 8px;
+}
+
+.btn-date {
+	width: 35px;
+	height: 22px;
+	margin-bottom: 2px;
+}
+
+.search_date {
+	margin-top: 8px;
+	width: 100px;
 }

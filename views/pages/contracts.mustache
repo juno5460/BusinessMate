@@ -1,17 +1,17 @@
 
 <div class="top-bar">
-	<input id="keyword" type="text" class="span3 input-medium search-query" placeholder="编号、名称、日期">
+	<input id="keyword" type="text" class="search_input1 search-query" placeholder="编号、名称、日期">
 		<div class="btn-group">
 			<button id="searchBtn" class="btn btn-purple btn-small">　　搜　索　　</button>	
 			<button id="drowdown" class="btn btn-purple btn-small dropdown-toggle">
 				<span class="caret"></span>
 			</button>
 		</div>
-	<a id="addContractBtn" class="btn btn-success btn-small span2 pull-right" type="button" href="contracts/new">
+	<a id="addContractBtn" class="span2 btn btn-success btn-small pull-right" type="button" href="contracts/new">
 		添加新合同
 	</a>
 </div>
-
+<!--
 <div id="customSearchPanel" class="row-fluid">
 	<div class="span6">
 		<div class="baseBox">
@@ -38,6 +38,38 @@
 				<button id="search_btn" class="btn btn-small span3">搜　索</button>
 			</div>
 		</div>
+	</div>
+</div>
+-->
+<div id="custom_search_panel" class="row-fluid">
+	<div class="span6 basebox">
+			<span>高级搜索</span>
+			<a id="removeBtn"><i class="icon-remove remove"></i></a>
+		<div class="search_type search_group">
+			<span>类　型:</span>
+			<span class="group_right">
+				<span class="type_item"><input id="search_check_id" type="checkbox"><span class="lbl">&nbsp;编号</span></span>
+				<span class="type_item"><input id="search_check_name" type="checkbox"><span class="lbl">&nbsp;名称</span></span>
+				<span class="type_item"><input id="search_check_remark" type="checkbox"><span class="lbl">&nbsp;备注</span></span>
+			</span>
+		</div>
+		<div class="search_key search_group">
+			<span class="keyword_title">关键字:</span>
+			<span><input id="search_keyword" class="group_right search_input" type="text"></span>
+		</div>
+		<div class="search_group">
+			<span>时　间:</span>
+			<span class="group_right">
+				<span><input id="beginDate" class="date-picker search_date" type="text" data-date-format="yyyy-mm-dd" readonly="true"></span>
+				至
+				<span><input id="endDate" class="date-picker search_date" type="text" data-date-format="yyyy-mm-dd" readonly="true"></span>
+			</span>
+			<span><input class="btn-date btn btn-small hidden-480" value="今年"></span>
+			<span><input class="btn-date btn btn-small hidden-480" value="去年"></span>
+		</div>
+
+			<input id="search_btn" class="span3 btn btn-success btn-small" value="搜　索">
+
 	</div>
 </div>
 
