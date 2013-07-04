@@ -127,7 +127,7 @@ $(function() {
 	});
 
 	//代办任务
-	$.get("/task", function(data, status) {
+	$.get("/tasks", function(data, status) {
 
 		$.each(data, function(i, contract) {
 			
@@ -225,7 +225,7 @@ $(function() {
 						};
 						console.info(postData);
 						$.ajax({
-								url: '/task' + '/' + contract.next.id,
+								url: '/tasks' + '/' + contract.next.id,
 								type: 'PUT',
 								data: postData,
 								error: function(){
