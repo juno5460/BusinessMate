@@ -13,7 +13,7 @@ module.exports = function(app) {
 	var template = require('../app/controller/template');
 	app.resource('api/templates', template);
 
-	///系统测试接口
+	///待办任务处理接口
 	var task = require('../app/controller/task');
 	app.resource('tasks', task);
 
@@ -51,7 +51,7 @@ module.exports = function(app) {
 			username: 'Justin'
 		}));
 	});
-	
+
 	app.get('/contracts/new', function(req, res) {
 		res.send(generator.generate('addContract', {
 			username: 'Justin'
