@@ -4,7 +4,7 @@ $(function() {
 
 		$.each(data, function(i, contract) {
 		
-			$.get("/tests/"+contract._id, function(data1, status) {
+			$.get("/task/"+contract._id, function(data1, status) {
 					console.info(data1);
 
 					//定义取小数点后两位函数

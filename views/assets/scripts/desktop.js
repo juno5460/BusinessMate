@@ -127,7 +127,7 @@ $(function() {
 	});
 
 	//代办任务
-	$.get("/tests", function(data, status) {
+	$.get("/task", function(data, status) {
 
 		$.each(data, function(i, contract) {
 			
@@ -145,7 +145,7 @@ $(function() {
 				 // t4 = "</span></label></li></ul></td></tr>";
 				 template = null;
 			}else {
-				 t3 = "<span class='lbl'>" + tdata.name + ":" + tdata.date;
+				 t3 = "<span class='lbl'>" + "<span style='background-color:grey'>"+tdata.name+"</span>"+ ":" + tdata.date;
 				 t4 = "~" + tdata.title + "</span></label></li></ul></td></tr>";
 				 template = t1 + t2 + t3 + t4;
 				 $('#taskToFinish').append(template);
@@ -225,7 +225,7 @@ $(function() {
 						};
 						console.info(postData);
 						$.ajax({
-								url: '/tests' + '/' + contract.next.id,
+								url: '/task' + '/' + contract.next.id,
 								type: 'PUT',
 								data: postData,
 								error: function(){

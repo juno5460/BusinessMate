@@ -19,7 +19,7 @@ module.exports = function(app) {
 
 	app.get('/', function(req, res) {
 
-		res.send(generator.generate('desktop', {
+		res.send(generator.generate('login', {
 			username: 'Justin'
 		}));
 	});
