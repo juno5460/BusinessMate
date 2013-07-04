@@ -1,5 +1,5 @@
 
-<div class="top-bar">
+<div class="top-bar row-fluid">
 	<input id="keyword" type="text" class="search_input1 search-query" placeholder="编号、名称、日期">
 		<div class="btn-group">
 			<button id="searchBtn" class="btn btn-purple btn-small">　　搜　索　　</button>	
@@ -11,36 +11,7 @@
 		添加新合同
 	</a>
 </div>
-<!--
-<div id="customSearchPanel" class="row-fluid">
-	<div class="span6">
-		<div class="baseBox">
-			<a id="removeBtn"><i class="icon-remove remove"></i></a>
-			<div class="search_title">高级搜索</div>
-			<div id="typeGroup row-fluid" class="span12">
-				<div class="span2">类　型:</div>
-				<div class="span6 row-fluid">
-					<div class="span3"><input id="search_check_id" type="checkbox"><span class="lbl">&nbsp;编号</span></div>
-					<div class="span3"><input id="search_check_name" type="checkbox"><span class="lbl">&nbsp;名称</span></div>
-					<div class="span3"><input id="search_check_remark" type="checkbox"><span class="lbl">&nbsp;备注</span></div>
-				</div>
-			</div>
-			<div class="span12">
-				<div class="span2 title">关键字:</div>
-				<input id="search_keyword" type="text" class="span6">
-			</div>
-			<div class="span12">
-				<div class="span2 title">日期:</div>
-				<input id="beginDate" class="span3 date-picker" type="text" data-date-format="yyyy-mm-dd" readonly="true">&nbsp;到&nbsp;
-				<input id="endDate" class="span3 date-picker" type="text" data-date-format="yyyy-mm-dd" readonly="true">
-			</div>
-			<div class="span12">
-				<button id="search_btn" class="btn btn-small span3">搜　索</button>
-			</div>
-		</div>
-	</div>
-</div>
--->
+
 <div id="custom_search_panel" class="row-fluid">
 	<div class="span6 basebox">
 			<span>高级搜索</span>
@@ -48,9 +19,9 @@
 		<div class="search_type search_group">
 			<span>类　型:</span>
 			<span class="group_right">
-				<span class="type_item"><input id="search_check_id" type="checkbox"><span class="lbl">&nbsp;编号</span></span>
-				<span class="type_item"><input id="search_check_name" type="checkbox"><span class="lbl">&nbsp;名称</span></span>
-				<span class="type_item"><input id="search_check_remark" type="checkbox"><span class="lbl">&nbsp;备注</span></span>
+				<span class="type_item"><input id="search_check_id" type="checkbox" checked="check"><span class="lbl">&nbsp;编号</span></span>
+				<span class="type_item"><input id="search_check_name" type="checkbox" checked="check"><span class="lbl">&nbsp;名称</span></span>
+				<span class="type_item"><input id="search_check_remark" type="checkbox" checked="check"><span class="lbl">&nbsp;备注</span></span>
 			</span>
 		</div>
 		<div class="search_key search_group">
@@ -68,7 +39,7 @@
 			<span><input class="btn-date btn btn-small hidden-480" value="去年"></span>
 		</div>
 
-			<input id="search_btn" class="span3 btn btn-success btn-small" value="搜　索">
+			<input id="search_btn" class="span3 btn btn-info btn-small" value="搜　索">
 
 	</div>
 </div>

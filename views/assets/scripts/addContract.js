@@ -1,21 +1,27 @@
 $(function() {
 
-	$('#signPicker').datepicker();
+	$('#signPicker').datepicker({
+		todayBtn:true
+	});
 	$('#signPicker').datepicker().on('changeDate', function(env) {
 		$('#signPicker').datepicker('hide');
 		$('#signPicker').blur()
 	});
-	$('#beginPicker').datepicker();
+	$('#beginPicker').datepicker({
+		todayBtn:true
+	});
 	$('#beginPicker').datepicker().on('changeDate', function(env) {
-		$('#beginPicker').datepicker('hide');
 		$('#beginPicker').blur()
 	});
-	$('#endPicker').datepicker();
+	$('#endPicker').datepicker({
+		todayBtn:true
+	});
 	$('#endPicker').datepicker().on('changeDate', function(env) {
-		$('#endPicker').datepicker('hide');
 		$('#endPicker').blur()
 	});
 
+
+	isTemplateMode = false;
 
 	//初始化弹出框样式
 	$._messengerDefaults = {
@@ -126,9 +132,14 @@ $(function() {
 					});
 
 					if (!isExist) {
-						var item = buildModel();
-						item.tName = result;
+
+						isTemplateMode 	= true;//标记当前创建model为模板模式
+						var item 		= buildModel();
+						isTemplateMode 	= false;
+						item.tName 		= result;
+						item.amount 	= '';						
 						delete item._id;
+
 						$.ajax({
 							url: '/api/templates',
 							type: 'POST',
@@ -188,7 +199,7 @@ $(function() {
 		var $signDate 	= $("#signPicker").val();
 		var $beginDate 	= $("#beginPicker").val();
 		var $endDate 	= $("#endPicker").val();
-		var $amount 	= $("#amount").val();
+		var $amount 	= isTemplateMode ? '' : $("#amount").val();
 		var $state 		= $("#state").val();
 
 		var model 		= {};
@@ -219,7 +230,7 @@ $(function() {
 			$event.type 	= $cell .find("#price").val() == null ? 1 : 2; //判断事件类型
 			$event.title 	= $cell .find("#title").val();
 			$event.date 	= $cell .find("input[id^='date']").val();
-			$event.price 	= $cell .find("#price").val() == null ? -1 : $(element).find("#price").val();
+			$event.price 	= isTemplateMode ? '' : $cell .find("#price").val() == null ? -1 : $(element).find("#price").val();
 			$event.remark 	= $cell .find("#remark").val();
 
 			$event = {
@@ -264,10 +275,9 @@ $(function() {
 
 
 		$('#eventsList').append($cellHtml);
-		console.info($cellHtml);
-		$('#date' + datePickerID).datepicker();
-		$('#date' + datePickerID).datepicker().on('changeDate', function(env) {
-			$('#date' + datePickerID).datepicker('hide');
+		$('#date' + datePickerID).datepicker({
+			autoclose:true,
+			todayBtn:true,
 		});
 	}
 
@@ -303,9 +313,9 @@ $(function() {
 
 		
 		$('#eventsList').append($cellHtml);
-		$('#date' + datePickerID).datepicker();
-		$('#date' + datePickerID).datepicker().on('changeDate', function(env) {
-			$('#date' + datePickerID).datepicker('hide');
+		$('#date' + datePickerID).datepicker({
+			autoclose:true,
+			todayBtn:true,
 		});
 	}
 
