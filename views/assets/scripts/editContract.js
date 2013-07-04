@@ -2,23 +2,36 @@ $(function(){
 
 
 
-	$('#signPicker').datepicker();
+	$('#signPicker').datepicker({
+		todayBtn:true
+	});
 	$('#signPicker').datepicker().on('changeDate',function(env){
-	$('#signPicker').datepicker('hide');
+		$('#signPicker').datepicker('hide');
+		$('#signPicker').blur();
 	});
-	$('#beginPicker').datepicker();
+
+	$('#beginPicker').datepicker({
+		todayBtn:true
+	});
 	$('#beginPicker').datepicker().on('changeDate',function(env){
-			$('#beginPicker').datepicker('hide');
+		$('#beginPicker').datepicker('hide');
+		$('#beginPicker').blur();
 	});
-	$('#endPicker').datepicker();
+
+	$('#endPicker').datepicker({
+		todayBtn:true
+	});
 	$('#endPicker').datepicker().on('changeDate',function(env){
-	$('#endPicker').datepicker('hide');
+		$('#endPicker').datepicker('hide');
+		$('#endPicker').blur();
 	});
 
 	//初始化弹出框样式
 	$._messengerDefaults = {
 	extraClasses: 'messenger-fixed messenger-theme-block messenger-on-bottom'
 	};
+
+	var isTemplateMode = false;
 
 
 	var initialize = function(){
@@ -137,7 +150,10 @@ $(function(){
 
 	//点击保存模板按钮时
 	$("#saveAsTemplateBtn").click(function(){
+		saveAsTemplate();
+	});
 
+	var saveAsTemplate = function(){
 		//模板保存时的弹出框
 		bootbox.prompt("请填写模板名", function(result) {
 			
@@ -161,9 +177,14 @@ $(function(){
 					});
 
 					if (!isExist) {
-						var item = buildModel();
-						item.tName = result;
+
+						isTemplateMode 	= true;//标记当前创建model为模板模式
+						var item 		= buildModel();
+						isTemplateMode 	= false;
+						item.tName 		= result;
+						item.amount 	= '';
 						delete item._id;
+						
 						$.ajax({
 							url: '/api/templates',
 							type: 'POST',
@@ -180,9 +201,7 @@ $(function(){
 			});
 			//
 		});
-	
-
-	});
+	}
 
 	//保存按钮点击时
 	$("#saveBtn").click(function(){
@@ -257,7 +276,9 @@ $(function(){
 		});
 
 		$('#eventsList').append($cellHtml);
-		$('#date' + datePickerID).datepicker();
+		$('#date' + datePickerID).datepicker({
+			todayBtn: true
+		});
 		$('#date' + datePickerID).datepicker().on('changeDate',function(env){
 			$('#date' + datePickerID).datepicker('hide');
 		});
@@ -293,7 +314,9 @@ $(function(){
 		});
 
 		$('#eventsList').append($cellHtml);
-		$('#date' + datePickerID).datepicker();
+		$('#date' + datePickerID).datepicker({
+			todayBtn: true
+		});
 		$('#date' + datePickerID).datepicker().on('changeDate',function(env){
 			$('#date' + datePickerID).datepicker('hide');
 		});
@@ -309,7 +332,7 @@ $(function(){
 		var $signDate 		= $("#signPicker").val();
 		var $beginDate 		= $("#beginPicker").val();
 		var $endDate 		= $("#endPicker").val();
-		var $amount 		= $("#amount").val();
+		var $amount 		= isTemplateMode ? '' : $("#amount").val();
 		var $state	 		= $("#state").val();
 
 		var model 		= {};
@@ -338,7 +361,7 @@ $(function(){
 			$event.id 		= $cell.find("#id").val();
 			$event.title 	= $cell.find("#title").val();
 			$event.date 	= $cell.find("input[id^='date']").val();
-			$event.price 	= $cell.find("#price").val() == null ? -1 : $(element).find("#price").val();
+			$event.price 	= isTemplateMode ? '' : $cell.find("#price").val() == null ? -1 : $(element).find("#price").val();
 			$event.remark 	= $cell.find("#remark").val();
 			$event.completed = $cell.find("#completed").val();
 
