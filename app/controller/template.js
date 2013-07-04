@@ -43,7 +43,7 @@ exports.create = function(req, res) {
 	var template = new Template();
 	console.log("template create");
 
-/*	var rdata = { //重新构造对象是为了让可编辑字段去掉主键:_id
+	/*	var rdata = { //重新构造对象是为了让可编辑字段去掉主键:_id
 		myId: "CA123",
 		partyA: "get.partyA",
 		partyB: "get.partyB",
@@ -56,10 +56,10 @@ exports.create = function(req, res) {
 		state: "get.state",
 		events: []
 	};*/
-		var rdata = req.body;
+	var rdata = req.body;
 	console.log(rdata);
 	console.log("start====");
-	template.insertTemplate(rdata,res);
+	template.insertTemplate(rdata, res);
 };
 
 exports.update = function(req, res) {

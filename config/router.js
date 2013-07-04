@@ -17,6 +17,10 @@ module.exports = function(app) {
 	var task = require('../app/controller/task');
 	app.resource('tasks', task);
 
+	///用户登录接口
+	var user = require('../app/controller/user');
+	app.resource('users', user);
+
 	app.get('/', function(req, res) {
 
 		res.send(generator.generate('login', {
