@@ -20,7 +20,7 @@ UserSchema.methods = {
 	test: function() {
 		console.info("=======test");
 	},
-	getUnique: function(callback) {
+	getUnique: function(callback) {    //构造唯一id赋予用户
 		var myDate = new Date();
 		var year = myDate.getFullYear(); //获取完整的年份(4位,1970-????)
 		var month = myDate.getMonth(); //获取当前月份(0-11,0代表1月)

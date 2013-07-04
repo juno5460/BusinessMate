@@ -15,6 +15,8 @@
     "hogan.js": "2.0.0",
     "xtend": "2.0.3",
     "async": "latest",
-    "connect-timeout": "latest"
+    "connect-timeout": "latest",
+    "passport": "latest",
+    "passport-local": "latest"
   }
 }

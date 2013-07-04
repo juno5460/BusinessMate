@@ -15,11 +15,11 @@ module.exports = function(app) {
 
 	///待办任务处理接口
 	var task = require('../app/controller/task');
-	app.resource('tasks', task);
+	app.resource('api/tasks', task);
 
 	///用户登录接口
 	var user = require('../app/controller/user');
-	app.resource('users', user);
+	app.resource('api/users', user);
 
 	app.get('/', function(req, res) {
 
