@@ -2,8 +2,8 @@ var express = require('express'),
 	resource = require('express-resource'),
 	fs = require('fs'),
 	mongoose = require('mongoose'),
-	passport=require('passport'),
-	auth=require('./config/middlewares/authorization'),
+	passport = require('passport'),
+	auth = require('./config/middlewares/authorization'),
 	http = require('http');
 
 
@@ -23,10 +23,13 @@ fs.readdirSync(models_path).forEach(function(file) {
 	require(models_path + '/' + file);
 });
 
+// bootstrap passport config
+require('./config/passport')(passport, config);
+
 //引入配置文件、环境设置
 var setting = require('./config/setting')(app, config);
 //引入路由
-var router = require('./config/router')(app,passport,auth);
+var router = require('./config/router')(app, passport, auth);
 
 
 //启动服务器

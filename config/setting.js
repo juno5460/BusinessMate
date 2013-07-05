@@ -14,6 +14,7 @@ module.exports = function function_name(app, config) {
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	app.use(express.cookieParser('your secret here'));
+	app.use(express.session({ secret: 'keyboard cat' }));
 	app.use(passport.initialize());
 	app.use(passport.session());
 	app.use(app.router);
