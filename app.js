@@ -2,6 +2,8 @@ var express = require('express'),
 	resource = require('express-resource'),
 	fs = require('fs'),
 	mongoose = require('mongoose'),
+	passport=require('passport'),
+	auth=require('./config/middlewares/authorization'),
 	http = require('http');
 
 
@@ -24,7 +26,7 @@ fs.readdirSync(models_path).forEach(function(file) {
 //引入配置文件、环境设置
 var setting = require('./config/setting')(app, config);
 //引入路由
-var router = require('./config/router')(app);
+var router = require('./config/router')(app,passport,auth);
 
 
 //启动服务器

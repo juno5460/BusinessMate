@@ -1,5 +1,6 @@
 var express = require('express'),
 	path = require('path'),
+	passport = require('passport'),
 	mongoStore = require('connect-mongo')(express),
 	connectTimeout = require('connect-timeout');
 
@@ -13,6 +14,8 @@ module.exports = function function_name(app, config) {
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	app.use(express.cookieParser('your secret here'));
+	app.use(passport.initialize());
+	app.use(passport.session());
 	app.use(app.router);
 
 	//设置超时时间

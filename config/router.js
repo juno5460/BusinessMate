@@ -3,7 +3,7 @@ var async = require('async'),
 	generator = require('../app/generator/generator');
 
 ////////contract-router
-module.exports = function(app) {
+module.exports = function(app, passport, auth) {
 
 	///新建合同操作接口
 	var contract = require('../app/controller/contract');
@@ -14,12 +14,28 @@ module.exports = function(app) {
 	app.resource('api/templates', template);
 
 	///待办任务处理接口
-	var task = require('../app/controller/task');
-	app.resource('api/tasks', task);
+	//	var task = require('../app/controller/task');
+	//	app.resource('api/tasks', task);
 
 	///用户登录接口
 	var user = require('../app/controller/user');
 	app.resource('api/users', user);
+
+
+	////////////passport测试
+	var users = require('../app/controller/users');
+	app.get('/login', users.login);
+	app.get('/signup', users.signup);
+	app.get('/logout', users.logout);
+	app.post('/users', users.create);
+	app.post('/users/session', passport.authenticate('local', {
+		failureRedirect: '/login',
+		failureFlash: 'Invalid email or password.'
+	}), users.session);
+	var task = require('../app/controller/task');
+	app.get('/api/tasks', auth.requiresLogin, task.index);
+	//	app.resource('api/tasks', auth.requiresLogin, task);
+	////////////passport测试
 
 	app.get('/', function(req, res) {
 

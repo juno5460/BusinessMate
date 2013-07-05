@@ -10,6 +10,7 @@ var mongoose = require('mongoose'),
 
 var UserSchema = mongoose.Schema({ //创建合同模型对象
 	uid: String, //用户账号
+	provider:String, //
 	userName: String, //用户名
 	email: String, //邮箱
 	password: String //密码
