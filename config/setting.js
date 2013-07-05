@@ -2,6 +2,7 @@ var express = require('express'),
 	path = require('path'),
 	passport = require('passport'),
 	mongoStore = require('connect-mongo')(express),
+	flash = require('connect-flash'),
 	connectTimeout = require('connect-timeout');
 
 module.exports = function function_name(app, config) {
@@ -14,11 +15,13 @@ module.exports = function function_name(app, config) {
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	app.use(express.cookieParser('your secret here'));
-	app.use(express.session({ secret: 'keyboard cat' }));
+	app.use(express.session({
+		secret: 'keyboard cat'
+	}));
 	app.use(passport.initialize());
 	app.use(passport.session());
 	app.use(app.router);
-
+	app.use(flash());
 	//设置超时时间
 	app.use(connectTimeout({
 		time: 10000
