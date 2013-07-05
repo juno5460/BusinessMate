@@ -11,7 +11,7 @@ $(function() {
 			provider: 'local'
 		};
 		console.info(postData);
-		$.post({
+		$.ajax({
 			url: 'http://10.108.1.67:3000/users/session',
 			type: 'post',
 			data: postData,
