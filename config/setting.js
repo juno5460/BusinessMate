@@ -10,6 +10,7 @@ module.exports = function function_name(app, config) {
 	app.set('port', process.env.PORT || 3000);
 	app.set('views', config.root + '/app/view');
 	app.set('view engine', 'ejs');
+	app.use(flash());
 	app.use(express.favicon());
 	app.use(express.logger('dev'));
 	app.use(express.bodyParser());
@@ -21,7 +22,7 @@ module.exports = function function_name(app, config) {
 	app.use(passport.initialize());
 	app.use(passport.session());
 	app.use(app.router);
-	app.use(flash());
+
 	//设置超时时间
 	app.use(connectTimeout({
 		time: 10000
