@@ -7,8 +7,6 @@ var express = require('express'),
 	http = require('http');
 
 
-//引入配置文件、环境设置、路由
-var app = express();
 
 //引入配置文件
 var env = process.env.NODE_ENV || 'development',
@@ -26,8 +24,11 @@ fs.readdirSync(models_path).forEach(function(file) {
 // bootstrap passport config
 require('./config/passport')(passport, config);
 
+//引入配置文件、环境设置、路由
+var app = express();
+
 //引入配置文件、环境设置
-var setting = require('./config/setting')(app, config);
+var setting = require('./config/setting')(app, config, passport);
 //引入路由
 var router = require('./config/router')(app, passport, auth);
 

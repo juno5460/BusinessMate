@@ -1,11 +1,10 @@
 var express = require('express'),
 	path = require('path'),
-	passport = require('passport'),
 	mongoStore = require('connect-mongo')(express),
 	flash = require('connect-flash'),
 	connectTimeout = require('connect-timeout');
 
-module.exports = function function_name(app, config) {
+module.exports = function function_name(app, config, passport) {
 	// all environments
 	app.set('port', process.env.PORT || 3000);
 	app.set('views', config.root + '/app/view');
@@ -16,9 +15,16 @@ module.exports = function function_name(app, config) {
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	app.use(express.cookieParser('your secret here'));
+	// express/mongo session storage
 	app.use(express.session({
-		secret: 'keyboard cat'
+		secret: 'noobjs',
+		store: new mongoStore({
+			url: config.db,
+			collection: 'sessions'
+		})
 	}));
+
+
 	app.use(passport.initialize());
 	app.use(passport.session());
 	app.use(app.router);
@@ -36,14 +42,6 @@ module.exports = function function_name(app, config) {
 		pretty: true
 	});
 
-	// express/mongo session storage
-	app.use(express.session({
-		secret: 'noobjs',
-		store: new mongoStore({
-			url: config.db,
-			collection: 'sessions'
-		})
-	}));
 
 
 	app.set('showStackError', true);
