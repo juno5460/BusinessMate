@@ -14,8 +14,8 @@ module.exports = function(app, passport, auth) {
 	app.resource('api/templates', template);
 
 	///待办任务处理接口
-	//	var task = require('../app/controller/task');
-	//	app.resource('api/tasks', task);
+	var task = require('../app/controller/task');
+	app.resource('api/tasks', task);
 
 	///用户登录接口
 	var user = require('../app/controller/user');
@@ -32,8 +32,8 @@ module.exports = function(app, passport, auth) {
 		failureRedirect: '/login',
 		failureFlash: 'Invalid email or password.'
 	}), users.session);
-	var task = require('../app/controller/task');
-	app.get('/api/tasks', auth.requiresLogin, task.index);
+//	var task = require('../app/controller/task');
+//	app.get('/api/tasks', auth.requiresLogin, task.index);
 	//	app.resource('api/tasks', auth.requiresLogin, task);
 	////////////passport测试
 

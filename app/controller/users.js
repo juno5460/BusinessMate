@@ -21,7 +21,7 @@ exports.authCallback = function(req, res, next) {
  */
 
 exports.login = function(req, res) {
-     console.log(req.user);
+  console.log(req.user);
   res.send(generator.generate('login', {
     username: 'Justin'
   }));
@@ -40,6 +40,7 @@ exports.signup = function(req, res) {
 /**
  * Logout
  */
+
 
 exports.logout = function(req, res) {
   req.logout();
@@ -61,7 +62,8 @@ exports.session = function(req, res) {
 
 exports.create = function(req, res) {
   var user = new User(req.body);
-  user.provider = 'local';
+  console.log(user);
+  //  user.provider = 'local';
   user.save(function(err) {
     if (err) {
       return res.send(generator.generate('login', {
@@ -69,7 +71,10 @@ exports.create = function(req, res) {
       }));
     }
     req.logIn(user, function(err) {
-      if (err) return 0;
+      if (err) {
+        return 0;
+      }
+      console.log(user.userName);
       return res.redirect('/api/contracts');
     });
   });
@@ -103,3 +108,20 @@ exports.user = function(req, res, next, id) {
     next();
   });
 };
+
+/*
+ exports.create = function(req, res) {
+  var user = new User();
+  var rdata = req.body;
+  user.getUnique(function(data) {
+    var getData = {
+      uid: data,
+      userName: rdata.userName,
+      email: rdata.email,
+      password: rdata.password
+    };
+    console.log(getData);
+    user.insertUserData(getData);
+  });
+};
+*/
