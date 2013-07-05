@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
 
 var UserSchema = mongoose.Schema({ //创建合同模型对象
 	uid: String, //用户账号
-	provider:String, //
+	provider: String, //
 	userName: String, //用户名
 	email: String, //邮箱
 	password: String //密码
@@ -21,7 +21,17 @@ UserSchema.methods = {
 	test: function() {
 		console.info("=======test");
 	},
-	getUnique: function(callback) {    //构造唯一id赋予用户
+	/**
+	 * Authenticate - check if the passwords are the same
+	 *
+	 * @param {String} plainText
+	 * @return {Boolean}
+	 * @api public
+	 */
+	authenticate: function(plainText) {
+		return plainText == this.password;
+	},
+	getUnique: function(callback) { //构造唯一id赋予用户
 		var myDate = new Date();
 		var year = myDate.getFullYear(); //获取完整的年份(4位,1970-????)
 		var month = myDate.getMonth(); //获取当前月份(0-11,0代表1月)
