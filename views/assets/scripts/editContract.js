@@ -270,15 +270,20 @@ $(function(){
 		}));
 
 		$cellHtml.find("#delete").click(function() {
-			$cellHtml.animate({
-				opacity: '0'
-			});
+			// $cellHtml.animate({
+			// 	opacity: '0'
+			// });
+
+			$cellHtml.slideUp();
 			doActionAfterSecond(function() {
 				$cellHtml.remove();
 			}, 0.4);
 		});
 
+		$cellHtml.hide();
 		$('#eventsList').append($cellHtml);
+		$cellHtml.slideDown();
+
 		$('#date' + datePickerID).datepicker({
 			todayBtn: true,
 			autoclose:true,
@@ -309,15 +314,19 @@ $(function(){
 		}));
 
 		$cellHtml.find("#delete").click(function() {
-			$cellHtml.animate({
-				opacity: '0'
-			});
+			// $cellHtml.animate({
+			// 	opacity: '0'
+			// });
+			$cellHtml.slideUp();
 			doActionAfterSecond(function() {
 				$cellHtml.remove();
 			}, 0.4);
 		});
 
+		$cellHtml.hide();
 		$('#eventsList').append($cellHtml);
+		$cellHtml.slideDown();
+
 		$('#date' + datePickerID).datepicker({
 			todayBtn: true,
 			autoclose:true,
