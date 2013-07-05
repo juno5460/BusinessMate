@@ -18,8 +18,8 @@ module.exports = function(app, passport, auth) {
 	app.resource('api/tasks', task);
 
 	///用户登录接口
-	var user = require('../app/controller/users');
-	app.resource('api/users', user);
+	// var user = require('../app/controller/users');
+	// app.resource('api/users', user);
 
 
 	////////////passport测试
