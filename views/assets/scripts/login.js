@@ -34,7 +34,8 @@ $(function() {
 		var postData = {
 			email: email,
 			userName: userName,
-			password: password
+			password: password,
+			provider: 'local'
 		};
 
 		console.info(postData);
