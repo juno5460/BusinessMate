@@ -52,7 +52,7 @@ exports.logout = function(req, res) {
  */
 
 exports.session = function(req, res) {
-  console.info(req.user);
+  console.info("req.user");
   res.redirect('/desktop');
 };
 

@@ -9,10 +9,12 @@ module.exports = function(passport, config) {
 
   // serialize sessions
   passport.serializeUser(function(user, done) {
+    console.log("serializeUser");
     done(null, user.id);
   });
 
   passport.deserializeUser(function(id, done) {
+    console.log("deserializeUser");
     User.findOne({
       _id: id
     }, function(err, user) {
@@ -20,6 +22,7 @@ module.exports = function(passport, config) {
     });
   });
   passport.use(new LocalStrategy(function(username, password, done) {
+    console.log("LocalStrategy");
     User.findOne({
       userName: username
     }, function(err, user) {
