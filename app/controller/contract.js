@@ -42,11 +42,12 @@ exports.show = function(req, res) {
 	console.log(occur);
 	var contract = new Contract();
 	console.log("show");
-	var get = req.params['contract'];
-	console.log(get);
-	if (get.length == 24) {
+	var queryId = req.params['id'] + '';
+	//	console.log(get);
+	console.log(req.params.id);
+	if (queryId.length == 24) {
 		var getId = {
-			_id: get
+			_id: queryId
 		};
 		console.log("checkIdData");
 		contract.checkIdData(getId, function(data) {
@@ -54,7 +55,7 @@ exports.show = function(req, res) {
 		});
 	} else {
 		console.log("fuzzySearch");
-		contract.fuzzySearch(get, function(data) {
+		contract.fuzzySearch(queryId, function(data) {
 			console.log(data[0]);
 			res.send(data[0]);
 		});
@@ -83,7 +84,7 @@ exports.update = function(req, res) {
 	var contract = new Contract();
 	console.log("update");
 	var getId = {
-		_id: req.params['contract']
+		_id: req.params['id']
 	};
 	var get = req.body;
 	/*	var getNew = { //重新构造对象是为了让可编辑字段去掉主键:_id
@@ -126,9 +127,9 @@ exports.destroy = function(req, res) {
 	var contract = new Contract();
 	console.log("destroy");
 	var getId = {
-		_id: req.params['contract']
+		_id: req.params['id']
 	};
-	if (req.params['contract'] != 'fuck') {
+	if (req.params['id'] != 'fuck') {
 		contract.removeData(getId, function(data) {
 			res.send(data);
 		});

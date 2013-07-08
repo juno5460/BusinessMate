@@ -23,7 +23,7 @@ exports.authCallback = function(req, res, next) {
 
 exports.login = function(req, res) {
 
-  console.log('login',res.user);
+  console.log('login', res.user);
 
   if (req.user != null || req.user != undefined) {
     return res.redirect('/desktop');
@@ -33,7 +33,7 @@ exports.login = function(req, res) {
     }));
 
   }
-  
+
 };
 /**
  * Show sign up form
@@ -60,7 +60,7 @@ exports.logout = function(req, res) {
  */
 
 exports.session = function(req, res) {
-  console.info("badboy:"+req.user);
+  console.info("badboy:" + req.user);
   //util.redirect(req,res,'/desktop');
   res.redirect('/desktop');
 };
@@ -71,7 +71,7 @@ exports.session = function(req, res) {
 
 exports.create = function(req, res) {
   var user = new User(req.body);
- // console.log(user);
+  // console.log(user);
   //  user.provider = 'local';
   user.save(function(err) {
     if (err) {
@@ -83,8 +83,8 @@ exports.create = function(req, res) {
       if (err) {
         return 0;
       }
-      console.log("Enter Login function",user.email);
-      return res.redirect('/api/contracts');
+      console.log("Enter Login function", user.email);
+      return res.redirect('/desktop');
     });
   });
 };

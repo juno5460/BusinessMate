@@ -26,9 +26,9 @@ exports.show = function(req, res) {
 	console.log(occur);
 	console.log("template show");
 	var template = new Template();
-	console.log("啊啊啊啊啊啊啊啊" + req.params['contract']);
+	console.log("啊啊啊啊啊啊啊啊" + req.params['id']);
 	var getId = {
-		_id: req.params['template']
+		_id: req.params['id']
 	};
 	console.log(getId);
 	template.checkIdTemplate(getId, function(data) {
@@ -68,7 +68,7 @@ exports.update = function(req, res) {
 	var template = new Template();
 	console.log("template update");
 	var getId = {
-		_id: req.params['template']
+		_id: req.params['id']
 	};
 	var get = req.body;
 	/*	var getNew = { //重新构造对象是为了让可编辑字段去掉主键:_id
@@ -110,7 +110,7 @@ exports.destroy = function(req, res) {
 	console.log("template destroy");
 	//	var getId = "17979181781105635000";
 	var getId = {
-		_id: req.params['template']
+		_id: req.params['id']
 	};
 	/*
 	template.removeData(getId, function(data) {
