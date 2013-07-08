@@ -1,5 +1,4 @@
-var passport = require('passport'),
-  mongoose = require('mongoose'),
+var mongoose = require('mongoose'),
   LocalStrategy = require('passport-local').Strategy,
   User = mongoose.model('User');
 
@@ -24,8 +23,9 @@ module.exports = function(passport, config) {
   passport.use(new LocalStrategy(function(username, password, done) {
     console.log("LocalStrategy");
     User.findOne({
-      userName: username
+      username: username
     }, function(err, user) {
+//      console.log(user);
       if (err) {
         return done(err);
       }
@@ -34,6 +34,7 @@ module.exports = function(passport, config) {
           message: 'Incorrect username.'
         });
       }
+      console.log("验证密码...");
       if (!user.authenticate(password)) {
         return done(null, false, {
           message: 'Incorrect password.'

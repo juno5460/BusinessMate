@@ -15,7 +15,7 @@ exports.index = function(req, res) {
 	console.log(occur);
 	var contract = new Contract();
 	contract.checkInfo(function(data) {
-		console.log('hello');
+		console.log("hello");
 		res.send(data);
 	});
 	/******/

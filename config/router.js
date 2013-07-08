@@ -28,12 +28,15 @@ module.exports = function(app, passport, auth) {
 	app.get('/signup', users.signup);
 	app.get('/logout', users.logout);
 	app.post('/users', users.create);
-	app.post('/users/session', passport.authenticate('local', {
+	app.post('/users/session',function(req,res,next){
+		console.info("call session");
+		next();
+	}, passport.authenticate('local', {
 		failureRedirect: '/login',
 		failureFlash: 'Invalid email or password.'
 	}), users.session);
-//	var task = require('../app/controller/task');
-//	app.get('/api/tasks', auth.requiresLogin, task.index);
+	//	var task = require('../app/controller/task');
+	//	app.get('/api/tasks', auth.requiresLogin, task.index);
 	//	app.resource('api/tasks', auth.requiresLogin, task);
 	////////////passport测试
 

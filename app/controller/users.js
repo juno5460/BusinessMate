@@ -21,10 +21,8 @@ exports.authCallback = function(req, res, next) {
  */
 
 exports.login = function(req, res) {
-  console.log(req.user);
-  res.send(generator.generate('login', {
-    username: 'Justin'
-  }));
+// console.log(req.user);
+ return res.redirect('/desktop');
 };
 
 /**
@@ -52,8 +50,11 @@ exports.logout = function(req, res) {
  */
 
 exports.session = function(req, res) {
-  console.info("req.user");
-  res.redirect('/desktop');
+  console.info("badboy:"+req.user);
+//  res.redirect('/desktop');
+  res.send(generator.generate('editContract', {
+      _id: req.params.id
+    }));
 };
 
 /**
@@ -62,7 +63,7 @@ exports.session = function(req, res) {
 
 exports.create = function(req, res) {
   var user = new User(req.body);
-  console.log(user);
+ // console.log(user);
   //  user.provider = 'local';
   user.save(function(err) {
     if (err) {
@@ -74,7 +75,7 @@ exports.create = function(req, res) {
       if (err) {
         return 0;
       }
-      console.log(user.userName);
+      console.log("Enter Login function",user.email);
       return res.redirect('/api/contracts');
     });
   });

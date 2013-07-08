@@ -11,7 +11,7 @@ var mongoose = require('mongoose'),
 var UserSchema = mongoose.Schema({ //创建合同模型对象
 	uid: String, //用户账号
 	provider: String, //
-	userName: String, //用户名
+	username: String, //用户名
 	email: String, //邮箱
 	password: String //密码
 });
@@ -53,7 +53,7 @@ UserSchema.methods = {
 	checkUserInfo: function(callback) {
 		this.model('User').find({}, {
 			uid: 1,
-			userName: 1,
+			username: 1,
 			email: 1,
 			password: 1
 		}, function(err, docs) {
