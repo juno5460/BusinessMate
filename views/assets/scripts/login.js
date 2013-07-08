@@ -4,26 +4,40 @@ var show_box = function show_box(id) {
 };
 
 $(function() {
-	$("#loadBtn").click(function() {
-		var postData = {
-			userName: $("#loadUsername").val(),
-			password: $("#loadPassword").val(),
-			provider: 'local'
-		};
-		console.info(postData);
-		$.post({
-			url: 'http://10.108.1.67:3000/users/session',
-			type: 'post',
-			data: postData,
-			error: function(error) {
-				console.info(error);
-			},
-			success: function(success) {
-				console.info(success);
-			}
-		});
+	// $("#loadBtn").click(function() {
+	// 	var postData = {
+	// 		userName: $("#loadUsername").val(),
+	// 		password: $("#loadPassword").val(),
+	// 		provider: 'local'
+	// 	};
+	// 	console.info(postData);
+	// 	// $.post({
+	// 	// 	url: '/users/session',
+	// 	// 	type: 'post',
+	// 	// 	data: {userName:2,password:2,provider:'local'},
+	// 	// 	error: function(error) {
+	// 	// 		console.info(error);
+	// 	// 	},
+	// 	// 	success: function(success) {
+	// 	// 		console.info(success);
+	// 	// 	}
+	// 	// });
 
+
+
+	// });
+
+$.post('/users/session',{username:2,password:2,provider:'local'},function(data,status){
+		console.info(status);
+		// if (data.redirectTo && data.msg == 'Just go there please') {
+  //               window.location = data.redirectTo;
+  //           }
+  		console.info(data);
 	});
+
+// $.post('/users',{email:'2@2.com',userName:'2',password:'2',provider:'local'},function(data,status){
+// 		console.info(status);
+// 	});
 
 	$("#registerBtn").click(function() {
 		var email = $("#registerEmail").val();
@@ -41,7 +55,7 @@ $(function() {
 		console.info(postData);
 
 		$.ajax({
-			url: 'http://10.108.1.67:3000/users',
+			url: '/users',
 			type: 'post',
 			data: postData,
 			error: function() {

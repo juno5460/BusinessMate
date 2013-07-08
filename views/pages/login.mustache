@@ -23,17 +23,17 @@
 							快速登录
 						</h4>
 
-						<form id="loadForm">
+						<form id="loadForm" action="/users/session" method="post">
 							<fieldset>
 								<label>
 									<span class="block input-icon input-icon-right">
-										<input type="text" id="loadUsername" name="loadUsername" class="span12" placeholder="用户名" />
+										<input type="text" id="loadUsername" name="username" class="span12" placeholder="用户名" />
 										<i class="icon-user"></i>
 									</span>
 								</label>
 								<label>
 									<span class="block input-icon input-icon-right">
-										<input type="password" id="loadPassword" name="loadPassword" class="span12" placeholder="密码" />
+										<input type="password" id="loadPassword" name="password" class="span12" placeholder="密码" />
 										<i class="icon-lock"></i>
 									</span>
 								</label>
@@ -43,10 +43,10 @@
 										<input type="checkbox">
 										<span class="lbl">记住帐号</span>
 									</label>
-									<button id="loadBtn" class="span4 btn btn-small btn-primary">
+									<input type="submit" id="loadBtn" class="span4 btn btn-small btn-primary">
 											<i class="icon-key"></i>
 											登录
-									</button>
+									</input>
 								</div>
 
 							</fieldset>
