@@ -27,44 +27,44 @@ $(function() {
 
 	// });
 
-$.post('/users/session',{username:2,password:2,provider:'local'},function(data,status){
-		console.info(status);
-		// if (data.redirectTo && data.msg == 'Just go there please') {
-  //               window.location = data.redirectTo;
-  //           }
-  		console.info(data);
-	});
+// $.post('/users/session',{username:2,password:2,provider:'local'},function(data,status){
+// 		console.info(status);
+// 		if(data.redirectTo != '') {
+// 			console.info(data.redirectTo);
+// 			window.location = data.redirectTo;
+// 		}
+// 	});
 
-// $.post('/users',{email:'2@2.com',userName:'2',password:'2',provider:'local'},function(data,status){
+// $.post('/users',{email:'2@2.com',username:'2',password:'2',provider:'local'},function(data,status){
 // 		console.info(status);
 // 	});
 
-	$("#registerBtn").click(function() {
-		var email = $("#registerEmail").val();
-		var userName = $("#registerUsername").val();
-		var password = $("#registerPassword").val();
-		var passwordChecked = $("#registerPasswordChecked").val();
+	// $("#registerBtn").click(function() {
+	// 	var email = $("#registerEmail").val();
+	// 	var userName = $("#registerUsername").val();
+	// 	var password = $("#registerPassword").val();
+	// 	var passwordChecked = $("#registerPasswordChecked").val();
 
-		var postData = {
-			email: email,
-			userName: userName,
-			password: password,
-			provider: 'local'
-		};
+	// 	var postData = {
+	// 		email: email,
+	// 		userName: userName,
+	// 		password: password,
+	// 		provider: 'local'
+	// 	};
 
-		console.info(postData);
+	// 	console.info(postData);
 
-		$.ajax({
-			url: '/users',
-			type: 'post',
-			data: postData,
-			error: function() {
-				console.info('error');
-			},
-			success: function(result) {
-				console.info('success');
-			}
-		});
-	});
+	// 	$.ajax({
+	// 		url: '/users',
+	// 		type: 'post',
+	// 		data: postData,
+	// 		error: function() {
+	// 			console.info('error');
+	// 		},
+	// 		success: function(result) {
+	// 			console.info('success');
+	// 		}
+	// 	});
+	// });
 
 });

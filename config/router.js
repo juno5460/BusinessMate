@@ -28,10 +28,7 @@ module.exports = function(app, passport, auth) {
 	app.get('/signup', users.signup);
 	app.get('/logout', users.logout);
 	app.post('/users', users.create);
-	app.post('/users/session',function(req,res,next){
-		console.info("call session");
-		next();
-	}, passport.authenticate('local', {
+	app.post('/users/session',passport.authenticate('local', {
 		failureRedirect: '/login',
 		failureFlash: 'Invalid email or password.'
 	}), users.session);
@@ -41,10 +38,7 @@ module.exports = function(app, passport, auth) {
 	////////////passport测试
 
 	app.get('/', function(req, res) {
-
-		res.send(generator.generate('login', {
-			username: 'Justin'
-		}));
+		res.redirect('/login');
 	});
 
 	app.get('/desktop', function(req, res) {

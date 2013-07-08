@@ -4,7 +4,8 @@
 
 var mongoose = require('mongoose'),
   User = mongoose.model('User'),
-  generator = require('../generator/generator');
+  generator = require('../generator/generator'),
+  util = require('../util/common');
 
 exports.signin = function(req, res) {};
 
@@ -21,10 +22,19 @@ exports.authCallback = function(req, res, next) {
  */
 
 exports.login = function(req, res) {
-// console.log(req.user);
- return res.redirect('/desktop');
-};
 
+  console.log('login',res.user);
+
+  if (req.user != null || req.user != undefined) {
+    return res.redirect('/desktop');
+  } else {
+    res.send(generator.generate('login', {
+      username: 'Justin'
+    }));
+
+  }
+  
+};
 /**
  * Show sign up form
  */
@@ -51,10 +61,8 @@ exports.logout = function(req, res) {
 
 exports.session = function(req, res) {
   console.info("badboy:"+req.user);
-//  res.redirect('/desktop');
-  res.send(generator.generate('editContract', {
-      _id: req.params.id
-    }));
+  //util.redirect(req,res,'/desktop');
+  res.redirect('/desktop');
 };
 
 /**
