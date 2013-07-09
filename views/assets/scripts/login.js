@@ -52,7 +52,7 @@ $("#registerForm").validate({
 			required: true,
 			minlength: 3,
 			remote: { 
-				url: "http://10.108.1.67:3000/username", //url地址 
+				url: "/username", //url地址 
 				type: "post", //发送方式 
 				dataType: "json", //数据格式 
 				data: { //要传递的数据 
