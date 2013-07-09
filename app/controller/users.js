@@ -24,16 +24,13 @@ exports.authCallback = function(req, res, next) {
 exports.login = function(req, res) {
 
   console.log('login', res.user);
-
   if (req.user != null || req.user != undefined) {
     return res.redirect('/desktop');
   } else {
     res.send(generator.generate('login', {
       username: 'Justin'
     }));
-
   }
-
 };
 /**
  * Show sign up form
@@ -61,7 +58,6 @@ exports.logout = function(req, res) {
 
 exports.session = function(req, res) {
   console.info("badboy:" + req.user);
-  //util.redirect(req,res,'/desktop');
   res.redirect('/desktop');
 };
 
@@ -70,21 +66,28 @@ exports.session = function(req, res) {
  */
 
 exports.create = function(req, res) {
-  var user = new User(req.body);
-  // console.log(user);
-  //  user.provider = 'local';
-  user.save(function(err) {
-    if (err) {
-      return res.send(generator.generate('login', {
-        username: 'Justin'
-      }));
-    }
-    req.logIn(user, function(err) {
+  var rdata = req.body;
+  var user = new User();
+  user.getUnique(function(data) { //生成唯一用户id
+    var getData = {
+      uid: data,
+      username: rdata.username,
+      email: rdata.email,
+      password: rdata.password
+    };
+    user = new User(getData);
+    user.save(function(err) {
       if (err) {
-        return 0;
+        return res.send(generator.generate('login', {
+          username: 'Justin'
+        }));
       }
-      console.log("Enter Login function", user.email);
-      return res.redirect('/desktop');
+      req.logIn(user, function(err) {
+        if (err) {
+          return 0;
+        }
+        return res.redirect('/desktop');
+      });
     });
   });
 };
@@ -117,20 +120,3 @@ exports.user = function(req, res, next, id) {
     next();
   });
 };
-
-/*
- exports.create = function(req, res) {
-  var user = new User();
-  var rdata = req.body;
-  user.getUnique(function(data) {
-    var getData = {
-      uid: data,
-      userName: rdata.userName,
-      email: rdata.email,
-      password: rdata.password
-    };
-    console.log(getData);
-    user.insertUserData(getData);
-  });
-};
-*/
