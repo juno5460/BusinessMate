@@ -48,45 +48,45 @@ module.exports = function(app, passport, auth) {
 	//	app.resource('api/tasks', auth.requiresLogin, task);
 	////////////passport测试
 
-	app.get('/', function(req, res) {
+	app.get('/', auth.requiresLogin, function(req, res) {
 		res.redirect('/login');
 	});
 
-	app.get('/desktop', function(req, res) {
+	app.get('/desktop', auth.requiresLogin, function(req, res) {
 
 		res.send(generator.generate('desktop', {
 			username: 'Justin'
 		}));
 	});
 
-	app.get('/desktop/:id', function(req, res) {
+	app.get('/desktop/:id', auth.requiresLogin, function(req, res) {
 		console.info(req.params.id);
 		res.send(generator.generate('pieDetail', {
 			_id: req.params.id
 		}));
 	});
 
-	app.get('/fund', function(req, res) {
+	app.get('/fund', auth.requiresLogin, function(req, res) {
 
 		res.send(generator.generate('fund', {
 			username: 'Justin'
 		}));
 	});
 
-	app.get('/contracts', function(req, res) {
+	app.get('/contracts', auth.requiresLogin, function(req, res) {
 
 		res.send(generator.generate('contracts', {
 			username: 'Justin'
 		}));
 	});
 
-	app.get('/contracts/new', function(req, res) {
+	app.get('/contracts/new', auth.requiresLogin, function(req, res) {
 		res.send(generator.generate('addContract', {
 			username: 'Justin'
 		}));
 	});
 
-	app.get('/contracts/:id/edit', function(req, res) {
+	app.get('/contracts/:id/edit', auth.requiresLogin, function(req, res) {
 		console.info(req.params.id);
 		res.send(generator.generate('editContract', {
 			_id: req.params.id
