@@ -23,7 +23,7 @@ exports.authCallback = function(req, res, next) {
 
 exports.login = function(req, res) {
 
-  console.log('login', res.user);
+  console.log('login', req.user);
   if (req.user != null || req.user != undefined) {
     return res.redirect('/desktop');
   } else {

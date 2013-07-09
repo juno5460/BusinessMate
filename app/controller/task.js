@@ -14,7 +14,7 @@ exports.index = function(req, res) {//返回所有待办任务
 	var template = new Template();
 	var contract = new Contract();
 	console.log("index");
-	contract.checkAllUndoneEvents(function(data) {
+	contract.checkAllUndoneEvents(req.user.uid,function(data) {
 		console.info("checkAllUndoneEvents");
 		res.send(data);
 	});

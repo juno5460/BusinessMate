@@ -18,7 +18,7 @@ var EventsSchema = new Schema({
 
 //合同模型
 var ContractSchema = mongoose.Schema({ //创建合同模型对象
-	uid: String, //用户id
+	uid: String, //用户id,对应用户模型的uid
 	myId: String, //合同编号
 	partyA: String, //签署甲方
 	partyB: String, //签署乙方
@@ -43,9 +43,9 @@ ContractSchema.methods = {
 		console.info("=======test");
 	},
 	//展示所有合同重要信息
-	checkInfo: function(callback) {
+	checkInfo: function(uid,callback) {
 
-		this.model('Contract').find({}, {
+		this.model('Contract').find({uid:uid}, {
 			_id: 1,
 			myId: 1,
 			id: 1,
@@ -67,9 +67,9 @@ ContractSchema.methods = {
 		});
 	},
 	//展示所有合同模版重要信息
-	checkTemplateInfo: function(callback) {
+	checkTemplateInfo: function(uid,callback) {
 
-		this.model('Template').find({}, {
+		this.model('Template').find({uid:uid}, {
 			_id: 1,
 			tName: 1
 		}, function(err, docs) {
@@ -393,7 +393,7 @@ ContractSchema.methods = {
 	/*
 	 *calback:回调返回数据
 	 */
-	checkAllUndoneEvents: function(callback) {
+	checkAllUndoneEvents: function(uid,callback) {
 
 		Contract = this.model('Contract');
 		var send = []; //用数组来存储未完成事件
@@ -425,7 +425,7 @@ ContractSchema.methods = {
 		var allWillSend = [];
 		//存储所有合同数据
 
-		Contract.find({}, function(err, docs) {
+		Contract.find({uid:uid}, function(err, docs) {
 			docs.forEach(function(doc) {
 				for (var i = 0; i < doc.events.length; i++) { //遍历该合同数组
 					if (doc.events[i].completed == false && doc.events[i].date < getOccur) {

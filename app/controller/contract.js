@@ -14,7 +14,7 @@ exports.index = function(req, res) {
 	var occur = new Date();
 	console.log(occur);
 	var contract = new Contract();
-	contract.checkInfo(function(data) {
+	contract.checkInfo(req.user.uid,function(data) {
 		console.log("hello");
 		res.send(data);
 	});
@@ -25,25 +25,11 @@ exports.index = function(req, res) {
 
 
 exports.show = function(req, res) {
-	/*
-	var occur = new Date();
-	console.log(occur);
-	var contract = new Contract();
-	console.log("啊啊啊啊啊啊啊啊" + req.params['contract']);
-	console.log("show");
-	var getId = {
-		_id: req.params['contract']
-	};
-	console.log(getId);
-	contract.checkIdData(getId, function(data) {
-		res.send(data[0]);
-	});*/
 	var occur = new Date();
 	console.log(occur);
 	var contract = new Contract();
 	console.log("show");
 	var queryId = req.params['id'] + '';
-	//	console.log(get);
 	console.log(req.params.id);
 	if (queryId.length == 24) {
 		var getId = {
@@ -65,14 +51,31 @@ exports.show = function(req, res) {
 
 
 exports.create = function(req, res) {
+	console.log('login', req.user);
 	var occur = new Date();
 	console.log(occur);
 	var contract = new Contract();
-	//	console.log("create");
 	var rdata = req.body;
-	console.log(rdata);
+	var saveData = {
+		uid: req.user.uid, //用户id,对应用户模型的uid
+		myId: rdata.myId, //合同编号
+		partyA: rdata.partyA, //签署甲方
+		partyB: rdata.partyB, //签署乙方
+		amount: rdata.amount, //金额
+		returnRatio: rdata.returnRatio, //回款比率
+		returnAmount: rdata.returnAmount, //回款金额
+		lastReturnDate: rdata.lastReturnDate, //上次回款日期
+		signDate: rdata.signDate, //签署日期
+		name: rdata.name, //合同名称
+		tName: rdata.tName, //合同模版名称
+		beginDate: rdata.beginDate, //开始日期
+		endDate: rdata.endDate, //结束日期
+		events: rdata.events, //合同事件
+		state: rdata.state, //合同状态
+		next: rdata.next //待办任务
+	};
 	console.log("start====");
-	contract.insertData(rdata, res);
+	contract.insertData(saveData, res);
 	//	res.send("insert successfully");
 };
 
@@ -87,18 +90,6 @@ exports.update = function(req, res) {
 		_id: req.params['id']
 	};
 	var get = req.body;
-	/*	var getNew = { //重新构造对象是为了让可编辑字段去掉主键:_id
-		myId: get.myId,
-		partyA: get.partyA,
-		partyB: get.partyB,
-		amount: get.amount,
-		signDate: get.sigDate,
-		name: get.name,
-		beginDate: get.beginDate,
-		endDate: get.endDate,
-		state: get.state,
-		events: get.events
-	};*/
 	var getNew = {
 		"myId": get.myId,
 		partyA: get.partyA,

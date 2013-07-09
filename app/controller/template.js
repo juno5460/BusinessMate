@@ -15,7 +15,7 @@ exports.index = function(req, res) {
 	console.log(occur);
 	var template = new Template();
 	console.log("template index");
-	template.checkTemplateInfo(function(data) {
+	template.checkTemplateInfo(req.user.uid,function(data) {
 		console.log('hello');
 		res.send(data);
 	});
@@ -42,24 +42,27 @@ exports.create = function(req, res) {
 	console.log(occur);
 	var template = new Template();
 	console.log("template create");
-
-	/*	var rdata = { //重新构造对象是为了让可编辑字段去掉主键:_id
-		myId: "CA123",
-		partyA: "get.partyA",
-		partyB: "get.partyB",
-		amount: 1,
-		signDate: "2012-09-01",
-		name: "get.name",
-		tName: "get.name",
-		beginDate: "2012-09-08",
-		endDate: "2012-09-08",
-		state: "get.state",
-		events: []
-	};*/
 	var rdata = req.body;
-	console.log(rdata);
+	var saveData = {
+		uid: req.user.uid, //用户id,对应用户模型的uid
+		myId: rdata.myId, //合同编号
+		partyA: rdata.partyA, //签署甲方
+		partyB: rdata.partyB, //签署乙方
+		amount: rdata.amount, //金额
+		returnRatio: rdata.returnRatio, //回款比率
+		returnAmount: rdata.returnAmount, //回款金额
+		lastReturnDate: rdata.lastReturnDate, //上次回款日期
+		signDate: rdata.signDate, //签署日期
+		name: rdata.name, //合同名称
+		tName: rdata.tName, //合同模版名称
+		beginDate: rdata.beginDate, //开始日期
+		endDate: rdata.endDate, //结束日期
+		events: rdata.events, //合同事件
+		state: rdata.state, //合同状态
+		next: rdata.next //待办任务
+	};
 	console.log("start====");
-	template.insertTemplate(rdata, res);
+	template.insertTemplate(saveData, res);
 };
 
 exports.update = function(req, res) {
