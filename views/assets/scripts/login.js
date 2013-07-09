@@ -4,67 +4,48 @@ var show_box = function show_box(id) {
 };
 
 $(function() {
-	// $("#loadBtn").click(function() {
-	// 	var postData = {
-	// 		userName: $("#loadUsername").val(),
-	// 		password: $("#loadPassword").val(),
-	// 		provider: 'local'
-	// 	};
-	// 	console.info(postData);
-	// 	// $.post({
-	// 	// 	url: '/users/session',
-	// 	// 	type: 'post',
-	// 	// 	data: {userName:2,password:2,provider:'local'},
-	// 	// 	error: function(error) {
-	// 	// 		console.info(error);
-	// 	// 	},
-	// 	// 	success: function(success) {
-	// 	// 		console.info(success);
-	// 	// 	}
-	// 	// });
+	$('#loginForm').validate({
+					errorElement: 'span',
+					errorClass: 'block input-icon input-icon-right',
+					focusInvalid: false,
+					rules:{
+						username: {
+							required:true,
+							minlength: 5,
+							maxlength: 20,
+						},
+						password: {
+							required:true,
+						}
+					},
+					highlight: function (e) {
+						$(e).closest('.loginGroup').removeClass('success').addClass('error');
+					},
+			
+					success: function (e) {
+						$(e).closest('.loginGroup').removeClass('error').addClass('success');
+						$(e).remove();
+					},
+			
+					errorPlacement: function (error, element) {
+						 if(element.is('#loadUsername') || element.is('#loadPassword')) {
+							console.info(element);
+							// element.append(error);
+							error.insertAfter(element.next('[id="loadUsername"]'));
+						}
+						else {error.insertAfter(element.parent());}
+					},
 
+					messages: {
+						username: {
+							required: "合同编号不能为空.",
+							minlength: "合同编号长度小于5."
+						},
+						password: {
+							required: "合同名称不能为空.",
+						}
+				},
+		});
 
-
-	// });
-
-// $.post('/users/session',{username:2,password:2,provider:'local'},function(data,status){
-// 		console.info(status);
-// 		if(data.redirectTo != '') {
-// 			console.info(data.redirectTo);
-// 			window.location = data.redirectTo;
-// 		}
-// 	});
-
-// $.post('/users',{email:'2@2.com',username:'2',password:'2',provider:'local'},function(data,status){
-// 		console.info(status);
-// 	});
-
-	// $("#registerBtn").click(function() {
-	// 	var email = $("#registerEmail").val();
-	// 	var userName = $("#registerUsername").val();
-	// 	var password = $("#registerPassword").val();
-	// 	var passwordChecked = $("#registerPasswordChecked").val();
-
-	// 	var postData = {
-	// 		email: email,
-	// 		userName: userName,
-	// 		password: password,
-	// 		provider: 'local'
-	// 	};
-
-	// 	console.info(postData);
-
-	// 	$.ajax({
-	// 		url: '/users',
-	// 		type: 'post',
-	// 		data: postData,
-	// 		error: function() {
-	// 			console.info('error');
-	// 		},
-	// 		success: function(result) {
-	// 			console.info('success');
-	// 		}
-	// 	});
-	// });
 
 });

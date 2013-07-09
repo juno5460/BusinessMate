@@ -23,8 +23,8 @@
 							快速登录
 						</h4>
 
-						<form id="loadForm" action="/users/session" method="post">
-							<fieldset>
+						<form id="loginForm" action="/users/session" method="post">
+							<fieldset class="loginGroup">
 								<label>
 									<span class="block input-icon input-icon-right">
 										<input type="text" id="loadUsername" name="username" class="span12" placeholder="用户名" />
@@ -43,7 +43,7 @@
 										<input type="checkbox">
 										<span class="lbl">记住帐号</span>
 									</label>
-									<button type="submit" id="loadBtn" class="span4 btn btn-small btn-primary">
+									<button type="submit" class="span4 btn btn-small btn-primary">
 											<i class="icon-key"></i>
 											登录
 									</button>
@@ -56,9 +56,7 @@
 
 					<div class="toolbar clearfix">
 						<div>
-							<a href="#" onclick="show_box('forgot-box'); return false;" class="forgot-password-link">
-								<i class="icon-arrow-left"></i>
-								忘了密码
+							<a href="#" onclick="return false;" class="forgot-password-link">
 							</a>
 						</div>
 						<div>

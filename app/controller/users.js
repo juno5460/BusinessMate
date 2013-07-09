@@ -66,9 +66,15 @@ exports.session = function(req, res) {
  */
 
 exports.create = function(req, res) {
+  console.log(req.body);
+  if(req.body['password'] != req.body['password2']) {
+    req.flash("password error");
+    return res.redirect('/login');
+  }
   var rdata = req.body;
   var user = new User();
   user.getUnique(function(data) { //生成唯一用户id
+    console.log(data);
     var getData = {
       uid: data,
       username: rdata.username,
