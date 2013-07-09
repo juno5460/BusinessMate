@@ -39,7 +39,7 @@ module.exports = function(app, passport, auth) {
 	app.get('/signup', users.signup);
 	app.get('/logout', users.logout);
 	app.post('/users', users.create);
-	app.post('/username', users.checkUsername);
+	app.post('/username', users.check);
 	app.post('/users/session', passport.authenticate('local', {
 		failureRedirect: '/login',
 		failureFlash: 'Invalid email or password.'

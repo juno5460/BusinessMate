@@ -22,7 +22,7 @@ exports.authCallback = function(req, res, next) {
  * check username
  */
 
-exports.checkUsername = function(req, res) {
+exports.check = function(req, res) {
   var user = new User();
   user.checkUsername(req.body.username, function(data) {
     if (data != null)
