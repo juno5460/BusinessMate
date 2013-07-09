@@ -25,7 +25,7 @@
 
 						<form id="loginForm" action="/users/session" method="post">
 							<fieldset class="loginGroup">
-								<label>
+								<label class="test">
 									<span class="block input-icon input-icon-right">
 										<input type="text" id="loadUsername" name="username" class="span12" placeholder="用户名" />
 										<i class="icon-user"></i>
@@ -72,51 +72,6 @@
 			</div>
 			<!--/login-box-->
 
-			<div id="forgot-box" class="widget-box no-border">
-
-				<div class="widget-body">
-					<div class="widget-main">
-						<h4 class="header red lighter bigger">
-							<i class="icon-key"></i>
-							取回密码
-						</h4>
-
-						<div class="space-6"></div>
-
-						<p>请输入登录邮箱</p>
-						<form id="retrieveForm">
-							<fieldset>
-								<label>
-									<span class="block input-icon input-icon-right">
-										<input type="email" class="span12" placeholder="邮箱" />
-										<i class="icon-envelope"></i>
-									</span>
-								</label>
-
-								<div class="row-fluid">
-									<button onclick="return false;" class="span5 offset7 btn btn-small btn-danger">
-										<i class="icon-lightbulb"></i>
-										发送验证邮件!
-									</button>
-								</div>
-
-							</fieldset>
-						</form>
-					</div>
-					<!--/widget-main-->
-
-					<div class="toolbar center">
-						<a href="#" onclick="show_box('login-box'); return false;" class="back-to-login-link">
-							返回登录界面
-							<i class="icon-arrow-right"></i>
-						</a>
-					</div>
-				</div>
-				<!--/widget-body-->
-
-			</div>
-			<!--/forgot-box-->
-
 			<div id="signup-box" class="widget-box no-border">
 
 				<div class="widget-body">
@@ -143,13 +98,13 @@
 								</label>
 								<label>
 									<span class="block input-icon input-icon-right">
-										<input type="password" class="span12" id="registerPassword" name="password" placeholder="密码" />
+										<input type="password" class="span12" name="password" placeholder="密码" />
 										<i class="icon-lock"></i>
 									</span>
 								</label>
 								<label>
 									<span class="block input-icon input-icon-right">
-										<input type="password" class="span12" id="registerPasswordChecked" name="password2" placeholder="确认密码" />
+										<input type="password" class="span12" name="password2" placeholder="确认密码" />
 										<i class="icon-retweet"></i>
 									</span>
 								</label>
