@@ -15,10 +15,14 @@ exports.index = function(req, res) {
 	console.log(occur);
 	var template = new Template();
 	console.log("template index");
-	template.checkTemplateInfo(req.user.uid,function(data) {
-		console.log('hello');
-		res.send(data);
-	});
+	if (req.user == undefined) {
+		res.redirect('/login');
+	} else {
+		template.checkTemplateInfo(function(data) {
+			console.log('hello');
+			res.send(data);
+		});
+	}
 };
 
 exports.show = function(req, res) {

@@ -14,10 +14,14 @@ exports.index = function(req, res) {
 	var occur = new Date();
 	console.log(occur);
 	var contract = new Contract();
-	contract.checkInfo(req.user.uid,function(data) {
-		console.log("hello");
-		res.send(data);
-	});
+	if (req.user == undefined) {
+		res.redirect('/login');
+	} else {
+		contract.checkInfo(function(data) {
+			console.log("hello");
+			res.send(data);
+		});
+	}
 	/******/
 
 };

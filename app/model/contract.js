@@ -43,9 +43,9 @@ ContractSchema.methods = {
 		console.info("=======test");
 	},
 	//展示所有合同重要信息
-	checkInfo: function(uid,callback) {
+	checkInfo: function(callback) {
 
-		this.model('Contract').find({uid:uid}, {
+		this.model('Contract').find({}, {
 			_id: 1,
 			myId: 1,
 			id: 1,
@@ -67,9 +67,9 @@ ContractSchema.methods = {
 		});
 	},
 	//展示所有合同模版重要信息
-	checkTemplateInfo: function(uid,callback) {
+	checkTemplateInfo: function(callback) {
 
-		this.model('Template').find({uid:uid}, {
+		this.model('Template').find({}, {
 			_id: 1,
 			tName: 1
 		}, function(err, docs) {
@@ -393,7 +393,7 @@ ContractSchema.methods = {
 	/*
 	 *calback:回调返回数据
 	 */
-	checkAllUndoneEvents: function(uid,callback) {
+	checkAllUndoneEvents: function(callback) {
 
 		Contract = this.model('Contract');
 		var send = []; //用数组来存储未完成事件
@@ -425,7 +425,7 @@ ContractSchema.methods = {
 		var allWillSend = [];
 		//存储所有合同数据
 
-		Contract.find({uid:uid}, function(err, docs) {
+		Contract.find({}, function(err, docs) {
 			docs.forEach(function(doc) {
 				for (var i = 0; i < doc.events.length; i++) { //遍历该合同数组
 					if (doc.events[i].completed == false && doc.events[i].date < getOccur) {

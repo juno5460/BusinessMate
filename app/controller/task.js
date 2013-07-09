@@ -9,22 +9,26 @@ var async = require('async'),
 	Contract = mongoose.model('Contract'),
 	Template = mongoose.model('Template');
 
-exports.index = function(req, res) {//返回所有待办任务
+exports.index = function(req, res) { //返回所有待办任务
 
 	var template = new Template();
 	var contract = new Contract();
 	console.log("index");
-	contract.checkAllUndoneEvents(req.user.uid,function(data) {
-		console.info("checkAllUndoneEvents");
-		res.send(data);
-	});
+	if (req.user == undefined) {
+		res.redirect('/login');
+	} else {
+		contract.checkAllUndoneEvents(function(data) {
+			console.info("checkAllUndoneEvents");
+			res.send(data);
+		});
+	}
 };
 
-exports.show = function(req, res) {//返回指定合同业务数据
+exports.show = function(req, res) { //返回指定合同业务数据
 
 	var template = new Template();
 	var contract = new Contract();
-//		var id = "51d16f10011787c411000015";
+	//		var id = "51d16f10011787c411000015";
 	var id = req.params['task'];
 	console.log(id);
 	contract.countOneGetMoney(id, function(data) {
@@ -33,7 +37,7 @@ exports.show = function(req, res) {//返回指定合同业务数据
 	});
 };
 
-exports.update = function(req, res) {//修改待办任务完成标志位
+exports.update = function(req, res) { //修改待办任务完成标志位
 	var occur = new Date();
 	console.log(occur);
 	var contract = new Contract();
