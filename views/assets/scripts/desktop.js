@@ -58,7 +58,7 @@ $(function() {
 				show: true,
 				position: "ne",
 				labelBoxBorderColor: null,
-				margin: [-10, 60]
+				margin: [-50, 50]
 			},
 			grid: {
 				hoverable: true,

@@ -39,6 +39,8 @@ $(function() {
 					};
 
 					var curRatio1 = changeTwoDecimal((t1data.returnRatio)*100);
+					if(!curRatio1)
+						curRatio1 = 0;
 					var easypieRatio1 = "<div style='margin:0px;padding:1px' class='progress' data-percent='"+curRatio1+"%'><div class='bar' style='width:"+curRatio1+"%;'></div></div>";
 					var template1 = "<tr><td class='center'>{{name}}</td><td class='hidden-480 center'>{{partyA}}</td><td class='hidden-480 center'>{{partyB}}</td><td  class='center'>{{amount}}</td><td class='center'>{{returnAmount}}</td><td class='hidden-phone center'>"+easypieRatio1+"</td><td class='hidden-480 center'>{{lastReturnDate}}</td></tr>";
 
@@ -74,6 +76,8 @@ $(function() {
 					};
 
 					var curRatio2 = changeTwoDecimal((t2data.returnRatio)*100);
+					if(!curRatio2)
+						curRatio2 = 0;
 					var easypieRatio2 = "<div style='margin:0px;padding:1px' class='progress' data-percent='"+curRatio2+"%'><div class='bar' style='width:"+curRatio2+"%;'></div></div>";
 					var template2 = "<tr><td class='center'>{{name}}</td><td class='hidden-480 center'>{{partyA}}</td><td class='hidden-480 center'>{{partyB}}</td><td class='center'>{{amount}}</td><td  class='center'>{{returnAmount}}</td><td class='hidden-phone center'>"+easypieRatio2+"</td><td class='hidden-phone center'>{{lastReturnDate}}</td><td  class='center'>{{remark}}</td></tr>";
 
