@@ -28,7 +28,7 @@ require('./config/passport')(passport, config);
 var app = express();
 
 //引入配置文件、环境设置
-var setting = require('./config/setting')(app, config, passport);
+var setting = require('./config/setting')(app, config, passport, auth);
 //引入路由
 var router = require('./config/router')(app, passport, auth);
 

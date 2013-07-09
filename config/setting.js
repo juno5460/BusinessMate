@@ -4,7 +4,7 @@ var express = require('express'),
 	flash = require('connect-flash'),
 	connectTimeout = require('connect-timeout');
 
-module.exports = function function_name(app, config, passport) {
+module.exports = function function_name(app, config, passport, auth) {
 	// all environments
 	app.set('port', process.env.PORT || 3000);
 	app.set('views', config.root + '/app/view');
@@ -24,9 +24,31 @@ module.exports = function function_name(app, config, passport) {
 		})
 	}));
 
+	app.use(require('stylus').middleware(config.root + '/cms'));
+	app.use(express.static(config.root + '/cms'));
+	app.use(express.static(config.root + '/public'));
 
 	app.use(passport.initialize());
 	app.use(passport.session());
+
+	app.use(function(req, res, next) {
+
+		//console.info(req.path);
+		if (req.path != '/login' && 
+			req.path != '/logout' &&
+			req.path != '/signup' &&
+			req.path != '/users' &&
+			req.path != '/users/session' &&
+			req.path != '/') {
+			if (req.user == undefined || req.user == null) {
+				res.redirect('/login');
+			}
+		} 
+			next();
+		
+
+	});
+
 	app.use(app.router);
 
 	//设置超时时间
@@ -34,9 +56,6 @@ module.exports = function function_name(app, config, passport) {
 		time: 10000
 	}));
 
-	app.use(require('stylus').middleware(config.root + '/cms'));
-	app.use(express.static(config.root + '/cms'));
-	app.use(express.static(config.root + '/public'));
 
 	app.set('view options', {
 		pretty: true
@@ -52,6 +71,10 @@ module.exports = function function_name(app, config, passport) {
 		},
 		level: 9
 	}));
+
+
+
+
 
 	// development enviroment//启动 NODE_ENV=development node app.js
 	if ('development' == app.get('env')) {
