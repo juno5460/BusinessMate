@@ -24,6 +24,7 @@ exports.authCallback = function(req, res, next) {
 
 exports.check = function(req, res) {
   var user = new User();
+  console.log(req.body.username);
   user.checkUsername(req.body.username, function(data) {
     console.log(data);
     if (data != "")
@@ -83,7 +84,7 @@ exports.session = function(req, res) {
 
 exports.create = function(req, res) {
   console.log(req.body);
-  if(req.body['password'] != req.body['password2']) {
+  if (req.body['password'] != req.body['password2']) {
     req.flash("password error");
     return res.redirect('/login');
   }
