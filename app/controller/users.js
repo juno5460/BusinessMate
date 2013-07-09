@@ -25,7 +25,8 @@ exports.authCallback = function(req, res, next) {
 exports.check = function(req, res) {
   var user = new User();
   user.checkUsername(req.body.username, function(data) {
-    if (data != null)
+    console.log(data);
+    if (data != "")
       res.send("false");
     else
       res.send("true");
