@@ -31,23 +31,6 @@ module.exports = function function_name(app, config, passport, auth) {
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-	// app.use(function(req, res, next) {
-
-	// 	console.info(req.path);
-	// 	if (req.path != '/login' && 
-	// 		req.path != '/logout' &&
-	// 		req.path != '/signup' &&
-	// 		req.path != '/users' &&
-	// 		req.path != '/users/session' &&
-	// 		req.path != '/') {
-	// 		if (req.user == undefined || req.user == null) {
-	// 			res.redirect('/login');
-	// 		}
-	// 	} 
-	// 		next();
-		
-
-	// });
 
 	app.use(app.router);
 

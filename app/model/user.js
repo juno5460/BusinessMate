@@ -95,6 +95,13 @@ UserSchema.methods = {
 				callback(docs);
 			});
 		});
+	},
+	checkUsername: function(username, callback) {
+		this.model('User').find({
+			username: username
+		}, function(err, docs) {
+			callback(docs);
+		});
 	}
 };
 

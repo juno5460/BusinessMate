@@ -17,6 +17,21 @@ exports.authCallback = function(req, res, next) {
   res.redirect('/');
 };
 
+
+/**
+ * check username
+ */
+
+exports.checkUsername = function(req, res) {
+  var user = new User();
+  user.checkUsername(req.body.username, function(data) {
+    if (data != null)
+      res.send("false");
+    else
+      res.send("true");
+  });
+};
+
 /**
  * Show login form
  */
