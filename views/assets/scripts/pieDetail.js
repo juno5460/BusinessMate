@@ -27,7 +27,7 @@ $(function() {
 				};
 
 				$("#detailValue").html(contract.partyA);
-				var template = "<tr><td class='center'>{{name}}</td><td class='center'>{{partyA}}</td><td class='center'>{{partyB}}</td><td class='center'>{{amount}}</td><td class='center'>{{state}}</td></tr>";
+				var template = "<tr><td class='center span3'>{{name}}</td><td class='center span2'>{{partyA}}</td><td class='center span2'>{{partyB}}</td><td class='center span2'>{{amount}}</td><td class='center span2'>{{state}}</td></tr>";
 
 				var html = Mustache.to_html(template, tdata);
 				$('#pieTable').append(html);
@@ -41,7 +41,7 @@ $(function() {
 				};
 
 				$("#detailValue").html(contract.partyB);
-				var template = "<tr><td class='center'>{{name}}</td><td class='center'>{{partyA}}</td><td class='center'>{{partyB}}</td><td class='center'>{{amount}}</td><td class='center'>{{state}}</td></tr>";
+				var template = "<tr><td class='center span3'>{{name}}</td><td class='center span2'>{{partyA}}</td><td class='center span2'>{{partyB}}</td><td class='center span2'>{{amount}}</td><td class='center span2'>{{state}}</td></tr>";
 
 				var html = Mustache.to_html(template, tdata);
 				$('#pieTable').append(html);

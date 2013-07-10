@@ -42,7 +42,7 @@ $(function() {
 					if(!curRatio1)
 						curRatio1 = 0;
 					var easypieRatio1 = "<div style='margin:0px;padding:1px' class='progress' data-percent='"+curRatio1+"%'><div class='bar' style='width:"+curRatio1+"%;'></div></div>";
-					var template1 = "<tr><td class='center'>{{name}}</td><td class='hidden-480 center'>{{partyA}}</td><td class='hidden-480 center'>{{partyB}}</td><td  class='center'>{{amount}}</td><td class='center'>{{returnAmount}}</td><td class='hidden-phone center'>"+easypieRatio1+"</td><td class='hidden-480 center'>{{lastReturnDate}}</td></tr>";
+					var template1 = "<tr><td class='center span4'>{{name}}</td><td class='hidden-480 center span2'>{{partyA}}</td><td class='hidden-480 center span2'>{{partyB}}</td><td  class='center span1'>{{amount}}</td><td class='center span1'>{{returnAmount}}</td><td class='hidden-phone center span1'>"+easypieRatio1+"</td><td class='hidden-480 center span1'>{{lastReturnDate}}</td></tr>";
 
 					var html1 = Mustache.to_html(template1, t1data);
 					$('#table1').append(html1);
@@ -79,7 +79,7 @@ $(function() {
 					if(!curRatio2)
 						curRatio2 = 0;
 					var easypieRatio2 = "<div style='margin:0px;padding:1px' class='progress' data-percent='"+curRatio2+"%'><div class='bar' style='width:"+curRatio2+"%;'></div></div>";
-					var template2 = "<tr><td class='center'>{{name}}</td><td class='hidden-480 center'>{{partyA}}</td><td class='hidden-480 center'>{{partyB}}</td><td class='center'>{{amount}}</td><td  class='center'>{{returnAmount}}</td><td class='hidden-phone center'>"+easypieRatio2+"</td><td class='hidden-phone center'>{{lastReturnDate}}</td><td  class='center'>{{remark}}</td></tr>";
+					var template2 = "<tr><td class='center span3'>{{name}}</td><td class='hidden-480 center span2'>{{partyA}}</td><td class='hidden-480 center span2'>{{partyB}}</td><td class='center span1'>{{amount}}</td><td  class='center span1'>{{returnAmount}}</td><td class='hidden-phone center span1'>"+easypieRatio2+"</td><td class='hidden-phone center span1'>{{lastReturnDate}}</td><td  class='center span1'>{{remark}}</td></tr>";
 
 					var html2 = Mustache.to_html(template2, t2data);
 					$('#table2').append(html2);
@@ -112,7 +112,7 @@ $(function() {
 					var curRatio3 = changeTwoDecimal((t3data.returnRatio)*100);
 					curRatio3=100;
 					var easypieRatio3 = "<div style='margin:0px;padding:1px' class='progress' data-percent='"+curRatio3+"%'><div class='bar' style='width:"+curRatio3+"%;'></div></div>";
-					var template3 = "<tr><td  class='center'>{{name}}</td><td class='hidden-480 center'>{{partyA}}</td><td class='hidden-480 center'>{{partyB}}</td><td class='center'>{{amount}}</td><td class='center'>{{returnAmount}}</td><td class='hidden-phone center'>"+easypieRatio3+"</td><td  class='center'>{{remark}}</td></tr>";
+					var template3 = "<tr><td  class='center span3'>{{name}}</td><td class='hidden-480 center span2'>{{partyA}}</td><td class='hidden-480 center span2'>{{partyB}}</td><td class='center span1'>{{amount}}</td><td class='center span1'>{{returnAmount}}</td><td class='hidden-phone center span1'>"+easypieRatio3+"</td><td  class='center span2'>{{remark}}</td></tr>";
 
 					var html3 = Mustache.to_html(template3, t3data);
 					$('#table3').append(html3);
