@@ -29,7 +29,7 @@ exports.show = function(req, res) { //返回指定合同业务数据
 	var template = new Template();
 	var contract = new Contract();
 	//		var id = "51d16f10011787c411000015";
-	var id = req.params['task'];
+	var id = req.params['id'];
 	console.log(id);
 	contract.countOneGetMoney(id, function(data) {
 		console.log("countOneGetMoney");
