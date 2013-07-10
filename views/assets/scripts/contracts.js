@@ -1,17 +1,15 @@
 $(function(){
 
 	var today = new Date();
-	var todayFormat = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDay();
+	var todayFormat = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 	console.info(todayFormat);
 	$('#beginDate').datepicker({
 		autoclose:true,
 		todayBtn:true,
-		endDate:todayFormat
 	});
 	$('#endDate').datepicker({
 		autoclose:true,
 		todayBtn:true,
-		endDate:todayFormat
 	});
 
 	$('#endDate').val(todayFormat);
