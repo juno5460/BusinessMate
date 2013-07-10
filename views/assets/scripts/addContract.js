@@ -39,12 +39,12 @@ $(function() {
 
 	//添加自定义事件
 	$("#customEventBtn").click(function() {
-		addCustomEvent();
+		addCustomEvent(null,'add');
 		scrollToBottom();
 	});
 	// 添加回款事件
 	$("#priceEventBtn").click(function() {
-		addPriceEvent();
+		addPriceEvent(null,'add');
 		scrollToBottom();
 	});
 

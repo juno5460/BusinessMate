@@ -266,7 +266,7 @@ $(function(){
 			price 	:data.price,
 			remark 	:data.remark,
 			dateID 	:datePickerID,
-			completed:data.completed
+			completed:type == 'add' ? false : data.completed
 		}));
 
 		$cellHtml.find("#delete").click(function() {
@@ -310,7 +310,7 @@ $(function(){
 			price 	:data.price,
 			remark 	:data.remark,
 			dateID 	:datePickerID,
-			completed:data == null ? false : data.completed
+			completed:type == 'add' ? false : data.completed
 		}));
 
 		$cellHtml.find("#delete").click(function() {
