@@ -24,13 +24,13 @@ module.exports = function(app, passport, auth) {
 	//	app.resource('api/templates', template);
 
 	///待办任务处理接口
-	var task = require('../app/controller/task');
-	app.get('/api/tasks', task.index);
-	app.get('/api/tasks/:id', task.show);
-	//	app.post('/api/tasks',task.create);
-	app.put('/api/tasks/:id', task.update);
-	//	app.del('/api/tasks/:id',task.destroy);
-	//	app.resource('api/tasks', task);
+	// var task = require('../app/controller/task');
+	// app.get('/api/tasks', task.index);
+	// //app.get('/api/tasks/:id', task.show);
+	// //	app.post('/api/tasks',task.create);
+	// app.put('/api/tasks/:id', task.update);
+	// //	app.del('/api/tasks/:id',task.destroy);
+		app.resource('api/tasks', task);
 
 
 	////////////用户 接口

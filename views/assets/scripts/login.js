@@ -69,7 +69,7 @@ $("#registerForm").validate({
 		password2: {
 			required: true,
 			minlength: 5,
-			equalTo: "#password"
+			// equalTo: "#password"
 		}
 	},
 
@@ -90,8 +90,8 @@ $("#registerForm").validate({
 		},
 		password2: {
 			required: "没有确认密码",
-			minlength: "确认密码不能小于5个字符",
-			equalTo: "两次输入密码不一致"
+			minlength: "确认密码不能小于5个字符"
+			// equalTo: "两次输入密码不一致"
 		}
 	}
 
