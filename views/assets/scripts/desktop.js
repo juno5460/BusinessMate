@@ -130,30 +130,27 @@ $(function() {
 	$.get("/api/tasks", function(data, status) {
 
 		$.each(data, function(i, contract) {
-			
+
 			var tdata = {
 				name: contract.name,
 				title: contract.next.title,
 				date: contract.next.date
 			};
 
-			var t1,t2,t3,t4,template;
+			var t1, t2, t3, t4, template;
 			t1 = "<tr><td><ul style='height:100%' class='item-list ui-sortable'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'>";
 			t2 = "<input class='test' type='checkbox' id='" + checkboxId[idIndex] + "'>";
 			console.info(contract.next.title);
-			if(contract.next.title == 0) {
-				 t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right'>"+tdata.name+"</span>";
-				 t4 = "<span class='lbl label label-success arrowed-in'>"+ "合同已完成" +"</span>" +"</span></label></li></ul></td></tr>";
-				 template = null;
-				 // template = t1 + t2 + t3 + t4;
-				 // $('#taskToFinish').append(template);
-
-			}else {
-				 t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right'>"+tdata.name+"</span>"+ "<span class='lbl label label-info arrowed-right arrowed-in'>"+ tdata.date+"</span>";
-				 t4 = "<span class='lbl label label-success arrowed-in'>"+ tdata.title +"</span>" +"</span></label></li></ul></td></tr>";
-				 template = t1 + t2 + t3 + t4;
+			if (contract.next.title == 0) {
+				t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right' >" + tdata.name + "</span>";
+				t4 = "<span class='lbl label label-success arrowed-in'>" + "合同已完成" + "</span>" + "</span></label></li></ul></td></tr>";
+				template = null;
+			} else {
+				t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right' style='width:125px' title='"+ tdata.name +"'>" + tdata.name + "</span>" + "<span class='lbl label label-info arrowed-right arrowed-in' style='width:125px'>" + tdata.date + "</span>";
+				t4 = "<span class='lbl label label-success arrowed-in' style='width:125px'>" + tdata.title + "</span>" + "</span></label></li></ul></td></tr>";
+				template = t1 + t2 + t3 + t4;
 			}
-			
+
 			$('#taskToFinish').append(template);
 			idIndex++;
 
@@ -209,9 +206,9 @@ $(function() {
 				var remark = null;
 				var $taskObj = $(this);
 
-				if(checkValue) {
+				if (checkValue) {
 					bootbox.prompt("提示（备注信息）", function(result) {
-						if(result == null) {
+						if (result == null) {
 							$taskObj.prop("checked", false);
 							return;
 						}
@@ -227,18 +224,18 @@ $(function() {
 							completed: checkValue,
 							remark: remark
 						};
-						console.info(postData);
-
+						// console.info(postData);
+						console.info(contract.next.id);
 						$.ajax({
-								url: '/api/tasks/'+ contract.next.id,
-								type: 'put',
-								data: postData,
-								error: function(){
-									console.info('error');
-								},
-								success: function(result){
-									console.info('success');
-								}
+							url: '/api/tasks/' + contract.next.id,
+							type: 'put',
+							data: postData,
+							error: function() {
+								console.info('error');
+							},
+							success: function(result) {
+								console.info('success');
+							}
 						});
 					});
 				}
