@@ -90,10 +90,6 @@ $(function(){
 
 	$("#templateBtn").click(function(){
 
-		if($('#templateList').text() == "") {
-			$('#templateList').append($(Mustache.to_html(templateTmp, {templateName: '当前无可以模板'})));
-		}
-
 		$.get("/api/templates",function(data,status){
 			if(status == 'success') {
 
@@ -113,6 +109,10 @@ $(function(){
 
 					$("#templateList").append($cellHtml);
 				});
+
+				if($('#templateList').text() == "") {
+			$('#templateList').append($(Mustache.to_html(templateTmp, {templateName: '当前无可用模板'})));
+		}
 			}
 		});
 	});

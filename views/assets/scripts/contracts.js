@@ -28,6 +28,12 @@ $(function(){
 		}
 	});
 
+	$('#search_keyword').keypress(function(event){
+		if(event.keyCode==13) {
+			onCustomSearch();
+		}
+	});
+
 	$("#searchBtn").click(function(){
 		onSearch();
 	});
