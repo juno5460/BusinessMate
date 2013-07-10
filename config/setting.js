@@ -25,7 +25,7 @@ module.exports = function function_name(app, config, passport, auth) {
 	}));
 
 	app.use(require('stylus').middleware(config.root + '/cms'));
-	app.use(express.static(config.root + '/cms'));
+	//app.use(express.static(config.root + '/cms'));
 	app.use(express.static(config.root + '/public'));
 
 	app.use(passport.initialize());

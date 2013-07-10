@@ -72,17 +72,17 @@ $(function(){
 	//从服务器拉取数据并初始化网页数据
 	initialize();
 
-	var customEventTmp 	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input id='id' type='hidden' value='{{id}}'><input  id='title' class='hiddenInput' placeholder='' value='{{title}}''></span></div><div class='widget-toolbar event-date'><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remark' class='span12 cellremark' placeholder='请输入备注信息'>{{remark}}</textarea><input type='hidden' id='completed' value={{completed}}></div></div></div>";
+	var customEventTmp 	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input id='id' type='hidden' value='{{id}}'><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remark' class='span12 cellremark' placeholder='请输入备注信息'>{{remark}}</textarea><input type='hidden' id='completed' value={{completed}}></div></div></div>";
 	var priceEventTmp	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input id='id' type='hidden' value='{{id}}'><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>回款金额：</span><span><input id='price' class='hiddenInput' id='price' value='{{price}}'></span><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remak' class='span12 cellremark' placeholder='请输入备注信息'>{{remark}}</textarea><input type='hidden' id='completed' value={{completed}}></div></div></div>";
 
 	//添加自定义事件
 	$("#customEventBtn").click(function(){
-		addCustomEvent();
+		addCustomEvent(null,'add');
 		scrollToBottom();
 	});
 	// 添加回款事件
 	$("#priceEventBtn").click(function(){
-		addPriceEvent();
+		addPriceEvent(null,'add');
 		scrollToBottom();
 	});
 
@@ -260,7 +260,7 @@ $(function(){
 		var datePickerID = generateID();
 
 		var $cellHtml = $(Mustache.to_html(customEventTmp, {
-			id 		:type == 'template' ? generateID() : data.id,
+			id 		:type == 'add' ? generateID() : data.id,
 			title 	:data.title,
 			date 	:data.date,
 			price 	:data.price,
@@ -304,7 +304,7 @@ $(function(){
 		var datePickerID = generateID();
 
 		var $cellHtml = $(Mustache.to_html(priceEventTmp, 
-			{id 	:type == 'template' ? generateID() : data.id,
+			{id 	:type == 'add' ? generateID() : data.id,
 			title 	:data.title,
 			date 	:data.date,
 			price 	:data.price,
