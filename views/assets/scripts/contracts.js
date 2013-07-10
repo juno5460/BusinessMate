@@ -2,7 +2,7 @@ $(function(){
 
 	var today = new Date();
 	var mounth = (today.getMonth() + 1)  < 10 ? "0" + (today.getMonth() + 1) : (today.getMonth() + 1);
-	var day = today.getDate()  < 10 ? "0" + today.getMonth() : today.getMonth();
+	var day = today.getDate()  < 10 ? "0" + today.getDate() : today.getDate();
 	var todayFormat = today.getFullYear() + "-" + mounth  + "-" + day;
 	console.info(todayFormat);
 	$('#beginDate').datepicker({
