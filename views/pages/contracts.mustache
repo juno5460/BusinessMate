@@ -21,7 +21,8 @@
 			<span class="group_right">
 				<span class="type_item"><input id="search_check_id" type="checkbox" checked="check"><span class="lbl">&nbsp;编号</span></span>
 				<span class="type_item"><input id="search_check_name" type="checkbox" checked="check"><span class="lbl">&nbsp;名称</span></span>
-				<span class="type_item"><input id="search_check_remark" type="checkbox" checked="check"><span class="lbl">&nbsp;备注</span></span>
+				<span class="type_item"><input id="search_check_partyA" type="checkbox" checked="check"><span class="lbl">&nbsp;甲方</span></span>
+				<span class="type_item"><input id="search_check_partyB" type="checkbox" checked="check"><span class="lbl">&nbsp;乙方</span></span>
 			</span>
 		</div>
 		<div class="search_key search_group">
@@ -35,12 +36,14 @@
 				至
 				<span><input id="endDate" class="date-picker search_date" type="text" data-date-format="yyyy-mm-dd" readonly="true"></span>
 			</span>
-			<span><button class="btn btn-small hidden-480">今年</button></span>
-			<span><button class="btn btn-small hidden-480">去年</button></span>
 		</div>
 
-			<input type="button" id="search_btn" class="span3 btn btn-info btn-small" value="搜　索">
-
+			
+		<div class="row-fluid">
+			<button id="search_btn" class="span3 btn btn-info btn-small">搜　索</button>
+			<button id="thisYear_btn" class="span2 btn btn-small hidden-480">今年</button>
+			<button id="lastYear_btn" class="span2 btn btn-small hidden-480">去年</button>
+		</div>
 	</div>
 </div>
 

@@ -58,6 +58,26 @@ $(function(){
 			showList(data);
 		});
 
+	$("#thisYear_btn").click(function(){
+		var date = new Date();
+		var bDate = date.getFullYear() + "-" + 1 + "-" + 1;
+		var eDate = date.getFullYear() + "-" + 12 + "-" + 30;
+		onCustomSearch({
+			beginDate : bDate,
+			endDate : eDate
+		});
+	});
+
+	$("#lastYear_btn").click(function(){
+		var date = new Date();
+		var bDate = date.getFullYear() - 1 + "-" + 1 + "-" + 1;
+		var eDate = date.getFullYear() - 1 + "-" + 12 + "-" + 30;
+		onCustomSearch({
+			beginDate : bDate,
+			endDate : eDate
+		});
+	});
+
 	var onSearch = function(){
 
 		var $keyword = $("#keyword").val();
@@ -76,19 +96,21 @@ $(function(){
 		});
 	}
 
-	var onCustomSearch = function(){
+	var onCustomSearch = function(date){
 
 		var checkId  	= $("#search_check_id").is(':checked');
 		var checkName 	= $("#search_check_name").is(':checked');
-		var checkRemark = $("#search_check_remark").is(':checked');
+		var checkPartyA = $("#search_check_partyA").is(':checked');
+		var checkPartyB = $("#search_check_partyB").is(':checked');
 
 		var $postJson  			= {};
 		$postJson.id 			= checkId;
 		$postJson.name 			= checkName;
-		$postJson.remark 		= checkRemark;
+		$postJson.partyA 		= checkPartyA;
+		$postJson.partyB 		= checkPartyB;
 		$postJson.keyword   	= $("#search_keyword").val();
-		$postJson.beginDate  	= $("#beginDate").val();
-		$postJson.endDate 		= $("#endDate").val();
+		$postJson.beginDate  	= date == null ? $("#beginDate").val() : date.beginDate;
+		$postJson.endDate 		= date == null ? $("#endDate").val() : date.endDate;
 
 
 		$.get('/api/contracts/' + JSON.stringify($postJson), function(data, status) {
