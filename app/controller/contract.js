@@ -46,8 +46,8 @@ exports.show = function(req, res) {
 	} else {
 		console.log("fuzzySearch");
 		contract.fuzzySearch(queryId, function(data) {
-			console.log(data[0]);
-			res.send(data[0]);
+//			console.log(data[0]);
+			return res.send(data[0]);
 		});
 	}
 };
