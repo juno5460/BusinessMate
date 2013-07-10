@@ -22,11 +22,6 @@ $(function() {
 			contractsCount++;
 		});
 
-		var placeholder1 = $('#placeholder1').css({
-			'width': '90%',
-			'min-height': '150px'
-		});
-
 		var optionPie = {
 
 			series: {
@@ -58,7 +53,7 @@ $(function() {
 				show: true,
 				position: "ne",
 				labelBoxBorderColor: null,
-				margin: [-50, 50]
+				margin: [-40, 50]
 			},
 			grid: {
 				hoverable: true,
@@ -106,15 +101,14 @@ $(function() {
 			pieData2.push({
 				label: partyB[i],
 				data: countB,
-				color: color[i + 4],
-				id:"11112222"
+				color: color[i + 4]
 			});
 		}
 
 		function stringToHex(str) {
 			var val = "";
-			for(var i=0;i<str.length;i++) {
-				if(val == "")
+			for (var i = 0; i < str.length; i++) {
+				if (val == "")
 					val = str.charCodeAt(i).toString(16);
 				else
 					val += "," + str.charCodeAt(i).toString(16);
@@ -122,6 +116,10 @@ $(function() {
 			return val;
 		}
 
+		var placeholder1 = $('#placeholder1').css({
+			'width': '90%',
+			'min-height': '150px'
+		});
 		$.plot(placeholder1, pieData1, optionPie);
 		placeholder1.bind("plotclick", function(event, pos, obj) {
 			var labelName = obj.series.label;
@@ -130,7 +128,8 @@ $(function() {
 
 		var placeholder2 = $('#placeholder2').css({
 			'width': '90%',
-			'min-height': '150px'
+			'min-height': '150px',
+			'margin-left': '10px'
 		});
 		$.plot(placeholder2, pieData2, optionPie);
 		placeholder2.bind("plotclick", function(event, pos, obj) {
