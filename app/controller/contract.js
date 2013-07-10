@@ -101,6 +101,7 @@ exports.update = function(req, res) {
 		"name": get.name,
 		"beginDate": get.beginDate,
 		"endDate": get.endDate,
+		amount:get.amount,
 		"state": get.state,
 		"events": get.events
 	};
