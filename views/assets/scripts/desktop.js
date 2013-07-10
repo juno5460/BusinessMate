@@ -106,13 +106,26 @@ $(function() {
 			pieData2.push({
 				label: partyB[i],
 				data: countB,
-				color: color[i + 4]
+				color: color[i + 4],
+				id:"11112222"
 			});
+		}
+
+		function stringToHex(str) {
+			var val = "";
+			for(var i=0;i<str.length;i++) {
+				if(val == "")
+					val = str.charCodeAt(i).toString(16);
+				else
+					val += "," + str.charCodeAt(i).toString(16);
+			}
+			return val;
 		}
 
 		$.plot(placeholder1, pieData1, optionPie);
 		placeholder1.bind("plotclick", function(event, pos, obj) {
-			window.location.href = "/desktop" + '/' + obj.series.label;
+			var labelName = obj.series.label;
+			window.location.href = "/desktop" + '/' + stringToHex(labelName);
 		});
 
 		var placeholder2 = $('#placeholder2').css({
@@ -121,7 +134,8 @@ $(function() {
 		});
 		$.plot(placeholder2, pieData2, optionPie);
 		placeholder2.bind("plotclick", function(event, pos, obj) {
-			window.location.href = "/desktop" + '/' + obj.series.label;
+			var labelName = obj.series.label;
+			window.location.href = "/desktop" + '/' + stringToHex(labelName);
 		});
 
 	});
@@ -146,7 +160,7 @@ $(function() {
 				t4 = "<span class='lbl label label-success arrowed-in'>" + "合同已完成" + "</span>" + "</span></label></li></ul></td></tr>";
 				template = null;
 			} else {
-				t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right' style='width:125px' title='"+ tdata.name +"'>" + tdata.name + "</span>" + "<span class='lbl label label-info arrowed-right arrowed-in' style='width:125px'>" + tdata.date + "</span>";
+				t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right' style='width:125px' title='" + tdata.name + "'>" + tdata.name + "</span>" + "<span class='lbl label label-info arrowed-right arrowed-in' style='width:125px'>" + tdata.date + "</span>";
 				t4 = "<span class='lbl label label-success arrowed-in' style='width:125px'>" + tdata.title + "</span>" + "</span></label></li></ul></td></tr>";
 				template = t1 + t2 + t3 + t4;
 			}
