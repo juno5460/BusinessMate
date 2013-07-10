@@ -489,13 +489,17 @@ ContractSchema.methods = {
 		var i = 0;
 		var idFlag = 0;
 		var nameFlag = 0;
-		var remarkFlag = 0;
-		var dateFlag = 0;
+		var partyAFlag = 0;
+		var partyBFlag = 0;
 		var obj = JSON.parse(get); //转化成json
 		if (obj.id == true)
 			idFlag = 1;
 		if (obj.name == true)
 			nameFlag = 1;
+		if (obj.partyA == true)
+			partyAFlag = 1;
+		if (obj.partyB == true)
+			partyBFlag = 1;
 		var q = new RegExp(obj.keyword); //所有以传入参数开始的
 		var getBeginDate = obj.beginDate;
 		var getEndDate = obj.endDate;
@@ -504,7 +508,7 @@ ContractSchema.methods = {
 		}
 		console.log(getEndDate);
 		console.log(getOccur);
-		if (idFlag == 1 && nameFlag == 1) {
+		if (idFlag == 1 && nameFlag == 1 && partyAFlag == 1 && partyBFlag == 1) {
 			console.log("1");
 			Contract.find({
 				$and: [{
@@ -542,8 +546,106 @@ ContractSchema.methods = {
 				callback(send);
 			});
 		}
-		if (idFlag == 1 && nameFlag == 0) {
+		if (idFlag == 1 && nameFlag == 1 && partyAFlag == 1 && partyBFlag == 0) {
 			console.log("2");
+			Contract.find({
+				$and: [{
+						beginDate: {
+							$gte: getBeginDate,
+							$lte: getEndDate
+						}
+					}, {
+						beginDate: {
+							$lte: getEndDate
+						}
+					}
+				],
+				$or: [{
+						name: {
+							'$all': [q]
+						}
+					}, {
+						myId: {
+							'$all': [q]
+						}
+					}, {
+						partyA: {
+							'$all': [q]
+						}
+					}
+				]
+			}, function(err, results2) {
+				send[i] = results2;
+				i++;
+				callback(send);
+			});
+		}
+		if (idFlag == 1 && nameFlag == 1 && partyAFlag == 0 && partyBFlag == 1) {
+			console.log("3");
+			Contract.find({
+				$and: [{
+						beginDate: {
+							$gte: getBeginDate,
+							$lte: getEndDate
+						}
+					}, {
+						beginDate: {
+							$lte: getEndDate
+						}
+					}
+				],
+				$or: [{
+						name: {
+							'$all': [q]
+						}
+					}, {
+						myId: {
+							'$all': [q]
+						}
+					}, {
+						partyB: {
+							'$all': [q]
+						}
+					}
+				]
+			}, function(err, results3) {
+				send[i] = results3;
+				i++;
+				callback(send);
+			});
+		}
+		if (idFlag == 1 && nameFlag == 1 && partyAFlag == 0 && partyBFlag == 0) {
+			console.log("4");
+			Contract.find({
+				$and: [{
+						beginDate: {
+							$gte: getBeginDate,
+							$lte: getEndDate
+						}
+					}, {
+						beginDate: {
+							$lte: getEndDate
+						}
+					}
+				],
+				$or: [{
+						name: {
+							'$all': [q]
+						}
+					}, {
+						myId: {
+							'$all': [q]
+						}
+					}
+				]
+			}, function(err, results4) {
+				send[i] = results4;
+				i++;
+				callback(send);
+			});
+		}
+		if (idFlag == 1 && nameFlag == 0 && partyAFlag == 1 && partyBFlag == 1) {
+			console.log("5");
 			Contract.find({
 				$and: [{
 						beginDate: {
@@ -570,14 +672,100 @@ ContractSchema.methods = {
 						}
 					}
 				]
-			}, function(err, results2) {
-				send[i] = results2;
+			}, function(err, results5) {
+				send[i] = results5;
 				i++;
 				callback(send);
 			});
 		}
-		if (idFlag == 0 && nameFlag == 1) {
-			console.log("3");
+		if (idFlag == 1 && nameFlag == 0 && partyAFlag == 1 && partyBFlag == 0) {
+			console.log("6");
+			Contract.find({
+				$and: [{
+						beginDate: {
+							$gte: getBeginDate,
+							$lte: getEndDate
+						}
+					}, {
+						beginDate: {
+							$lte: getEndDate
+						}
+					}
+				],
+				$or: [{
+						myId: {
+							'$all': [q]
+						}
+					}, {
+						partyA: {
+							'$all': [q]
+						}
+					}
+				]
+			}, function(err, results6) {
+				send[i] = results6;
+				i++;
+				callback(send);
+			});
+		}
+		if (idFlag == 1 && nameFlag == 0 && partyAFlag == 0 && partyBFlag == 1) {
+			console.log("7");
+			Contract.find({
+				$and: [{
+						beginDate: {
+							$gte: getBeginDate,
+							$lte: getEndDate
+						}
+					}, {
+						beginDate: {
+							$lte: getEndDate
+						}
+					}
+				],
+				$or: [{
+						myId: {
+							'$all': [q]
+						}
+					}, {
+						partyB: {
+							'$all': [q]
+						}
+					}
+				]
+			}, function(err, results7) {
+				send[i] = results7;
+				i++;
+				callback(send);
+			});
+		}
+		if (idFlag == 1 && nameFlag == 0 && partyAFlag == 0 && partyBFlag == 0) {
+			console.log("8");
+			Contract.find({
+				$and: [{
+						beginDate: {
+							$gte: getBeginDate,
+							$lte: getEndDate
+						}
+					}, {
+						beginDate: {
+							$lte: getEndDate
+						}
+					}
+				],
+				$or: [{
+						myId: {
+							'$all': [q]
+						}
+					}
+				]
+			}, function(err, results8) {
+				send[i] = results8;
+				i++;
+				callback(send);
+			});
+		}
+		if (idFlag == 0 && nameFlag == 1 && partyAFlag == 1 && partyBFlag == 1) {
+			console.log("9");
 			Contract.find({
 				$and: [{
 						beginDate: {
@@ -604,13 +792,200 @@ ContractSchema.methods = {
 						}
 					}
 				]
-			}, function(err, results3) {
-				send[i] = results3;
+			}, function(err, results9) {
+				send[i] = results9;
 				i++;
 				callback(send);
 			});
 		}
-		if (idFlag == 0 && nameFlag == 0) {
+		if (idFlag == 0 && nameFlag == 1 && partyAFlag == 1 && partyBFlag == 0) {
+			console.log("10");
+			Contract.find({
+				$and: [{
+						beginDate: {
+							$gte: getBeginDate,
+							$lte: getEndDate
+						}
+					}, {
+						beginDate: {
+							$lte: getEndDate
+						}
+					}
+				],
+				$or: [{
+						name: {
+							'$all': [q]
+						}
+					}, {
+						partyA: {
+							'$all': [q]
+						}
+					}
+				]
+			}, function(err, results10) {
+				send[i] = results10;
+				i++;
+				callback(send);
+			});
+		}
+		if (idFlag == 0 && nameFlag == 1 && partyAFlag == 0 && partyBFlag == 1) {
+			console.log("11");
+			Contract.find({
+				$and: [{
+						beginDate: {
+							$gte: getBeginDate,
+							$lte: getEndDate
+						}
+					}, {
+						beginDate: {
+							$lte: getEndDate
+						}
+					}
+				],
+				$or: [{
+						name: {
+							'$all': [q]
+						}
+					}, {
+						partyB: {
+							'$all': [q]
+						}
+					}
+				]
+			}, function(err, results11) {
+				send[i] = results11;
+				i++;
+				callback(send);
+			});
+		}
+		if (idFlag == 0 && nameFlag == 1 && partyAFlag == 0 && partyBFlag == 0) {
+			console.log("12");
+			Contract.find({
+				$and: [{
+						beginDate: {
+							$gte: getBeginDate,
+							$lte: getEndDate
+						}
+					}, {
+						beginDate: {
+							$lte: getEndDate
+						}
+					}
+				],
+				$or: [{
+						name: {
+							'$all': [q]
+						}
+					}
+				]
+			}, function(err, results12) {
+				send[i] = results12;
+				i++;
+				callback(send);
+			});
+		}
+		if (idFlag == 0 && nameFlag == 0 && partyAFlag == 1 && partyBFlag == 1) {
+			console.log("13");
+			Contract.find({
+				$and: [{
+						beginDate: {
+							$gte: getBeginDate,
+							$lte: getEndDate
+						}
+					}, {
+						beginDate: {
+							$lte: getEndDate
+						}
+					}
+				],
+				$or: [{
+						partyA: {
+							'$all': [q]
+						}
+					}, {
+						partyB: {
+							'$all': [q]
+						}
+					}
+				]
+			}, function(err, results13) {
+				send[i] = results13;
+				i++;
+				callback(send);
+			});
+		}
+		if (idFlag == 0 && nameFlag == 0 && partyAFlag == 1 && partyBFlag == 0) {
+			console.log("14");
+			Contract.find({
+				$and: [{
+						beginDate: {
+							$gte: getBeginDate,
+							$lte: getEndDate
+						}
+					}, {
+						beginDate: {
+							$lte: getEndDate
+						}
+					}
+				],
+				$or: [{
+						partyA: {
+							'$all': [q]
+						}
+					}
+				]
+			}, function(err, results14) {
+				send[i] = results14;
+				i++;
+				callback(send);
+			});
+		}
+		if (idFlag == 0 && nameFlag == 0 && partyAFlag == 0 && partyBFlag == 1) {
+			console.log("15");
+			Contract.find({
+				$and: [{
+						beginDate: {
+							$gte: getBeginDate,
+							$lte: getEndDate
+						}
+					}, {
+						beginDate: {
+							$lte: getEndDate
+						}
+					}
+				],
+				$or: [{
+						partyB: {
+							'$all': [q]
+						}
+					}
+				]
+			}, function(err, results15) {
+				send[i] = results15;
+				i++;
+				callback(send);
+			});
+		}
+		if (idFlag == 0 && nameFlag == 0 && partyAFlag == 0 && partyBFlag == 0) {
+			console.log("16");
+			Contract.find({
+				$and: [{
+						beginDate: {
+							$gte: getBeginDate,
+							$lte: getEndDate
+						}
+					}, {
+						beginDate: {
+							$lte: getEndDate
+						}
+					}
+				]
+			}, function(err, results16) {
+				send[i] = results16;
+				i++;
+				callback(send);
+			});
+		} else {
 			callback(send);
 		}
 	}
