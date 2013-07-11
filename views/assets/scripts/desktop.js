@@ -159,11 +159,10 @@ $(function() {
 			if (contract.next.title == 0) {
 
 				t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right' style='width:100px' title='" + tdata.name + "'>" + tdata.name + "</span>";
-				t4 = "<span class='lbl label label-success arrowed-in' style='width:90px'>" + "合同已完成" + "</span>" + "</span></label></li></ul></td></tr>";
+				t4 = "<span id='finished' class='lbl label label-success arrowed-in' style='width:90px'>" + "合同已完成" + "</span>" + "</span></label></li></ul></td></tr>";
 				template = t1 + t2 + t3 + t4;
 				$('#taskToFinish').append(template);
-				console.info("helllo");
-				$('#finished').parent().parent().parent().parent().parent().parent('#toHidden').hide(3000);
+				// $('#finished').parent().parent().parent().parent().parent().parent('#toHidden').hide(3000);
 
 			} else {
 
