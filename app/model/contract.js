@@ -433,9 +433,7 @@ ContractSchema.methods = {
 	checkAllUndoneEvents: function(callback) {
 
 		Contract = this.model('Contract');
-		var send = []; //用数组来存储未完成事件
-		var j = 0; //未完成事件数组下标控制器
-		var m = 0; //大于当前时间数组下标控制器
+
 		var s = 0; //合同待办事件数组下标控制器
 		var occur = new Date(); //
 		var year = occur.getFullYear();
@@ -446,24 +444,28 @@ ContractSchema.methods = {
 		var getOccur = year + "-" + month + "-" + day;
 		//转换成标准时间格式
 		var getTemp;
-		var flag = 0;
-		//找到第一个比当前执行日期大的事件标志位
+
 		var canGet = 0;
-		//存在下一步事件标志位
-		var next = { //初始化下步执行事件变量
+		var next = { //存在下一步事件标志位,初始化下步执行事件变量
 			"id": 0,
 			"title": 0,
 			"date": 0,
 			"price": 0,
 			"completed": 0
 		};
-		var willSend;
-		//存储单个合同数据
+
+
 		var allWillSend = [];
 		//存储所有合同数据
 
 		Contract.find({}, function(err, docs) {
 			docs.forEach(function(doc) {
+
+				var willSend; //存储单个合同数据
+				var send = []; //用数组来存储未完成事件
+				var j = 0; //未完成事件数组下标控制器
+				var flag = 0;
+				//找到第一个比当前执行日期大的事件标志位
 
 				for (var i = 0; i < doc.events.length; i++) { //遍历该合同数组
 					if (doc.events[i].completed == false && doc.events[i].date < getOccur) {
@@ -496,14 +498,6 @@ ContractSchema.methods = {
 					"_id": doc._id,
 					"undone": send,
 					"next": next
-				};
-				send = [];
-				next = { //初始化下步执行事件变量
-					"id": 0,
-					"title": 0,
-					"date": 0,
-					"price": 0,
-					"completed": 0
 				};
 				console.log(willSend);
 				allWillSend[s] = willSend;
