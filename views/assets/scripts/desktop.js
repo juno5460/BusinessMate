@@ -167,8 +167,8 @@ $(function() {
 
 			} else {
 
-				t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right' style='width:120px' title='" + tdata.name + "'>" + tdata.name + "</span>" + "<span class='lbl label label-info arrowed-right arrowed-in' style='width:100px'>" + tdata.date + "</span>";
-				t4 = "<span class='lbl label label-success arrowed-in' style='width:100px'>" + tdata.title + "</span>" + "</span></label></li></ul></td></tr>";
+				t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right' style='width:100px' title='" + tdata.name + "'>" + tdata.name + "</span>" + "<span class='lbl label label-info arrowed-right arrowed-in' style='width:90px'>" + tdata.date + "</span>";
+				t4 = "<span class='lbl label label-success arrowed-in' style='width:90px'>" + tdata.title + "</span>" + "</span></label></li></ul></td></tr>";
 				template = t1 + t2 + t3 + t4;
 				$('#taskToFinish').append(template);
 
