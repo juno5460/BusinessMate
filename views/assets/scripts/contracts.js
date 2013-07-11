@@ -73,22 +73,16 @@ $(function(){
 		var date = new Date();
 		var bDate = date.getFullYear() + "-01-01";
 		var eDate = date.getFullYear() + "-12-31";
-		onCustomSearch({
-			beginDate : bDate,
-			endDate : eDate
-		});
-		console.info(bDate + ' ' + eDate);
+		$("#beginDate").val(bDate);
+		$("#endDate").val(eDate); 
 	});
 
 	$("#lastYear_btn").click(function(){
 		var date = new Date();
 		var bDate = date.getFullYear() - 1 + "-01-01";
 		var eDate = date.getFullYear() - 1 + "-12-31";
-		onCustomSearch({
-			beginDate : bDate,
-			endDate : eDate
-		});
-		console.info(bDate + ' ' + eDate);
+		$("#beginDate").val(bDate);
+		$("#endDate").val(eDate); 
 	});
 
 	var onSearch = function(){
