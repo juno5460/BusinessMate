@@ -41,12 +41,11 @@ exports.show = function(req, res) {
 		};
 		console.log("checkIdData");
 		contract.checkIdData(getId, function(data) {
-			res.send(data[0]);
+			return res.send(data[0]);
 		});
 	} else {
 		console.log("fuzzySearch");
 		contract.fuzzySearch(queryId, function(data) {
-//			console.log(data[0]);
 			return res.send(data[0]);
 		});
 	}
@@ -101,7 +100,7 @@ exports.update = function(req, res) {
 		"name": get.name,
 		"beginDate": get.beginDate,
 		"endDate": get.endDate,
-		amount:get.amount,
+		amount: get.amount,
 		"state": get.state,
 		"events": get.events
 	};

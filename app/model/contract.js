@@ -269,6 +269,37 @@ ContractSchema.methods = {
 			callback(getData);
 		});
 	},
+	//计算所有合同的事件在未来指定时间段内可回收的金额
+	/*
+	 *calback:回调返回数据
+	 */
+	countWillGetMoney: function(getTime, callback) {
+
+		var count = 0; //存储所有合同已回款总额
+		var allCount = 0; //存储所有合同总金额
+		var getData;
+		Contract = this.model('Contract');
+
+		Contract.find({}, function(err, docs) {
+			docs.forEach(function(doc) {
+				allCount = allCount + doc.amount;
+				for (var i = 0; i < doc.events.length; i++) { //遍历单个合同的事件数组
+					if (doc.events[i].price > 0 && doc.events[i].completed == true)
+					//					if (doc.events[i].price > 0)
+						count = count + doc.events[i].price;
+				}
+				getData = {
+					"allCount": allCount,
+					"count": count,
+					"ratio": parseFloat(count / allCount)
+				};
+				console.log(doc.events);
+			});
+			console.log(parseFloat(4 / 10));
+			//			callback(count);
+			callback(getData);
+		});
+	},
 	//计算单个合同的事件回收金额
 	/*
 	 *calback:回调返回数据
@@ -985,8 +1016,6 @@ ContractSchema.methods = {
 				i++;
 				callback(send);
 			});
-		} else {
-			callback(send);
 		}
 	}
 
