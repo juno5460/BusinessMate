@@ -1,5 +1,7 @@
 $(function(){
 
+	$("#custom_search_panel").hide();
+
 	var today = new Date();
 	var mounth = (today.getMonth() + 1)  < 10 ? "0" + (today.getMonth() + 1) : (today.getMonth() + 1);
 	var day = today.getDate()  < 10 ? "0" + today.getDate() : today.getDate();
@@ -46,16 +48,16 @@ $(function(){
 	$("#drowdown").click(function(){
 		if(!isDropDown){
 			isDropDown = true;
-			$("#custom_search_panel").css("display","block");
+			$("#custom_search_panel").slideDown();
 		} else {
 			isDropDown = false;
-			$("#custom_search_panel").css("display","none");
+			$("#custom_search_panel").slideUp();
 		}
 		
 	});
 
 	$("#removeBtn").click(function(){
-		$("#custom_search_panel").css("display","none");
+		$("#custom_search_panel").slideUp();
 		isDropDown = false;
 	});
 
