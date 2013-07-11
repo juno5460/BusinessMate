@@ -81,3 +81,15 @@ exports.update = function(req, res) { //修改待办任务完成标志位
 		res.send(data);
 	});
 };
+exports.count = function(req, res) { //返回指定合同业务数据
+
+	var template = new Template();
+	var contract = new Contract();
+	var getTime = "2013-07-18";
+	// var id = req.params['id'];
+	// console.log(id);
+	contract.countWillGetMoney(getTime, function(data) {
+		console.log("countWillGetMoney");
+		res.send(data);
+	});
+};
