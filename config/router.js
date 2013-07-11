@@ -31,8 +31,8 @@ module.exports = function(app, passport, auth) {
 	app.put('/api/tasks/:id', task.update);
 	// //	app.del('/api/tasks/:id',task.destroy);
 	//app.resource('api/tasks', task);
-    app.get('/api/tests',task.count);
-    //业务测试接口
+	app.get('/api/tests', task.count);
+	//业务测试接口
 
 	////////////用户 接口
 	var users = require('../app/controller/users');
@@ -45,10 +45,7 @@ module.exports = function(app, passport, auth) {
 		failureRedirect: '/login',
 		failureFlash: 'Invalid email or password.'
 	}), users.session);
-	//	var task = require('../app/controller/task');
-	//	app.get('/api/tasks', auth.requiresLogin, task.index);
-	//	app.resource('api/tasks', auth.requiresLogin, task);
-	////////////passport测试
+
 
 	app.get('/', auth.requiresLogin, function(req, res) {
 		res.redirect('/login');
