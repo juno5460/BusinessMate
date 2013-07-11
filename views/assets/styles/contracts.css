@@ -60,3 +60,17 @@ td{
 	margin-top: 8px;
 	width: 100px;
 }
+
+td{
+	vertical-align: middle;
+}
+
+.row-title{
+text-overflow:ellipsis;
+width: 250px;
+height: 20px;
+}
+
+.row-date{
+	width: 70px;
+}
