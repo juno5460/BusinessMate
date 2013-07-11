@@ -446,13 +446,7 @@ ContractSchema.methods = {
 		var getTemp;
 
 		var canGet = 0;
-		var next = { //存在下一步事件标志位,初始化下步执行事件变量
-			"id": 0,
-			"title": 0,
-			"date": 0,
-			"price": 0,
-			"completed": 0
-		};
+
 
 
 		var allWillSend = [];
@@ -466,6 +460,13 @@ ContractSchema.methods = {
 				var j = 0; //未完成事件数组下标控制器
 				var flag = 0;
 				//找到第一个比当前执行日期大的事件标志位
+				var next = { //存在下一步事件标志位,初始化下步执行事件变量
+					"id": 0,
+					"title": 0,
+					"date": 0,
+					"price": 0,
+					"completed": 0
+				};
 
 				for (var i = 0; i < doc.events.length; i++) { //遍历该合同数组
 					if (doc.events[i].completed == false && doc.events[i].date < getOccur) {
