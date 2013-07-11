@@ -450,7 +450,13 @@ ContractSchema.methods = {
 		//找到第一个比当前执行日期大的事件标志位
 		var canGet = 0;
 		//存在下一步事件标志位
-
+		var next = { //初始化下步执行事件变量
+			"id": 0,
+			"title": 0,
+			"date": 0,
+			"price": 0,
+			"completed": 0
+		};
 		var willSend;
 		//存储单个合同数据
 		var allWillSend = [];
@@ -458,13 +464,7 @@ ContractSchema.methods = {
 
 		Contract.find({}, function(err, docs) {
 			docs.forEach(function(doc) {
-				var next = { //初始化下步执行事件变量
-					"id": 0,
-					"title": 0,
-					"date": 0,
-					"price": 0,
-					"completed": 0
-				};
+
 				for (var i = 0; i < doc.events.length; i++) { //遍历该合同数组
 					if (doc.events[i].completed == false && doc.events[i].date < getOccur) {
 						send[j] = doc.events[i]; //当状态为未完成状态,取出
@@ -497,8 +497,15 @@ ContractSchema.methods = {
 					"undone": send,
 					"next": next
 				};
-				console.log(doc.name);
-				console.log(next);
+				send = [];
+				next = { //初始化下步执行事件变量
+					"id": 0,
+					"title": 0,
+					"date": 0,
+					"price": 0,
+					"completed": 0
+				};
+				console.log(willSend);
 				allWillSend[s] = willSend;
 				s++;
 			});
