@@ -144,6 +144,7 @@ $(function() {
 
 		$.each(data, function(i, contract) {
 
+			//获取代办任务插入模版的数据
 			var tdata = {
 				name: contract.name,
 				title: contract.next.title,
@@ -151,24 +152,34 @@ $(function() {
 			};
 
 			var t1, t2, t3, t4, template;
-			t1 = "<tr class='toHidden'><td><ul style='height:100%' class='item-list ui-sortable'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'>";
-			t2 = "<input type='checkbox' id='" + checkboxId[idIndex] + "'>";
+			t1 = "<tr id='toHidden'><td><ul style='height:100%' class='item-list ui-sortable'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'>";
+			t2 = "<input class='test' type='checkbox' id='" + checkboxId[idIndex] + "'>";
 			console.info(contract.next.title);
+
 			if (contract.next.title == 0) {
-				t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right' style='width:120px' title='" + tdata.name + "'>" + tdata.name + "</span>";
-				t4 = "<span class='lbl label label-success arrowed-in' style='width:100px'>" + "合同已完成" + "</span>" + "</span></label></li></ul></td></tr>";
+
+				t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right' >" + tdata.name + "</span>";
+				t4 = "<span id='finished' class='lbl label label-success arrowed-in'>" + "合同已完成" + "</span>" + "</span></label></li></ul></td></tr>";
+				template = t1 + t2 + t3 + t4;
+				$('#taskToFinish').append(template);
+				console.info("helllo");
+				$('#finished').parent().parent().parent().parent().parent().parent('#toHidden').hide(3000);
+
 			} else {
+
 				t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right' style='width:120px' title='" + tdata.name + "'>" + tdata.name + "</span>" + "<span class='lbl label label-info arrowed-right arrowed-in' style='width:100px'>" + tdata.date + "</span>";
 				t4 = "<span class='lbl label label-success arrowed-in' style='width:100px'>" + tdata.title + "</span>" + "</span></label></li></ul></td></tr>";
+				template = t1 + t2 + t3 + t4;
+				$('#taskToFinish').append(template);
+
 			}
 
-			template = t1 + t2 + t3 + t4;
-			$('#taskToFinish').append(template);
 			idIndex++;
 
 			var tempIDValue = checkboxId[idIndex - 1];
 			var tempID;
 
+			//获取当前插入的代办任务中checkbox的id
 			if (tempIDValue == 'a')
 				tempID = $("#a");
 			else if (tempIDValue == 'b')
@@ -229,7 +240,8 @@ $(function() {
 				var checkValue = dom.checked;
 				var remark = null;
 				var $taskObj = $(this);
-console.info($taskObj.parent().parent().parent().parent().parent(".toHidden"));
+				var isChecked = false;
+
 				if (checkValue) {
 					bootbox.prompt("提示（备注信息）", function(result) {
 						if (result == null) {
@@ -237,6 +249,7 @@ console.info($taskObj.parent().parent().parent().parent().parent(".toHidden"));
 							return;
 						}
 
+						isChecked = true;
 						checkValue = true;
 						remark = result;
 						$taskObj.closest('li').addClass('selected');
@@ -258,13 +271,12 @@ console.info($taskObj.parent().parent().parent().parent().parent(".toHidden"));
 								console.info('error');
 							},
 							success: function(result) {
-								console.info('success');
+								console.info("success");
 							}
 						});
+						$taskObj.prop("checked", true);
 					});<!--bootbox-->
 				}<!--if-->
-				$taskObj.prop("checked", true);
-				$taskObj.parent().parent().parent().parent().parent(".toHidden").fadeOut(7000);
 			});
 		});
 	});
