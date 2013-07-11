@@ -515,13 +515,14 @@ ContractSchema.methods = {
 
 		Contract = this.model('Contract');
         var send = []; //用数组来存储未完成事件
+        var j = 0; //未完成事件数组下标控制器
 		Contract.find({}, function(err, docs) {
 			docs.forEach(function(doc) {
 
 				var willSend; //存储单个合同数据
 				
 				var getOne;
-				var j = 0; //未完成事件数组下标控制器
+				
 				var flag = 0;
 				//找到第一个比当前执行日期大的事件标志位
 
