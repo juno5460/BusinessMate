@@ -507,6 +507,41 @@ ContractSchema.methods = {
 			callback(allWillSend);
 		});
 	},
+	//展示所有所有合同未完成事件以及下一个待办事件
+	/*
+	 *calback:回调返回数据
+	 */
+	checkAlldoneEvents: function(callback) {
+
+		Contract = this.model('Contract');
+        var send = []; //用数组来存储未完成事件
+		Contract.find({}, function(err, docs) {
+			docs.forEach(function(doc) {
+
+				var willSend; //存储单个合同数据
+				
+				var getOne;
+				var j = 0; //未完成事件数组下标控制器
+				var flag = 0;
+				//找到第一个比当前执行日期大的事件标志位
+
+				for (var i = 0; i < doc.events.length; i++) {
+					if (doc.events[i].completed == false) {
+						flag = 1;
+					}
+				}
+				if (flag == 0) {
+					getOne = {
+						"name": doc.name
+					};
+					send[j] = getOne;
+					j++;
+				} else
+					flag = 0;
+			});
+			callback(send);
+		});
+	},
 	/*模糊查询
 	 *get:获取查询字符串
 	 *callback:返回数据
