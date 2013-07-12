@@ -146,33 +146,34 @@ $(function() {
 
 			//获取代办任务插入模版的数据
 			var tdata = {
+				id: contract._id,
 				name: contract.name,
 				title: contract.next.title,
 				date: contract.next.date
 			};
 
 			var t1, t2, t3, t4, template;
-			t1 = "<tr id='toHidden'><td><ul style='height:100%' class='item-list ui-sortable'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'>";
+			t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'>";
 			t2 = "<input class='test' type='checkbox' id='" + checkboxId[idIndex] + "'>";
 			console.info(contract.next.title);
 
 			if (contract.next.title == 0) {
-
-				t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right' style='width:100px' title='" + tdata.name + "'>" + tdata.name + "</span>";
-				t4 = "<span id='finished' class='lbl label label-success arrowed-in' style='width:90px'>" + "合同已完成" + "</span>" + "</span></label></li></ul></td></tr>";
-				template = t1 + t2 + t3 + t4;
-				$('#taskToFinish').append(template);
-				// $('#finished').parent().parent().parent().parent().parent().parent('#toHidden').hide(3000);
-
+				template = null;
 			} else {
 
-				t3 = "<span class='lbl'>" + "<span class='lbl label arrowed-right' style='width:100px' title='" + tdata.name + "'>" + tdata.name + "</span>" + "<span class='lbl label label-info arrowed-right arrowed-in' style='width:90px'>" + tdata.date + "</span>";
-				t4 = "<span class='lbl label label-success arrowed-in' style='width:90px'>" + tdata.title + "</span>" + "</span></label></li></ul></td></tr>";
+				var dataName = tdata.name;
+				//合同名称过长则进行省略处理
+				if(dataName.length > 10) {
+					dataName = dataName.substring(0,10) + "...";
+				}
+				t3 = "<span class='lbl'>" + "<span class='lbl' style='width:100px' >"+"<a href='"+"/contracts/"+tdata.id+"/edit' class='lbl' style='color:black'>" + tdata.title + "</a>"+"</span>" + "&nbsp;&nbsp;"+"<span class='lbl' style='width:90px;color:silver'>" + tdata.date + "</span>";
+				t4 = "&nbsp;&nbsp;"+"<span class='lbl' style='color:silver' title='" + tdata.name + "'>" + "【"+dataName +"】"+ "</span>" + "</span></label></li></ul>";
 				template = t1 + t2 + t3 + t4;
-				$('#taskToFinish').append(template);
 
 			}
 
+			$('#taskToFinish').append(template);
+			
 			idIndex++;
 
 			var tempIDValue = checkboxId[idIndex - 1];
@@ -279,4 +280,20 @@ $(function() {
 			});
 		});
 	});
+
+	$("#taskBtn").click(function(){
+		$.get("/api/finishtasks", function(data, status) {
+			$("#taskList").html("<li>hahaha</li>");
+			// var $temp = $("#taskList");
+			// $temp.html("");
+
+			// $.each(data, function(i, contract) {
+				
+			// 	var contractName = contract.name;
+			// 	$temp.append("<li>"+contractName+"</li>");
+
+			// });
+		});
+	});
+
 });
