@@ -192,11 +192,11 @@ $(function() {
 
 					var dataName = unData.name;
 					//合同名称过长则进行省略处理
-					if (dataName.length > 10) {
-						dataName = dataName.substring(0, 10) + "...";
+					if (dataName.length > 8) {
+						dataName = dataName.substring(0, 8) + "...";
 					}
 					t3 = "<span class='lbl'>" + "<span class='lbl'>" + "<a href='" + "/contracts/" + unData.id + "/edit' class='lbl' style='color:black'>" + unData.title + "</a>" + "</span>" + "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver'>" + unData.date + "</span>";
-					t4 = "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver' title='" + unData.name + "'>" + "【" + dataName + "】" + "</span>" + "<span class='lbl' style='color:red;font-size:10px'>" + "*(过期)" + "</span>" + "</span></label></li></ul>";
+					t4 = "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver' title='" + unData.name + "'>" + "【" + dataName + "】" + "</span>" + "<span class='lbl' style='color:red'>" + "*(过期)" + "</span>" + "</span></label></li></ul>";
 					template = t1 + t2 + t3 + t4;
 					$('#taskToFinish').append(template);
 				}
@@ -226,8 +226,8 @@ $(function() {
 
 				var dataName = tdata.name;
 				//合同名称过长则进行省略处理
-				if (dataName.length > 10) {
-					dataName = dataName.substring(0, 10) + "...";
+				if (dataName.length > 8) {
+					dataName = dataName.substring(0, 8) + "...";
 				}
 				t3 = "<span class='lbl'>" + "<span class='lbl'>" + "<a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title + "</a>" + "</span>" + "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver'>" + tdata.date + "</span>";
 				t4 = "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver' title='" + tdata.name + "'>" + "【" + dataName + "】" + "</span>" + "</span></label></li></ul>";
