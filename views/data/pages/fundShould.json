@@ -1,0 +1,7 @@
+{
+ "scripts" : ["jquery-ui" , "slimscroll" , "easy-pie-chart" , "sparkline" , "flot" , "flot.pie" , "flot.resize"]
+ ,
+ "ie_scripts" : [{"version":8, "name":"excanvas"}]
+ ,
+ "no-header" : true
+}

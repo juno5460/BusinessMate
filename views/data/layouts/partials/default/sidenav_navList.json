@@ -7,7 +7,9 @@
 		"link" : null, "title" : "统计分析" , "icon" : "icon-dashboard",
 		"submenu" :
 		[
-		{ "link" : "/fund", "title" : "回款统计"} 
+		{ "link" : "/fund", "title" : "已回款"},
+		{ "link" : "/fundWait", "title" : "待回款"} ,
+		{ "link" : "/fundShould", "title" : "应收款"} 
 		]
 	}
 ]

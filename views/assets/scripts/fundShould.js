@@ -1,3 +1,6 @@
+
+
+
 $(function() {
 
 	$.get("/api/contracts", function(data, status) {
@@ -28,28 +31,26 @@ $(function() {
 						return s_x;  
 					}  
 
-					var t1data = {
+					var t3data = {
 						name: contract.name,
 						partyA: contract.partyA,
 						partyB: contract.partyB,
 						amount: contract.amount,
-						returnAmount: data1.returnCount,
-						returnRatio: data1.returnRatio,
-						lastReturnDate: data1.lastDate
+						returnAmount: data1.oneAllCount,
+						returnRatio: contract.returnRatio,
+						remark	: contract.state
 					};
 
-					var curRatio1 = changeTwoDecimal((t1data.returnRatio)*100);
-					if(!curRatio1)
-						curRatio1 = 0;
-					var easypieRatio1 = "<div style='margin:0px;padding:1px' class='progress' data-percent='"+curRatio1+"%'><div class='bar' style='width:"+curRatio1+"%;'></div></div>";
-					var template1 = "<tr><td class='center span3'>{{name}}</td><td class='hidden-480 center span2'>{{partyA}}</td><td class='hidden-480 center span2'>{{partyB}}</td><td  class='center span1'>{{amount}}</td><td class='center span1'>{{returnAmount}}</td><td class='hidden-phone center span1'>"+easypieRatio1+"</td><td class='hidden-480 center span1'>{{lastReturnDate}}</td></tr>";
+					var curRatio3 = changeTwoDecimal((t3data.returnRatio)*100);
+					curRatio3=100;
+					var easypieRatio3 = "<div style='margin:0px;padding:1px' class='progress' data-percent='"+curRatio3+"%'><div class='bar' style='width:"+curRatio3+"%;'></div></div>";
+					var template3 = "<tr><td  class='center span3'>{{name}}</td><td class='hidden-480 center span2'>{{partyA}}</td><td class='hidden-480 center span2'>{{partyB}}</td><td class='center span1'>{{amount}}</td><td class='center span1'>{{returnAmount}}</td><td class='hidden-phone center span1'>"+easypieRatio3+"</td><td  class='center span2'>{{remark}}</td></tr>";
 
-					var html1 = Mustache.to_html(template1, t1data);
-					$('#table1').append(html1);
-
+					var html3 = Mustache.to_html(template3, t3data);
+					$('#table3').append(html3);
 
 					var oldie = $.browser.msie && $.browser.version < 9;
-					$('.easy-pie-chart1.percentage').each(function(){
+					$('.easy-pie-chart3.percentage').each(function(){
 						var barColor = $(this).data('color') ;
 						var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' : '#E2E2E2';
 						var size = parseInt($(this).data('size')) || 50;
@@ -63,7 +64,8 @@ $(function() {
 							size: size
 						});
 					});
+
 			});
-		});		
+		});
 	});
 });

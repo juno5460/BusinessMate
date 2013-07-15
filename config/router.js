@@ -73,6 +73,20 @@ module.exports = function(app, passport, auth) {
 		}));
 	});
 
+	app.get('/fundWait', auth.requiresLogin, function(req, res) {
+
+		res.send(generator.generate('fundWait', {
+			username: 'Justin'
+		}));
+	});
+
+	app.get('/fundShould', auth.requiresLogin, function(req, res) {
+
+		res.send(generator.generate('fundShould', {
+			username: 'Justin'
+		}));
+	});
+
 	app.get('/contracts', auth.requiresLogin, function(req, res) {
 
 		res.send(generator.generate('contracts', {
