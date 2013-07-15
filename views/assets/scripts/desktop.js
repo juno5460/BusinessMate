@@ -144,7 +144,6 @@ $(function() {
 
 		$.each(data, function(i, contract) {
 
-
 			//获取代办任务插入模版的数据
 			var tdata = {
 				id: contract._id,
@@ -155,7 +154,7 @@ $(function() {
 
 			var t1, t2, t3, t4, template;
 			t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'>";
-			t2 = "<input class='test' type='checkbox' id='" + checkboxId[idIndex] + "'>";
+			t2 = "<input type='checkbox' id='" + checkboxId[idIndex] + "'>";
 			console.info(contract.next.title);
 
 			if (contract.next.title == 0) {
