@@ -196,7 +196,7 @@ $(function() {
 						dataName = dataName.substring(0, 10) + "...";
 					}
 					t3 = "<span class='lbl'>" + "<span class='lbl'>" + "<a href='" + "/contracts/" + unData.id + "/edit' class='lbl' style='color:black'>" + unData.title + "</a>" + "</span>" + "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver'>" + unData.date + "</span>";
-					t4 = "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver' title='" + unData.name + "'>" + "【" + dataName + "】" + "</span>" + "<span class='lbl' style='color:red'>" + "*(已过期)" + "</span>" + "</span></label></li></ul>";
+					t4 = "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver' title='" + unData.name + "'>" + "【" + dataName + "】" + "</span>" + "<span class='lbl' style='color:red;font-size:10px'>" + "*(过期)" + "</span>" + "</span></label></li></ul>";
 					template = t1 + t2 + t3 + t4;
 					$('#taskToFinish').append(template);
 				}
