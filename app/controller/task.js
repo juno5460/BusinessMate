@@ -98,10 +98,20 @@ exports.finish = function(req, res) { //返回指定合同业务数据
 
 	var template = new Template();
 	var contract = new Contract();
-	
-	contract.checkAlldoneEvents(function(data) {
-		console.log("checkAlldoneEvents");
+
+	contract.checkAlldoneContracts(function(data) {
+		console.log("checkAlldoneContracts");
 		console.log(data);
+		res.send(data);
+	});
+};
+
+exports.done=function(req,res){
+	var template = new Template();
+	var contract = new Contract();
+
+	contract.checkLastWeekDone(function(data) {
+		console.log("checkLastWeekDone");
 		res.send(data);
 	});
 };

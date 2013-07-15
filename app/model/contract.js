@@ -515,11 +515,68 @@ ContractSchema.methods = {
 			callback(allWillSend);
 		});
 	},
-	//展示所有所有合同未完成事件以及下一个待办事件
+	//展示上周完成事件
+	checkLastWeekDone: function(callback) {
+
+		Contract = this.model('Contract');
+
+		var s = 0; //合同待办事件数组下标控制器
+		///获取当前时间
+		var occur = new Date(); //
+		var year = occur.getFullYear();
+		var month = occur.getMonth() + 1;
+		var day = occur.getDate(); ///
+		day = day < 10 ? "0" + day : day;
+		month = month < 10 ? "0" + month : month;
+		var getOccur = year + "-" + month + "-" + day;
+		//转换成标准时间格式
+		var getTemp; //临时设定事件执行目标时间
+
+		////获取一周之后的时间
+		var lastWeek = new Date(occur.getTime() - 1000 * 60 * 60 * 24 * 7);
+		var tyear = lastWeek.getFullYear();
+		var tmonth = lastWeek.getMonth() + 1;
+		var tday = lastWeek.getDate(); ///
+		tday = tday < 10 ? "0" + tday : tday;
+		tmonth = tmonth < 10 ? "0" + tmonth : tmonth;
+		var getLastWeek = tyear + "-" + tmonth + "-" + tday;
+		console.log(getLastWeek);
+
+		var allWillSend = [];
+		//存储所有合同数据
+
+		Contract.find({}, function(err, docs) {
+			docs.forEach(function(doc) {
+
+				var willSend; //存储单个合同数据
+				var send = []; //用数组来存储未完成事件
+				var j = 0; //未完成事件数组下标控制器
+				var flag = 0;
+
+				for (var i = 0; i < doc.events.length; i++) { //遍历该合同数组
+					if (doc.events[i].completed == true && (doc.events[i].date < getOccur || doc.events[i].date == getOccur) && (doc.events[i].date > getLastWeek || doc.events[i].date == getLastWeek)) {
+						send[j] = doc.events[i]; //当状态为未完成状态,取出
+						j++; //下标移动
+					}
+				}
+
+				willSend = {
+					"name": doc.name,
+					"_id": doc._id,
+					"done": send
+				};
+				console.log(willSend);
+				allWillSend[s] = willSend;
+				s++;
+			});
+			callback(allWillSend);
+		});
+	},
+	//展示所有所有已完成合同
 	/*
 	 *calback:回调返回数据
 	 */
-	checkAlldoneEvents: function(callback) {
+	checkAlldoneContracts: function(callback) {
 
 		Contract = this.model('Contract');
 		var send = []; //用数组来存储未完成事件

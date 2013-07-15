@@ -49,7 +49,9 @@ module.exports = function(app, passport, auth) {
 
 	//app.resource('api/tasks', task);
 
-	app.get('/api/finishtasks', task.finish);
+	app.get('/api/finishes', task.finish);
+
+	app.get('/api/dones',task.done);
 
 	app.get('/api/tests', task.count);
 	//业务测试接口
