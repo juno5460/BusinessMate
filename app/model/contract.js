@@ -7,13 +7,15 @@ var mongoose = require('mongoose'),
 	Repository = require('./repository');
 
 //事件子模型
-var EventsSchema = new Schema({
-	id: String,
-	title: String,
-	remark: String,
-	price: Number,
-	date: String,
-	completed: Boolean
+var EventsSchema = new Schema({ //假如非回款事件,price,invoiceDate,invoiceDone字段默认为-1
+	id: String, //事件id
+	title: String, //事件名称
+	remark: String, //事件备注
+	price: Number, //回款金额
+	date: String, //执行日期
+	completed: Boolean, //事件完成标志
+	invoiceDate: String, //发票日期
+	invoiceDone: Boolean //是否开发票标志
 });
 
 //合同模型
@@ -435,6 +437,7 @@ ContractSchema.methods = {
 		Contract = this.model('Contract');
 
 		var s = 0; //合同待办事件数组下标控制器
+		///获取当前时间
 		var occur = new Date(); //
 		var year = occur.getFullYear();
 		var month = occur.getMonth() + 1;
@@ -443,11 +446,17 @@ ContractSchema.methods = {
 		month = month < 10 ? "0" + month : month;
 		var getOccur = year + "-" + month + "-" + day;
 		//转换成标准时间格式
-		var getTemp;
+		var getTemp; //临时设定事件执行目标时间
 
-		var canGet = 0;
-
-
+		////获取一周之后的时间
+		var weekLater = new Date(occur.getTime() + 1000 * 60 * 60 * 24 * 7);
+		var tyear = weekLater.getFullYear();
+		var tmonth = weekLater.getMonth() + 1;
+		var tday = weekLater.getDate(); ///
+		tday = tday < 10 ? "0" + tday : tday;
+		tmonth = tmonth < 10 ? "0" + tmonth : tmonth;
+		var getWeekLater = tyear + "-" + tmonth + "-" + tday;
+		console.log(getWeekLater);
 
 		var allWillSend = [];
 		//存储所有合同数据
@@ -476,12 +485,11 @@ ContractSchema.methods = {
 				}
 				console.log(getOccur);
 				for (var k = 0; k < doc.events.length; k++) {
-					if (flag == 0 && (doc.events[k].date > getOccur || doc.events[k].date == getOccur) && doc.events[k].completed == false) {
+					if (flag == 0 && (doc.events[k].date > getOccur || doc.events[k].date == getOccur) && (doc.events[k].date < getWeekLater || doc.events[k].date == getWeekLater) && doc.events[k].completed == false) {
 						//找到第一个大于或等于当前时间的事件而且还没完成的事件
 						getTemp = doc.events[k].date; //把该事件的执行日期赋给临时时间
 						next = doc.events[k];
 						flag = 1;
-						canGet = 1;
 					}
 					if (flag == 1 && (doc.events[k].date > getOccur || doc.events[k].date == getOccur) && doc.events[k].date < getTemp && doc.events[k].completed == false) {
 						//之后要是存在比当前时间大并且比临时时间小的而且还没完成的事件,更新临时时间,并且更新下一步执行事件
@@ -514,15 +522,15 @@ ContractSchema.methods = {
 	checkAlldoneEvents: function(callback) {
 
 		Contract = this.model('Contract');
-        var send = []; //用数组来存储未完成事件
-        var j = 0; //未完成事件数组下标控制器
+		var send = []; //用数组来存储未完成事件
+		var j = 0; //未完成事件数组下标控制器
 		Contract.find({}, function(err, docs) {
 			docs.forEach(function(doc) {
 
 				var willSend; //存储单个合同数据
-				
+
 				var getOne;
-				
+
 				var flag = 0;
 				//找到第一个比当前执行日期大的事件标志位
 
@@ -586,34 +594,32 @@ ContractSchema.methods = {
 			console.log("1");
 			Contract.find({
 				$and: [{
-						beginDate: {
-							$gte: getBeginDate,
-							$lte: getEndDate
-						}
-					}, {
-						beginDate: {
-							$lte: getEndDate
-						}
+					beginDate: {
+						$gte: getBeginDate,
+						$lte: getEndDate
 					}
-				],
+				}, {
+					beginDate: {
+						$lte: getEndDate
+					}
+				}],
 				$or: [{
-						name: {
-							'$all': [q]
-						}
-					}, {
-						myId: {
-							'$all': [q]
-						}
-					}, {
-						partyA: {
-							'$all': [q]
-						}
-					}, {
-						partyB: {
-							'$all': [q]
-						}
+					name: {
+						'$all': [q]
 					}
-				]
+				}, {
+					myId: {
+						'$all': [q]
+					}
+				}, {
+					partyA: {
+						'$all': [q]
+					}
+				}, {
+					partyB: {
+						'$all': [q]
+					}
+				}]
 			}, function(err, results1) {
 				send[i] = results1;
 				i++;
@@ -624,30 +630,28 @@ ContractSchema.methods = {
 			console.log("2");
 			Contract.find({
 				$and: [{
-						beginDate: {
-							$gte: getBeginDate,
-							$lte: getEndDate
-						}
-					}, {
-						beginDate: {
-							$lte: getEndDate
-						}
+					beginDate: {
+						$gte: getBeginDate,
+						$lte: getEndDate
 					}
-				],
+				}, {
+					beginDate: {
+						$lte: getEndDate
+					}
+				}],
 				$or: [{
-						name: {
-							'$all': [q]
-						}
-					}, {
-						myId: {
-							'$all': [q]
-						}
-					}, {
-						partyA: {
-							'$all': [q]
-						}
+					name: {
+						'$all': [q]
 					}
-				]
+				}, {
+					myId: {
+						'$all': [q]
+					}
+				}, {
+					partyA: {
+						'$all': [q]
+					}
+				}]
 			}, function(err, results2) {
 				send[i] = results2;
 				i++;
@@ -658,30 +662,28 @@ ContractSchema.methods = {
 			console.log("3");
 			Contract.find({
 				$and: [{
-						beginDate: {
-							$gte: getBeginDate,
-							$lte: getEndDate
-						}
-					}, {
-						beginDate: {
-							$lte: getEndDate
-						}
+					beginDate: {
+						$gte: getBeginDate,
+						$lte: getEndDate
 					}
-				],
+				}, {
+					beginDate: {
+						$lte: getEndDate
+					}
+				}],
 				$or: [{
-						name: {
-							'$all': [q]
-						}
-					}, {
-						myId: {
-							'$all': [q]
-						}
-					}, {
-						partyB: {
-							'$all': [q]
-						}
+					name: {
+						'$all': [q]
 					}
-				]
+				}, {
+					myId: {
+						'$all': [q]
+					}
+				}, {
+					partyB: {
+						'$all': [q]
+					}
+				}]
 			}, function(err, results3) {
 				send[i] = results3;
 				i++;
@@ -692,26 +694,24 @@ ContractSchema.methods = {
 			console.log("4");
 			Contract.find({
 				$and: [{
-						beginDate: {
-							$gte: getBeginDate,
-							$lte: getEndDate
-						}
-					}, {
-						beginDate: {
-							$lte: getEndDate
-						}
+					beginDate: {
+						$gte: getBeginDate,
+						$lte: getEndDate
 					}
-				],
+				}, {
+					beginDate: {
+						$lte: getEndDate
+					}
+				}],
 				$or: [{
-						name: {
-							'$all': [q]
-						}
-					}, {
-						myId: {
-							'$all': [q]
-						}
+					name: {
+						'$all': [q]
 					}
-				]
+				}, {
+					myId: {
+						'$all': [q]
+					}
+				}]
 			}, function(err, results4) {
 				send[i] = results4;
 				i++;
@@ -722,30 +722,28 @@ ContractSchema.methods = {
 			console.log("5");
 			Contract.find({
 				$and: [{
-						beginDate: {
-							$gte: getBeginDate,
-							$lte: getEndDate
-						}
-					}, {
-						beginDate: {
-							$lte: getEndDate
-						}
+					beginDate: {
+						$gte: getBeginDate,
+						$lte: getEndDate
 					}
-				],
+				}, {
+					beginDate: {
+						$lte: getEndDate
+					}
+				}],
 				$or: [{
-						myId: {
-							'$all': [q]
-						}
-					}, {
-						partyA: {
-							'$all': [q]
-						}
-					}, {
-						partyB: {
-							'$all': [q]
-						}
+					myId: {
+						'$all': [q]
 					}
-				]
+				}, {
+					partyA: {
+						'$all': [q]
+					}
+				}, {
+					partyB: {
+						'$all': [q]
+					}
+				}]
 			}, function(err, results5) {
 				send[i] = results5;
 				i++;
@@ -756,26 +754,24 @@ ContractSchema.methods = {
 			console.log("6");
 			Contract.find({
 				$and: [{
-						beginDate: {
-							$gte: getBeginDate,
-							$lte: getEndDate
-						}
-					}, {
-						beginDate: {
-							$lte: getEndDate
-						}
+					beginDate: {
+						$gte: getBeginDate,
+						$lte: getEndDate
 					}
-				],
+				}, {
+					beginDate: {
+						$lte: getEndDate
+					}
+				}],
 				$or: [{
-						myId: {
-							'$all': [q]
-						}
-					}, {
-						partyA: {
-							'$all': [q]
-						}
+					myId: {
+						'$all': [q]
 					}
-				]
+				}, {
+					partyA: {
+						'$all': [q]
+					}
+				}]
 			}, function(err, results6) {
 				send[i] = results6;
 				i++;
@@ -786,26 +782,24 @@ ContractSchema.methods = {
 			console.log("7");
 			Contract.find({
 				$and: [{
-						beginDate: {
-							$gte: getBeginDate,
-							$lte: getEndDate
-						}
-					}, {
-						beginDate: {
-							$lte: getEndDate
-						}
+					beginDate: {
+						$gte: getBeginDate,
+						$lte: getEndDate
 					}
-				],
+				}, {
+					beginDate: {
+						$lte: getEndDate
+					}
+				}],
 				$or: [{
-						myId: {
-							'$all': [q]
-						}
-					}, {
-						partyB: {
-							'$all': [q]
-						}
+					myId: {
+						'$all': [q]
 					}
-				]
+				}, {
+					partyB: {
+						'$all': [q]
+					}
+				}]
 			}, function(err, results7) {
 				send[i] = results7;
 				i++;
@@ -816,22 +810,20 @@ ContractSchema.methods = {
 			console.log("8");
 			Contract.find({
 				$and: [{
-						beginDate: {
-							$gte: getBeginDate,
-							$lte: getEndDate
-						}
-					}, {
-						beginDate: {
-							$lte: getEndDate
-						}
+					beginDate: {
+						$gte: getBeginDate,
+						$lte: getEndDate
 					}
-				],
+				}, {
+					beginDate: {
+						$lte: getEndDate
+					}
+				}],
 				$or: [{
-						myId: {
-							'$all': [q]
-						}
+					myId: {
+						'$all': [q]
 					}
-				]
+				}]
 			}, function(err, results8) {
 				send[i] = results8;
 				i++;
@@ -842,30 +834,28 @@ ContractSchema.methods = {
 			console.log("9");
 			Contract.find({
 				$and: [{
-						beginDate: {
-							$gte: getBeginDate,
-							$lte: getEndDate
-						}
-					}, {
-						beginDate: {
-							$lte: getEndDate
-						}
+					beginDate: {
+						$gte: getBeginDate,
+						$lte: getEndDate
 					}
-				],
+				}, {
+					beginDate: {
+						$lte: getEndDate
+					}
+				}],
 				$or: [{
-						name: {
-							'$all': [q]
-						}
-					}, {
-						partyA: {
-							'$all': [q]
-						}
-					}, {
-						partyB: {
-							'$all': [q]
-						}
+					name: {
+						'$all': [q]
 					}
-				]
+				}, {
+					partyA: {
+						'$all': [q]
+					}
+				}, {
+					partyB: {
+						'$all': [q]
+					}
+				}]
 			}, function(err, results9) {
 				send[i] = results9;
 				i++;
@@ -876,26 +866,24 @@ ContractSchema.methods = {
 			console.log("10");
 			Contract.find({
 				$and: [{
-						beginDate: {
-							$gte: getBeginDate,
-							$lte: getEndDate
-						}
-					}, {
-						beginDate: {
-							$lte: getEndDate
-						}
+					beginDate: {
+						$gte: getBeginDate,
+						$lte: getEndDate
 					}
-				],
+				}, {
+					beginDate: {
+						$lte: getEndDate
+					}
+				}],
 				$or: [{
-						name: {
-							'$all': [q]
-						}
-					}, {
-						partyA: {
-							'$all': [q]
-						}
+					name: {
+						'$all': [q]
 					}
-				]
+				}, {
+					partyA: {
+						'$all': [q]
+					}
+				}]
 			}, function(err, results10) {
 				send[i] = results10;
 				i++;
@@ -906,26 +894,24 @@ ContractSchema.methods = {
 			console.log("11");
 			Contract.find({
 				$and: [{
-						beginDate: {
-							$gte: getBeginDate,
-							$lte: getEndDate
-						}
-					}, {
-						beginDate: {
-							$lte: getEndDate
-						}
+					beginDate: {
+						$gte: getBeginDate,
+						$lte: getEndDate
 					}
-				],
+				}, {
+					beginDate: {
+						$lte: getEndDate
+					}
+				}],
 				$or: [{
-						name: {
-							'$all': [q]
-						}
-					}, {
-						partyB: {
-							'$all': [q]
-						}
+					name: {
+						'$all': [q]
 					}
-				]
+				}, {
+					partyB: {
+						'$all': [q]
+					}
+				}]
 			}, function(err, results11) {
 				send[i] = results11;
 				i++;
@@ -936,22 +922,20 @@ ContractSchema.methods = {
 			console.log("12");
 			Contract.find({
 				$and: [{
-						beginDate: {
-							$gte: getBeginDate,
-							$lte: getEndDate
-						}
-					}, {
-						beginDate: {
-							$lte: getEndDate
-						}
+					beginDate: {
+						$gte: getBeginDate,
+						$lte: getEndDate
 					}
-				],
+				}, {
+					beginDate: {
+						$lte: getEndDate
+					}
+				}],
 				$or: [{
-						name: {
-							'$all': [q]
-						}
+					name: {
+						'$all': [q]
 					}
-				]
+				}]
 			}, function(err, results12) {
 				send[i] = results12;
 				i++;
@@ -962,26 +946,24 @@ ContractSchema.methods = {
 			console.log("13");
 			Contract.find({
 				$and: [{
-						beginDate: {
-							$gte: getBeginDate,
-							$lte: getEndDate
-						}
-					}, {
-						beginDate: {
-							$lte: getEndDate
-						}
+					beginDate: {
+						$gte: getBeginDate,
+						$lte: getEndDate
 					}
-				],
+				}, {
+					beginDate: {
+						$lte: getEndDate
+					}
+				}],
 				$or: [{
-						partyA: {
-							'$all': [q]
-						}
-					}, {
-						partyB: {
-							'$all': [q]
-						}
+					partyA: {
+						'$all': [q]
 					}
-				]
+				}, {
+					partyB: {
+						'$all': [q]
+					}
+				}]
 			}, function(err, results13) {
 				send[i] = results13;
 				i++;
@@ -992,22 +974,20 @@ ContractSchema.methods = {
 			console.log("14");
 			Contract.find({
 				$and: [{
-						beginDate: {
-							$gte: getBeginDate,
-							$lte: getEndDate
-						}
-					}, {
-						beginDate: {
-							$lte: getEndDate
-						}
+					beginDate: {
+						$gte: getBeginDate,
+						$lte: getEndDate
 					}
-				],
+				}, {
+					beginDate: {
+						$lte: getEndDate
+					}
+				}],
 				$or: [{
-						partyA: {
-							'$all': [q]
-						}
+					partyA: {
+						'$all': [q]
 					}
-				]
+				}]
 			}, function(err, results14) {
 				send[i] = results14;
 				i++;
@@ -1018,22 +998,20 @@ ContractSchema.methods = {
 			console.log("15");
 			Contract.find({
 				$and: [{
-						beginDate: {
-							$gte: getBeginDate,
-							$lte: getEndDate
-						}
-					}, {
-						beginDate: {
-							$lte: getEndDate
-						}
+					beginDate: {
+						$gte: getBeginDate,
+						$lte: getEndDate
 					}
-				],
+				}, {
+					beginDate: {
+						$lte: getEndDate
+					}
+				}],
 				$or: [{
-						partyB: {
-							'$all': [q]
-						}
+					partyB: {
+						'$all': [q]
 					}
-				]
+				}]
 			}, function(err, results15) {
 				send[i] = results15;
 				i++;
@@ -1044,16 +1022,15 @@ ContractSchema.methods = {
 			console.log("16");
 			Contract.find({
 				$and: [{
-						beginDate: {
-							$gte: getBeginDate,
-							$lte: getEndDate
-						}
-					}, {
-						beginDate: {
-							$lte: getEndDate
-						}
+					beginDate: {
+						$gte: getBeginDate,
+						$lte: getEndDate
 					}
-				]
+				}, {
+					beginDate: {
+						$lte: getEndDate
+					}
+				}]
 			}, function(err, results16) {
 				send[i] = results16;
 				i++;
