@@ -3,12 +3,12 @@ $(function() {
 	var partyA = new Array(),
 		partyB = new Array();
 	var contractsCount = 0;
-
+	var isChecked = false;
 	//代办任务初始化变量
 
 	//为代办任务中添加的每一个checkbox动态添加id
 	var checkboxId = new Array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
-		'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't','u','v','w','x','y','z');
+		'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
 	var idIndex = 0;
 
 	var liColor = new Array('item-orange', 'item-red', 'item-default', 'item-blue',
@@ -164,19 +164,19 @@ $(function() {
 
 				var dataName = tdata.name;
 				//合同名称过长则进行省略处理
-				if(dataName.length > 10) {
-					dataName = dataName.substring(0,10) + "...";
+				if (dataName.length > 10) {
+					dataName = dataName.substring(0, 10) + "...";
 				}
-				t3 = "<span class='lbl'>" + "<span class='lbl'>"+"<a href='"+"/contracts/"+tdata.id+"/edit' class='lbl' style='color:black'>" + tdata.title + "</a>"+"</span>" + "&nbsp;&nbsp;"+"<span class='lbl' style='color:silver'>" + tdata.date + "</span>";
-				t4 = "&nbsp;&nbsp;"+"<span class='lbl' style='color:silver' title='" + tdata.name + "'>" + "【"+dataName +"】"+ "</span>" + "</span></label></li></ul>";
+				t3 = "<span class='lbl'>" + "<span class='lbl'>" + "<a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title + "</a>" + "</span>" + "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver'>" + tdata.date + "</span>";
+				t4 = "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver' title='" + tdata.name + "'>" + "【" + dataName + "】" + "</span>" + "</span></label></li></ul>";
 				template = t1 + t2 + t3 + t4;
 
 			}
 
 			$('#taskToFinish').append(template);
-			
+
 			idIndex++;
-			if(idIndex >= 25) 
+			if (idIndex >= 25)
 				idIndex = 0;
 
 			var tempIDValue = checkboxId[idIndex - 1];
@@ -236,16 +236,13 @@ $(function() {
 			else if (tempIDValue == 'z')
 				tempID = $("#z");
 
-			var tempContractID = contract._id;
-
-			tempID.bind("click", function() {
+			tempID.click(function() {
 
 				var tID = this.id;
 				var dom = document.getElementById(tID);
 				var checkValue = dom.checked;
 				var remark = null;
 				var $taskObj = $(this);
-				var isChecked = false;
 
 				if (checkValue) {
 					bootbox.prompt("提示（备注信息）", function(result) {
@@ -280,54 +277,10 @@ $(function() {
 							}
 						});
 						$taskObj.prop("checked", true);
+						parent.location.reload();
+					}); <!--bootbox-->
 
-						//单击弹出框的确定按钮后，删除并添加新的代办任务
-						if(isChecked) {
-
-								$taskObj.parent().parent().parent().remove();
-								$.get("/api/tasks", function(data, status) {
-
-									$.each(data, function(i, contract) {
-										if(contract._id == tempContractID) {
-											//获取代办任务插入模版的数据
-											var tdata = {
-												id: contract._id,
-												name: contract.name,
-												title: contract.next.title,
-												date: contract.next.date
-											};
-
-											var t1, t2, t3, t4, template;
-											t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'>";
-											t2 = "<input class='test' type='checkbox' id='" + checkboxId[idIndex] + "'>";
-
-											if (contract.next.title == 0) {
-												template = null;
-											} else {
-
-												var dataName = tdata.name;
-												//合同名称过长则进行省略处理
-												if(dataName.length > 10) {
-													dataName = dataName.substring(0,10) + "...";
-												}
-												t3 = "<span class='lbl'>" + "<span class='lbl'>"+"<a href='"+"/contracts/"+tdata.id+"/edit' class='lbl' style='color:black'>" + tdata.title + "</a>"+"</span>" + "&nbsp;&nbsp;"+"<span class='lbl' style='color:silver'>" + tdata.date + "</span>";
-												t4 = "&nbsp;&nbsp;"+"<span class='lbl' style='color:silver' title='" + tdata.name + "'>" + "【"+dataName +"】"+ "</span>" + "</span></label></li></ul>";
-												template = t1 + t2 + t3 + t4;
-
-											}
-
-											$('#taskToFinish').append(template);
-											idIndex++;
-											if(idIndex >= 25)
-												idIndex = 0; 
-										}<!--if-->
-									});<!--each-->
-							});
-					}
-
-					});<!--bootbox-->
-
-				}<!--if-->
+				} <!--if-->
 			});
 		});
 	});
