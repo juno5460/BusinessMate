@@ -9,8 +9,16 @@ $(function() {
 
 	//为代办任务中添加的每一个checkbox动态添加id
 	var checkboxId = new Array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
-		'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+		'l', 'm', 'n', 'o', 'p');
 	var idIndex = 0;
+
+	//为过期任务中添加的每一个checkbox动态添加id
+	var checkboxId1 = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+		'L', 'M', 'N', 'O', 'P');
+	var idIndex1 = 0;
+
+	//已完成任务索引
+	var idIndex2 = 0;
 
 	var liColor = new Array('item-orange', 'item-red', 'item-default', 'item-blue',
 		'item-grey', 'item-green', 'item-pink', 'item-orange', 'item-red', 'item-default', 'item-blue', 'item-grey', 'item-green', 'item-pink', 'item-orange', 'item-red', 'item-default', 'item-blue', 'item-grey', 'item-green', 'item-pink');
@@ -171,41 +179,7 @@ $(function() {
 	//代办任务
 	$.get("/api/tasks", function(data, status) {
 
-		//代办任务过期事件处理
 		$.each(data, function(i, contract) {
-
-			var nowDate = new Date().format("yyyy-MM-dd");
-
-			var t1, t2, t3, t4, template;
-			t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'>";
-			t2 = "<input type='checkbox' id='" + checkboxId[idIndex] + "'>";
-
-			if (contract.undone.length != 0) {
-				for (var j in contract.undone) {
-					var unData = {
-						id: contract._id,
-						name: contract.name,
-						title: contract.undone[j].title,
-						date: contract.undone[j].date,
-						completed: contract.undone[j].completed
-					};
-
-					var dataName = unData.name;
-					//合同名称过长则进行省略处理
-					if (dataName.length > 8) {
-						dataName = dataName.substring(0, 8) + "...";
-					}
-					t3 = "<span class='lbl'>" + "<span class='lbl'>" + "<a href='" + "/contracts/" + unData.id + "/edit' class='lbl' style='color:black'>" + unData.title + "</a>" + "</span>" + "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver'>" + unData.date + "</span>";
-					t4 = "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver' title='" + unData.name + "'>" + "【" + dataName + "】" + "</span>" + "<span class='lbl' style='color:red'>" + "*(过期)" + "</span>" + "</span></label></li></ul>";
-					template = t1 + t2 + t3 + t4;
-					$('#taskToFinish').append(template);
-				}
-			}
-		});
-
-		$.each(data, function(i, contract) {
-
-			var nowDate = new Date().format("yyyy-MM-dd");
 
 			var t1, t2, t3, t4, template;
 			t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'>";
@@ -216,8 +190,6 @@ $(function() {
 				id: contract._id,
 				name: contract.name,
 				title: contract.next.title,
-				date: contract.next.date,
-				completed: contract.next.completed
 			};
 
 			if (contract.next.title == 0) {
@@ -236,8 +208,18 @@ $(function() {
 
 			$('#taskToFinish').append(template);
 
+			//对待办任务部分为空的情况进行处理
+			var html = $('#taskToFinish').html();
+			if (html == '') {
+				template = "<div id='blankTask'><ul class='center' style='font-size:16px'>没有需要待办的任务.</ul></div>";
+				$('#taskToFinish').html(template);
+				return;
+			} else {
+				$('#blankTask').remove();
+			}
+
 			idIndex++;
-			if (idIndex >= 25)
+			if (idIndex >= 15)
 				idIndex = 0;
 
 			var tempIDValue = checkboxId[idIndex - 1];
@@ -276,27 +258,6 @@ $(function() {
 				tempID = $("#o");
 			else if (tempIDValue == 'p')
 				tempID = $("#p");
-			else if (tempIDValue == 'q')
-				tempID = $("#q");
-			else if (tempIDValue == 'r')
-				tempID = $("#r");
-			else if (tempIDValue == 's')
-				tempID = $("#s");
-			else if (tempIDValue == 't')
-				tempID = $("#t");
-			else if (tempIDValue == 'u')
-				tempID = $("#u");
-			else if (tempIDValue == 'v')
-				tempID = $("#v");
-			else if (tempIDValue == 'w')
-				tempID = $("#w");
-			else if (tempIDValue == 'x')
-				tempID = $("#x");
-			else if (tempIDValue == 'y')
-				tempID = $("#y");
-			else if (tempIDValue == 'z')
-				tempID = $("#z");
-
 			tempID.click(function() {
 
 				var tID = this.id;
@@ -342,8 +303,184 @@ $(function() {
 					}); <!--bootbox-->
 
 				} <!--if-->
-			});
-		});
-	});
+			}); <!--tempID-->
+		}); <!--each-->
+	}); <!--get-->
 
+	//过期任务
+	$.get("/api/tasks", function(data, status) {
+
+		$.each(data, function(i, contract) {
+
+			var t1, t2, t3, t4, template;
+
+			//判断是否有过期任务
+			var html = $('#outOfDate').html();
+			if (html == '') {
+				template = "<div id='blankDate'><ul class='center' style='font-size:16px'>没有过期任务.</ul></div>";
+				$('#outOfDate').html(template);
+				return;
+			} else {
+				$('#blankDate').remove();
+			}
+
+			for (var j = 0; j < contract.undone.length; j++) {
+
+				//获取代办任务插入模版的数据
+				var tdata = {
+					id: contract._id,
+					name: contract.name,
+					title: contract.undone[j].title,
+					date: contract.undone[j].date,
+				};
+
+				var dataName = tdata.name;
+				//合同名称过长则进行省略处理
+				if (dataName.length > 8) {
+					dataName = dataName.substring(0, 8) + "...";
+				}
+				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex1] + "'><label id='"+contract.undone[j].id+"'class='inline taskcell'>";
+				t2 = "<input type='checkbox' id='" + checkboxId1[idIndex1] + "'>";
+				t3 = "<span class='lbl'>" + "<span class='lbl'>" + "<a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title + "</a>" + "</span>" + "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver'>" + tdata.date + "</span>";
+				t4 = "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver' title='" + tdata.name + "'>" + "【" + dataName + "】" + "</span>" +"<span style='color:red'>*</span>"+ "</span></label></li></ul>";
+				template = t1 + t2 + t3 + t4;
+				$('#outOfDate').append(template);
+
+				idIndex1++;
+				if (idIndex1 >= 16)
+					idIndex1 = 0;
+
+				var tempIDValue = checkboxId1[idIndex1 - 1];
+				var tempID;
+
+				//获取当前插入的代办任务中checkbox的id
+				if (tempIDValue == 'A')
+					tempID = $("#A");
+				else if (tempIDValue == 'B')
+					tempID = $("#B");
+				else if (tempIDValue == 'C')
+					tempID = $("#C");
+				else if (tempIDValue == 'D')
+					tempID = $("#D");
+				else if (tempIDValue == 'E')
+					tempID = $("#E");
+				else if (tempIDValue == 'F')
+					tempID = $("#F");
+				else if (tempIDValue == 'G')
+					tempID = $("#G");
+				else if (tempIDValue == 'H')
+					tempID = $("#H");
+				else if (tempIDValue == 'I')
+					tempID = $("#I");
+				else if (tempIDValue == 'J')
+					tempID = $("#J");
+				else if (tempIDValue == 'K')
+					tempID = $("#K");
+				else if (tempIDValue == 'L')
+					tempID = $("#L");
+				else if (tempIDValue == 'M')
+					tempID = $("#M");
+				else if (tempIDValue == 'N')
+					tempID = $("#N");
+				else if (tempIDValue == 'O')
+					tempID = $("#O");
+				else if (tempIDValue == 'P')
+					tempID = $("#P");
+
+				tempID.click(function() {
+
+					var tID = this.id;
+					var dom = document.getElementById(tID);
+					var checkValue = dom.checked;
+					var remark = null;
+					var $taskObj = $(this);
+
+					if (checkValue) {
+						bootbox.prompt("提示（备注信息）", function(result) {
+							if (result == null) {
+								$taskObj.prop("checked", false);
+								return;
+							}
+
+							isChecked = true;
+							checkValue = true;
+							remark = result;
+							$taskObj.closest('li').addClass('selected');
+							var undoneID = $taskObj.parent().attr('id');
+							var postData = {
+								_id: contract._id,
+								id: undoneID,
+								title: tdata.title,
+								completed: checkValue,
+								remark: remark
+							};
+							// console.info(postData);
+							$.ajax({
+								url: '/api/tasks/' + undoneID,
+								type: 'put',
+								data: postData,
+								error: function() {
+									console.info('error');
+								},
+								success: function(result) {
+									console.info("success");
+								}
+							});
+							$taskObj.prop("checked", true);
+							$taskObj.parent().parent().parent().remove();
+						}); <!--bootbox-->
+
+					} <!--if-->
+				}); <!--tempID-->
+			}
+		}); <!--each-->
+	}); <!--get-->
+
+	//已完成任务
+	$.get('/api/dones', function(data, status) {
+
+		$.each(data, function(i, contract) {
+
+			var t1, t2, t3, template;
+
+			for (var j = 0; j < contract.done.length; j++) {
+
+				//获取代办任务插入模版的数据
+				var tdata = {
+					id: contract._id,
+					name: contract.name,
+					title: contract.done[j].title,
+					date: contract.done[j].date,
+				};
+
+				var dataName = tdata.name;
+				//合同名称过长则进行省略处理
+				if (dataName.length > 8) {
+					dataName = dataName.substring(0, 8) + "...";
+				}
+				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex2] + "'><label>";
+				t2 = "<span class='lbl'>" + "<span class='lbl'>" + "<a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title + "</a>" + "</span>" + "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver'>" + tdata.date + "</span>";
+				t3 = "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver' title='" + tdata.name + "'>" + "【" + dataName + "】" + "</span>"+ "</span></label></li></ul>";
+				template = t1 + t2 + t3;
+
+				$('#isFinished').append(template);
+
+				idIndex2++;
+				if (idIndex2 >= 16)
+					idIndex2 = 0;
+			}
+
+			//判断是否有完成任务
+			var html = $('#isFinished').html();
+			if (html == '') {
+				template = "<div id='blankFinished'><ul class='center' style='font-size:16px'>没有已完成任务.</ul></div>";
+				$('#isFinished').html(template);
+				return;
+			} else {
+				if($('#blankFinished'))
+					$('#blankFinished').remove();
+			}
+		});
+
+	});
 });
