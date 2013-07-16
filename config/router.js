@@ -17,6 +17,8 @@ module.exports = function(app, passport, auth) {
 	app.put('/api/contracts/:id', contract.update);
 
 	app.del('/api/contracts/:id', contract.destroy);
+
+	app.get('/api/tests',contract.test);
 	//	app.resource('api/contracts', contract);
 
 	///合同模版接口
@@ -51,7 +53,7 @@ module.exports = function(app, passport, auth) {
 
 	app.get('/api/finishes', task.finish);
 
-	app.get('/api/dones',task.done);
+	app.get('/api/dones', task.done);
 
 	app.get('/api/tests', task.count);
 	//业务测试接口
@@ -70,8 +72,10 @@ module.exports = function(app, passport, auth) {
 	app.post('/username', users.check);
 
 	app.post('/users/session', passport.authenticate('local', {
+
 		failureRedirect: '/login',
 		failureFlash: 'Invalid email or password.'
+
 	}), users.session);
 
 

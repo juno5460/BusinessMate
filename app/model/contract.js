@@ -13,6 +13,7 @@ var EventsSchema = new Schema({ //假如非回款事件,price,invoiceDate,invoic
 	remark: String, //事件备注
 	price: Number, //回款金额
 	date: String, //执行日期
+	priceDate: String, //回款日期
 	completed: Boolean, //事件完成标志
 	invoiceDate: String, //发票日期
 	invoiceDone: Boolean //是否开发票标志
@@ -217,26 +218,81 @@ ContractSchema.methods = {
 	 * eventName:事件名称 (或是状态名称,方便跟踪合同状态)
 	 * callback:回调返回数据
 	 */
+	// updateSymble: function(id, eventId, checkValue, remark, eventName, callback) {
+
+	// 	console.log('updateSymble');
+	// 	console.log(checkValue);
+	// 	Contract = this.model('Contract');
+
+	// 	Contract.update({
+	// 		_id: id,
+	// 		"events.id": eventId
+	// 	}, {
+	// 		"$set": {
+	// 			"events.$.completed": checkValue,
+	// 			//				"events.$.remark": remark,
+	// 			state: eventName
+	// 		}
+	// 	}, function() {
+	// 		Contract.find({
+	// 			_id: id
+	// 		}, function(err, docs) {
+	// 			callback(docs);
+	// 		});
+	// 	});
+	// },
 	updateSymble: function(id, eventId, checkValue, remark, eventName, callback) {
 
 		console.log('updateSymble');
 		console.log(checkValue);
 		Contract = this.model('Contract');
 
-		Contract.update({
-			_id: id,
-			"events.id": eventId
-		}, {
-			"$set": {
-				"events.$.completed": checkValue,
-				//				"events.$.remark": remark,
-				state: eventName
-			}
-		}, function() {
-			Contract.find({
-				_id: id
-			}, function(err, docs) {
-				callback(docs);
+		Contract.find({
+			_id: id
+		}, function(err, results) {
+			results.forEach(function(result) {
+				for (var i = 0; i < result.events.length; i++) {
+					if (result.events[i].id == eventId) {
+						if (result.events[i].invoiceDone == false) {
+							Contract.update({
+								_id: id,
+								"events.id": eventId
+							}, {
+								"$set": {
+									"events.$.invoiceDone": checkValue,
+									state: eventName,
+									"events.$.date": result.events[i].priceDate
+								}
+							}, function() {
+								Contract.find({
+									_id: id
+								}, function(err, docs) {
+									console.log("发票:");
+									console.log(docs);
+									callback(docs);
+								});
+							});
+						} else {
+							Contract.update({
+								_id: id,
+								"events.id": eventId
+							}, {
+								"$set": {
+									"events.$.completed": checkValue,
+									state: eventName
+								}
+							}, function() {
+								Contract.find({
+									_id: id
+								}, function(err, docs) {
+									console.log("回款:");
+									console.log(docs);
+									callback(docs);
+								});
+							});
+						}
+					}
+				}
 			});
 		});
 	},
@@ -1095,7 +1151,6 @@ ContractSchema.methods = {
 			});
 		}
 	}
-
 };
 
 
