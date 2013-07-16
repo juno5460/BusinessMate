@@ -299,7 +299,7 @@ $(function() {
 	//对待办任务部分为空的情况进行处理
 			var html = $('#taskToFinish').html();
 			if (html == "") {
-				template = "<div id='blankTask'><ul class='center' style='font-size:16px'>没有需要待办的任务.</ul></div>";
+				template = "<div id='blankTask' style='margin-top:100px'><ul class='center' style='font-size:16px'>没有需要待办的任务.</ul></div>";
 				$('#taskToFinish').html(template);
 				return;
 			} else {
@@ -310,6 +310,19 @@ $(function() {
 
 	//过期任务
 	$.get("/api/tasks", function(data, status) {
+
+		function isBlank() {
+			//判断是否有过期任务
+				var html = $('#outOfDate').html();
+				if (html == "") {
+					template = "<div id='blankDate' style='margin-top:120px'><ul class='center' style='font-size:16px'>没有过期任务.</ul></div>";
+					$('#outOfDate').html(template);
+					return;
+				} else {
+					if($('#blankDate'))
+						$('#blankDate').remove();
+				}
+		};
 
 		$.each(data, function(i, contract) {
 
@@ -419,6 +432,7 @@ $(function() {
 							});
 							$taskObj.prop("checked", true);
 							$taskObj.parent().parent().parent().remove();
+							isBlank();
 						}); <!--bootbox-->
 
 					} <!--if-->
@@ -426,16 +440,7 @@ $(function() {
 			}
 		}); <!--each-->
 
-		//判断是否有过期任务
-			var html = $('#outOfDate').html();
-			if (html == "") {
-				template = "<div id='blankDate'><ul class='center' style='font-size:16px'>没有过期任务.</ul></div>";
-				$('#outOfDate').html(template);
-				return;
-			} else {
-				if($('#blankDate'))
-					$('#blankDate').remove();
-			}
+		isBlank();
 	}); <!--get-->
 
 	//已完成任务
@@ -477,7 +482,7 @@ $(function() {
 	//判断是否有完成任务
 			var html = $('#isFinished').html();
 			if (html == "") {
-				template = "<div id='blankFinished'><ul class='center' style='font-size:16px'>没有已完成任务.</ul></div>";
+				template = "<div id='blankFinished' style='margin-top:100px'><ul class='center' style='font-size:16px'>没有已完成任务.</ul></div>";
 				$('#isFinished').html(template);
 				return;
 			} else {
