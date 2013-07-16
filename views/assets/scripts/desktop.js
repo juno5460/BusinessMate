@@ -210,12 +210,13 @@ $(function() {
 
 			//对待办任务部分为空的情况进行处理
 			var html = $('#taskToFinish').html();
-			if (html == '') {
+			if (html == "") {
 				template = "<div id='blankTask'><ul class='center' style='font-size:16px'>没有需要待办的任务.</ul></div>";
 				$('#taskToFinish').html(template);
 				return;
 			} else {
-				$('#blankTask').remove();
+				if($('#blankTask') != null)
+					$('#blankTask').remove();
 			}
 
 			idIndex++;
@@ -316,12 +317,13 @@ $(function() {
 
 			//判断是否有过期任务
 			var html = $('#outOfDate').html();
-			if (html == '') {
+			if (html == "") {
 				template = "<div id='blankDate'><ul class='center' style='font-size:16px'>没有过期任务.</ul></div>";
 				$('#outOfDate').html(template);
 				return;
 			} else {
-				$('#blankDate').remove();
+				if($('#blankDate') != null)
+					$('#blankDate').remove();
 			}
 
 			for (var j = 0; j < contract.undone.length; j++) {
@@ -472,12 +474,12 @@ $(function() {
 
 			//判断是否有完成任务
 			var html = $('#isFinished').html();
-			if (html == '') {
+			if (html == "") {
 				template = "<div id='blankFinished'><ul class='center' style='font-size:16px'>没有已完成任务.</ul></div>";
 				$('#isFinished').html(template);
 				return;
 			} else {
-				if($('#blankFinished'))
+				if($('#blankFinished') != null)
 					$('#blankFinished').remove();
 			}
 		});
