@@ -190,6 +190,7 @@ $(function() {
 				id: contract._id,
 				name: contract.name,
 				title: contract.next.title,
+				date: contract.next.date
 			};
 
 			if (contract.next.title == 0) {
