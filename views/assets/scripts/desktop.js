@@ -208,17 +208,6 @@ $(function() {
 
 			$('#taskToFinish').append(template);
 
-			//对待办任务部分为空的情况进行处理
-			var html = $('#taskToFinish').html();
-			if (html == "") {
-				template = "<div id='blankTask'><ul class='center' style='font-size:16px'>没有需要待办的任务.</ul></div>";
-				$('#taskToFinish').html(template);
-				return;
-			} else {
-				if($('#blankTask') != null)
-					$('#blankTask').remove();
-			}
-
 			idIndex++;
 			if (idIndex >= 15)
 				idIndex = 0;
@@ -306,6 +295,17 @@ $(function() {
 				} <!--if-->
 			}); <!--tempID-->
 		}); <!--each-->
+
+	//对待办任务部分为空的情况进行处理
+			var html = $('#taskToFinish').html();
+			if (html == "") {
+				template = "<div id='blankTask'><ul class='center' style='font-size:16px'>没有需要待办的任务.</ul></div>";
+				$('#taskToFinish').html(template);
+				return;
+			} else {
+				if($('#blankTask'))
+					$('#blankTask').remove();
+			}
 	}); <!--get-->
 
 	//过期任务
@@ -314,17 +314,6 @@ $(function() {
 		$.each(data, function(i, contract) {
 
 			var t1, t2, t3, t4, template;
-
-			//判断是否有过期任务
-			var html = $('#outOfDate').html();
-			if (html == "") {
-				template = "<div id='blankDate'><ul class='center' style='font-size:16px'>没有过期任务.</ul></div>";
-				$('#outOfDate').html(template);
-				return;
-			} else {
-				if($('#blankDate') != null)
-					$('#blankDate').remove();
-			}
 
 			for (var j = 0; j < contract.undone.length; j++) {
 
@@ -436,6 +425,17 @@ $(function() {
 				}); <!--tempID-->
 			}
 		}); <!--each-->
+
+		//判断是否有过期任务
+			var html = $('#outOfDate').html();
+			if (html == "") {
+				template = "<div id='blankDate'><ul class='center' style='font-size:16px'>没有过期任务.</ul></div>";
+				$('#outOfDate').html(template);
+				return;
+			} else {
+				if($('#blankDate'))
+					$('#blankDate').remove();
+			}
 	}); <!--get-->
 
 	//已完成任务
@@ -472,17 +472,17 @@ $(function() {
 					idIndex2 = 0;
 			}
 
-			//判断是否有完成任务
+		});
+	
+	//判断是否有完成任务
 			var html = $('#isFinished').html();
 			if (html == "") {
 				template = "<div id='blankFinished'><ul class='center' style='font-size:16px'>没有已完成任务.</ul></div>";
 				$('#isFinished').html(template);
 				return;
 			} else {
-				if($('#blankFinished') != null)
+				if($('#blankFinished'))
 					$('#blankFinished').remove();
 			}
-		});
-
 	});
 });
