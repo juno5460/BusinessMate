@@ -245,11 +245,15 @@ $(function() {
 				'type' 		: $event.type,
 				'title' 	: $event.title,
 				'date' 		: $event.date,
-				($event.invoiceDate == undefined ? '' : 'invoiceDate') : $event.invoiceDate,
 				'price' 	: $event.price,
 				'remark' 	: $event.remark,
 				'completed' : false,
 			};
+
+			if($event.invoiceDate != undefined) {
+				$event.invoiceDate = $event.invoiceDate;
+			} 
+
 			$eventsArray.push($event);
 		});
 
