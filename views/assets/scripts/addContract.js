@@ -440,7 +440,7 @@ $(function() {
 			
 					errorPlacement: function (error, element) {
 						if(element.is(':checkbox') || element.is(':radio')) {
-							var controls = element.closest('.controls');
+							var controls = element.closest('.validate_item');
 							if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
 							else error.insertAfter(element.nextAll('.lbl').eq(0));
 						} 
