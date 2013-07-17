@@ -157,22 +157,24 @@ exports.test = function(req, res) {
 			"id": "C5C4EC7101C0000251601930F8501976",
 			"title": "竞标",
 			"date": "2013-07-01",
-			"price":-1,
+			"price": -1,
 			"completed": false
 		}, {
 			"id": "C5C4EC7101C00002669D1E8235409DB0",
 			"title": "首款",
-			"date": "2013-07-18",
-			"price": 345400,
+			"date": "2013-07-17",
+			"price": 400000,
 			"completed": false,
+			"priceDate": "2013-07-18",
 			"invoiceDate": "2013-07-17", //发票日期
 			"invoiceDone": false //是否开发票标志
 		}, {
 			"id": "C5C4EC7101C00002C7BF1E5014E01D5F",
 			"title": "尾款",
-			"date": "2013-07-19",
-			"price": 200000,
+			"date": "2013-07-18",
+			"price": 600000,
 			"completed": false,
+			"priceDate": "2013-07-19",
 			"invoiceDate": "2013-07-18", //发票日期
 			"invoiceDone": false //是否开发票标志
 		}]

@@ -14,6 +14,7 @@ var EventsSchema = new Schema({ //假如非回款事件,price,invoiceDate,invoic
 	price: Number, //回款金额
 	date: String, //执行日期
 	completed: Boolean, //事件完成标志
+	priceDate: String, //回款日期
 	invoiceDate: String, //发票日期
 	invoiceDone: Boolean //是否开发票标志
 });
@@ -222,21 +223,52 @@ ContractSchema.methods = {
 		console.log('updateSymble');
 		console.log(checkValue);
 		Contract = this.model('Contract');
-
-		Contract.update({
-			_id: id,
-			"events.id": eventId
-		}, {
-			"$set": {
-				"events.$.completed": checkValue,
-				//				"events.$.remark": remark,
-				state: eventName
-			}
-		}, function() {
-			Contract.find({
-				_id: id
-			}, function(err, docs) {
-				callback(docs);
+		Contract.find({
+			_id: id
+		}, function(err, results) {
+			results.forEach(function(result) {
+				for (var i = 0; i < result.events.length; i++) {
+					if (result.events[i].id == eventId) {
+						if (result.events[i].invoiceDone == false) {
+							Contract.update({
+								_id: id,
+								"events.id": eventId
+							}, {
+								"$set": {
+									"events.$.invoiceDone": checkValue,
+									state: eventName,
+									"events.$.date": result.events[i].priceDate
+								}
+							}, function() {
+								Contract.find({
+									_id: id
+								}, function(err, docs) {
+									console.log("发票:");
+									console.log(docs);
+									callback(docs);
+								});
+							});
+						} else {
+							Contract.update({
+								_id: id,
+								"events.id": eventId
+							}, {
+								"$set": {
+									"events.$.completed": checkValue,
+									state: eventName
+								}
+							}, function() {
+								Contract.find({
+									_id: id
+								}, function(err, docs) {
+									console.log("回款:");
+									console.log(docs);
+									callback(docs);
+								});
+							});
+						}
+					}
+				}
 			});
 		});
 	},
@@ -316,6 +348,7 @@ ContractSchema.methods = {
 
 		var count = 0; //存储该合同已回款总额
 		var allCount = 0; //存储该合同总金额
+		var waitCount = 0;
 		var getData;
 		var flag = 0;
 		var lastDate = "无";
@@ -336,6 +369,8 @@ ContractSchema.methods = {
 				for (var i = 0; i < doc.events.length; i++) { //遍历该合同的事件数组
 					if (doc.events[i].price > 0 && doc.events[i].completed == true)
 						count = count + doc.events[i].price;
+					if (doc.events[i].price > 0 && doc.events[i].invoiceDone == true && doc.events[i].completed == false)
+						waitCount = waitCount + doc.events[i].price;
 					if (flag == 0 && doc.events[i].price > 0 && doc.events[i].completed == true && (doc.events[i].date < getOccur || doc.events[i].date == getOccur)) {
 						lastDate = doc.events[i].date;
 						flag = 1;
@@ -346,6 +381,7 @@ ContractSchema.methods = {
 				}
 				getData = {
 					"lastDate": lastDate, //上次回款日期
+					"waitCount": waitCount, //待回款
 					"oneAllCount": allCount, //该合同总金额
 					"returnCount": count, //已回款
 					"unreturnCount": allCount - count, //未回款
