@@ -176,7 +176,7 @@ exports.test = function(req, res) {
 			"completed": false,
 			"priceDate": "2013-07-19",
 			"invoiceDate": "2013-07-18", //发票日期
-			"invoiceDone": false //是否开发票标志
+			"invoiceDone": false //是否开发票标志位
 		}]
 
 	};
