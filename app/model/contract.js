@@ -372,7 +372,7 @@ ContractSchema.methods = {
 						count = count + doc.events[i].price;
 					if (doc.events[i].price > 0 && doc.events[i].invoiceDone == true && doc.events[i].completed == false) {
 						waitCount = waitCount + doc.events[i].price;
-						applicantDate=doc.events[i].invoiceDate;
+						applicantDate = doc.events[i].invoiceDate;
 					}
 					if (flag == 0 && doc.events[i].price > 0 && doc.events[i].completed == true && (doc.events[i].date < getOccur || doc.events[i].date == getOccur)) {
 						lastDate = doc.events[i].date;
@@ -383,7 +383,7 @@ ContractSchema.methods = {
 					}
 				}
 				getData = {
-					"applicantDate":applicantDate, //发票申请时间
+					"applicantDate": applicantDate, //发票申请时间
 					"lastDate": lastDate, //上次回款日期
 					"waitCount": waitCount, //待回款
 					"oneAllCount": allCount, //该合同总金额
@@ -594,6 +594,10 @@ ContractSchema.methods = {
 				var flag = 0;
 
 				for (var i = 0; i < doc.events.length; i++) { //遍历该合同数组
+					if (doc.events[i].invoiceDone == true && doc.events[i].completed == false && (doc.events[i].date < getOccur || doc.events[i].date == getOccur) && (doc.events[i].date > getLastWeek || doc.events[i].date == getLastWeek)) {
+						send[j] = doc.events[i]; //当状态为未完成状态,取出
+						j++; //下标移动
+					}
 					if (doc.events[i].completed == true && (doc.events[i].date < getOccur || doc.events[i].date == getOccur) && (doc.events[i].date > getLastWeek || doc.events[i].date == getLastWeek)) {
 						send[j] = doc.events[i]; //当状态为未完成状态,取出
 						j++; //下标移动
