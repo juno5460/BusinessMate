@@ -389,10 +389,10 @@ $(function(){
 			}
 			$event.price 	= isTemplateMode ? tPrice : $cell.find("#price").val() == undefined ? -1 : $(element).find("#price").val();
 			$event.remark 	= $cell.find("#remark").val();
-			$event.completed = $cell.find("#completed").val();
+			$event.completed = isTemplateMode ? false : $cell.find("#completed").val();
 
-			var $invoiceDate = $cell.find("input[id^='invoiceDate']").val();
-			var $invoiceDone = $cell.find("#invoiceDone").val();
+			var $invoiceDate = isTemplateMode ? '' :$cell.find("input[id^='invoiceDate']").val();
+			var $invoiceDone = isTemplateMode ? false :$cell.find("#invoiceDone").val();
 
 			$event = {
 				'id' 		: $event.id,

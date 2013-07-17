@@ -261,9 +261,9 @@ $(function() {
 			if ($event.type == 1) {
 
 			} else {
-				$event.invoiceDate = $invoiceDate;
-				$event.date = $invoiceDate;
-				$event.priceDate = $cell.find("input[id^='date']").val();
+				$event.invoiceDate = isTemplateMode ? '' : $invoiceDate;
+				$event.date = isTemplateMode ? '' : $invoiceDate;
+				$event.priceDate = isTemplateMode ? '' ? $cell.find("input[id^='date']").val();
 				$event.invoiceDone = false;
 			};
 
