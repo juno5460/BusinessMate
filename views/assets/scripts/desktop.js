@@ -203,7 +203,7 @@ $(function() {
 
 			if (contract.next.title == 0) {
 				template = null;
-			} else if (!contract.next.invoiceDone) {
+			} else if (!contract.next.invoiceDone && contract.next.price > 0) {
 				t3 = "<span style='color:red'>开发票</span>";
 				template = t1 + t2 + t3 + t4;
 			} else {
@@ -464,10 +464,11 @@ $(function() {
 
 				//获取代办任务插入模版的数据
 				var tdata = {
-					id: contract._id,
-					name: contract.name,
-					title: contract.done[j].title,
-					date: contract.done[j].date,
+					id 										: contract._id,
+					name 								: contract.name,
+					title 							: contract.done[j].title,
+					date 								: contract.done[j].date,
+					invoiceDate	: contract.done[j].invoiceDate
 				};
 
 				//合同名称过长则进行省略处理
@@ -480,8 +481,9 @@ $(function() {
 				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex2] + "'><label>";
 				t2 = "<span class='lbl'><span class='lbl'><a href='/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
 				t4 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label></li></ul>";
-				// if(contract.done[j].completed $$ contract.done[j].invoiceDone) {
+				// if(contract.done[j].completed && contract.done[j].invoiceDone) {
 				// 	t3 = "<span style='color:red'>开发票</span>";
+				// 	t4 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.invoiceDate + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label></li></ul>";
 				// 	template = t1 + t2 + t3 + t4;
 				// } else 
 				template = t1 + t2 + t4;
