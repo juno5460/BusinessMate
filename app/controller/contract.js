@@ -78,6 +78,7 @@ exports.create = function(req, res) {
 		next: rdata.next //待办任务
 	};
 	console.log("start====");
+	console.log(saveData);
 	contract.insertData(saveData, res);
 	//	res.send("insert successfully");
 };
