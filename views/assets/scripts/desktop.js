@@ -442,6 +442,7 @@ $(function() {
 							});
 							$taskObj.prop("checked", true);
 							$taskObj.parent().parent().parent().remove();
+							parent.location.reload();
 							isBlank();
 						}); <!--bootbox-->
 
