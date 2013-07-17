@@ -9,6 +9,10 @@
 			position: relative;
 		}
 
+		#eventsList {
+			
+		}
+
 		#eventsList li:hover #delete{
 			display: block;
 		}
