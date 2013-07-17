@@ -394,7 +394,7 @@ $(function(){
 				'date' 		: $event.date,
 				'price' 	: $event.price,
 				'remark' 	: $event.remark,
-				'completed' : false,
+				'completed' : $event.completed,
 			};
 
 			if ($event.type == 1) {
