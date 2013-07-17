@@ -594,7 +594,7 @@ ContractSchema.methods = {
 				var flag = 0;
 
 				for (var i = 0; i < doc.events.length; i++) { //遍历该合同数组
-					if (doc.events[i].invoiceDone == true && doc.events[i].completed == false && (doc.events[i].date < getOccur || doc.events[i].date == getOccur) && (doc.events[i].date > getLastWeek || doc.events[i].date == getLastWeek)) {
+					if (doc.events[i].invoiceDone == true && (doc.events[i].invoiceDate < getOccur || doc.events[i].invoiceDate == getOccur) && (doc.events[i].invoiceDate > getLastWeek || doc.events[i].invoiceDaye == getLastWeek)) {
 						send[j] = doc.events[i]; //当状态为未完成状态,取出
 						j++; //下标移动
 					}
