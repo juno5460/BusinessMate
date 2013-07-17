@@ -35,7 +35,7 @@ $(function() {
 	// var $eventsArray = [];
 
 	var customEventTmp 	= "<li id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><i id='delete' class='icon-remove  bigger-120 icon-only'></i></div></div><div class='widget-body'><div id='newBody' class='widget-main'><textarea id='remark' class='span12 cellremark' placeholder='请输入备注信息'>{{remark}}</textarea><input type='hidden' id='completed' value={{completed}}></div></div></li>";
-	var priceEventTmp	= "<li id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>回款金额：</span><span><input id='price' class='hiddenInput' id='price' value='{{price}}'></span><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' style='' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><i id='delete' class='icon-remove  bigger-120 icon-only'></i></div></div><div class='widget-body'><div id='newBody' class='widget-main'><textarea id='remark' class='span12 cellremark' placeholder='请输入备注信息'>{{remark}}</textarea><input type='hidden' id='completed' value={{completed}}></div></div></li>";
+	var priceEventTmp	= "<li id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>回款金额：</span><span><input id='price' class='hiddenInput2' id='price' value='{{price}}'></span><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' style='' class='hiddenInput2' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><span class='celltitle'>执行时间：</span><span><input style='' class='hiddenInput2' id='invoiceDate{{dateID}}' data-date-format='yyyy-mm-dd' value='{{invoiceDate}}' readonly='true'></span><i id='delete' class='icon-remove  bigger-120 icon-only'></i></div></div><div class='widget-body'><div id='newBody' class='widget-main'><textarea id='remark' class='span12 cellremark' placeholder='请输入备注信息'>{{remark}}</textarea><input type='hidden' id='completed' value={{completed}}></div></div></li>";
 
 	//添加自定义事件
 	$("#customEventBtn").click(function() {
@@ -239,12 +239,13 @@ $(function() {
 			$event.date 	= $cell .find("input[id^='date']").val();
 			$event.price 	= isTemplateMode ? '' : $cell .find("#price").val() == null ? -1 : $(element).find("#price").val();
 			$event.remark 	= $cell .find("#remark").val();
-
+			$event.invoiceDate = $cell.find("input[id^='invoiceDate']").val();
 			$event = {
 				'id' 		: $event.id,
 				'type' 		: $event.type,
 				'title' 	: $event.title,
 				'date' 		: $event.date,
+				($event.invoiceDate == undefined ? '' : 'invoiceDate') : $event.invoiceDate,
 				'price' 	: $event.price,
 				'remark' 	: $event.remark,
 				'completed' : false,
@@ -306,6 +307,7 @@ $(function() {
 			id 		: type == 'template' ? generateID() : data.id,
 			title 	: data.title,
 			date 	: data.date,
+			invoiceDate : data.invoiceDate,
 			price 	: data.price,
 			remark 	: data.remark,
 			dateID 	: datePickerID
@@ -327,6 +329,10 @@ $(function() {
 		$('#eventsList').append($cellHtml);
 		$cellHtml.slideDown();
 		$('#date' + datePickerID).datepicker({
+			autoclose:true,
+			todayBtn:true,
+		});
+		$('#invoiceDate' + datePickerID).datepicker({
 			autoclose:true,
 			todayBtn:true,
 		});
@@ -416,11 +422,11 @@ $(function() {
 						}
 					},
 					highlight: function (e) {
-						$(e).closest('.control-group').removeClass('success').addClass('error');
+						$(e).closest('.validate_item').removeClass('success').addClass('error');
 					},
 			
 					success: function (e) {
-						$(e).closest('.control-group').removeClass('error').addClass('success');
+						$(e).closest('.validate_item').removeClass('error').addClass('success');
 						$(e).remove();
 					},
 			
@@ -434,7 +440,7 @@ $(function() {
 							console.info(element);
 							error.insertAfter(element.nextAll('[class*="chzn-container"]').eq(0));
 						}
-						else {error.insertAfter(element.parent());}
+						else {error.insertAfter(element);}
 					},
 
 					messages: {

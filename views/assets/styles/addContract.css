@@ -57,6 +57,19 @@
 			padding-left: 5px;
 		}
 
+		.hiddenInput2{
+			border-top:1px; 
+  			border-left:0px ; 
+  			border-right:1px;
+			border-bottom: 1px solid #CCC;
+			background-color:transparent;
+			outline:none;
+			color: #5090c1;
+			margin-right: 10px; 
+			padding-left: 5px;
+			width: 100px;
+		}
+
 
 		.celltitle{
 			font-size: 15px;
@@ -183,4 +196,25 @@
 
 		#newBody{
 			padding:1px 0 0 0;
+		}
+
+		.title_left{
+			font-size: 14px;
+			margin-left: 20px;
+			width: 100px;
+			display: inline-block;
+			text-align: right;
+			padding-right: 10px;
+		}
+		.title_right{
+			font-size: 14px;
+			width: 100px;
+			margin-left: 20px;
+			display: inline-block;
+			text-align: right;
+			padding-right: 10px;
+		}
+
+		.validate_item{
+			display: inline-block;
 		}
