@@ -239,7 +239,7 @@ $(function() {
 			$event.date 	= $cell .find("input[id^='date']").val();
 			$event.price 	= isTemplateMode ? '' : $cell .find("#price").val() == null ? -1 : $(element).find("#price").val();
 			$event.remark 	= $cell .find("#remark").val();
-			$event.invoiceDate = $cell.find("input[id^='invoiceDate']").val();
+			var $invoiceDate = $cell.find("input[id^='invoiceDate']").val();
 			$event = {
 				'id' 		: $event.id,
 				'type' 		: $event.type,
@@ -250,8 +250,8 @@ $(function() {
 				'completed' : false,
 			};
 
-			if($event.invoiceDate != undefined) {
-				$event.invoiceDate = $event.invoiceDate;
+			if($invoiceDate != undefined) {
+				$event.invoiceDate = $invoiceDate;
 			} 
 
 			$eventsArray.push($event);
