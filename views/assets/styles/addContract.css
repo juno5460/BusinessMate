@@ -207,8 +207,10 @@
 			margin-left: 20px;
 			width: 100px;
 			display: inline-block;
+			float: left;
 			text-align: right;
 			padding-right: 10px;
+			margin-top: 5px;
 		}
 		.title_right{
 			font-size: 14px;
@@ -216,7 +218,9 @@
 			margin-left: 20px;
 			display: inline-block;
 			text-align: right;
+			float: left;
 			padding-right: 10px;
+			margin-top: 5px;
 		}
 
 		.validate_item{
