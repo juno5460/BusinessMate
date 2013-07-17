@@ -292,7 +292,6 @@ $(function() {
 						$taskObj.prop("checked", true);
 						parent.location.reload();
 					}); <!--bootbox-->
-
 				} <!--if-->
 			}); <!--tempID-->
 		}); <!--each-->
