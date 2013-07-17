@@ -352,6 +352,7 @@ ContractSchema.methods = {
 		var getData;
 		var flag = 0;
 		var lastDate = "无";
+		var applicantDate = "无";
 		var occur = new Date();
 		var year = occur.getFullYear();
 		var month = occur.getMonth() + 1;
@@ -369,8 +370,10 @@ ContractSchema.methods = {
 				for (var i = 0; i < doc.events.length; i++) { //遍历该合同的事件数组
 					if (doc.events[i].price > 0 && doc.events[i].completed == true)
 						count = count + doc.events[i].price;
-					if (doc.events[i].price > 0 && doc.events[i].invoiceDone == true && doc.events[i].completed == false)
+					if (doc.events[i].price > 0 && doc.events[i].invoiceDone == true && doc.events[i].completed == false) {
 						waitCount = waitCount + doc.events[i].price;
+						applicantDate=doc.events[i].invoiceDate;
+					}
 					if (flag == 0 && doc.events[i].price > 0 && doc.events[i].completed == true && (doc.events[i].date < getOccur || doc.events[i].date == getOccur)) {
 						lastDate = doc.events[i].date;
 						flag = 1;
@@ -380,11 +383,12 @@ ContractSchema.methods = {
 					}
 				}
 				getData = {
+					"applicantDate":applicantDate, //发票申请时间
 					"lastDate": lastDate, //上次回款日期
 					"waitCount": waitCount, //待回款
 					"oneAllCount": allCount, //该合同总金额
 					"returnCount": count, //已回款
-					"unreturnCount": allCount - count, //未回款
+					"unreturnCount": allCount - count, //应回款
 					"returnRatio": parseFloat(count / allCount), //已回款比率
 					"unreturnRatio": parseFloat((allCount - count) / allCount) //未回款比率
 				};
