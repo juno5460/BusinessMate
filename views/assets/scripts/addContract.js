@@ -237,7 +237,14 @@ $(function() {
 			$event.type 	= $cell .find("#price").val() == null ? 1 : 2; //判断事件类型
 			$event.title 	= $cell .find("#title").val();
 			$event.date 	= $cell .find("input[id^='date']").val();
-			$event.price 	= isTemplateMode ? '' : $cell .find("#price").val() == null ? -1 : $(element).find("#price").val();
+			var tPrice 		=  0;
+			if(isTemplateMode){
+				if ($event.type == 1)
+					tPrice = -1;
+				else 
+					tPrice = '';
+			}
+			$event.price 	= isTemplateMode ? tPrice : $cell .find("#price").val() == null ? -1 : $(element).find("#price").val();
 			$event.remark 	= $cell .find("#remark").val();
 			var $invoiceDate = $cell.find("input[id^='invoiceDate']").val();
 			

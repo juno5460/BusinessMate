@@ -378,9 +378,16 @@ $(function(){
 			$cell 			= $(element);
 			$event.id 		= $cell.find("#id").val();
 			$event.title 	= $cell.find("#title").val();
-			$event.type 	= $cell .find("#price").val() == null ? 1 : 2; //判断事件类型
+			$event.type 	= $cell .find("#price").val() == undefined ? 1 : 2; //判断事件类型
 			$event.date 	= $cell.find("input[id^='date']").val();
-			$event.price 	= isTemplateMode ? '' : $cell.find("#price").val() == null ? -1 : $(element).find("#price").val();
+			var tPrice 		=  0;
+			if(isTemplateMode){
+				if ($event.type == 1)
+					tPrice = -1;
+				else 
+					tPrice = '';
+			}
+			$event.price 	= isTemplateMode ? tPrice : $cell.find("#price").val() == undefined ? -1 : $(element).find("#price").val();
 			$event.remark 	= $cell.find("#remark").val();
 			$event.completed = $cell.find("#completed").val();
 
