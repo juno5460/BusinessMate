@@ -257,6 +257,7 @@ $(function() {
 				$event.invoiceDate = $invoiceDate;
 				$event.date = $invoiceDate;
 				$event.priceDate = $cell.find("input[id^='date']").val();
+				$event.invoiceDone = false;
 			};
 
 			$eventsArray.push($event);
@@ -275,7 +276,7 @@ $(function() {
 		var datePickerID = generateID();
 
 		var $cellHtml = $(Mustache.to_html(customEventTmp, {
-			id 		: type == 'template' ? generateID() : data.id,
+			id 		: generateID() ,
 			title 	: data.title,
 			date 	: data.date,
 			price 	: data.price,
@@ -312,10 +313,11 @@ $(function() {
 		var datePickerID = generateID();
 
 		var $cellHtml = $(Mustache.to_html(priceEventTmp, {
-			id 		: type == 'template' ? generateID() : data.id,
+			id 		: generateID(),
 			title 	: data.title,
 			date 	: data.priceDate,
 			invoiceDate : data.invoiceDate,
+			invoiceDone : false,
 			price 	: data.price,
 			remark 	: data.remark,
 			dateID 	: datePickerID

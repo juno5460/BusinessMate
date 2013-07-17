@@ -76,7 +76,7 @@ $(function(){
 	// var priceEventTmp	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input id='id' type='hidden' value='{{id}}'><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>回款金额：</span><span><input id='price' class='hiddenInput' id='price' value='{{price}}'></span><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remak' class='span12 cellremark' placeholder='请输入备注信息'>{{remark}}</textarea><input type='hidden' id='completed' value={{completed}}></div></div></div>";
 
 	var customEventTmp = "<li id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><i id='delete' class='icon-remove  bigger-120 icon-only'></i></div></div><div class='widget-body'><div id='newBody' class='widget-main'><textarea id='remark' class='span12 cellremark' placeholder='请输入备注信息'>{{remark}}</textarea><input type='hidden' id='completed' value={{completed}}></div></div></li>";
-	var priceEventTmp = "<li id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>完成时间：</span><span><input id='date{{dateID}}'  class='hiddenInput2' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><span class='celltitle'>发票日期：</span><span><input class='hiddenInput2' id='invoiceDate{{dateID}}' data-date-format='yyyy-mm-dd' value='{{invoiceDate}}' readonly='true'><span class='celltitle'>回款金额：</span><span><input id='price' class='hiddenInput2'  value='{{price}}'></span></span><i id='delete' class='icon-remove  bigger-120 icon-only'></i></div></div><div class='widget-body'><div id='newBody' class='widget-main'><textarea id='remark' class='span12 cellremark' placeholder='请输入备注信息'>{{remark}}</textarea><input type='hidden' id='completed' value={{completed}}></div></div></li>";
+	var priceEventTmp = "<li id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>完成时间：</span><span><input id='date{{dateID}}'  class='hiddenInput2' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><span class='celltitle'>发票日期：</span><span><input class='hiddenInput2' id='invoiceDate{{dateID}}' data-date-format='yyyy-mm-dd' value='{{invoiceDate}}' readonly='true'><span class='celltitle'>回款金额：</span><span><input id='price' class='hiddenInput2'  value='{{price}}'></span></span><i id='delete' class='icon-remove  bigger-120 icon-only'></i></div></div><div class='widget-body'><div id='newBody' class='widget-main'><textarea id='remark' class='span12 cellremark' placeholder='请输入备注信息'>{{remark}}</textarea><input type='hidden' id='invoiceDone' value={{invoiceDone}}><input type='hidden' id='completed' value={{completed}}></div></div></li>";
 	//添加自定义事件
 	$("#customEventBtn").click(function(){
 		addCustomEvent(null,'add');
@@ -317,6 +317,7 @@ $(function(){
 			remark 	:data.remark,
 			dateID 	:datePickerID,
 			invoiceDate :data.invoiceDate,
+			invoiceDone :type == 'add' ? false : data.invoiceDone,
 			completed:type == 'add' ? false : data.completed
 		}));
 
@@ -387,6 +388,8 @@ $(function(){
 			$event.completed = $cell.find("#completed").val();
 
 			var $invoiceDate = $cell.find("input[id^='invoiceDate']").val();
+			var $invoiceDone = $cell.find("#invoiceDone").val();
+
 			$event = {
 				'id' 		: $event.id,
 				'type' 		: $event.type,
@@ -400,9 +403,10 @@ $(function(){
 			if ($event.type == 1) {
 
 			} else {
-				$event.invoiceDate = $invoiceDate;
-				$event.date = $invoiceDate;
-				$event.priceDate = $cell.find("input[id^='date']").val();
+				$event.invoiceDate 	= $invoiceDate;
+				$event.date 		= $invoiceDate;
+				$event.priceDate 	= $cell.find("input[id^='date']").val();
+				$event.invoiceDone 	= $invoiceDone;
 			};
 
 			$eventsArray.push($event);
