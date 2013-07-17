@@ -263,7 +263,7 @@ $(function() {
 			} else {
 				$event.invoiceDate = isTemplateMode ? '' : $invoiceDate;
 				$event.date = isTemplateMode ? '' : $invoiceDate;
-				$event.priceDate = isTemplateMode ? '' ? $cell.find("input[id^='date']").val();
+				$event.priceDate = isTemplateMode ? '' : $cell.find("input[id^='date']").val();
 				$event.invoiceDone = false;
 			};
 
@@ -437,17 +437,17 @@ $(function() {
 						}
 					},
 					highlight: function (e) {
-						$(e).closest('.validate_item').removeClass('success').addClass('error');
+						$(e).closest('.control-group').removeClass('success').addClass('error');
 					},
 			
 					success: function (e) {
-						$(e).closest('.validate_item').removeClass('error').addClass('success');
+						$(e).closest('.control-group').removeClass('error').addClass('success');
 						$(e).remove();
 					},
 			
 					errorPlacement: function (error, element) {
 						if(element.is(':checkbox') || element.is(':radio')) {
-							var controls = element.closest('.validate_item');
+							var controls = element.closest('.controls');
 							if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
 							else error.insertAfter(element.nextAll('.lbl').eq(0));
 						} 
