@@ -42,7 +42,7 @@ $(function() {
 					if(!curRatio1)
 						curRatio1 = 0;
 					var easypieRatio1 = "<div style='margin:0px;padding:1px' class='progress' data-percent='"+curRatio1+"%'><div class='bar' style='width:"+curRatio1+"%;'></div></div>";
-					var template1 = "<tr><td class='center span3'>{{name}}</td><td class='hidden-480 center span2'>{{partyA}}</td><td class='hidden-480 center span2'>{{partyB}}</td><td  class='center span1'>{{amount}}</td><td class='center span1'>{{returnAmount}}</td><td class='hidden-phone center span1'>"+easypieRatio1+"</td><td class='hidden-480 center span1'>{{lastReturnDate}}</td></tr>";
+					var template1 = "<tr><td class='center' style='width:200px'>{{name}}</td><td class='hidden-480 center '>{{partyA}}</td><td class='hidden-480 center '>{{partyB}}</td><td  class='center '>{{amount}}</td><td class='center '>{{returnAmount}}</td><td class='hidden-phone center '>"+easypieRatio1+"</td><td class='hidden-480 center '>{{lastReturnDate}}</td></tr>";
 
 					var html1 = Mustache.to_html(template1, t1data);
 					$('#table1').append(html1);

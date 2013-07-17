@@ -29,21 +29,21 @@ $(function() {
 					}  
 
 					var t2data = {
-						name						: contract.name,
-						partyA					: contract.partyA,
-						partyB					: contract.partyB,
-						amount          : contract.amount,
-						returnAmount		: data1.unreturnCount,
-						returnRatio			: data1.unreturnRatio,
-						lastReturnDate	: data1.lastDate,
-						remark					: contract.state
+						name						: 	contract.name,
+						partyA					: 	contract.partyA,
+						partyB					: 	contract.partyB,
+						amount          : 	contract.amount,
+						returnAmount		: 	data1.unreturnCount,
+						returnRatio 		: 	data1.returnRatio,
+						applicantDate  	: 	data1.applicantDate,
+						remark					: 	contract.state
 					};
 
 					var curRatio2 = changeTwoDecimal((t2data.returnRatio)*100);
 					if(!curRatio2)
 						curRatio2 = 0;
 					var easypieRatio2 = "<div style='margin:0px;padding:1px' class='progress' data-percent='"+curRatio2+"%'><div class='bar' style='width:"+curRatio2+"%;'></div></div>";
-					var template2 = "<tr><td class='center span2'>{{name}}</td><td class='hidden-480 center span2'>{{partyA}}</td><td class='hidden-480 center span2'>{{partyB}}</td><td class='center span1'>{{amount}}</td><td  class='center span1'>{{returnAmount}}</td><td class='hidden-phone center span2'>"+easypieRatio2+"</td><td class='hidden-phone center span1'>{{lastReturnDate}}</td><td  class='center span1'>{{remark}}</td></tr>";
+					var template2 = "<tr><td class='center' style='width:200px'>{{name}}</td><td class='hidden-480 center'>{{partyA}}</td><td class='hidden-480 center'>{{partyB}}</td><td class='center'>{{amount}}</td><td  class='center'>{{returnAmount}}</td><td class='hidden-phone center'>"+easypieRatio2+"</td><td class='hidden-phone center'>{{applicantDate}}</td><td  class='center'>{{remark}}</td></tr>";
 
 					var html2 = Mustache.to_html(template2, t2data);
 					$('#table2').append(html2);

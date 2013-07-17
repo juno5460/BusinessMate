@@ -181,9 +181,11 @@ $(function() {
 
 		$.each(data, function(i, contract) {
 
-			var t1, t2, t3, t4, template;
-			t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'>";
-			t2 = "<input type='checkbox' id='" + checkboxId[idIndex] + "'>";
+			//测试回款发票
+			var invoiceDone = false;
+			if (!invoiceDone) {
+
+			}
 
 			//获取代办任务插入模版的数据
 			var tdata = {
@@ -193,18 +195,22 @@ $(function() {
 				date: contract.next.date
 			};
 
+			//合同名称过长则进行省略处理
+			var dataName = tdata.name;
+			if (dataName.length > 8) {
+				dataName = dataName.substring(0, 8) + "...";
+			}
+
+			//定义插入模版
+			var t1, t2, t3, t4, template;
+			t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'>";
+			t2 = "<input type='checkbox' id='" + checkboxId[idIndex] + "'><span class='lbl'><span class='lbl'><a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
+			t4 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label></li></ul>";
+
 			if (contract.next.title == 0) {
 				template = null;
 			} else {
-
-				var dataName = tdata.name;
-				//合同名称过长则进行省略处理
-				if (dataName.length > 8) {
-					dataName = dataName.substring(0, 8) + "...";
-				}
-				t3 = "<span class='lbl'>" + "<span class='lbl'>" + "<a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title + "</a>" + "</span>" + "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver'>" + tdata.date + "</span>";
-				t4 = "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver' title='" + tdata.name + "'>" + "【" + dataName + "】" + "</span>" + "</span></label></li></ul>";
-				template = t1 + t2 + t3 + t4;
+				template = t1 + t2 + t4;
 			}
 
 			$('#taskToFinish').append(template);
@@ -249,6 +255,7 @@ $(function() {
 				tempID = $("#o");
 			else if (tempIDValue == 'p')
 				tempID = $("#p");
+
 			tempID.click(function() {
 
 				var tID = this.id;
@@ -296,16 +303,16 @@ $(function() {
 			}); <!--tempID-->
 		}); <!--each-->
 
-	//对待办任务部分为空的情况进行处理
-			var html = $('#taskToFinish').html();
-			if (html == "") {
-				template = "<div id='blankTask' style='margin-top:100px'><ul class='center' style='font-size:16px'>没有需要待办的任务.</ul></div>";
-				$('#taskToFinish').html(template);
-				return;
-			} else {
-				if($('#blankTask'))
-					$('#blankTask').remove();
-			}
+		//对待办任务部分为空的情况进行处理
+		var html = $('#taskToFinish').html();
+		if (html == "") {
+			template = "<div id='blankTask' style='margin-top:100px'><ul class='center' style='font-size:16px'>没有需要待办的任务.</ul></div>";
+			$('#taskToFinish').html(template);
+			return;
+		} else {
+			if ($('#blankTask'))
+				$('#blankTask').remove();
+		}
 	}); <!--get-->
 
 	//过期任务
@@ -313,15 +320,15 @@ $(function() {
 
 		function isBlank() {
 			//判断是否有过期任务
-				var html = $('#outOfDate').html();
-				if (html == "") {
-					template = "<div id='blankDate' style='margin-top:120px'><ul class='center' style='font-size:16px'>没有过期任务.</ul></div>";
-					$('#outOfDate').html(template);
-					return;
-				} else {
-					if($('#blankDate'))
-						$('#blankDate').remove();
-				}
+			var html = $('#outOfDate').html();
+			if (html == "") {
+				template = "<div id='blankDate' style='margin-top:120px'><ul class='center' style='font-size:16px'>没有过期任务.</ul></div>";
+				$('#outOfDate').html(template);
+				return;
+			} else {
+				if ($('#blankDate'))
+					$('#blankDate').remove();
+			}
 		};
 
 		$.each(data, function(i, contract) {
@@ -338,16 +345,17 @@ $(function() {
 					date: contract.undone[j].date,
 				};
 
-				var dataName = tdata.name;
 				//合同名称过长则进行省略处理
+				var dataName = tdata.name;
 				if (dataName.length > 8) {
 					dataName = dataName.substring(0, 8) + "...";
 				}
-				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex1] + "'><label id='"+contract.undone[j].id+"'class='inline taskcell'>";
-				t2 = "<input type='checkbox' id='" + checkboxId1[idIndex1] + "'>";
-				t3 = "<span class='lbl'>" + "<span class='lbl'>" + "<a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title + "</a>" + "</span>" + "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver'>" + tdata.date + "</span>";
-				t4 = "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver' title='" + tdata.name + "'>" + "【" + dataName + "】" + "</span>" +"<span style='color:red'>*</span>"+ "</span></label></li></ul>";
-				template = t1 + t2 + t3 + t4;
+
+				//定义插入模版
+				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex1] + "'><label id='" + contract.undone[j].id + "'class='inline taskcell'>";
+				t2 = "<input type='checkbox' id='" + checkboxId1[idIndex1] + "'><span class='lbl'><span class='lbl'><a href='/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title + "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>";
+				t4 = "&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span><span style='color:red'>*</span></span></label></li></ul>";
+				template = t1 + t2 + t4;
 				$('#outOfDate').append(template);
 
 				idIndex1++;
@@ -460,16 +468,17 @@ $(function() {
 					date: contract.done[j].date,
 				};
 
-				var dataName = tdata.name;
 				//合同名称过长则进行省略处理
+				var dataName = tdata.name;
 				if (dataName.length > 8) {
 					dataName = dataName.substring(0, 8) + "...";
 				}
-				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex2] + "'><label>";
-				t2 = "<span class='lbl'>" + "<span class='lbl'>" + "<a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title + "</a>" + "</span>" + "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver'>" + tdata.date + "</span>";
-				t3 = "&nbsp;&nbsp;" + "<span class='lbl' style='color:silver' title='" + tdata.name + "'>" + "【" + dataName + "】" + "</span>"+ "</span></label></li></ul>";
-				template = t1 + t2 + t3;
 
+				//定义插入模版
+				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex2] + "'><label>";
+				t2 = "<span class='lbl'><span class='lbl'><a href='/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title + "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>";
+				t3 = "&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label></li></ul>";
+				template = t1 + t2 + t3;
 				$('#isFinished').append(template);
 
 				idIndex2++;
@@ -478,16 +487,16 @@ $(function() {
 			}
 
 		});
-	
-	//判断是否有完成任务
-			var html = $('#isFinished').html();
-			if (html == "") {
-				template = "<div id='blankFinished' style='margin-top:100px'><ul class='center' style='font-size:16px'>没有已完成任务.</ul></div>";
-				$('#isFinished').html(template);
-				return;
-			} else {
-				if($('#blankFinished'))
-					$('#blankFinished').remove();
-			}
+
+		//判断是否有完成任务
+		var html = $('#isFinished').html();
+		if (html == "") {
+			template = "<div id='blankFinished' style='margin-top:100px'><ul class='center' style='font-size:16px'>没有已完成任务.</ul></div>";
+			$('#isFinished').html(template);
+			return;
+		} else {
+			if ($('#blankFinished'))
+				$('#blankFinished').remove();
+		}
 	});
 });
