@@ -181,12 +181,6 @@ $(function() {
 
 		$.each(data, function(i, contract) {
 
-			//测试回款发票
-			var invoiceDone = false;
-			if (!invoiceDone) {
-
-			}
-
 			//获取代办任务插入模版的数据
 			var tdata = {
 				id: contract._id,
@@ -209,6 +203,9 @@ $(function() {
 
 			if (contract.next.title == 0) {
 				template = null;
+			} else if (!contract.next.invoiceDone) {
+				t3 = "<span style='color:red'>开发票</span>";
+				template = t1 + t2 + t3 + t4;
 			} else {
 				template = t1 + t2 + t4;
 			}
@@ -274,7 +271,7 @@ $(function() {
 						isChecked = true;
 						checkValue = true;
 						remark = result;
-						$taskObj.closest('li').addClass('selected');
+						// $taskObj.closest('li').addClass('selected');
 
 						var postData = {
 							_id: contract._id,
@@ -353,13 +350,18 @@ $(function() {
 
 				//定义插入模版
 				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex1] + "'><label id='" + contract.undone[j].id + "'class='inline taskcell'>";
-				t2 = "<input type='checkbox' id='" + checkboxId1[idIndex1] + "'><span class='lbl'><span class='lbl'><a href='/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title + "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>";
-				t4 = "&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span><span style='color:red'>*</span></span></label></li></ul>";
-				template = t1 + t2 + t4;
+				t2 = "<input type='checkbox' id='" + checkboxId1[idIndex1] + "'><span class='lbl'><span class='lbl'><a href='/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
+				t4 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span><span style='color:red'>*</span></span></label></li></ul>";
+				if (!contract.undone[j].invoiceDone) {
+					t3 = "<span style='color:red'>开发票</span>";
+					template = t1 + t2 + t3 + t4;
+				} else
+					template = t1 + t2 + t4;
+
 				$('#outOfDate').append(template);
 
 				idIndex1++;
-				if (idIndex1 >= 16)
+				if (idIndex1 >= 15)
 					idIndex1 = 0;
 
 				var tempIDValue = checkboxId1[idIndex1 - 1];
@@ -476,13 +478,17 @@ $(function() {
 
 				//定义插入模版
 				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex2] + "'><label>";
-				t2 = "<span class='lbl'><span class='lbl'><a href='/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title + "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>";
-				t3 = "&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label></li></ul>";
-				template = t1 + t2 + t3;
+				t2 = "<span class='lbl'><span class='lbl'><a href='/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
+				t4 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label></li></ul>";
+				// if(contract.done[j].completed $$ contract.done[j].invoiceDone) {
+				// 	t3 = "<span style='color:red'>开发票</span>";
+				// 	template = t1 + t2 + t3 + t4;
+				// } else 
+				template = t1 + t2 + t4;
 				$('#isFinished').append(template);
 
 				idIndex2++;
-				if (idIndex2 >= 16)
+				if (idIndex2 >= 15)
 					idIndex2 = 0;
 			}
 
