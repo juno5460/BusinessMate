@@ -33,7 +33,7 @@ $(function() {
 						partyA					: 	contract.partyA,
 						partyB					: 	contract.partyB,
 						amount          : 	contract.amount,
-						returnAmount		: 	data1.unreturnCount,
+						returnAmount		: 	data1.waitCount,
 						returnRatio 		: 	data1.returnRatio,
 						applicantDate  	: 	data1.applicantDate,
 						remark					: 	contract.state
