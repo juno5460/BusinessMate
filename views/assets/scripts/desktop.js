@@ -71,9 +71,9 @@ $(function() {
 		};
 
 		//定义颜色数组
-		var color = new Array("#00CCFF",  "#88FF7A", "#F27AFF", "#FF85FF", "#47FF47", 
-			"#F27AFF", "#FF33CC", "#85FFFF","#FF8FB4", "#8BFF52", "#FF85FF", "#FFF27A",
-			"#FF4747", "#47A3FF", "#FF0066","#4DFF00", "#F27AFF");
+		var color = new Array("#00CCFF",  "#88FF7A", "#F27AFF", "#47FF47", 
+			"#FF0066", "#FF33CC", "#85FFFF","#FF8FB4", "#8BFF52",  "#FFF27A",
+			"#FF4747", "#47A3FF", "#4DFF00","#F63AFF","#F18BDD","#FF85FF");
 
 		var pieData1 = new Array(),
 			pieData2 = new Array();
@@ -110,7 +110,7 @@ $(function() {
 			pieData2.push({
 				label: partyB[i],
 				data: countB,
-				color: color[i + 4]
+				color: color[i + 2]
 			});
 		}
 
