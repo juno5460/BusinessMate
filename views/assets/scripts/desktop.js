@@ -71,9 +71,9 @@ $(function() {
 		};
 
 		//定义颜色数组
-		var color = new Array("#00CCFF", "#4DFF00", "#FF4747", "#47A3FF", "#FF0066",
-			"#FF85FF", "#47FF47", "#FF8FB4", "#8BFF52", "#FF85FF", "#FFF27A",
-			"#F27AFF", "#88FF7A", "#F27AFF", "#F27AFF", "#FF33CC", "#85FFFF");
+		var color = new Array("#00CCFF",  "#88FF7A", "#F27AFF", "#FF85FF", "#47FF47", 
+			"#F27AFF", "#FF33CC", "#85FFFF","#FF8FB4", "#8BFF52", "#FF85FF", "#FFF27A",
+			"#FF4747", "#47A3FF", "#FF0066","#4DFF00", "#F27AFF");
 
 		var pieData1 = new Array(),
 			pieData2 = new Array();
