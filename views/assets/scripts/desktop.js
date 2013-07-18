@@ -11,6 +11,7 @@ $(function() {
 	var checkboxId = new Array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
 		'l', 'm', 'n', 'o', 'p');
 	var idIndex = 0;
+	var dName = new Array('1', '2');
 
 	//为过期任务中添加的每一个checkbox动态添加id
 	var checkboxId1 = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
@@ -71,9 +72,9 @@ $(function() {
 		};
 
 		//定义颜色数组
-		var color = new Array("#00CCFF",  "#88FF7A", "#F27AFF", "#47FF47", 
-			"#FF0066", "#FF33CC", "#85FFFF","#FF8FB4", "#8BFF52",  "#FFF27A",
-			"#FF4747", "#47A3FF", "#4DFF00","#F63AFF","#F18BDD","#FF85FF");
+		var color = new Array("#00CCFF", "#88FF7A", "#F27AFF", "#47FF47",
+			"#FF0066", "#FF33CC", "#85FFFF", "#FF8FB4", "#8BFF52", "#FFF27A",
+			"#FF4747", "#47A3FF", "#4DFF00", "#F63AFF", "#F18BDD", "#FF85FF");
 
 		var pieData1 = new Array(),
 			pieData2 = new Array();
@@ -199,7 +200,7 @@ $(function() {
 			var t1, t2, t3, t4, template;
 			t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'>";
 			t2 = "<input type='checkbox' id='" + checkboxId[idIndex] + "'><span class='lbl'><span class='lbl'><a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
-			t4 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span id='dName' class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label></li></ul>";
+			t4 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span id='" + dName[idIndex] + "' class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label></li></ul>";
 
 			if (contract.next.title == 0) {
 				template = null;
@@ -253,20 +254,29 @@ $(function() {
 			else if (tempIDValue == 'p')
 				tempID = $("#p");
 
+			var dNameIDValue = dName[idIndex - 1];
+			var dNameVal;
+
+			//为了在click checkbox后能得到title，先获得title所在span的ID
+			if (dNameIDValue == '1')
+				dNameVal = $("#1");
+			else if (dNameIDValue == '2')
+				dNameVal = $("#2");
+
+			//获取合同名称、过期事件数组长度及每个事件的标题,并传入到click中
 			var conName = contract.name;
 			var undoneLength = contract.undone.length;
-			tempID.bind('click',{cname:conName,unLen:undoneLength},function(e) {
+			var title = $(dNameVal).attr("title");
+
+			tempID.bind('click', {cname: conName,unLength: undoneLength,til: title}, function(e) {
 
 				//首先判断该合同是否有过期事件
-				var title = tempID.parent().parent().parent().parent().find('#dName').attr('title');
-			
-				if (e.data.cname == title && (e.data.unLen!= 0)) {
-					tempID.click(function() {
-						alert("该合同有过期事件未完成,请先完成!!");
-						return;
-					});
+				if (e.data.cname == title && (e.data.unLength != 0)) {
+
 					tempID.prop("checked", false);
+					alert("该合同有过期事件未完成,请先完成!!");
 					return;
+					
 				} else {
 
 					var tID = this.id;
