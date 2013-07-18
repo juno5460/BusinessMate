@@ -11,7 +11,8 @@ $(function() {
 	var checkboxId = new Array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
 		'l', 'm', 'n', 'o', 'p');
 	var idIndex = 0;
-	var dName = new Array('1', '2');
+	//定义对有过期任务时不能进行下一步处理时设置title所在span的ID
+	var dName = new Array('1', '2','3','4','5','6','7','8','9','10','11','12','13','14','15','16');
 
 	//为过期任务中添加的每一个checkbox动态添加id
 	var checkboxId1 = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
@@ -262,7 +263,35 @@ $(function() {
 				dNameVal = $("#1");
 			else if (dNameIDValue == '2')
 				dNameVal = $("#2");
-
+			else if (dNameIDValue == '3')
+				dNameVal = $("#3");
+			else if (dNameIDValue == '4')
+				dNameVal = $("#4");
+			else if (dNameIDValue == '5')
+				dNameVal = $("#5");
+			else if (dNameIDValue == '6')
+				dNameVal = $("#6");
+			else if (dNameIDValue == '7')
+				dNameVal = $("#7");
+			else if (dNameIDValue == '8')
+				dNameVal = $("#8");
+			else if (dNameIDValue == '9')
+				dNameVal = $("#9");
+			else if (dNameIDValue == '10')
+				dNameVal = $("#10");
+			else if (dNameIDValue == '11')
+				dNameVal = $("#11");
+			else if (dNameIDValue == '12')
+				dNameVal = $("#12");
+			else if (dNameIDValue == '13')
+				dNameVal = $("#13");
+			else if (dNameIDValue == '14')
+				dNameVal = $("#14");
+			else if (dNameIDValue == '15')
+				dNameVal = $("#15");
+			else if (dNameIDValue == '16')
+				dNameVal = $("#16");
+		
 			//获取合同名称、过期事件数组长度及每个事件的标题,并传入到click中
 			var conName = contract.name;
 			var undoneLength = contract.undone.length;
@@ -276,7 +305,7 @@ $(function() {
 					tempID.prop("checked", false);
 					alert("该合同有过期事件未完成,请先完成!!");
 					return;
-					
+
 				} else {
 
 					var tID = this.id;
