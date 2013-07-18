@@ -5,14 +5,10 @@ $(function() {
 	var contractsCount = 0;
 	var isChecked = false;
 
-	//代办任务初始化变量
-
 	//为代办任务中添加的每一个checkbox动态添加id
 	var checkboxId = new Array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
 		'l', 'm', 'n', 'o', 'p');
 	var idIndex = 0;
-	//定义对有过期任务时不能进行下一步处理时设置title所在span的ID
-	var dName = new Array('1', '2','3','4','5','6','7','8','9','10','11','12','13','14','15','16');
 
 	//为过期任务中添加的每一个checkbox动态添加id
 	var checkboxId1 = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
@@ -150,7 +146,7 @@ $(function() {
 
 	});
 
-
+	//格式化日期函数
 	Date.prototype.format = function(format) {
 		/* 
 		 * eg:format="yyyy-MM-dd hh:mm:ss";
@@ -162,8 +158,7 @@ $(function() {
 			"m+": this.getMinutes(), // minute  
 			"s+": this.getSeconds(), // second  
 			"q+": Math.floor((this.getMonth() + 3) / 3), // quarter  
-			"S": this.getMilliseconds()
-			// millisecond  
+			"S": this.getMilliseconds() // millisecond  
 		}
 
 		if (/(y+)/.test(format)) {
@@ -201,7 +196,7 @@ $(function() {
 			var t1, t2, t3, t4, template;
 			t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'>";
 			t2 = "<input type='checkbox' id='" + checkboxId[idIndex] + "'><span class='lbl'><span class='lbl'><a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
-			t4 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span id='" + dName[idIndex] + "' class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label></li></ul>";
+			t4 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label></li></ul>";
 
 			if (contract.next.title == 0) {
 				template = null;
@@ -255,102 +250,51 @@ $(function() {
 			else if (tempIDValue == 'p')
 				tempID = $("#p");
 
-			var dNameIDValue = dName[idIndex - 1];
-			var dNameVal;
+			tempID.bind('click', function() {
 
-			//为了在click checkbox后能得到title，先获得title所在span的ID
-			if (dNameIDValue == '1')
-				dNameVal = $("#1");
-			else if (dNameIDValue == '2')
-				dNameVal = $("#2");
-			else if (dNameIDValue == '3')
-				dNameVal = $("#3");
-			else if (dNameIDValue == '4')
-				dNameVal = $("#4");
-			else if (dNameIDValue == '5')
-				dNameVal = $("#5");
-			else if (dNameIDValue == '6')
-				dNameVal = $("#6");
-			else if (dNameIDValue == '7')
-				dNameVal = $("#7");
-			else if (dNameIDValue == '8')
-				dNameVal = $("#8");
-			else if (dNameIDValue == '9')
-				dNameVal = $("#9");
-			else if (dNameIDValue == '10')
-				dNameVal = $("#10");
-			else if (dNameIDValue == '11')
-				dNameVal = $("#11");
-			else if (dNameIDValue == '12')
-				dNameVal = $("#12");
-			else if (dNameIDValue == '13')
-				dNameVal = $("#13");
-			else if (dNameIDValue == '14')
-				dNameVal = $("#14");
-			else if (dNameIDValue == '15')
-				dNameVal = $("#15");
-			else if (dNameIDValue == '16')
-				dNameVal = $("#16");
-		
-			//获取合同名称、过期事件数组长度及每个事件的标题,并传入到click中
-			var conName = contract.name;
-			var undoneLength = contract.undone.length;
-			var title = $(dNameVal).attr("title");
+				var tID = this.id;
+				var dom = document.getElementById(tID);
+				var checkValue = dom.checked;
+				var remark = null;
+				var $taskObj = $(this);
 
-			tempID.bind('click', {cname: conName,unLength: undoneLength,til: title}, function(e) {
+				if (checkValue) {
+					bootbox.prompt("提示（备注信息）", function(result) {
+						if (result == null) {
+							$taskObj.prop("checked", false);
+							return;
+						}
 
-				//首先判断该合同是否有过期事件
-				if (e.data.cname == title && (e.data.unLength != 0)) {
+						isChecked = true;
+						checkValue = true;
+						remark = result;
+						// $taskObj.closest('li').addClass('selected');
 
-					tempID.prop("checked", false);
-					alert("该合同有过期事件未完成,请先完成!!");
-					return;
-
-				} else {
-
-					var tID = this.id;
-					var dom = document.getElementById(tID);
-					var checkValue = dom.checked;
-					var remark = null;
-					var $taskObj = $(this);
-
-					if (checkValue) {
-						bootbox.prompt("提示（备注信息）", function(result) {
-							if (result == null) {
-								$taskObj.prop("checked", false);
-								return;
+						var postData = {
+							_id: contract._id,
+							id: contract.next.id,
+							title: tdata.title,
+							completed: checkValue,
+							remark: remark
+						};
+						// console.info(postData);
+						console.info(contract.next.id);
+						$.ajax({
+							url: '/api/tasks/' + contract.next.id,
+							type: 'put',
+							data: postData,
+							error: function() {
+								console.info('error');
+							},
+							success: function(result) {
+								console.info("success");
 							}
+						});
+						$taskObj.prop("checked", true);
+						parent.location.reload();
+					}); <!--bootbox-->
+				} <!--if-->
 
-							isChecked = true;
-							checkValue = true;
-							remark = result;
-							// $taskObj.closest('li').addClass('selected');
-
-							var postData = {
-								_id: contract._id,
-								id: contract.next.id,
-								title: tdata.title,
-								completed: checkValue,
-								remark: remark
-							};
-							// console.info(postData);
-							console.info(contract.next.id);
-							$.ajax({
-								url: '/api/tasks/' + contract.next.id,
-								type: 'put',
-								data: postData,
-								error: function() {
-									console.info('error');
-								},
-								success: function(result) {
-									console.info("success");
-								}
-							});
-							$taskObj.prop("checked", true);
-							parent.location.reload();
-						}); <!--bootbox-->
-					} <!--if-->
-				}
 			}); <!--tempID-->
 		}); <!--each-->
 
@@ -369,8 +313,8 @@ $(function() {
 	//过期任务
 	$.get("/api/tasks", function(data, status) {
 
+		//判断是否有过期任务
 		function isBlank() {
-			//判断是否有过期任务
 			var html = $('#outOfDate').html();
 			if (html == "") {
 				template = "<div id='blankDate' style='margin-top:120px'><ul class='center' style='font-size:16px'>没有过期任务.</ul></div>";
@@ -473,7 +417,7 @@ $(function() {
 							isChecked = true;
 							checkValue = true;
 							remark = result;
-							$taskObj.closest('li').addClass('selected');
+							// $taskObj.closest('li').addClass('selected');
 							var undoneID = $taskObj.parent().attr('id');
 							var postData = {
 								_id: contract._id,
@@ -492,11 +436,15 @@ $(function() {
 								},
 								success: function(result) {
 									console.info("success");
+									$taskObj.prop("checked", true);
+									$taskObj.parent().parent().parent().remove();
+									parent.location.reload();
 								}
 							});
-							$taskObj.prop("checked", true);
-							$taskObj.parent().parent().parent().remove();
-							parent.location.reload();
+
+							// $("#waitToDo").removeClass("active");
+							// $("#outDate").addClass("active");
+
 							isBlank();
 						}); <!--bootbox-->
 
