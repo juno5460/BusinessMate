@@ -199,7 +199,7 @@ $(function() {
 			var t1, t2, t3, t4, template;
 			t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'>";
 			t2 = "<input type='checkbox' id='" + checkboxId[idIndex] + "'><span class='lbl'><span class='lbl'><a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
-			t4 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label></li></ul>";
+			t4 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span id='dName' class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label></li></ul>";
 
 			if (contract.next.title == 0) {
 				template = null;
@@ -253,50 +253,65 @@ $(function() {
 			else if (tempIDValue == 'p')
 				tempID = $("#p");
 
-			tempID.click(function() {
+			var conName = contract.name;
+			var undoneLength = contract.undone.length;
+			tempID.bind('click',{cname:conName,unLen:undoneLength},function(e) {
 
-				var tID = this.id;
-				var dom = document.getElementById(tID);
-				var checkValue = dom.checked;
-				var remark = null;
-				var $taskObj = $(this);
+				//首先判断该合同是否有过期事件
+				var title = tempID.parent().parent().parent().parent().find('#dName').attr('title');
+			
+				if (e.data.cname == title && (e.data.unLen!= 0)) {
+					tempID.click(function() {
+						alert("该合同有过期事件未完成,请先完成!!");
+						return;
+					});
+					tempID.prop("checked", false);
+					return;
+				} else {
 
-				if (checkValue) {
-					bootbox.prompt("提示（备注信息）", function(result) {
-						if (result == null) {
-							$taskObj.prop("checked", false);
-							return;
-						}
+					var tID = this.id;
+					var dom = document.getElementById(tID);
+					var checkValue = dom.checked;
+					var remark = null;
+					var $taskObj = $(this);
 
-						isChecked = true;
-						checkValue = true;
-						remark = result;
-						// $taskObj.closest('li').addClass('selected');
-
-						var postData = {
-							_id: contract._id,
-							id: contract.next.id,
-							title: tdata.title,
-							completed: checkValue,
-							remark: remark
-						};
-						// console.info(postData);
-						console.info(contract.next.id);
-						$.ajax({
-							url: '/api/tasks/' + contract.next.id,
-							type: 'put',
-							data: postData,
-							error: function() {
-								console.info('error');
-							},
-							success: function(result) {
-								console.info("success");
+					if (checkValue) {
+						bootbox.prompt("提示（备注信息）", function(result) {
+							if (result == null) {
+								$taskObj.prop("checked", false);
+								return;
 							}
-						});
-						$taskObj.prop("checked", true);
-						parent.location.reload();
-					}); <!--bootbox-->
-				} <!--if-->
+
+							isChecked = true;
+							checkValue = true;
+							remark = result;
+							// $taskObj.closest('li').addClass('selected');
+
+							var postData = {
+								_id: contract._id,
+								id: contract.next.id,
+								title: tdata.title,
+								completed: checkValue,
+								remark: remark
+							};
+							// console.info(postData);
+							console.info(contract.next.id);
+							$.ajax({
+								url: '/api/tasks/' + contract.next.id,
+								type: 'put',
+								data: postData,
+								error: function() {
+									console.info('error');
+								},
+								success: function(result) {
+									console.info("success");
+								}
+							});
+							$taskObj.prop("checked", true);
+							parent.location.reload();
+						}); <!--bootbox-->
+					} <!--if-->
+				}
 			}); <!--tempID-->
 		}); <!--each-->
 
@@ -465,11 +480,11 @@ $(function() {
 
 				//获取代办任务插入模版的数据
 				var tdata = {
-					id 										: contract._id,
-					name 								: contract.name,
-					title 							: contract.done[j].title,
-					date 								: contract.done[j].date,
-					invoiceDate	: contract.done[j].invoiceDate
+					id: contract._id,
+					name: contract.name,
+					title: contract.done[j].title,
+					date: contract.done[j].date,
+					invoiceDate: contract.done[j].invoiceDate
 				};
 
 				//合同名称过长则进行省略处理
