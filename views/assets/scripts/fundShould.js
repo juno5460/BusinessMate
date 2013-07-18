@@ -32,8 +32,8 @@ $(function() {
 						name				: 	contract.name,
 						partyA			: 	contract.partyA,
 						partyB			: 	contract.partyB,
-						amount      : 	contract.amount,
-						returnAmount: 	data1.oneAllCount,
+						amount      : 	data1.oneAllCount,
+						returnAmount: 	data1.unreturnCount,
 						returnRatio : 	data1.returnRatio,
 						remark	    : 	contract.state
 					};
