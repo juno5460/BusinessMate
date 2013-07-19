@@ -176,126 +176,116 @@ $(function() {
 	//代办任务
 	$.get("/api/tasks", function(data, status) {
 
+		var ulIndex = -1; //ul标签索引，根据它可以find到checkbox，进而添加click
+		var t1, t2, t3, template;
+		var zeroTitle; //title是否为零标识，以此作为合同结束标志
+		var remark = ''; //备注信息
+
 		$.each(data, function(i, contract) {
 
-			//获取代办任务插入模版的数据
-			var tdata = {
-				id: contract._id,
-				name: contract.name,
-				title: contract.next.title,
-				date: contract.next.date
+			var templateModel = function(contract) {
+
+				zeroTitle = false;
+
+				//获取代办任务插入模版的数据
+				var tdata = {
+					id: contract._id,
+					name: contract.name,
+					title: contract.next.title,
+					date: contract.next.date
+				};
+
+				//合同名称过长则进行省略处理
+				var dataName = tdata.name;
+				if (dataName.length > 8) {
+					dataName = dataName.substring(0, 8) + "...";
+				}
+
+				//定义插入模版
+				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'><input type='checkbox'><span class='lbl'><span class='lbl'><a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
+				t3 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label><div class='pull-right'><button class='btn btn-mini btn-info'><i class='icon-edit bigger-123'></i></button></div></li></ul>";
+
+				if (contract.next.title == 0) {
+					template = null;
+					zeroTitle = true;
+				} else if (!contract.next.invoiceDone && contract.next.price > 0) {
+					t2 = "<span style='color:red'>开发票</span>";
+					template = t1 + t2 + t3;
+					ulIndex++;
+				} else {
+					template = t1 + t3;
+					ulIndex++;
+				}
+
+				idIndex++;
+				if (idIndex >= 15)
+					idIndex = 0;
 			};
 
-			//合同名称过长则进行省略处理
-			var dataName = tdata.name;
-			if (dataName.length > 8) {
-				dataName = dataName.substring(0, 8) + "...";
-			}
+			var bindModel = function(ulIndex, contract) {
 
-			//定义插入模版
-			var t1, t2, t3, t4, template;
-			t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'>";
-			t2 = "<input type='checkbox' id='" + checkboxId[idIndex] + "'><span class='lbl'><span class='lbl'><a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
-			t4 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label></li></ul>";
-
-			if (contract.next.title == 0) {
-				template = null;
-			} else if (!contract.next.invoiceDone && contract.next.price > 0) {
-				t3 = "<span style='color:red'>开发票</span>";
-				template = t1 + t2 + t3 + t4;
-			} else {
-				template = t1 + t2 + t4;
-			}
-
-			$('#taskToFinish').append(template);
-
-			idIndex++;
-			if (idIndex >= 15)
-				idIndex = 0;
-
-			var tempIDValue = checkboxId[idIndex - 1];
-			var tempID;
-
-			//获取当前插入的代办任务中checkbox的id
-			if (tempIDValue == 'a')
-				tempID = $("#a");
-			else if (tempIDValue == 'b')
-				tempID = $("#b");
-			else if (tempIDValue == 'c')
-				tempID = $("#c");
-			else if (tempIDValue == 'd')
-				tempID = $("#d");
-			else if (tempIDValue == 'e')
-				tempID = $("#e");
-			else if (tempIDValue == 'f')
-				tempID = $("#f");
-			else if (tempIDValue == 'g')
-				tempID = $("#g");
-			else if (tempIDValue == 'h')
-				tempID = $("#h");
-			else if (tempIDValue == 'i')
-				tempID = $("#i");
-			else if (tempIDValue == 'j')
-				tempID = $("#j");
-			else if (tempIDValue == 'k')
-				tempID = $("#k");
-			else if (tempIDValue == 'l')
-				tempID = $("#l");
-			else if (tempIDValue == 'm')
-				tempID = $("#m");
-			else if (tempIDValue == 'n')
-				tempID = $("#n");
-			else if (tempIDValue == 'o')
-				tempID = $("#o");
-			else if (tempIDValue == 'p')
-				tempID = $("#p");
-
-			tempID.bind('click', function() {
-
-				var tID = this.id;
-				var dom = document.getElementById(tID);
-				var checkValue = dom.checked;
-				var remark = null;
-				var $taskObj = $(this);
-
-				if (checkValue) {
-					bootbox.prompt("提示（备注信息）", function(result) {
-						if (result == null) {
-							$taskObj.prop("checked", false);
+				var $buttonElement = $("#taskToFinish ul:eq(" + ulIndex + ")").find('button');
+				$buttonElement.click(function() {
+					bootbox.prompt("提示（填写备注信息）", function(result) {
+						if (result == null)
 							return;
-						}
 
-						isChecked = true;
-						checkValue = true;
 						remark = result;
-						// $taskObj.closest('li').addClass('selected');
+					});
+				});
 
-						var postData = {
-							_id: contract._id,
-							id: contract.next.id,
-							title: tdata.title,
-							completed: checkValue,
-							remark: remark
-						};
-						// console.info(postData);
-						console.info(contract.next.id);
-						$.ajax({
-							url: '/api/tasks/' + contract.next.id,
-							type: 'put',
-							data: postData,
-							error: function() {
-								console.info('error');
-							},
-							success: function(result) {
-								console.info("success");
-							}
-						});
-						$taskObj.prop("checked", true);
-						parent.location.reload();
-					}); <!--bootbox-->
-				} <!--if-->
+				var $inputElement = $("#taskToFinish ul:eq(" + ulIndex + ")").find('input');
+				$inputElement.bind('click', {
+					con: contract,
+					uI: ulIndex
+				}, function(e) {
+					var $tempObj = $(this);
+					var tempName = e.data.con.name;
+					var checkValue = true;
 
-			}); <!--tempID-->
+					var postData = {
+						_id: e.data.con._id,
+						id: e.data.con.next.id,
+						title: e.data.con.next.title,
+						completed: checkValue,
+						remark: remark
+					};
+					console.info(postData.remark);
+					$.ajax({
+						url: '/api/tasks/' + e.data.con.next.id,
+						type: 'put',
+						data: postData,
+						error: function() {
+							console.info('error');
+						},
+						success: function(result) {
+							$.get("/api/tasks", function(data, status) {
+
+								$.each(data, function(i, contract) {
+
+									if (contract.name == tempName) {
+
+										templateModel(contract);
+										console.info(zeroTitle);
+										if (zeroTitle) {
+											$tempObj.parent().parent().parent().remove();
+										} else {
+											$tempObj.parent().parent().parent().fadeOut(2000);
+											$tempObj.parent().parent().parent().replaceWith(template);
+											bindModel(e.data.uI, contract);
+										}
+									}
+								});
+							});
+						}
+					});
+				});
+			};
+
+			templateModel(contract);
+			$('#taskToFinish').append(template);
+			bindModel(ulIndex, contract);
+
 		}); <!--each-->
 
 		//对待办任务部分为空的情况进行处理
@@ -313,7 +303,13 @@ $(function() {
 	//过期任务
 	$.get("/api/tasks", function(data, status) {
 
+		var ulIndex = -1; //ul标签索引，根据它可以find到checkbox，进而添加click
+		var t1, t2, t3, template;
+		var remark = ''; //备注信息
+		var idIndex = 0;
+
 		//判断是否有过期任务
+
 		function isBlank() {
 			var html = $('#outOfDate').html();
 			if (html == "") {
@@ -328,9 +324,7 @@ $(function() {
 
 		$.each(data, function(i, contract) {
 
-			var t1, t2, t3, t4, template;
-
-			for (var j = 0; j < contract.undone.length; j++) {
+			var templateModel = function(contract, j) {
 
 				//获取代办任务插入模版的数据
 				var tdata = {
@@ -347,109 +341,71 @@ $(function() {
 				}
 
 				//定义插入模版
-				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex1] + "'><label id='" + contract.undone[j].id + "'class='inline taskcell'>";
-				t2 = "<input type='checkbox' id='" + checkboxId1[idIndex1] + "'><span class='lbl'><span class='lbl'><a href='/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
-				t4 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span><span style='color:red'>*</span></span></label></li></ul>";
+				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label id='" + contract.undone[j].id + "'class='inline taskcell'><input type='checkbox'><span class='lbl'><span class='lbl'><a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
+				t3 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label><div class='pull-right'><button class='btn btn-mini btn-info'><i class='icon-edit bigger-123'></i></button></div></li></ul>";
+
 				if (!contract.undone[j].invoiceDone) {
-					t3 = "<span style='color:red'>开发票</span>";
-					template = t1 + t2 + t3 + t4;
+					t2 = "<span style='color:red'>开发票</span>";
+					template = t1 + t2 + t3;
 				} else
-					template = t1 + t2 + t4;
+					template = t1 + t3;
 
+				ulIndex++;
+
+				idIndex++;
+				if (idIndex >= 15)
+					idIndex = 0;
+			};
+
+			var bindModel = function(ulIndex, contract, j) {
+
+				var $buttonElement = $("#outOfDate ul:eq(" + ulIndex + ")").find('button');
+				$buttonElement.click(function() {
+					bootbox.prompt("提示（填写备注信息）", function(result) {
+						if (result == null)
+							return;
+
+						remark = result;
+					});
+				});
+
+				var $inputElement = $("#outOfDate ul:eq(" + ulIndex + ")").find('input');
+				$inputElement.bind('click', {
+					con: contract
+				}, function(e) {
+					var $tempObj = $(this);
+					var tempName = e.data.con.name;
+					var checkValue = true;
+					var undoneID = $tempObj.parent().attr('id');
+
+					var postData = {
+						_id: e.data.con._id,
+						id: undoneID,
+						title: e.data.con.undone[j].title,
+						completed: checkValue,
+						remark: remark
+					};
+
+					$.ajax({
+						url: '/api/tasks/' + undoneID,
+						type: 'put',
+						data: postData,
+						error: function() {
+							console.info('error');
+						},
+						success: function(result) {
+							$tempObj.parent().parent().parent().remove();
+						}
+					});
+				});
+			};
+
+			for (var j = 0; j < contract.undone.length; j++) {
+
+				templateModel(contract, j);
 				$('#outOfDate').append(template);
+				bindModel(ulIndex, contract, j);
 
-				idIndex1++;
-				if (idIndex1 >= 15)
-					idIndex1 = 0;
-
-				var tempIDValue = checkboxId1[idIndex1 - 1];
-				var tempID;
-
-				//获取当前插入的代办任务中checkbox的id
-				if (tempIDValue == 'A')
-					tempID = $("#A");
-				else if (tempIDValue == 'B')
-					tempID = $("#B");
-				else if (tempIDValue == 'C')
-					tempID = $("#C");
-				else if (tempIDValue == 'D')
-					tempID = $("#D");
-				else if (tempIDValue == 'E')
-					tempID = $("#E");
-				else if (tempIDValue == 'F')
-					tempID = $("#F");
-				else if (tempIDValue == 'G')
-					tempID = $("#G");
-				else if (tempIDValue == 'H')
-					tempID = $("#H");
-				else if (tempIDValue == 'I')
-					tempID = $("#I");
-				else if (tempIDValue == 'J')
-					tempID = $("#J");
-				else if (tempIDValue == 'K')
-					tempID = $("#K");
-				else if (tempIDValue == 'L')
-					tempID = $("#L");
-				else if (tempIDValue == 'M')
-					tempID = $("#M");
-				else if (tempIDValue == 'N')
-					tempID = $("#N");
-				else if (tempIDValue == 'O')
-					tempID = $("#O");
-				else if (tempIDValue == 'P')
-					tempID = $("#P");
-
-				tempID.click(function() {
-
-					var tID = this.id;
-					var dom = document.getElementById(tID);
-					var checkValue = dom.checked;
-					var remark = null;
-					var $taskObj = $(this);
-
-					if (checkValue) {
-						bootbox.prompt("提示（备注信息）", function(result) {
-							if (result == null) {
-								$taskObj.prop("checked", false);
-								return;
-							}
-
-							isChecked = true;
-							checkValue = true;
-							remark = result;
-							// $taskObj.closest('li').addClass('selected');
-							var undoneID = $taskObj.parent().attr('id');
-							var postData = {
-								_id: contract._id,
-								id: undoneID,
-								title: tdata.title,
-								completed: checkValue,
-								remark: remark
-							};
-							// console.info(postData);
-							$.ajax({
-								url: '/api/tasks/' + undoneID,
-								type: 'put',
-								data: postData,
-								error: function() {
-									console.info('error');
-								},
-								success: function(result) {
-									console.info("success");
-									$taskObj.prop("checked", true);
-									$taskObj.parent().parent().parent().remove();
-									parent.location.reload();
-								}
-							});
-
-							// $("#waitToDo").removeClass("active");
-							// $("#outDate").addClass("active");
-
-							isBlank();
-						}); <!--bootbox-->
-
-					} <!--if-->
-				}); <!--tempID-->
 			}
 		}); <!--each-->
 
@@ -461,7 +417,7 @@ $(function() {
 
 		$.each(data, function(i, contract) {
 
-			var t1, t2, t3, template;
+			var t1, t2, template;
 
 			for (var j = 0; j < contract.done.length; j++) {
 
@@ -481,15 +437,10 @@ $(function() {
 				}
 
 				//定义插入模版
-				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex2] + "'><label>";
-				t2 = "<span class='lbl'><span class='lbl'><a href='/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
-				t4 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label></li></ul>";
-				// if(contract.done[j].completed && contract.done[j].invoiceDone) {
-				// 	t3 = "<span style='color:red'>开发票</span>";
-				// 	t4 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.invoiceDate + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label></li></ul>";
-				// 	template = t1 + t2 + t3 + t4;
-				// } else 
-				template = t1 + t2 + t4;
+				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex2] + "'><label><span class='lbl'><span class='lbl'><a href='/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
+				t2 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label></li></ul>";
+				
+				template = t1 + t2;
 				$('#isFinished').append(template);
 
 				idIndex2++;
