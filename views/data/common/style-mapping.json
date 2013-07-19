@@ -19,5 +19,7 @@
 
  "prettify" : "prettify.css",
 
- "datepicker" : "datepicker.css"
+ "datepicker" : "datepicker.css",
+
+ "uploadify" : "uploadify.css"
 }

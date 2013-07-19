@@ -29,6 +29,15 @@ $(function(){
 		$('#endPicker').blur();
 	});
 
+	$('#file_upload').uploadify({
+				'attachParms'     : {
+					'contractId' : '10001',
+					'fileName'   : '123.doc'
+				},
+				'swf'      : '/assets/img/uploadify.swf',
+				'uploader' : '/upload'
+			});
+
 	//初始化弹出框样式
 	$._messengerDefaults = {
 	extraClasses: 'messenger-fixed messenger-theme-block messenger-on-bottom'

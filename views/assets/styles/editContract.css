@@ -226,3 +226,11 @@
 		.validate_item{
 			display: inline-block;
 		}
+
+		.form-horizontal .control-group{
+			margin-bottom: 5px;
+		}
+
+		.contract-form {
+			margin-top: 10px;
+		}
