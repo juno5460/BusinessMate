@@ -224,15 +224,15 @@ $(function() {
 
 			var bindModel = function(ulIndex, contract) {
 
-				var $buttonElement = $("#taskToFinish ul:eq(" + ulIndex + ")").find('button');
-				$buttonElement.click(function() {
-					bootbox.prompt("提示（填写备注信息）", function(result) {
-						if (result == null)
-							return;
+				// var $buttonElement = $("#taskToFinish ul:eq(" + ulIndex + ")").find('button');
+				// $buttonElement.click(function() {
+				// 	bootbox.prompt("提示（填写备注信息）", function(result) {
+				// 		if (result == null)
+				// 			return;
 
-						remark = result;
-					});
-				});
+				// 		remark = result;
+				// 	});
+				// });
 
 				var $inputElement = $("#taskToFinish ul:eq(" + ulIndex + ")").find('input');
 				$inputElement.bind('click', {
@@ -359,15 +359,15 @@ $(function() {
 
 			var bindModel = function(ulIndex, contract, j) {
 
-				var $buttonElement = $("#outOfDate ul:eq(" + ulIndex + ")").find('button');
-				$buttonElement.click(function() {
-					bootbox.prompt("提示（填写备注信息）", function(result) {
-						if (result == null)
-							return;
+				// var $buttonElement = $("#outOfDate ul:eq(" + ulIndex + ")").find('button');
+				// $buttonElement.click(function() {
+				// 	bootbox.prompt("提示（填写备注信息）", function(result) {
+				// 		if (result == null)
+				// 			return;
 
-						remark = result;
-					});
-				});
+				// 		remark = result;
+				// 	});
+				// });
 
 				var $inputElement = $("#outOfDate ul:eq(" + ulIndex + ")").find('input');
 				$inputElement.bind('click', {
