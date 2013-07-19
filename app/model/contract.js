@@ -385,10 +385,10 @@ ContractSchema.methods = {
 				getData = {
 					"applicantDate": applicantDate, //发票申请时间
 					"lastDate": lastDate, //上次回款日期
-					"waitCount": waitCount, //待回款
+					"waitCount": waitCount, //待收款=开了申请发票的回款金额
 					"oneAllCount": allCount, //该合同总金额
 					"returnCount": count, //已回款
-					"unreturnCount": allCount - count, //应回款
+					"unreturnCount": allCount - count - waitCount, //应回款=总金额-已回款-待收款
 					"returnRatio": parseFloat(count / allCount), //已回款比率
 					"unreturnRatio": parseFloat((allCount - count) / allCount) //未回款比率
 				};
