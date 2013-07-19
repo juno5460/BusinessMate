@@ -73,3 +73,10 @@ height: 20px;
 .row-date{
 	width: 70px;
 }
+
+//附件列表CSS
+
+.attachment_box{
+	border: 1px solid #d5d5d5;
+	
+}

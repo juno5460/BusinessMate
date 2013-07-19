@@ -29,6 +29,19 @@ $(function(){
 		$('#endPicker').blur();
 	});
 
+	$('#file_upload').uploadifive({
+				'formData'     : {
+					'contractId' : '10001',
+				},
+				'uploader' : '/upload',
+				'buttonClass' : 'btn btn-small',
+				'buttonText' : '上传附件',
+				'auto' : 'true',
+				'onUploadFile' : function(file) {
+
+        }
+			});
+
 	//初始化弹出框样式
 	$._messengerDefaults = {
 	extraClasses: 'messenger-fixed messenger-theme-block messenger-on-bottom'

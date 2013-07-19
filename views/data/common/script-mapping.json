@@ -63,5 +63,7 @@
 
  "underscore" : "underscore-min.js",
 
- "common" : "common/common.js"
+ "common" : "common/common.js",
+
+ "uploadifive" : "jquery.uploadifive.min.js"
 }
