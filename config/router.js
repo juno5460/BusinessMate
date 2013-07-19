@@ -63,7 +63,7 @@ module.exports = function(app, passport, auth) {
 
 	app.post('/upload', files.upload);
 
-	//app.get('/upload', files.upload);
+	app.get('/test', files.test);
 
 	app.get('/download', files.download);
 	////////////用户 接口
