@@ -65,5 +65,5 @@
 
  "common" : "common/common.js",
 
- "uploadify" : "jquery.uploadify.min.js"
+ "uploadifive" : "jquery.uploadifive.min.js"
 }

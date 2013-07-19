@@ -29,13 +29,17 @@ $(function(){
 		$('#endPicker').blur();
 	});
 
-	$('#file_upload').uploadify({
-				'attachParms'     : {
+	$('#file_upload').uploadifive({
+				'formData'     : {
 					'contractId' : '10001',
-					'fileName'   : '123.doc'
 				},
-				'swf'      : '/assets/img/uploadify.swf',
-				'uploader' : '/upload'
+				'uploader' : '/upload',
+				'buttonClass' : 'btn btn-small',
+				'buttonText' : '上传附件',
+				'auto' : 'true',
+				'onUploadFile' : function(file) {
+
+        }
 			});
 
 	//初始化弹出框样式
