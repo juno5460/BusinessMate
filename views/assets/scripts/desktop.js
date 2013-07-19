@@ -5,17 +5,8 @@ $(function() {
 	var contractsCount = 0;
 	var isChecked = false;
 
-	//为代办任务中添加的每一个checkbox动态添加id
-	var checkboxId = new Array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
-		'l', 'm', 'n', 'o', 'p');
 	var idIndex = 0;
-
-	//为过期任务中添加的每一个checkbox动态添加id
-	var checkboxId1 = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
-		'L', 'M', 'N', 'O', 'P');
 	var idIndex1 = 0;
-
-	//已完成任务索引
 	var idIndex2 = 0;
 
 	var liColor = new Array('item-orange', 'item-red', 'item-default', 'item-blue',
@@ -42,7 +33,7 @@ $(function() {
 						width: 2
 					},
 					// startAngle: 2,
-					radius: 100,
+					radius: 70,
 					label: {
 						show: true,
 						radius: 1,
@@ -60,7 +51,7 @@ $(function() {
 				show: true,
 				position: "ne",
 				labelBoxBorderColor: null,
-				margin: [-40, 50]
+				margin: [0, 20]
 			},
 			grid: {
 				hoverable: true,
@@ -124,8 +115,9 @@ $(function() {
 		}
 
 		var placeholder1 = $('#placeholder1').css({
-			'width': '90%',
-			'min-height': '150px'
+			'width': '40%',
+			'min-height': '150px',
+			'margin-left': '30px'
 		});
 		$.plot(placeholder1, pieData1, optionPie);
 		placeholder1.bind("plotclick", function(event, pos, obj) {
@@ -134,15 +126,21 @@ $(function() {
 		});
 
 		var placeholder2 = $('#placeholder2').css({
-			'width': '90%',
+			'width': '40%',
 			'min-height': '150px',
-			'margin-left': '10px'
+			'margin-left': '30px'
 		});
 		$.plot(placeholder2, pieData2, optionPie);
 		placeholder2.bind("plotclick", function(event, pos, obj) {
 			var labelName = obj.series.label;
 			window.location.href = "/desktop" + '/' + stringToHex(labelName);
 		});
+
+		var placeholder3 = $('#placeholder3').css({
+			'width': '90%',
+			'min-height': '150px'
+		});
+		$.plot(placeholder3, pieData2, optionPie);
 
 	});
 
@@ -180,6 +178,7 @@ $(function() {
 		var t1, t2, t3, template;
 		var zeroTitle; //title是否为零标识，以此作为合同结束标志
 		var remark = ''; //备注信息
+		var taskIsBland = false;
 
 		$.each(data, function(i, contract) {
 
@@ -217,6 +216,8 @@ $(function() {
 					ulIndex++;
 				}
 
+				if (taskIsBland)
+					ulIndex--;
 				idIndex++;
 				if (idIndex >= 15)
 					idIndex = 0;
@@ -250,7 +251,7 @@ $(function() {
 						completed: checkValue,
 						remark: remark
 					};
-					console.info(postData.remark);
+
 					$.ajax({
 						url: '/api/tasks/' + e.data.con.next.id,
 						type: 'put',
@@ -259,6 +260,7 @@ $(function() {
 							console.info('error');
 						},
 						success: function(result) {
+							console.info('success');
 							$.get("/api/tasks", function(data, status) {
 
 								$.each(data, function(i, contract) {
@@ -266,9 +268,18 @@ $(function() {
 									if (contract.name == tempName) {
 
 										templateModel(contract);
+										console.info(template);
 										console.info(zeroTitle);
 										if (zeroTitle) {
+
 											$tempObj.parent().parent().parent().remove();
+											taskIsBland = true;
+											var html = $('#taskToFinish').html();
+											if (html == "") {
+												template = "<div id='blankTask' style='margin-top:100px'><ul class='center' style='font-size:16px'>没有需要待办的任务.</ul></div>";
+												$('#taskToFinish').html(template);
+											}
+
 										} else {
 											// $tempObj.parent().parent().parent().fadeOut(2000);
 											$tempObj.parent().parent().parent().replaceWith(template);
@@ -373,6 +384,7 @@ $(function() {
 				$inputElement.bind('click', {
 					con: contract
 				}, function(e) {
+					console.info(ulIndex);
 					var $tempObj = $(this);
 					var tempName = e.data.con.name;
 					var checkValue = true;
@@ -395,6 +407,11 @@ $(function() {
 						},
 						success: function(result) {
 							$tempObj.parent().parent().parent().remove();
+							var html = $('#outOfDate').html();
+							if (html == "") {
+								template = "<div id='blankDate' style='margin-top:120px'><ul class='center' style='font-size:16px'>没有过期任务.</ul></div>";
+								$('#outOfDate').html(template);
+							}
 						}
 					});
 				});
@@ -439,7 +456,7 @@ $(function() {
 				//定义插入模版
 				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex2] + "'><label><span class='lbl'><span class='lbl'><a href='/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
 				t2 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label></li></ul>";
-				
+
 				template = t1 + t2;
 				$('#isFinished').append(template);
 
