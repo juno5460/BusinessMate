@@ -46,12 +46,42 @@ exports.upload = function(req, res) {
 
 //下载文件
 exports.download = function(req, res) {
-	//	var pathname = url.parse(request.url).pathname;
-	//	var realPath = "assets" + pathname;
-	var getId=req.contractId;
-	var getName=req.name;
-	var pathname="./files/"+getId+"/"+getName;
+
+	// var getId = req.contractId;
+	// var getName = req.name;
+	// var pathname = "./files/" + getId + "/" + getName;
+
+	var getId = "1234567";
+	var getName = "1.jpg";
+	var pathname = "./files/" + getId + "/" + getName;
 	// var pathname = "./files/1234567/message.doc";
+
+	var types = {
+		"css": "text/css",
+		"gif": "image/gif",
+		"html": "text/html",
+		"ico": "image/x-icon",
+		"jpeg": "image/jpeg",
+		"jpg": "image/jpeg",
+		"js": "text/javascript",
+		"json": "application/json",
+		"pdf": "application/pdf",
+		"png": "image/png",
+		"svg": "image/svg+xml",
+		"swf": "application/x-shockwave-flash",
+		"tiff": "image/tiff",
+		"txt": "text/plain",
+		"wav": "audio/x-wav",
+		"wma": "audio/x-ms-wma",
+		"wmv": "video/x-ms-wmv",
+		"xml": "text/xml",
+		"zip": "application/zip"
+	};
+	var fileText = getName.substring(getName.lastIndexOf("."), getName.length);
+
+	var fileAfterName = fileText.toLowerCase(); //获取到文件后缀名
+
+	console.log(fileAfterName);
 	path.exists(pathname, function(exists) {
 		if (!exists) {
 			res.writeHead(404, {
@@ -69,7 +99,9 @@ exports.download = function(req, res) {
 					res.end(err);
 				} else {
 					res.writeHead(200, {
-						'Content-Type': 'text/plain'
+						// 'Content-Type': types.fileAfterName
+						'Content-Encoding':'jpg',
+						'Content-Type': 'text/html'
 					});
 
 					res.write(file, "binary");
