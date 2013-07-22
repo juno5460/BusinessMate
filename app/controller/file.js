@@ -52,7 +52,7 @@ exports.download = function(req, res) {
 	// var pathname = "./files/" + getId + "/" + getName;
 
 	var getId = "1234567";
-	var getName = "1.jpg";
+	var getName = "i3开发基础教程代码.zip";
 	var pathname = "./files/" + getId + "/" + getName;
 	// var pathname = "./files/1234567/message.doc";
 
@@ -98,10 +98,11 @@ exports.download = function(req, res) {
 
 					res.end(err);
 				} else {
+					res.header('Content-Disposition', 'attachment;filename=' + getName);
 					res.writeHead(200, {
-						// 'Content-Type': types.fileAfterName
-						'Content-Encoding':'jpg',
-						'Content-Type': 'text/html'
+						'Content-Type': types.fileAfterName
+						// 'Content-Encoding': 'jpg',
+						// 'Content-Type': 'text/html'
 					});
 
 					res.write(file, "binary");
