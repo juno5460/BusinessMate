@@ -26,7 +26,7 @@ $(function() {
 				pie: {
 					show: true,
 					highlight: {
-						opacity: 0.25
+						opacity: 0.2
 					},
 					stroke: {
 						color: '#fff',
@@ -51,7 +51,7 @@ $(function() {
 				show: true,
 				position: "ne",
 				labelBoxBorderColor: null,
-				margin: [0, 20]
+				margin: [-40, 20]
 			},
 			grid: {
 				hoverable: true,
@@ -103,6 +103,7 @@ $(function() {
 			});
 		}
 
+		//字符串转换成十六进制
 		function stringToHex(str) {
 			var val = "";
 			for (var i = 0; i < str.length; i++) {
@@ -225,15 +226,15 @@ $(function() {
 
 			var bindModel = function(ulIndex, contract) {
 
-				// var $buttonElement = $("#taskToFinish ul:eq(" + ulIndex + ")").find('button');
-				// $buttonElement.click(function() {
-				// 	bootbox.prompt("提示（填写备注信息）", function(result) {
-				// 		if (result == null)
-				// 			return;
+				var $buttonElement = $("#taskToFinish ul:eq(" + ulIndex + ")").find('button');
+				$buttonElement.click(function() {
+					bootbox.prompt("提示（填写备注信息）", function(result) {
+						if (result == null)
+							return;
 
-				// 		remark = result;
-				// 	});
-				// });
+						remark = result;
+					});
+				});
 
 				var $inputElement = $("#taskToFinish ul:eq(" + ulIndex + ")").find('input');
 				$inputElement.bind('click', {
