@@ -19,11 +19,11 @@ exports.upload = function(req, res) {
 	var file = new File();
 	var get = {
 		name: req.files.Filedata.name,
-		contractID: "1234567",
+		contractId: "1234567",
 		tempPath: req.files.Filedata.path
 	};
-	var getDir = "./files/" + get.contractID;
-	var getName = "./files/" + get.contractID + "/" + get.name;
+	var getDir = "./files/" + get.contractId;
+	var getName = "./files/" + get.contractId + "/" + get.name;
 	fs.exists(getDir, function(check) {
 		if (check) {
 			console.log("upload");
@@ -48,8 +48,10 @@ exports.upload = function(req, res) {
 exports.download = function(req, res) {
 	//	var pathname = url.parse(request.url).pathname;
 	//	var realPath = "assets" + pathname;
-	var pathname = "./files/1234567/message.doc";
-	//	var realPath = "assets" + pathname;
+	var getId=req.contractId;
+	var getName=req.name;
+	var pathname="./files/"+getId+"/"+getName;
+	// var pathname = "./files/1234567/message.doc";
 	path.exists(pathname, function(exists) {
 		if (!exists) {
 			res.writeHead(404, {
