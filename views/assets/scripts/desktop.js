@@ -68,42 +68,52 @@ $(function() {
 			pieData2 = new Array();
 
 		for (var i = 0; i < contractsCount; i++) {
-			if (partyA[i] == null)
-				continue;
-			var countA = 1;
-			for (var j = i + 1; j < contractsCount; j++) {
-				if ((partyA[j] != null) && (partyA[j] == partyA[i])) {
-					countA++;
-					partyA[j] = null;
-				}
-			}
+			var amountA = 0; //甲方总金额
+			var amountB = 0; //乙方总金额
+			var toPushA = false;
+			var toPushB = false;
 
-			pieData1.push({
-				label: partyA[i],
-				data: countA,
-				color: color[i]
-			});
-		}
-
-		for (var i = 0; i < contractsCount; i++) {
-			if (partyB[i] == null)
-				continue;
-			var countB = 1;
 			for (var j = i + 1; j < contractsCount; j++) {
-				if ((partyB[j] != null) && (partyB[j] == partyB[i])) {
-					countB++;
+				var fe = (partyA[j] == partyA[i]);
+				if (partyA[j] == partyA[i])
+					partyA[0] = null;
+				
+				if (partyB[j] == partyB[i])
 					partyB[j] = null;
-				}
 			}
+		
+			$.each(data, function(t, contract) {
 
-			pieData2.push({
-				label: partyB[i],
-				data: countB,
-				color: color[i + 2]
+				if (partyA[i] != null && contract.partyA == partyA[i]) {
+					toPushA = true;
+					amountA += contract.amount;
+				}
+				if (partyB[i] != null && contract.partyB == partyB[i]) {
+					toPushB = true;
+					amountB += contract.amount;
+				}
+
 			});
+
+			if(toPushA) {
+				pieData1.push({
+					label: partyA[i],
+					data: amountA,
+					color: color[i]
+				});
+			}
+			if(toPushB) {
+				pieData2.push({
+					label: partyB[i],
+					data: amountB,
+					color: color[i + 2]
+				});
+			}
 		}
+
 
 		//字符串转换成十六进制
+
 		function stringToHex(str) {
 			var val = "";
 			for (var i = 0; i < str.length; i++) {
