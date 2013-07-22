@@ -399,6 +399,78 @@ ContractSchema.methods = {
 			callback(getData);
 		});
 	},
+	//计算合同的合同款,总金额
+	/*
+	 *calback:回调返回数据
+	 */
+	countGraphics: function(callback) {
+
+
+		var allGetData; //返回数据json
+		var allGetCount = 0;
+		var allWaitCount = 0;
+		var allReturnCount = 0;
+		var allUnreturnCount = 0;
+
+		var occur = new Date();
+		var year = occur.getFullYear();
+		var month = occur.getMonth() + 1;
+		var day = occur.getDate(); ///
+		day = day < 10 ? "0" + day : day;
+		month = month < 10 ? "0" + month : month;
+		var getOccur = year + "-" + month + "-" + day;
+		Contract = this.model('Contract');
+
+		Contract.find({}, function(err, docs) {
+
+			var count = 0; //存储该合同已回款总额
+			var allCount = 0; //存储该合同总金额
+			var waitCount = 0; //该合同待回款金额
+			var flag = 0; //标志位
+			var getData; //该合同数据json
+
+			docs.forEach(function(doc) {
+				allCount = doc.amount;
+				for (var i = 0; i < doc.events.length; i++) { //遍历该合同的事件数组
+					if (doc.events[i].price > 0 && doc.events[i].completed == true)
+						count = count + doc.events[i].price;
+					if (doc.events[i].price > 0 && doc.events[i].invoiceDone == true && doc.events[i].completed == false) {
+						waitCount = waitCount + doc.events[i].price;
+						applicantDate = doc.events[i].invoiceDate;
+					}
+					if (flag == 0 && doc.events[i].price > 0 && doc.events[i].completed == true && (doc.events[i].date < getOccur || doc.events[i].date == getOccur)) {
+						lastDate = doc.events[i].date;
+						flag = 1;
+					}
+					if (flag == 1 && doc.events[i].price > 0 && doc.events[i].completed == true && doc.events[i].date < getOccur && doc.events[i].date > lastDate) {
+						lastDate = doc.events[i].date;
+					}
+				}
+				getData = {
+					"waitCount": waitCount, //待收款=开了申请发票的回款金额
+					"oneAllCount": allCount, //该合同总金额
+					"returnCount": count, //已回款
+					"unreturnCount": allCount - count - waitCount, //应回款=总金额-已回款-待收款
+					"returnRatio": parseFloat(count / allCount), //已回款比率
+					"unreturnRatio": parseFloat((allCount - count) / allCount) //未回款比率
+				};
+				allGetCount = allGetCount + getData.oneAllCount;
+				allWaitCount = allWaitCount + getData.waitCount;
+				allReturnCount = allReturnCount + getData.returnCount;
+				allUnreturnCount = allUnreturnCount + getData.unreturnCount;
+
+
+			});
+			allGetData = {
+				"allGetCount": allGetCount,  //所有合同总金额
+				"allWaitCount": allWaitCount, //所有合同待回款
+				"allReturnCount": allReturnCount, //所有合同已回款
+				"allUnreturnCount": allUnreturnCount  //所有合同应收款
+			};
+			console.log(parseFloat(4 / 10));
+			callback(allGetData);
+		});
+	},
 	//根据合同id,展示所有未完成事件以及下一个待办事件
 	/*
 	 *id:合同id

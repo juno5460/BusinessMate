@@ -106,12 +106,23 @@ exports.finish = function(req, res) { //返回指定合同业务数据
 	});
 };
 
-exports.done=function(req,res){
+exports.done = function(req, res) {
 	var template = new Template();
 	var contract = new Contract();
 
 	contract.checkLastWeekDone(function(data) {
 		console.log("checkLastWeekDone");
+		res.send(data);
+	});
+};
+
+exports.graphics = function(req, res) {
+
+	console.log("graphics");
+
+	var contract = new Contract();
+
+	contract.countGraphics(function(data) {
 		res.send(data);
 	});
 };

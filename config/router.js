@@ -19,6 +19,7 @@ module.exports = function(app, passport, auth) {
 	app.del('/api/contracts/:id', contract.destroy);
 
 	app.get('/api/tests', contract.test);
+
 	//	app.resource('api/contracts', contract);
 
 	///合同模版接口
@@ -43,6 +44,8 @@ module.exports = function(app, passport, auth) {
 
 	app.get('/api/tasks/:id', task.show);
 
+	app.get('/api/tasksGraph',task.graphics);
+
 	// //	app.post('/api/tasks',task.create);
 
 	app.put('/api/tasks/:id', task.update);
@@ -66,6 +69,8 @@ module.exports = function(app, passport, auth) {
 	app.get('/test', files.test);
 
 	app.get('/download', files.download);
+
+	app.post('/show/:id',files.show);
 	////////////用户 接口
 	var users = require('../app/controller/users');
 

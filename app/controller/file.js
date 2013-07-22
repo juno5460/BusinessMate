@@ -12,6 +12,8 @@ var async = require('async'),
 	File = mongoose.model('File'),
 	Template = mongoose.model('Template');
 
+
+//上传文件
 exports.upload = function(req, res) {
 	console.log("upload");
 	var file = new File();
@@ -41,6 +43,8 @@ exports.upload = function(req, res) {
 		}
 	});
 };
+
+//下载文件
 exports.download = function(req, res) {
 	//	var pathname = url.parse(request.url).pathname;
 	//	var realPath = "assets" + pathname;
@@ -76,6 +80,10 @@ exports.download = function(req, res) {
 	console.log("download");
 };
 
+//展示合同附件
+exports.show = function(req, res) {
+	console.log("show");
+};
 exports.test = function(req, res) {
 	console.log("test");
 	//	console.log(req);

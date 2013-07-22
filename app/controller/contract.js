@@ -136,6 +136,8 @@ exports.destroy = function(req, res) {
 	}
 };
 
+
+
 exports.test = function(req, res) {
 	console.log('login', req.user);
 	var occur = new Date();
