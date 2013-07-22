@@ -20,8 +20,6 @@ module.exports = function(app, passport, auth) {
 
 	app.get('/api/tests', contract.test);
 
-	//	app.resource('api/contracts', contract);
-
 	///合同模版接口
 	var template = require('../app/controller/template');
 
@@ -35,7 +33,6 @@ module.exports = function(app, passport, auth) {
 
 	app.del('/api/templates/:id', template.destroy);
 
-	//	app.resource('api/templates', template);
 
 	///待办任务处理接口
 	var task = require('../app/controller/task');
@@ -46,13 +43,7 @@ module.exports = function(app, passport, auth) {
 
 	app.get('/api/tasksGraph',task.graphics);
 
-	// //	app.post('/api/tasks',task.create);
-
 	app.put('/api/tasks/:id', task.update);
-
-	// //	app.del('/api/tasks/:id',task.destroy);
-
-	//app.resource('api/tasks', task);
 
 	app.get('/api/finishes', task.finish);
 
@@ -71,6 +62,8 @@ module.exports = function(app, passport, auth) {
 	app.get('/download', files.download);
 
 	app.post('/show/:id',files.show);
+
+	app.post('/send',files.send);
 	////////////用户 接口
 	var users = require('../app/controller/users');
 

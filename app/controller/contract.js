@@ -6,7 +6,11 @@
 
 var async = require('async'),
 	mongoose = require('mongoose'),
-	Contract = mongoose.model('Contract');
+	Contract = mongoose.model('Contract'),
+	fs = require('fs'),
+	path = require('path'),
+	File = mongoose.model('File');
+
 
 exports.index = function(req, res) {
 	/******/
@@ -25,7 +29,6 @@ exports.index = function(req, res) {
 	/******/
 
 };
-
 
 
 exports.show = function(req, res) {
@@ -75,12 +78,18 @@ exports.create = function(req, res) {
 		endDate: rdata.endDate, //结束日期
 		events: rdata.events, //合同事件
 		state: rdata.state, //合同状态
-		next: rdata.next //待办任务
+		next: rdata.next, //待办任务
+		file: [{
+			tempid: "9ba9d1521bada3542ce8998f8867df49",
+			name: "BusinessMate.zip"
+		}, {
+			tempid: "b1496e94027f832f624139b10a20785a",
+			name: "he.js"
+		}]
 	};
 	console.log("start====");
 	console.log(saveData);
 	contract.insertData(saveData, res);
-	//	res.send("insert successfully");
 };
 
 

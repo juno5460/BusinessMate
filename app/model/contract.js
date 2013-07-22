@@ -4,6 +4,9 @@
 
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
+	fs = require('fs'),
+	path = require('path'),
+	async = require('async'),
 	Repository = require('./repository');
 
 //事件子模型
@@ -105,6 +108,43 @@ ContractSchema.methods = {
 			callback(docs);
 		});
 	},
+	//转移文件
+	upload: function(getData, callback) {
+		console.log("upload");
+		console.log(getData);
+		var getDir = "./files/" + "123";
+		///async test
+		async.forEach(getData, function(item, callback) {
+			var tempPath = "./uploads/" + item.tempid;
+			var getName = "./files/" + "123" + "/" + item.name;
+			console.log(tempPath);
+			console.log(getName);
+			fs.exists(getDir, function(check) {
+				console.log(check);
+				if (check == true) {
+					console.log("yes");
+					fs.readFile(tempPath, function(err, data) {
+						fs.writeFile(getName, data, function(err) {
+							console.log("success save");
+						});
+					});
+				} else {
+					fs.mkdir(getDir, 0777, function() {
+						console.log("no");
+						fs.readFile(tempPath, function(err, data) {
+							fs.writeFile(getName, data, function(err) {
+								console.log("success save");
+							});
+						});
+					});
+				}
+
+			});
+
+		});
+
+		callback("good");
+	},
 	//新建合同插入数据库
 	/*
 	 * rdata:要保存的合同对象
@@ -112,12 +152,19 @@ ContractSchema.methods = {
 	insertData: function(rdata, res) {
 
 		Contract = this.model('Contract');
+
 		console.log("insert");
-		var contract = new Contract(rdata);
-		contract.save();
-		res.send({
-			hello: "success insert"
+
+		var contract = new Contract();
+		contract.upload(rdata.file, function(data) {
+			console.log(data);
+			contract = new Contract(rdata);
+			contract.save();
+			res.send({
+				hello: "success insert"
+			});
 		});
+
 		//	res.end();
 	},
 	//新建合同模版插入模版数据库
@@ -462,10 +509,10 @@ ContractSchema.methods = {
 
 			});
 			allGetData = {
-				"allGetCount": allGetCount,  //所有合同总金额
+				"allGetCount": allGetCount, //所有合同总金额
 				"allWaitCount": allWaitCount, //所有合同待回款
 				"allReturnCount": allReturnCount, //所有合同已回款
-				"allUnreturnCount": allUnreturnCount  //所有合同应收款
+				"allUnreturnCount": allUnreturnCount //所有合同应收款
 			};
 			console.log(parseFloat(4 / 10));
 			callback(allGetData);
