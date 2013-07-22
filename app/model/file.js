@@ -48,6 +48,9 @@ FileSchema.methods = {
 			console.log('It\'s saved!');
 			callback("success");
 		});
+	},
+	download:function(callback){
+		
 	}
 };
 
