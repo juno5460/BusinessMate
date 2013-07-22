@@ -11,7 +11,31 @@ $(function() {
 
 	var liColor = new Array('item-orange', 'item-red', 'item-default', 'item-blue',
 		'item-grey', 'item-green', 'item-pink', 'item-orange', 'item-red', 'item-default', 'item-blue', 'item-grey', 'item-green', 'item-pink', 'item-orange', 'item-red', 'item-default', 'item-blue', 'item-grey', 'item-green', 'item-pink');
+	//定义颜色数组
+	var color = new Array("#68BC31", "#2091CF", "#F63AFF", "#4DFF00", "#00CCFF", "#88FF7A", "#F27AFF", "#47FF47",
+		"#FF0066", "#FF33CC", "#85FFFF", "#FF8FB4", "#8BFF52", "#FFF27A",
+		"#FF4747", "#47A3FF", "#FEE074", "#FF85FF", "#F18BDD", "#DA5430");
 
+	//字符串转换成十六进制
+
+	function stringToHex(str) {
+		var val = "";
+		for (var i = 0; i < str.length; i++) {
+			if (val == "")
+				val = str.charCodeAt(i).toString(16);
+			else
+				val += "," + str.charCodeAt(i).toString(16);
+		}
+		return val;
+	}
+
+	var allCount, allUncount, waitCount;
+	$.get("/api/tasksGraph", function(data, status) {
+		allCount = data.allReturnCount;
+		allUncount = data.allUnreturnCount;
+		waitCount = data.allWaitCount;
+	});
+	//定义标签显示函数
 	$.get("/api/contracts", function(data, status) {
 
 		$.each(data, function(i, contract) {
@@ -21,28 +45,19 @@ $(function() {
 		});
 
 		var optionPie = {
-
 			series: {
 				pie: {
 					show: true,
+					radius: 1,
 					highlight: {
-						opacity: 0.2
+						opacity: 0.25
 					},
-					stroke: {
-						color: '#fff',
-						width: 2
-					},
-					// startAngle: 2,
-					radius: 70,
 					label: {
 						show: true,
-						radius: 1,
-						formatter: function(label, slice) {
-							return '<div style="font-size:x-small;text-align:center;padding:2px;color:' + slice.color + ';">' + '<br/>' + Math.round(slice.percent) + '%</div>';
-						},
+						radius: 1/2,
+						formatter: labelFormatter,
 						background: {
-							opacity: 0,
-							color: null
+							opacity: 0
 						}
 					}
 				}
@@ -51,7 +66,7 @@ $(function() {
 				show: true,
 				position: "ne",
 				labelBoxBorderColor: null,
-				margin: [-40, 20]
+				margin: [-35, 20]
 			},
 			grid: {
 				hoverable: true,
@@ -59,10 +74,23 @@ $(function() {
 			}
 		};
 
-		//定义颜色数组
-		var color = new Array("#00CCFF", "#88FF7A", "#F27AFF", "#47FF47",
-			"#FF0066", "#FF33CC", "#85FFFF", "#FF8FB4", "#8BFF52", "#FFF27A",
-			"#FF4747", "#47A3FF", "#4DFF00", "#F63AFF", "#F18BDD", "#FF85FF");
+		//设置饼图标签格式，同时返回金额和百分比
+		function labelFormatter(label, series) {
+			var count = 0;
+			if (label == "已回款")
+				return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + allCount + "<br/>" + Math.round(series.percent) + "%</div>";
+			else if (label == "应回款")
+				return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + allUncount + "<br/>" + Math.round(series.percent) + "%</div>";
+			else if (label == "待回款")
+				return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + waitCount + "<br/>" + Math.round(series.percent) + "%</div>";
+			else {
+				$.each(data, function(i, contract) {
+					if(contract.partyA == label || contract.partyB == label) 
+						count += contract.amount;
+				});
+				return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + count + "<br/>" + Math.round(series.percent) + "%</div>";
+			}
+		}
 
 		var pieData1 = new Array(),
 			pieData2 = new Array();
@@ -74,14 +102,13 @@ $(function() {
 			var toPushB = false;
 
 			for (var j = i + 1; j < contractsCount; j++) {
-				var fe = (partyA[j] == partyA[i]);
 				if (partyA[j] == partyA[i])
-					partyA[0] = null;
-				
+					partyA[j] = null;
+
 				if (partyB[j] == partyB[i])
 					partyB[j] = null;
 			}
-		
+
 			$.each(data, function(t, contract) {
 
 				if (partyA[i] != null && contract.partyA == partyA[i]) {
@@ -95,34 +122,20 @@ $(function() {
 
 			});
 
-			if(toPushA) {
+			if (toPushA) {
 				pieData1.push({
 					label: partyA[i],
 					data: amountA,
 					color: color[i]
 				});
 			}
-			if(toPushB) {
+			if (toPushB) {
 				pieData2.push({
 					label: partyB[i],
 					data: amountB,
-					color: color[i + 2]
+					color: color[i + 3]
 				});
 			}
-		}
-
-
-		//字符串转换成十六进制
-
-		function stringToHex(str) {
-			var val = "";
-			for (var i = 0; i < str.length; i++) {
-				if (val == "")
-					val = str.charCodeAt(i).toString(16);
-				else
-					val += "," + str.charCodeAt(i).toString(16);
-			}
-			return val;
 		}
 
 		var placeholder1 = $('#placeholder1').css({
@@ -147,11 +160,42 @@ $(function() {
 			window.location.href = "/desktop" + '/' + stringToHex(labelName);
 		});
 
-		var placeholder3 = $('#placeholder3').css({
-			'width': '90%',
-			'min-height': '150px'
+		$.get("/api/tasksGraph", function(data, status) {
+			var pieData3 = [];
+			var data1 = {
+				label: "已回款",
+				data: data.allReturnCount,
+				color: color[10]
+			};
+			var data2 = {
+				label: "待回款",
+				data: data.allWaitCount,
+				color: color[14]
+			};
+			var data3 = {
+				label: "应回款",
+				data: data.allUnreturnCount,
+				color: color[17]
+			};
+			pieData3.push(data1);
+			pieData3.push(data2);
+			pieData3.push(data3);
+			var placeholder3 = $('#placeholder3').css({
+				'width': '90%',
+				'min-height': '150px'
+			});
+			$.plot(placeholder3, pieData3, optionPie);
+			placeholder3.bind("plotclick", function(event, pos, obj) {
+				var labelName = obj.series.label;
+
+				if (labelName == "已回款")
+					window.location.href = "/fund";
+				else if (labelName == "应回款")
+					window.location.href = "/fundShould";
+				else
+					window.location.href = "/fundWait";
+			});
 		});
-		$.plot(placeholder3, pieData2, optionPie);
 
 	});
 
