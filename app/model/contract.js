@@ -109,14 +109,14 @@ ContractSchema.methods = {
 		});
 	},
 	//转移文件
-	upload: function(getData, callback) {
+	upload: function(getData, getFileID, callback) {
 		console.log("upload");
 		console.log(getData);
-		var getDir = "./files/" + "123";
+		var getDir = "./files/" + getFileID;
 		///async test
 		async.forEach(getData, function(item, callback) {
 			var tempPath = "./uploads/" + item.tempid;
-			var getName = "./files/" + "123" + "/" + item.name;
+			var getName = "./files/" + getFileID + "/" + item.name;
 			console.log(tempPath);
 			console.log(getName);
 			fs.exists(getDir, function(check) {
@@ -149,21 +149,33 @@ ContractSchema.methods = {
 	/*
 	 * rdata:要保存的合同对象
 	 */
-	insertData: function(rdata, res) {
+	insertData: function(rdata, callback) {
 
 		Contract = this.model('Contract');
 
 		console.log("insert");
 
-		var contract = new Contract();
-		contract.upload(rdata.file, function(data) {
-			console.log(data);
-			contract = new Contract(rdata);
-			contract.save();
-			res.send({
-				hello: "success insert"
+		var contract = new Contract(rdata);
+		contract.save(function(err, obj) {
+			Contract.find({
+				_id: obj._id
+			}, {
+				_id: 1
+			}, function(err, identify) {
+				callback(identify);
 			});
+
 		});
+
+		// var contract = new Contract();
+		// contract.upload(rdata.file, function(data) {
+		// 	console.log(data);
+		// 	contract = new Contract(rdata);
+		// 	contract.save();
+		// 	res.send({
+		// 		hello: "success insert"
+		// 	});
+		// });
 
 		//	res.end();
 	},
@@ -192,10 +204,12 @@ ContractSchema.methods = {
 
 		Contract = this.model('Contract');
 		console.log(id);
-
-		Contract.update(id, result, function() {
-			Contract.find(id, function(err, docs) {
-				callback(docs);
+		var contract = new Contract();
+		contract.upload(result.file, function(data) {
+			Contract.update(id, result, function() {
+				Contract.find(id, function(err, docs) {
+					callback(docs);
+				});
 			});
 		});
 	},
