@@ -9,18 +9,29 @@ var async = require('async'),
 	path = require('path'),
 	mongoose = require('mongoose'),
 	Contract = mongoose.model('Contract'),
-	File = mongoose.model('File'),
 	Template = mongoose.model('Template');
 
-
+exports.send = function(req, res) {
+	console.log("sendid");
+	var temp = {
+		fileName:req.files.Filedata.name,
+		tempid: req.files.Filedata.path
+	};
+	console.log(temp);
+	res.send(temp);
+};
 //上传文件
 exports.upload = function(req, res) {
 	console.log("upload");
-	var file = new File();
+	console.log(req.files.Filedata.path);
 	var get = {
 		name: req.files.Filedata.name,
 		contractId: "1234567",
 		tempPath: req.files.Filedata.path
+	};
+	var userInfo = {
+		"uid": req.uid,
+		"name": req.files.Filedata.name
 	};
 	var getDir = "./files/" + get.contractId;
 	var getName = "./files/" + get.contractId + "/" + get.name;
@@ -121,8 +132,7 @@ exports.show = function(req, res) {
 };
 exports.test = function(req, res) {
 	console.log("test");
-	//	console.log(req);
-	var file = new File();
+
 	var get = {
 		name: "message.doc",
 		contractID: "1234567",

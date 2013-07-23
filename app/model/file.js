@@ -8,8 +8,8 @@ var mongoose = require('mongoose'),
 
 //文件模型
 var FileSchema = mongoose.Schema({ //创建文件模型对象
-	name: String,
-	contractId: String
+	contractId: String,
+	name: []
 });
 
 
@@ -17,21 +17,6 @@ FileSchema.methods = {
 
 	test: function() {
 		console.info("=======test");
-	},
-	insertData: function(get, callback) {
-		File = this.model('File');
-		var file = new File(get);
-		file.save();
-	},
-	upload: function(getName, getData, callback) {
-		fs.writeFile(getName, getData, function(err) {
-			if (err) throw err;
-			console.log('It\'s saved!');
-			callback("success");
-		});
-	},
-	download: function(callback) {
-
 	}
 };
 
