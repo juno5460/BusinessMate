@@ -494,7 +494,7 @@ $(function(){
 		}, 600);
 	}
 
-	var generateID = function() {
+	var getContractID = function() {
 
 		//生成唯一ID号
 		return new UUID().toString();
