@@ -109,7 +109,7 @@ $(function(){
 
 	$("#tab-attachments").click(function(){
 		$.ajax({
-			url:'files/show/' + getContractID(),
+			url:'/files/show/' + getContractID(),
 			type:'GET',
 			success: function(data){
 				$(data).each(function(index,item){
