@@ -166,18 +166,6 @@ ContractSchema.methods = {
 			});
 
 		});
-
-		// var contract = new Contract();
-		// contract.upload(rdata.file, function(data) {
-		// 	console.log(data);
-		// 	contract = new Contract(rdata);
-		// 	contract.save();
-		// 	res.send({
-		// 		hello: "success insert"
-		// 	});
-		// });
-
-		//	res.end();
 	},
 	//新建合同模版插入模版数据库
 	/*

@@ -38,7 +38,7 @@ exports.show = function(req, res) {
 			var data = fs.readFileSync(getDir + '/' + files[count]);
 			get[count] = {
 				"name": files[count],
-				"length": parseFloat(data.length/1024)
+				"size": parseFloat(data.length/1024)
 			};
 			console.log(get[count]);
 			count++;
