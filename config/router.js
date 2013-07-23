@@ -97,7 +97,8 @@ module.exports = function(app, passport, auth) {
 	app.get('/desktop/:id', auth.requiresLogin, function(req, res) {
 		console.info(req.params.id);
 		res.send(generator.generate('pieDetail', {
-			_id: req.params.id
+			_id: req.params.id,
+			username: req.user.username
 		}));
 	});
 
@@ -138,7 +139,8 @@ module.exports = function(app, passport, auth) {
 	app.get('/contracts/:id/edit', auth.requiresLogin, function(req, res) {
 		console.info(req.params.id);
 		res.send(generator.generate('editContract', {
-			_id: req.params.id
+			_id: req.params.id,
+			username: req.user.username
 		}));
 	});
 
