@@ -55,15 +55,13 @@ module.exports = function(app, passport, auth) {
 	//文件操作接口
 	var files = require('../app/controller/file');
 
-	app.post('/upload', files.upload);
-
 	app.get('/test', files.test);
 
-	app.get('/download', files.download);
+	app.get('/files/download', files.download);
 
-	app.get('/show/:id',files.show);
+	app.get('/files/show/:id',files.show);
 
-	app.post('/send',files.send);
+	app.post('/files/upload',files.upload);
 	////////////用户 接口
 	var users = require('../app/controller/users');
 
