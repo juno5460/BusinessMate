@@ -201,11 +201,9 @@ ContractSchema.methods = {
 		Contract = this.model('Contract');
 		console.log(id);
 		var contract = new Contract();
-		contract.upload(result.file, function(data) {
-			Contract.update(id, result, function() {
-				Contract.find(id, function(err, docs) {
-					callback(docs);
-				});
+		Contract.update(id, result, function() {
+			Contract.find(id, function(err, docs) {
+				callback(docs);
 			});
 		});
 	},

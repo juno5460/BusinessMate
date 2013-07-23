@@ -131,6 +131,11 @@ exports.update = function(req, res) {
 	console.log(getId);
 	console.log(get);
 	contract.updateIdData(getId, getNew, function(data) {
+		console.log("starting....");
+		var contract = new Contract();
+		contract.upload(getNew.file, req.params['id'], function(data1) {
+			console.log(data1);
+		});
 		res.send(data);
 	});
 };
