@@ -12,7 +12,7 @@ module.exports = function function_name(app, config, passport, auth) {
 	app.use(flash());
 	app.use(express.favicon());
 	app.use(express.logger('dev'));
-	app.use(express.bodyParser({uploadDir:'../uploads'}));
+	app.use(express.bodyParser({uploadDir:'./uploads'}));
 	app.use(express.methodOverride());
 	app.use(express.cookieParser('your secret here'));
 	// express/mongo session storage
