@@ -32,7 +32,7 @@ $(function(){
 	var uploadFilesInfo = new Array();
 	//上传控件代码
 	$('#file_upload').uploadifive({
-				'uploadScript' 	: 'files/send',
+				'uploadScript' 	: '/files/send',
 				'buttonClass' 	: 'btn btn-small',
 				'buttonText' 	: '添加附件',
 				'auto' 			: true,
