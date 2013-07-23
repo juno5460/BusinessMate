@@ -123,13 +123,7 @@ exports.update = function(req, res) {
 		amount: get.amount,
 		"state": get.state,
 		"events": get.events,
-		file: [{
-			tempid: "9ba9d1521bada3542ce8998f8867df49",
-			name: "BusinessMate.zip"
-		}, {
-			tempid: "b1496e94027f832f624139b10a20785a",
-			name: "he.js"
-		}]
+		file: get.file
 	};
 	if (getNew.events == null) {
 		getNew.events = [];
