@@ -29,16 +29,17 @@ $(function(){
 		$('#endPicker').blur();
 	});
 
+	var uploadFilesInfo = new Array();
+	//上传控件代码
 	$('#file_upload').uploadifive({
-				'formData'     : {
-					'contractId' : '10001',
-				},
-				'uploader' : '/upload',
-				'buttonClass' : 'btn btn-small',
-				'buttonText' : '上传附件',
-				'auto' : 'true',
-				'onUploadFile' : function(file) {
-
+				'uploadScript' 	: '/files/upload',
+				'buttonClass' 	: 'btn btn-small',
+				'buttonText' 	: '添加附件',
+				'auto' 			: true,
+				'fileSizeLimit'	: 1024 * 5,
+				'onUploadComplete' : function(file,data) {
+					uploadFilesInfo.push(data);
+					console.info(data);
         }
 			});
 
@@ -60,7 +61,11 @@ $(function(){
 				$("#myId").val(data.myId);
 				$("#name").val(data.name);
 				$("#partyA").val(data.partyA);
+				$("partyAabbr").val(data.partyAabbr);
+				$("partyADept").val(data.partyADept);
 				$("#partyB").val(data.partyB);
+				$("partyBabbr").val(data.partyBabbr);
+				$("partyBDept").val(data.partyBDept);
 				$("#signPicker").val(data.signDate);
 				$("#beginPicker").val(data.beginDate);
 				$("#endPicker").val(data.endDate);
@@ -99,6 +104,33 @@ $(function(){
 	$("#priceEventBtn").click(function(){
 		addPriceEvent(null,'add');
 		scrollToBottom();
+	});
+
+
+	$("#tab-attachments").click(function(){
+		$.ajax(function(){
+			url:'files/show/' + getContractID(),
+			type:'GET',
+			success: function(data){
+
+				$(data).each(function(index,item)){
+					var tmp = "<p>附件{{_no}}：<a href='/files/download?contractId={{_cid}}&fileName={{_name}}'>{{_fileName}}</a>{{_size}}</p>"
+					$('#attachments').append($(Mustache.to_html(tmp, {
+						_no: 1,
+						_cid: getContractID(),
+						_fileName: item.name ,
+						_name: item.name,
+						_size: item.size < 1024 ? item.size + "KB"  : item.size / 1024 +"MB"
+					})));
+				}
+
+			},
+			error: function(data){
+				showAlert("获取附件信息失败","error",2);
+			}
+
+		});
+
 	});
 
 	var templateTmp = "<li><a hre='#' title='{{templateName}}'>{{templateName}}</a></li>";
@@ -143,7 +175,11 @@ $(function(){
 				$("#myId").val(data.myId);
 				$("#name").val(data.name);
 				$("#partyA").val(data.partyA);
+				$("partyAabbr").val(data.partyAabbr);
+				$("partyADept").val(data.partyADept);
 				$("#partyB").val(data.partyB);
+				$("partyBabbr").val(data.partyAabbr);
+				$("partyBDept").val(data.partyADept);
 				$("#signPicker").val(data.signDate);
 				$("#beginPicker").val(data.beginDate);
 				$("#endPicker").val(data.endDate);
@@ -233,7 +269,7 @@ $(function(){
 			console.info(item);
 
 			$.ajax({
-				url: '/api/contracts/' + getItemID(),
+				url: '/api/contracts/' + getContractID(),
 				type: 'PUT',
 				data: item,
 				success: function(result) {
@@ -255,7 +291,7 @@ $(function(){
 
 	$("#deleteContractBtn").click(function(){
 			$.ajax({
-			url: '/api/contracts/' + getItemID(),
+			url: '/api/contracts/' + getContractID(),
 			type: 'DELETE',
 			success: function(result) {
 				showAlert("删除合同成功","success",2,doActionAfterSecond(function(){
@@ -359,7 +395,11 @@ $(function(){
 		var $myId 			= $("#myId").val();
 		var $name 			= $("#name").val();
 		var $partyA 		= $("#partyA").val();
+		var $partyAabbr		= $("#partyAabbr").val();
+		var $partyADept		= $("#partyADept").val();
 		var $partyB 		= $("#partyB").val();
+		var $partyBabbr		= $("#partyAabbr").val();
+		var $partyBDept		= $("#partyBDept").val();
 		var $signDate 		= $("#signPicker").val();
 		var $beginDate 		= $("#beginPicker").val();
 		var $endDate 		= $("#endPicker").val();
@@ -367,7 +407,7 @@ $(function(){
 		var $state	 		= $("#state").val();
 
 		var model 		= {};
-		model._id 		= getItemID();
+		model._id 		= getContractID();
 		model.myId 		= $myId;
 		model.name 		= $name;
 		model.partyA 	= $partyA;
@@ -377,6 +417,8 @@ $(function(){
 		model.endDate 	= $endDate;
 		model.amount 	= $amount;
 		model.state 	= $state;
+
+		model.files 	= $uploadFilesInfo;
 
 		model.events 	= buildEventsModel();
 
@@ -432,6 +474,11 @@ $(function(){
 		return $eventsArray;
 	}
 
+	$("#add-upload").click(function(){
+		$(".file-list").css("display","block");
+		$("#uploadifive-file_upload").click();
+	});
+
 	var getItemID = function(){
 		return $("#contractID").val();
 	}
@@ -473,11 +520,7 @@ $(function(){
 		}
 	}
 
-	// //校验测试代码
-	// $('#saveBtn').click(function(){
-	// 	$('#validateForm').valid();
-	// });
-	
+
 	$('#validateForm').validate({
 					errorElement: 'span',
 					errorClass: 'help-inline warn-tip',

@@ -1,11 +1,37 @@
 	<input id="contractID" type="hidden" value="{{params._id}}">
-	<form id="validateForm">
+
+	<ul class="nav nav-tabs" id="myTab">
+		<li class="active">
+			<a data-toggle="tab" href="#info"> <i class="green  icon-info-sign bigger-110"></i>
+				合同列表
+			</a>
+		</li>
+
+		<li class="">
+			<a data-toggle="tab" href="#attachments">
+				<i class="blue icon-download-alt bigger-110"></i>
+				附件列表
+			</a>
+		</li>
+
+		<li class="">
+			<a data-toggle="tab" href="#price">
+				<i class="red icon-bookmark bigger-110"></i>
+				回款计划
+			</a>
+		</li>
+	</ul>
+
+
+<div class="tab-content">
+	<div id="info" class="tab-pane active">
+		<form id="validateForm">
 	<div class="widget-box transparent">
 		<div class="widget-header">
 			<h3 class="smaller lighter green">合同基本信息</h3>
 			<div class="widget-toolbar no-border">
-				<div clas="btn-group">
-					<button id="templateBtn" data-toggle="dropdown" class="btn btn-small btn-info dropdown-toggle span12"> 
+				<div class="btn-group">
+					<button id="templateBtn" data-toggle="dropdown" class="btn btn-small btn-info dropdown-toggle"> 
 						使用模板 
 						<i class="icon-angle-down icon-on-right"></i>
 					</button>
@@ -15,8 +41,7 @@
 			</div>
 		</div>
 	</div>
-
-<div class="form-horizontal row-fluid">
+<div class="contract-form form-horizontal row-fluid">
 	<div class="span6">
 		<div class="control-group ">
 			<div class=" title_left">合同编号</div>
@@ -26,7 +51,16 @@
 		<div class="control-group ">
 			<div class=" title_left">甲方</div>
 			<div class="controls">
-				<input id="partyA" name="partyA" type="text"  class="span10" placeholder="甲方"></div>
+				<input id="partyA" name="partyA" type="text"  class="span5" placeholder="甲方">
+				<input id="partyAabbr" name="partyAabbr" type="text"  class="span5" placeholder="简称">
+			</div>
+
+		</div>
+		<div class="control-group ">
+			<div class=" title_left">甲方部门</div>
+			<div class="controls">
+				<input id="partyADept" name="partyADept" type="text"  class="span10" placeholder="部门">
+			</div>
 
 		</div>
 		<div class="control-group ">
@@ -63,8 +97,17 @@
 		<div class="control-group">
 			<div class=" title_right">乙方</div>	
 			<div class="controls">
-				<input id="partyB" name="partyB" type="text"  class="span10" placeholder="乙方">
+				<input id="partyB" name="partyB" type="text"  class="span5" placeholder="乙方">
+				<input id="partyBabbr" name="partyBabbr" type="text"  class="span5" placeholder="简称">
 			</div>
+		</div>
+
+		<div class="control-group ">
+			<div class=" title_left">乙方部门</div>
+			<div class="controls">
+				<input id="partyBDept" name="partyBDept" type="text"  class="span10" placeholder="部门">
+			</div>
+
 		</div>
 
 		<div class="control-group">
@@ -86,16 +129,14 @@
 
 
 </div>
-
 </form>
-
 
 	<div class="widget-box transparent">
 		<div class="widget-header">
 			<h3 class="smaller lighter green">合同事件列表</h3>
 			<div class="widget-toolbar no-border">
-				<div clas="btn-group">
-					<button data-toggle="dropdown" class="btn btn-small btn-info dropdown-toggle span12"> 
+				<div class="btn-group">
+					<button data-toggle="dropdown" class="btn btn-small btn-info dropdown-toggle"> 
 						<i class="icon-plus icon-on-left"></i>
 						增加事件 
 						<i class="icon-angle-down icon-on-right"></i>
@@ -114,11 +155,25 @@
 			</div>
 		</div>
 	</div>
-
 	<ul id="eventsList">
 		<div id="blankWarn" class="alert alert-warning">请添加合同事件.</div>
-
 	</ul>
+	</div>
+
+	<div id="attachments" class="tab-pane">
+
+		<div class="file-list">
+			<div class="btn-control">
+				<button id="file_upload">选择附件</button>
+			</div>
+		</div>
+	</div>
+
+	<div id="price" class="tab-pane">
+
+	</div>
+
+</div>
 
 	<div class="row-fluid bottom-cmd">
 		<div class="span2">
