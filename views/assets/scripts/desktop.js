@@ -1,4 +1,5 @@
 $(function() {
+
 	//计算各航空的合同数目
 	var partyA = new Array(),
 		partyB = new Array();
@@ -13,7 +14,7 @@ $(function() {
 	var liColor = new Array('item-orange', 'item-red', 'item-default', 'item-blue',
 		'item-grey', 'item-green', 'item-pink', 'item-orange', 'item-red', 'item-default', 'item-blue', 'item-grey', 'item-green', 'item-pink', 'item-orange', 'item-red', 'item-default', 'item-blue', 'item-grey', 'item-green', 'item-pink');
 	//定义饼图颜色数组
-	var color = new Array("#68BC31", "#FEE074", "#d54c7e","#2091CF", "#AF4E96", "#b74635","#DA5430","#f7d05b","#8b9aa3","#4f99c6","#69aa46","#d9d9d9","#a069c3","#629b58","#b4c2cc");
+	var color = new Array("#68BC31", "#FEE074", "#d54c7e", "#2091CF", "#AF4E96", "#b74635", "#DA5430", "#f7d05b", "#8b9aa3", "#4f99c6", "#69aa46", "#d9d9d9", "#a069c3", "#629b58", "#b4c2cc");
 
 	//字符串转换成十六进制
 
@@ -143,7 +144,7 @@ $(function() {
 
 		var placeholder1 = $('#placeholder1').css({
 			'width': '100%',
-			'min-height': '150px'
+			'min-height': '160px'
 		});
 		$.plot(placeholder1, pieData1, optionPie);
 		placeholder1.bind("plotclick", function(event, pos, obj) {
@@ -153,7 +154,7 @@ $(function() {
 
 		var placeholder2 = $('#placeholder2').css({
 			'width': '100%',
-			'min-height': '150px'
+			'min-height': '160px'
 		});
 		$.plot(placeholder2, pieData2, optionPie);
 		placeholder2.bind("plotclick", function(event, pos, obj) {
@@ -183,7 +184,7 @@ $(function() {
 			pieData3.push(data3);
 			var placeholder3 = $('#placeholder3').css({
 				'width': '100%',
-				'min-height': '150px'
+				'min-height': '160px'
 			});
 			$.plot(placeholder3, pieData3, optionPie);
 			placeholder3.bind("plotclick", function(event, pos, obj) {
@@ -280,7 +281,11 @@ $(function() {
 			var bindModel = function(ulIndex, contract) {
 
 				var $buttonElement = $("#taskToFinish ul:eq(" + ulIndex + ")").find('button');
+
+				//对于button，绑定事件之前一定要先解除前一次的绑定，否则会出错
+				$buttonElement.unbind("click"); 
 				$buttonElement.click(function() {
+
 					bootbox.prompt("提示（填写备注信息）", function(result) {
 						if (result == null)
 							return;
@@ -322,11 +327,8 @@ $(function() {
 									if (contract.name == tempName) {
 
 										templateModel(contract);
-										console.info(template);
-										console.info(zeroTitle);
+										// console.info(contract);
 										if (zeroTitle) {
-
-											// $tempObj.parent().parent().parent().remove();
 											$tempObj.parent().parent().parent().fadeOut(1000);
 
 											var html = $('#taskToFinish').html();
@@ -336,10 +338,10 @@ $(function() {
 											}
 
 										} else {
-												// $tempObj.parent().parent().parent().fadeOut(2000);
-												console.info("execute here:");
-												$tempObj.parent().parent().parent().replaceWith(template).show(500);
-												bindModel(e.data.uI, contract);
+											$tempObj.parent().parent().parent().replaceWith(template).show(500);
+											// console.info("rollIn");
+											// console.info(e.data.uI);
+											bindModel(e.data.uI, contract);
 										}
 									}
 								});
@@ -427,6 +429,8 @@ $(function() {
 			var bindModel = function(ulIndex, contract, j) {
 
 				var $buttonElement = $("#outOfDate ul:eq(" + ulIndex + ")").find('button');
+				
+				$buttonElement.unbind("click");
 				$buttonElement.click(function() {
 					bootbox.prompt("提示（填写备注信息）", function(result) {
 						if (result == null)
