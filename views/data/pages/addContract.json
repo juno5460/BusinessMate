@@ -5,9 +5,9 @@
  ,
  "no-header" : true
  ,
-  "scripts" : ["jquery-ui" , "underscore" , "backbone" , "bootbox" , "validate" , "common"]
+  "scripts" : ["jquery-ui" , "underscore" , "backbone" , "bootbox" , "validate" , "common" , "uploadifive"]
  ,
-  "styles" : ["bootstrap-timepicker" , "datepicker"]
+  "styles" : ["bootstrap-timepicker" , "datepicker" , "uploadifive"]
  ,
  "ie_scripts" : [{"version":8, "name":"excanvas"}]
 }

@@ -23,6 +23,20 @@ $(function() {
 		$('#endPicker').blur()
 	});
 
+	var uploadFilesInfo = new Array();
+	//上传控件代码
+	$('#file_upload').uploadifive({
+		'uploadScript': '/send',
+		'buttonClass': 'btn btn-small',
+		'buttonText': '添加附件',
+		'auto': true,
+		'fileSizeLimit': 1024 * 5,
+		'onUploadComplete': function(file, data) {
+			uploadFilesInfo.push(data);
+			console.info(data);
+		}
+	});
+
 
 	isTemplateMode = false;
 
@@ -219,6 +233,8 @@ $(function() {
 		model.endDate 	= $endDate;
 		model.amount 	= $amount;
 		model.state 	= $state;
+
+		model.files 	= $uploadFilesInfo;
 
 		model.events 	= buildEventsModel();
 
