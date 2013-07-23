@@ -61,7 +61,7 @@ module.exports = function(app, passport, auth) {
 
 	app.get('/download', files.download);
 
-	app.post('/show/:id',files.show);
+	app.get('/show/:id',files.show);
 
 	app.post('/send',files.send);
 	////////////用户 接口

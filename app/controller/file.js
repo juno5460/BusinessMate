@@ -9,16 +9,27 @@ var async = require('async'),
 	path = require('path'),
 	mongoose = require('mongoose'),
 	Contract = mongoose.model('Contract'),
-	Template = mongoose.model('Template');
+	Template = mongoose.model('Template'),
+	File = mongoose.model('File');
 
+//返回文件id
 exports.send = function(req, res) {
 	console.log("sendid");
 	var temp = {
-		fileName:req.files.Filedata.name,
+		name: req.files.Filedata.name,
 		tempid: req.files.Filedata.path
 	};
 	console.log(temp);
 	res.send(temp);
+};
+
+//展示合同附件
+exports.show = function(req, res) {
+	var file = new File();
+	var getDir="./files/123";
+	file.readdir(getDir, function(data) {
+		res.send(data);
+	});
 };
 //上传文件
 exports.upload = function(req, res) {
@@ -46,7 +57,7 @@ exports.upload = function(req, res) {
 		} else {
 			fs.mkdirSync(getDir, 0777);
 			console.log("upload");
-			fs.readFile(get.name, function(err, data) {
+			fs.readFile(get.tempPath, function(err, data) {
 				fs.writeFile(getName, data, function(err) {
 					console.log("success save");
 				});
@@ -126,33 +137,8 @@ exports.download = function(req, res) {
 	console.log("download");
 };
 
-//展示合同附件
-exports.show = function(req, res) {
-	console.log("show");
-};
+
 exports.test = function(req, res) {
 	console.log("test");
 
-	var get = {
-		name: "message.doc",
-		contractID: "1234567",
-		fileContent: "hello upload!!!"
-	};
-	var getDir = "./files/" + get.contractID;
-	var getName = "./files/" + get.contractID + "/" + get.name;
-	var getData = get.fileContent;
-	fs.exists(getDir, function(check) {
-		if (check) {
-			console.log("test");
-			file.upload(getName, getData, function(data) {
-				console.log(data);
-			});
-		} else {
-			fs.mkdirSync(getDir, 0777);
-			console.log("test");
-			file.upload(getName, getData, function(data) {
-				console.log(data);
-			});
-		}
-	});
 };

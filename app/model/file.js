@@ -17,6 +17,13 @@ FileSchema.methods = {
 
 	test: function() {
 		console.info("=======test");
+	},
+	readdir: function(getDir, callback) {
+		var sendInfo = [];
+		var i = 0;
+		console.log("show");
+		sendInfo=fs.readdirSync(getDir);
+		callback(sendInfo);
 	}
 };
 
