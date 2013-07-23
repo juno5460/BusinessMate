@@ -67,7 +67,7 @@ $(function() {
 				show: true,
 				position: "ne",
 				labelBoxBorderColor: null,
-				margin: [-35, 20]
+				margin: [10, 20]
 			},
 			grid: {
 				hoverable: true,
@@ -142,9 +142,8 @@ $(function() {
 		}
 
 		var placeholder1 = $('#placeholder1').css({
-			'width': '40%',
-			'min-height': '150px',
-			'margin-left': '30px'
+			'width': '100%',
+			'min-height': '150px'
 		});
 		$.plot(placeholder1, pieData1, optionPie);
 		placeholder1.bind("plotclick", function(event, pos, obj) {
@@ -153,9 +152,8 @@ $(function() {
 		});
 
 		var placeholder2 = $('#placeholder2').css({
-			'width': '40%',
-			'min-height': '150px',
-			'margin-left': '30px'
+			'width': '100%',
+			'min-height': '150px'
 		});
 		$.plot(placeholder2, pieData2, optionPie);
 		placeholder2.bind("plotclick", function(event, pos, obj) {
@@ -184,7 +182,7 @@ $(function() {
 			pieData3.push(data2);
 			pieData3.push(data3);
 			var placeholder3 = $('#placeholder3').css({
-				'width': '90%',
+				'width': '100%',
 				'min-height': '150px'
 			});
 			$.plot(placeholder3, pieData3, optionPie);
@@ -329,7 +327,7 @@ $(function() {
 										if (zeroTitle) {
 
 											// $tempObj.parent().parent().parent().remove();
-											$tempObj.parent().parent().parent().fadeOut(2000);
+											$tempObj.parent().parent().parent().fadeOut(1000);
 
 											var html = $('#taskToFinish').html();
 											if (html == "") {
