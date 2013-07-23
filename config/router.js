@@ -90,7 +90,7 @@ module.exports = function(app, passport, auth) {
 	app.get('/desktop', auth.requiresLogin, function(req, res) {
 
 		res.send(generator.generate('desktop', {
-			username: 'Justin'
+			username: req.user.username
 		}));
 	});
 
@@ -104,34 +104,34 @@ module.exports = function(app, passport, auth) {
 	app.get('/fund', auth.requiresLogin, function(req, res) {
 
 		res.send(generator.generate('fund', {
-			username: 'Justin'
+			username: req.user.username
 		}));
 	});
 
 	app.get('/fundWait', auth.requiresLogin, function(req, res) {
 
 		res.send(generator.generate('fundWait', {
-			username: 'Justin'
+			username: req.user.username
 		}));
 	});
 
 	app.get('/fundShould', auth.requiresLogin, function(req, res) {
 
 		res.send(generator.generate('fundShould', {
-			username: 'Justin'
+			username: req.user.username
 		}));
 	});
 
 	app.get('/contracts', auth.requiresLogin, function(req, res) {
 
 		res.send(generator.generate('contracts', {
-			username: 'Justin'
+			username: req.user.username
 		}));
 	});
 
 	app.get('/contracts/new', auth.requiresLogin, function(req, res) {
 		res.send(generator.generate('addContract', {
-			username: 'Justin'
+			username: req.user.username
 		}));
 	});
 
