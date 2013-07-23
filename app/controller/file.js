@@ -26,7 +26,9 @@ exports.upload = function(req, res) {
 //展示合同附件
 exports.show = function(req, res) {
 
-	var getDir = "./files/123";
+    console.log("show");
+    var queryId = req.params['id'] + '';
+	var getDir = "./files/"+queryId;
 	var get = [];
 	var count = 0;
 	fs.readdir(getDir, function(err, files) {
