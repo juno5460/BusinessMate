@@ -32,8 +32,8 @@ $(function() {
 		'auto': true,
 		'fileSizeLimit': 1024 * 5,
 		'onUploadComplete': function(file, data) {
-			uploadFilesInfo.push(data);
-			console.info(data);
+			uploadFilesInfo.push($(data));
+			console.info($(data));
 		}
 	});
 
@@ -215,8 +215,12 @@ $(function() {
 		//从网页中提取已经输入的数据
 		var $myId 		= $("#myId").val();
 		var $name 		= $("#name").val();
-		var $partyA 	= $("#partyA").val();
-		var $partyB 	= $("#partyB").val();
+		var $partyA 		= $("#partyA").val();
+		var $partyAabbr		= $("#partyAabbr").val();
+		var $partyADept		= $("#partyADept").val();
+		var $partyB 		= $("#partyB").val();
+		var $partyBabbr		= $("#partyAabbr").val();
+		var $partyBDept		= $("#partyBDept").val();
 		var $signDate 	= $("#signPicker").val();
 		var $beginDate 	= $("#beginPicker").val();
 		var $endDate 	= $("#endPicker").val();
@@ -227,7 +231,11 @@ $(function() {
 		model.myId 		= $myId;
 		model.name 		= $name;
 		model.partyA 	= $partyA;
+		model.partyAabbr = $partyAabbr;
+		model.partyADept = $partyADept;
 		model.partyB 	= $partyB;
+		model.partyBabbr = $partyBabbr;
+		model.partyBDept = $partyBDept;
 		model.signDate 	= $signDate;
 		model.beginDate = $beginDate;
 		model.endDate 	= $endDate;

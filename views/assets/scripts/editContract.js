@@ -410,14 +410,18 @@ $(function(){
 		model.myId 		= $myId;
 		model.name 		= $name;
 		model.partyA 	= $partyA;
+		model.partyAabbr = $partyAabbr;
+		model.partyADept = $partyADept;
 		model.partyB 	= $partyB;
+		model.partyBabbr = $partyBabbr;
+		model.partyBDept = $partyBDept;
 		model.signDate 	= $signDate;
 		model.beginDate = $beginDate;
 		model.endDate 	= $endDate;
 		model.amount 	= $amount;
 		model.state 	= $state;
 
-		model.file 	= $uploadFilesInfo;
+		model.file 	= uploadFilesInfo;
 
 		model.events 	= buildEventsModel();
 
