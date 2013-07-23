@@ -38,6 +38,7 @@ $(function(){
 				'auto' 			: true,
 				'fileSizeLimit'	: (1024 * 5),
 				'onUploadComplete' : function(file,data) {
+					data = JSON.parse(data);
 					uploadFilesInfo.push(data);
 					console.info(data);
         }
