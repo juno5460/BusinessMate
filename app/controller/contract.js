@@ -74,6 +74,7 @@ exports.create = function(req, res) {
 		amount: rdata.amount, //金额
 		returnRatio: rdata.returnRatio, //回款比率
 		returnAmount: rdata.returnAmount, //回款金额
+		lastReturnDate: rdata.lastReturnDate, //上次回款日期
 		signDate: rdata.signDate, //签署日期
 		name: rdata.name, //合同名称
 		tName: rdata.tName, //合同模版名称
