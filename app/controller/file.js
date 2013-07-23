@@ -25,11 +25,63 @@ exports.send = function(req, res) {
 
 //展示合同附件
 exports.show = function(req, res) {
-	var file = new File();
-	var getDir="./files/123";
-	file.readdir(getDir, function(data) {
-		res.send(data);
+	/////
+	/*var getDir="./files/123";
+		fs.readdir(getDir, function(err,files) {
+			res.send(files);
+		});*/
+	//////
+	var getDir = "./files/123";
+	var get = [];
+	var count = 0;
+	fs.readdir(getDir, function(err, files) {
+		async.whilst(function() {
+			return count < files.length;
+		}, function(cb) {
+			var data = fs.readFileSync(getDir + '/' + files[count]);
+			get[count] = {
+				"name": files[count],
+				"length": data.length
+			};
+			console.log(get[count]);
+			count++;
+			cb();
+		}, function(err) {
+			if (err != undefined)
+				console.log(err);
+		});
+		res.send(get);
 	});
+
+	// var sendInfo = [];
+	// var getDir = "./files/123";
+	// var get = [];
+	// var i = 0;
+	// files = fs.readdirSync(getDir);
+	// async.waterfall([
+	// 	function(callback) {
+	// 		fs.readFile(getDir + "/" + files[i], function(err, data) {
+	// 			get[i] = {
+	// 				"name": files[i],
+	// 				"length": data.length
+	// 			};
+	// 			i++;
+	// 			callback(get);
+	// 		});
+	// 	},
+	// 	function(get, callback) {
+	// 		fs.readFile(getDir + "/" + files[i], function(err, data) {
+	// 			get[i] = {
+	// 				"name": files[i],
+	// 				"length": data.length
+	// 			};
+	// 			i++;
+	// 			callback(get);
+	// 		});
+	// 	}
+	// ], function(err, result) {
+	// 	console.log(result);
+	// });
 };
 //上传文件
 exports.upload = function(req, res) {
