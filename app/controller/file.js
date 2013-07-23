@@ -19,7 +19,8 @@ exports.upload = function(req, res) {
 		name: req.files.Filedata.name,
 		tempid: req.files.Filedata.path
 	};
-	console.log(temp);
+
+	console.log(temp.name);
 	res.send(temp);
 };
 
