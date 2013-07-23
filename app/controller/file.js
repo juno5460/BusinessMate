@@ -68,9 +68,11 @@ exports.download = function(req, res) {
 	// var getId = req.contractId;
 	// var getName = req.name;
 	// var pathname = "./files/" + getId + "/" + getName;
+	console.log(req.query.contractId);
+	console.log(req.query.fileName);
 
-	var getId = "1234567";
-	var getName = "i3开发基础教程代码.zip";
+	var getId = req.query.contractId;
+	var getName = req.query.fileName;
 	var pathname = "../files/" + getId + "/" + getName;
 	// var pathname = "./files/1234567/message.doc";
 
@@ -138,39 +140,3 @@ exports.test = function(req, res) {
 	console.log("test");
 
 };
-/*
-//上传文件
-exports.upload = function(req, res) {
-	console.log("upload");
-	console.log(req.files.Filedata.path);
-	var get = {
-		name: req.files.Filedata.name,
-		contractId: "1234567",
-		tempPath: req.files.Filedata.path
-	};
-	var userInfo = {
-		"uid": req.uid,
-		"name": req.files.Filedata.name
-	};
-	var getDir = "./files/" + get.contractId;
-	var getName = "./files/" + get.contractId + "/" + get.name;
-	fs.exists(getDir, function(check) {
-		if (check) {
-			console.log("upload");
-			fs.readFile(get.tempPath, function(err, data) {
-				fs.writeFile(getName, data, function(err) {
-					console.log("success save");
-				});
-			});
-		} else {
-			fs.mkdirSync(getDir, 0777);
-			console.log("upload");
-			fs.readFile(get.tempPath, function(err, data) {
-				fs.writeFile(getName, data, function(err) {
-					console.log("success save");
-				});
-			});
-		}
-	});
-};
-*/
