@@ -120,11 +120,11 @@ ContractSchema.methods = {
 	upload: function(getData, getFileID, callback) {
 		console.log("upload");
 		console.log(getData);
-		var getDir = "../files/" + getFileID;
+		var getDir = "./files/" + getFileID;
 		///async test
 		async.forEach(getData, function(item, callback) {
-			var tempPath = "../uploads/" + item.tempid;
-			var getName = "../files/" + getFileID + "/" + item.name;
+			var tempPath = "./uploads/" + item.tempid;
+			var getName = "./files/" + getFileID + "/" + item.name;
 			console.log(tempPath);
 			console.log(getName);
 			fs.exists(getDir, function(check) {

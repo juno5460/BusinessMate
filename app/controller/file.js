@@ -29,7 +29,7 @@ exports.show = function(req, res) {
 
 	console.log("show");
 	var queryId = req.params['id'] + '';
-	var getDir = "../files/" + queryId;
+	var getDir = "./files/" + queryId;
 	console.log(getDir);
 	var get = [];
 	var count = 0;
@@ -73,7 +73,7 @@ exports.download = function(req, res) {
 
 	var getId = req.query.contractId;
 	var getName = req.query.fileName;
-	var pathname = "../files/" + getId + "/" + getName;
+	var pathname = "./files/" + getId + "/" + getName;
 	// var pathname = "./files/1234567/message.doc";
 
 	var types = {
@@ -124,7 +124,6 @@ exports.download = function(req, res) {
 						// 'Content-Encoding': 'jpg',
 						// 'Content-Type': 'text/html'
 					});
-
 					res.write(file, "binary");
 
 					res.end();
