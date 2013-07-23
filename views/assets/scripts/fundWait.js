@@ -28,10 +28,16 @@ $(function() {
 						return s_x;  
 					}  
 
+					//合同名称过长则进行省略处理
+					var contractName = contract.name;
+					if (contractName.length > 20) {
+						contractName = contractName.substring(0, 20) + "...";
+					}
+
 					var t2data = {
-						name						: 	contract.name,
-						partyA					: 	contract.partyA,
-						partyB					: 	contract.partyB,
+						name						: 	contractName,
+						partyA					: 	contract.partyAabbr,
+						partyB					: 	contract.partyBabbr,
 						amount          : 	contract.amount,
 						returnAmount		: 	data1.waitCount,
 						returnRatio 		: 	data1.returnRatio,

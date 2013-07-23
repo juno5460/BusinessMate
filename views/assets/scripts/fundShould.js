@@ -28,14 +28,20 @@ $(function() {
 						return s_x;  
 					}  
 
+					//合同名称过长则进行省略处理
+					var contractName = contract.name;
+					if (contractName.length > 20) {
+						contractName = contractName.substring(0, 20) + "...";
+					}
+
 					var t3data = {
-						name				: 	contract.name,
-						partyA			: 	contract.partyA,
-						partyB			: 	contract.partyB,
-						amount      : 	data1.oneAllCount,
-						returnAmount: 	data1.unreturnCount,
-						returnRatio : 	data1.returnRatio,
-						remark	    : 	contract.state
+						name				  : 	contractName,
+						partyA			  : 	contract.partyAabbr,
+						partyB			  : 	contract.partyBabbr,
+						amount        : 	data1.oneAllCount,
+						returnAmount	: 	data1.unreturnCount,
+						returnRatio   : 	data1.returnRatio,
+						remark	      : 	contract.state
 					};
 
 					var curRatio3 = changeTwoDecimal((t3data.returnRatio)*100);

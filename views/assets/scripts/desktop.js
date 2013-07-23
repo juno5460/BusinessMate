@@ -1,8 +1,8 @@
 $(function() {
 
 	//计算各航空的合同数目
-	var partyA = new Array(),
-		partyB = new Array();
+	var partyAabbr = new Array(),
+		partyBabbr = new Array();
 	var contractsCount = 0;
 	var isChecked = false;
 
@@ -41,8 +41,8 @@ $(function() {
 	$.get("/api/contracts", function(data, status) {
 
 		$.each(data, function(i, contract) {
-			partyA[contractsCount] = contract.partyA;
-			partyB[contractsCount] = contract.partyB;
+			partyAabbr[contractsCount] = contract.partyAabbr;
+			partyBabbr[contractsCount] = contract.partyBabbr;
 			contractsCount++;
 		});
 
@@ -88,7 +88,7 @@ $(function() {
 				return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + waitCount + "<br/>" + Math.round(series.percent) + "%</div>";
 			else {
 				$.each(data, function(i, contract) {
-					if (contract.partyA == label || contract.partyB == label)
+					if (contract.partyAabbr == label || contract.partyBabbr == label)
 						count += contract.amount;
 				});
 				return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + count + "<br/>" + Math.round(series.percent) + "%</div>";
@@ -106,20 +106,20 @@ $(function() {
 			var toPushB = false;
 
 			for (var j = i + 1; j < contractsCount; j++) {
-				if (partyA[j] == partyA[i])
-					partyA[j] = null;
+				if (partyAabbr[j] == partyAabbr[i])
+					partyAabbr[j] = null;
 
-				if (partyB[j] == partyB[i])
-					partyB[j] = null;
+				if (partyBabbr[j] == partyBabbr[i])
+					partyBabbr[j] = null;
 			}
 
 			$.each(data, function(t, contract) {
 
-				if (partyA[i] != null && contract.partyA == partyA[i]) {
+				if (partyAabbr[i] != null && contract.partyAabbr == partyAabbr[i]) {
 					toPushA = true;
 					amountA += contract.amount;
 				}
-				if (partyB[i] != null && contract.partyB == partyB[i]) {
+				if (partyBabbr[i] != null && contract.partyBabbr == partyBabbr[i]) {
 					toPushB = true;
 					amountB += contract.amount;
 				}
@@ -128,14 +128,14 @@ $(function() {
 
 			if (toPushA) {
 				pieData1.push({
-					label: partyA[i],
+					label: partyAabbr[i],
 					data: amountA,
 					color: color[i]
 				});
 			}
 			if (toPushB) {
 				pieData2.push({
-					label: partyB[i],
+					label: partyBabbr[i],
 					data: amountB,
 					color: color[i + 3]
 				});
@@ -283,7 +283,7 @@ $(function() {
 				var $buttonElement = $("#taskToFinish ul:eq(" + ulIndex + ")").find('button');
 
 				//对于button，绑定事件之前一定要先解除前一次的绑定，否则会出错
-				$buttonElement.unbind("click"); 
+				$buttonElement.unbind("click");
 				$buttonElement.click(function() {
 
 					bootbox.prompt("提示（填写备注信息）", function(result) {
@@ -429,7 +429,7 @@ $(function() {
 			var bindModel = function(ulIndex, contract, j) {
 
 				var $buttonElement = $("#outOfDate ul:eq(" + ulIndex + ")").find('button');
-				
+
 				$buttonElement.unbind("click");
 				$buttonElement.click(function() {
 					bootbox.prompt("提示（填写备注信息）", function(result) {
