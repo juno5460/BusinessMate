@@ -13,7 +13,7 @@ $(function() {
 	var liColor = new Array('item-orange', 'item-red', 'item-default', 'item-blue',
 		'item-grey', 'item-green', 'item-pink', 'item-orange', 'item-red', 'item-default', 'item-blue', 'item-grey', 'item-green', 'item-pink', 'item-orange', 'item-red', 'item-default', 'item-blue', 'item-grey', 'item-green', 'item-pink');
 	//定义饼图颜色数组
-	var color = new Array("#68BC31", "#FEE074", "#d54c7e","#2091CF", "#AF4E96", "#b4c2cc","#b74635","#DA5430","#d9d9d9","#f7d05b","#8b9aa3","#4f99c6","#69aa46","#a069c3","#629b58");
+	var color = new Array("#68BC31", "#FEE074", "#d54c7e","#2091CF", "#AF4E96", "#b74635","#DA5430","#f7d05b","#8b9aa3","#4f99c6","#69aa46","#d9d9d9","#a069c3","#629b58","#b4c2cc");
 
 	//字符串转换成十六进制
 
