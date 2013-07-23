@@ -15,12 +15,12 @@ var async = require('async'),
 //返回文件id
 exports.upload = function(req, res) {
 	console.log("upload");
+	var path=req.files.Filedata.path;
+	var fileid = path.substring(path.lastIndexOf("/")+1, path.length);
 	var temp = {
 		name: req.files.Filedata.name,
-		tempid: req.files.Filedata.path
+		tempid: fileid
 	};
-
-	console.log(temp.name);
 	res.send(temp);
 };
 
