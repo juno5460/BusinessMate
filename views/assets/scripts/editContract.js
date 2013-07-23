@@ -482,7 +482,7 @@ $(function(){
 		$("#uploadifive-file_upload").click();
 	});
 
-	var getItemID = function(){
+	var getContractID = function(){
 		return $("#contractID").val();
 	}
 
@@ -498,7 +498,7 @@ $(function(){
 		}, 600);
 	}
 
-	var getContractID = function() {
+	var generateID = function() {
 
 		//生成唯一ID号
 		return new UUID().toString();
