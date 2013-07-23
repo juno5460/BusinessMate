@@ -417,7 +417,7 @@ $(function(){
 		model.amount 	= $amount;
 		model.state 	= $state;
 
-		model.files 	= $uploadFilesInfo;
+		model.file 	= $uploadFilesInfo;
 
 		model.events 	= buildEventsModel();
 
