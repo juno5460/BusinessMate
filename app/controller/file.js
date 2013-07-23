@@ -15,8 +15,8 @@ var async = require('async'),
 //返回文件id
 exports.upload = function(req, res) {
 	console.log("upload");
-	var path=req.files.Filedata.path;
-	var fileid = path.substring(path.lastIndexOf("/")+1, path.length);
+	var path = req.files.Filedata.path;
+	var fileid = path.substring(path.lastIndexOf("/") + 1, path.length);
 	var temp = {
 		name: req.files.Filedata.name,
 		tempid: fileid
@@ -27,30 +27,39 @@ exports.upload = function(req, res) {
 //展示合同附件
 exports.show = function(req, res) {
 
-    console.log("show");
-    var queryId = req.params['id'] + '';
-	var getDir = "../files/"+queryId;
+	console.log("show");
+	var queryId = req.params['id'] + '';
+	var getDir = "../files/" + queryId;
+	console.log(getDir);
 	var get = [];
 	var count = 0;
-	fs.readdir(getDir, function(err, files) {
-		async.whilst(function() {
-			return count < files.length;
-		}, function(cb) {
-			var data = fs.readFileSync(getDir + '/' + files[count]);
-			get[count] = {
-				"name": files[count],
-				"size": parseFloat(data.length/1024)
-			};
-			console.log(get[count]);
-			count++;
-			cb();
-		}, function(err) {
-			if (err != undefined)
-				console.log(err);
-		});
-		res.send(get);
+	fs.exists(getDir, function(check) {
+		if (check == true) {
+			fs.readdir(getDir, function(err, files) {
+				console.log(files);
+				async.whilst(function() {
+					return count < files.length;
+				}, function(cb) {
+					var data = fs.readFileSync(getDir + '/' + files[count]);
+					get[count] = {
+						"name": files[count],
+						"size": parseFloat(data.length / 1024)
+					};
+					console.log(get[count]);
+					count++;
+					cb();
+				}, function(err) {
+					if (err != undefined)
+						console.log(err);
+				});
+				res.send(get);
+			});
+		}
+		else
+		{
+			res.send("cannot get the file");
+		}
 	});
-
 };
 
 //下载文件
