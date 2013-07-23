@@ -28,7 +28,7 @@ exports.show = function(req, res) {
 
     console.log("show");
     var queryId = req.params['id'] + '';
-	var getDir = "./files/"+queryId;
+	var getDir = "../files/"+queryId;
 	var get = [];
 	var count = 0;
 	fs.readdir(getDir, function(err, files) {
@@ -61,7 +61,7 @@ exports.download = function(req, res) {
 
 	var getId = "1234567";
 	var getName = "i3开发基础教程代码.zip";
-	var pathname = "./files/" + getId + "/" + getName;
+	var pathname = "../files/" + getId + "/" + getName;
 	// var pathname = "./files/1234567/message.doc";
 
 	var types = {

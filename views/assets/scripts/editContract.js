@@ -36,7 +36,7 @@ $(function(){
 				'buttonClass' 	: 'btn btn-small',
 				'buttonText' 	: '添加附件',
 				'auto' 			: true,
-				'fileSizeLimit'	: 1024 * 5,
+				'fileSizeLimit'	: (1024 * 5),
 				'onUploadComplete' : function(file,data) {
 					uploadFilesInfo.push(data);
 					console.info(data);
@@ -108,13 +108,12 @@ $(function(){
 
 
 	$("#tab-attachments").click(function(){
-		$.ajax(function(){
+		$.ajax({
 			url:'files/show/' + getContractID(),
 			type:'GET',
 			success: function(data){
-
-				$(data).each(function(index,item)){
-					var tmp = "<p>附件{{_no}}：<a href='/files/download?contractId={{_cid}}&fileName={{_name}}'>{{_fileName}}</a>{{_size}}</p>"
+				$(data).each(function(index,item){
+					var tmp = "<p>附件{{_no}}：<a href='/files/download?contractId={{_cid}}&fileName={{_name}}'>{{_fileName}}</a>{{_size}}</p>";
 					$('#attachments').append($(Mustache.to_html(tmp, {
 						_no: 1,
 						_cid: getContractID(),
@@ -122,7 +121,7 @@ $(function(){
 						_name: item.name,
 						_size: item.size < 1024 ? item.size + "KB"  : item.size / 1024 +"MB"
 					})));
-				}
+				});
 
 			},
 			error: function(data){
@@ -495,7 +494,7 @@ $(function(){
 		}, 600);
 	}
 
-	var generateID = function() {
+	var getContractID = function() {
 
 		//生成唯一ID号
 		return new UUID().toString();
