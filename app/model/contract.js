@@ -27,7 +27,11 @@ var ContractSchema = mongoose.Schema({ //创建合同模型对象
 	uid: String, //用户id,对应用户模型的uid
 	myId: String, //合同编号
 	partyA: String, //签署甲方
+	partyAabbr: String, //甲方简称
+	partyADept: String, //甲方部门
 	partyB: String, //签署乙方
+	partyBabbr: String, //乙方简称
+	partyBDept: String, //乙方部门
 	amount: Number, //金额
 	returnRatio: Number, //回款比率
 	returnAmount: Number, //回款金额
@@ -62,7 +66,11 @@ ContractSchema.methods = {
 			lastReturnDate: 1,
 			signDate: 1,
 			partyA: 1,
+			partyAabbr: 1,
+			partyADept: 1,
 			partyB: 1,
+			partyBabbr: 1,
+			partyBDept: 1,
 			beginDate: 1,
 			endDate: 1,
 			events: 1,

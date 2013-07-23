@@ -79,15 +79,10 @@ exports.create = function(req, res) {
 		events: rdata.events, //合同事件
 		state: rdata.state, //合同状态
 		next: rdata.next, //待办任务
-		file: [{
-			tempid: "9ba9d1521bada3542ce8998f8867df49",
-			name: "BusinessMate.zip"
-		}, {
-			tempid: "b1496e94027f832f624139b10a20785a",
-			name: "he.js"
-		}]
+		file: rdata.file
 	};
 	console.log("start====");
+	console.log(saveData.file);
 	console.log(saveData);
 	contract.insertData(saveData, function(identify) {
 		console.log("starting....");
@@ -125,6 +120,7 @@ exports.update = function(req, res) {
 		"events": get.events,
 		file: get.file
 	};
+	console.log(get.file);
 	if (getNew.events == null) {
 		getNew.events = [];
 	}
