@@ -113,9 +113,12 @@ $(function(){
 			url:'/files/show/' + getContractID(),
 			type:'GET',
 			success: function(data){
+
+				$('#files').html("");
+
 				$(data).each(function(index,item){
 					var tmp = "<p>附件{{_no}}：<a href='/files/download?contractId={{_cid}}&fileName={{_name}}'>{{_fileName}}</a>{{_size}}</p>";
-					$('#attachments').append($(Mustache.to_html(tmp, {
+					$('#files').append($(Mustache.to_html(tmp, {
 						_no: 1,
 						_cid: getContractID(),
 						_fileName: item.name ,
