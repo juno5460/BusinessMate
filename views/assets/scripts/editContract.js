@@ -123,7 +123,7 @@ $(function(){
 						_cid: getContractID(),
 						_fileName: item.name ,
 						_name: item.name,
-						_size: item.size < 1024 ? item.size + "KB"  : item.size / 1024 +"MB"
+						_size: item.size < 1024 ? parseInt(item.size) + "KB"  : parseInt(item.size) / 1024 +"MB"
 					})));
 				});
 
