@@ -9,12 +9,11 @@ $(function() {
 	var idIndex1 = 0;
 	var idIndex2 = 0;
 
+	//定义代办任务label边颜色
 	var liColor = new Array('item-orange', 'item-red', 'item-default', 'item-blue',
 		'item-grey', 'item-green', 'item-pink', 'item-orange', 'item-red', 'item-default', 'item-blue', 'item-grey', 'item-green', 'item-pink', 'item-orange', 'item-red', 'item-default', 'item-blue', 'item-grey', 'item-green', 'item-pink');
-	//定义颜色数组
-	var color = new Array("#68BC31", "#2091CF", "#F63AFF", "#4DFF00", "#00CCFF", "#88FF7A", "#F27AFF", "#47FF47",
-		"#FF0066", "#FF33CC", "#85FFFF", "#FF8FB4", "#8BFF52", "#FFF27A",
-		"#FF4747", "#47A3FF", "#FEE074", "#FF85FF", "#F18BDD", "#DA5430");
+	//定义饼图颜色数组
+	var color = new Array("#68BC31", "#FEE074", "#d54c7e","#2091CF", "#AF4E96", "#b4c2cc","#b74635","#DA5430","#d9d9d9","#f7d05b","#8b9aa3","#4f99c6","#69aa46","#a069c3","#629b58");
 
 	//字符串转换成十六进制
 
@@ -29,13 +28,15 @@ $(function() {
 		return val;
 	}
 
+	//定义三种回款标识，并获得其值
 	var allCount, allUncount, waitCount;
 	$.get("/api/tasksGraph", function(data, status) {
 		allCount = data.allReturnCount;
 		allUncount = data.allUnreturnCount;
 		waitCount = data.allWaitCount;
 	});
-	//定义标签显示函数
+
+	//桌面饼图部分
 	$.get("/api/contracts", function(data, status) {
 
 		$.each(data, function(i, contract) {
@@ -50,11 +51,11 @@ $(function() {
 					show: true,
 					radius: 1,
 					highlight: {
-						opacity: 0.25
+						opacity: 0.3
 					},
 					label: {
 						show: true,
-						radius: 1/2,
+						radius: 1 / 2,
 						formatter: labelFormatter,
 						background: {
 							opacity: 0
@@ -75,6 +76,7 @@ $(function() {
 		};
 
 		//设置饼图标签格式，同时返回金额和百分比
+
 		function labelFormatter(label, series) {
 			var count = 0;
 			if (label == "已回款")
@@ -85,7 +87,7 @@ $(function() {
 				return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + waitCount + "<br/>" + Math.round(series.percent) + "%</div>";
 			else {
 				$.each(data, function(i, contract) {
-					if(contract.partyA == label || contract.partyB == label) 
+					if (contract.partyA == label || contract.partyB == label)
 						count += contract.amount;
 				});
 				return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + count + "<br/>" + Math.round(series.percent) + "%</div>";
@@ -95,6 +97,7 @@ $(function() {
 		var pieData1 = new Array(),
 			pieData2 = new Array();
 
+		//获得甲（乙）方各公司的总金额，并存入饼图数据中
 		for (var i = 0; i < contractsCount; i++) {
 			var amountA = 0; //甲方总金额
 			var amountB = 0; //乙方总金额
@@ -165,17 +168,17 @@ $(function() {
 			var data1 = {
 				label: "已回款",
 				data: data.allReturnCount,
-				color: color[10]
+				color: "#f89406"
 			};
 			var data2 = {
 				label: "待回款",
 				data: data.allWaitCount,
-				color: color[14]
+				color: "#b74635"
 			};
 			var data3 = {
 				label: "应回款",
 				data: data.allUnreturnCount,
-				color: color[17]
+				color: "#005580"
 			};
 			pieData3.push(data1);
 			pieData3.push(data2);
@@ -233,7 +236,7 @@ $(function() {
 		var t1, t2, t3, template;
 		var zeroTitle; //title是否为零标识，以此作为合同结束标志
 		var remark = ''; //备注信息
-		var taskIsBland = false;
+		var taskIsBlank = false;
 
 		$.each(data, function(i, contract) {
 
@@ -271,8 +274,6 @@ $(function() {
 					ulIndex++;
 				}
 
-				if (taskIsBland)
-					ulIndex--;
 				idIndex++;
 				if (idIndex >= 15)
 					idIndex = 0;
@@ -327,8 +328,9 @@ $(function() {
 										console.info(zeroTitle);
 										if (zeroTitle) {
 
-											$tempObj.parent().parent().parent().remove();
-											taskIsBland = true;
+											// $tempObj.parent().parent().parent().remove();
+											$tempObj.parent().parent().parent().fadeOut(2000);
+
 											var html = $('#taskToFinish').html();
 											if (html == "") {
 												template = "<div id='blankTask' style='margin-top:100px'><ul class='center' style='font-size:16px'>没有需要待办的任务.</ul></div>";
@@ -336,9 +338,10 @@ $(function() {
 											}
 
 										} else {
-											// $tempObj.parent().parent().parent().fadeOut(2000);
-											$tempObj.parent().parent().parent().replaceWith(template);
-											bindModel(e.data.uI, contract);
+												// $tempObj.parent().parent().parent().fadeOut(2000);
+												console.info("execute here:");
+												$tempObj.parent().parent().parent().replaceWith(template).show(500);
+												bindModel(e.data.uI, contract);
 										}
 									}
 								});
@@ -425,15 +428,15 @@ $(function() {
 
 			var bindModel = function(ulIndex, contract, j) {
 
-				// var $buttonElement = $("#outOfDate ul:eq(" + ulIndex + ")").find('button');
-				// $buttonElement.click(function() {
-				// 	bootbox.prompt("提示（填写备注信息）", function(result) {
-				// 		if (result == null)
-				// 			return;
+				var $buttonElement = $("#outOfDate ul:eq(" + ulIndex + ")").find('button');
+				$buttonElement.click(function() {
+					bootbox.prompt("提示（填写备注信息）", function(result) {
+						if (result == null)
+							return;
 
-				// 		remark = result;
-				// 	});
-				// });
+						remark = result;
+					});
+				});
 
 				var $inputElement = $("#outOfDate ul:eq(" + ulIndex + ")").find('input');
 				$inputElement.bind('click', {
@@ -461,7 +464,7 @@ $(function() {
 							console.info('error');
 						},
 						success: function(result) {
-							$tempObj.parent().parent().parent().remove();
+							$tempObj.parent().parent().parent().fadeOut(1000);
 							var html = $('#outOfDate').html();
 							if (html == "") {
 								template = "<div id='blankDate' style='margin-top:120px'><ul class='center' style='font-size:16px'>没有过期任务.</ul></div>";
