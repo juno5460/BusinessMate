@@ -13,8 +13,8 @@ var async = require('async'),
 	File = mongoose.model('File');
 
 //返回文件id
-exports.send = function(req, res) {
-	console.log("sendid");
+exports.upload = function(req, res) {
+	console.log("upload");
 	var temp = {
 		name: req.files.Filedata.name,
 		tempid: req.files.Filedata.path
@@ -25,13 +25,10 @@ exports.send = function(req, res) {
 
 //展示合同附件
 exports.show = function(req, res) {
-	/////
-	/*var getDir="./files/123";
-		fs.readdir(getDir, function(err,files) {
-			res.send(files);
-		});*/
-	//////
-	var getDir = "./files/123";
+
+    console.log("show");
+    var queryId = req.params['id'] + '';
+	var getDir = "./files/"+queryId;
 	var get = [];
 	var count = 0;
 	fs.readdir(getDir, function(err, files) {
@@ -41,7 +38,7 @@ exports.show = function(req, res) {
 			var data = fs.readFileSync(getDir + '/' + files[count]);
 			get[count] = {
 				"name": files[count],
-				"length": data.length
+				"size": parseFloat(data.length/1024)
 			};
 			console.log(get[count]);
 			count++;
@@ -53,69 +50,6 @@ exports.show = function(req, res) {
 		res.send(get);
 	});
 
-	// var sendInfo = [];
-	// var getDir = "./files/123";
-	// var get = [];
-	// var i = 0;
-	// files = fs.readdirSync(getDir);
-	// async.waterfall([
-	// 	function(callback) {
-	// 		fs.readFile(getDir + "/" + files[i], function(err, data) {
-	// 			get[i] = {
-	// 				"name": files[i],
-	// 				"length": data.length
-	// 			};
-	// 			i++;
-	// 			callback(get);
-	// 		});
-	// 	},
-	// 	function(get, callback) {
-	// 		fs.readFile(getDir + "/" + files[i], function(err, data) {
-	// 			get[i] = {
-	// 				"name": files[i],
-	// 				"length": data.length
-	// 			};
-	// 			i++;
-	// 			callback(get);
-	// 		});
-	// 	}
-	// ], function(err, result) {
-	// 	console.log(result);
-	// });
-};
-//上传文件
-exports.upload = function(req, res) {
-	console.log("upload");
-	console.log(req.files.Filedata.path);
-	var get = {
-		name: req.files.Filedata.name,
-		contractId: "1234567",
-		tempPath: req.files.Filedata.path
-	};
-	var userInfo = {
-		"uid": req.uid,
-		"name": req.files.Filedata.name
-	};
-	var getDir = "./files/" + get.contractId;
-	var getName = "./files/" + get.contractId + "/" + get.name;
-	fs.exists(getDir, function(check) {
-		if (check) {
-			console.log("upload");
-			fs.readFile(get.tempPath, function(err, data) {
-				fs.writeFile(getName, data, function(err) {
-					console.log("success save");
-				});
-			});
-		} else {
-			fs.mkdirSync(getDir, 0777);
-			console.log("upload");
-			fs.readFile(get.tempPath, function(err, data) {
-				fs.writeFile(getName, data, function(err) {
-					console.log("success save");
-				});
-			});
-		}
-	});
 };
 
 //下载文件
@@ -194,3 +128,39 @@ exports.test = function(req, res) {
 	console.log("test");
 
 };
+/*
+//上传文件
+exports.upload = function(req, res) {
+	console.log("upload");
+	console.log(req.files.Filedata.path);
+	var get = {
+		name: req.files.Filedata.name,
+		contractId: "1234567",
+		tempPath: req.files.Filedata.path
+	};
+	var userInfo = {
+		"uid": req.uid,
+		"name": req.files.Filedata.name
+	};
+	var getDir = "./files/" + get.contractId;
+	var getName = "./files/" + get.contractId + "/" + get.name;
+	fs.exists(getDir, function(check) {
+		if (check) {
+			console.log("upload");
+			fs.readFile(get.tempPath, function(err, data) {
+				fs.writeFile(getName, data, function(err) {
+					console.log("success save");
+				});
+			});
+		} else {
+			fs.mkdirSync(getDir, 0777);
+			console.log("upload");
+			fs.readFile(get.tempPath, function(err, data) {
+				fs.writeFile(getName, data, function(err) {
+					console.log("success save");
+				});
+			});
+		}
+	});
+};
+*/

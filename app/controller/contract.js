@@ -87,10 +87,19 @@ exports.create = function(req, res) {
 			name: "he.js"
 		}]
 	};
-	
 	console.log("start====");
 	console.log(saveData);
-	contract.insertData(saveData, res);
+	contract.insertData(saveData, function(identify) {
+		console.log("starting....");
+		console.log(identify);
+		var contract = new Contract();
+		contract.upload(saveData.file, identify[0]._id, function(data) {
+			console.log(data);
+			res.send({
+				hello: "success insert"
+			});
+		});
+	});
 };
 
 
@@ -113,7 +122,14 @@ exports.update = function(req, res) {
 		"endDate": get.endDate,
 		amount: get.amount,
 		"state": get.state,
-		"events": get.events
+		"events": get.events,
+		file: [{
+			tempid: "9ba9d1521bada3542ce8998f8867df49",
+			name: "BusinessMate.zip"
+		}, {
+			tempid: "b1496e94027f832f624139b10a20785a",
+			name: "he.js"
+		}]
 	};
 	if (getNew.events == null) {
 		getNew.events = [];
