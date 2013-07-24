@@ -1,5 +1,6 @@
 var express = require('express'),
 	path = require('path'),
+	fs = require('fs'),
 	mongoStore = require('connect-mongo')(express),
 	flash = require('connect-flash'),
 	connectTimeout = require('connect-timeout');
@@ -12,7 +13,9 @@ module.exports = function function_name(app, config, passport, auth) {
 	app.use(flash());
 	app.use(express.favicon());
 	app.use(express.logger('dev'));
-	app.use(express.bodyParser({uploadDir:'./uploads'}));
+	app.use(express.bodyParser({
+		uploadDir: './uploads'
+	}));
 	app.use(express.methodOverride());
 	app.use(express.cookieParser('your secret here'));
 	// express/mongo session storage
@@ -56,8 +59,26 @@ module.exports = function function_name(app, config, passport, auth) {
 		level: 9
 	}));
 
-
-
+	fs.exists('./files', function(check) {
+		if (check) {
+			console.log("files dir have existed");
+		} else {
+			fs.mkdir('./files', 0777, function(err) {
+				if (err != null)
+					console.log(err);
+			});
+		}
+	});
+	fs.exists('./uploads', function(check) {
+		if (check) {
+			console.log("uploads dir have existed");
+		} else {
+			fs.mkdir('./uploads', 0777, function(err) {
+				if (err != null)
+					console.log(err);
+			});
+		}
+	});
 
 
 	// development enviroment//启动 NODE_ENV=development node app.js
