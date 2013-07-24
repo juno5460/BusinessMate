@@ -359,7 +359,7 @@ $(function(){
 		data = data == null ? [] : data;
 
 		//消除事件列表空白的警告
-		$("#blankWarn").remove();
+		$("#blankWarn").slideUp();
 
 		var datePickerID = generateID();
 
@@ -378,7 +378,11 @@ $(function(){
 			$cellHtml.slideUp();
 			doActionAfterSecond(function() {
 				$cellHtml.remove();
+				var $cellList = $("#eventsList").find(".widget-box");
+				if ($cellList.length == 0)
+					$("#blankWarn").slideDown();
 			}, 0.4);
+
 		});
 
 		$cellHtml.hide();
@@ -399,7 +403,7 @@ $(function(){
 		data = data == null ? [] : data;
 
 		//消除事件列表空白的警告
-		$("#blankWarn").remove();
+		$("#blankWarn").slideUp();
 
 
 		var datePickerID = generateID();
@@ -420,7 +424,11 @@ $(function(){
 			$cellHtml.slideUp();
 			doActionAfterSecond(function() {
 				$cellHtml.remove();
+				var $cellList = $("#eventsList").find(".widget-box");
+				if ($cellList.length == 0)
+					$("#blankWarn").slideDown();
 			}, 0.4);
+
 		});
 
 		$cellHtml.hide();

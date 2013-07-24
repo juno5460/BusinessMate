@@ -26,17 +26,27 @@ $(function() {
 	var uploadFilesInfo = new Array();
 	//上传控件代码
 	$('#file_upload').uploadifive({
-		'uploadScript': '/files/upload',
-		'buttonClass': 'btn btn-small',
-		'buttonText': '添加附件',
-		'auto': true,
-		'fileSizeLimit': 1024 * 5,
-		'onUploadComplete': function(file, data) {
-			data = JSON.parse(data);
-			uploadFilesInfo.push(data);
-			console.info(data.name);
-		}
-	});
+				'uploadScript' 	: '/files/upload',
+				'buttonClass' 	: 'btn btn-small',
+				'buttonText' 	: '添加附件',
+				'auto' 			: true,
+				'fileSizeLimit'	: (1024 * 5),
+				'onUploadComplete' : function(file,data) {
+					data = JSON.parse(data);
+					uploadFilesInfo.push(data);
+					console.info(data);
+        		},
+        		'onCancel' : function(file){
+        			console.info("remove",file.name);
+        			for(var i = 0;i < uploadFilesInfo.length;i++){
+						if (file.name == uploadFilesInfo[i].name) {
+							uploadFilesInfo.splice(i, i + 1);
+						}
+        			}
+        		}
+			});
+
+
 
 
 	isTemplateMode = false;
@@ -307,7 +317,7 @@ $(function() {
 		data = data == null ? [] : data;
 
 		//消除事件列表空白的警告
-		$("#blankWarn").remove();
+		$("#blankWarn").slideUp();
 
 		var datePickerID = generateID();
 
@@ -325,6 +335,9 @@ $(function() {
 			$cellHtml.slideUp();
 			 doActionAfterSecond(function(){
 			 	$cellHtml.remove();
+			 	var $cellList = $("#eventsList").find(".widget-box");
+				if ($cellList.length == 0)
+					$("#blankWarn").slideDown();
 			 },0.4);
 		});
 
@@ -343,7 +356,7 @@ $(function() {
 		data = data == null ? [] : data;
 
 		//消除事件列表空白的警告
-		$("#blankWarn").remove();
+		$("#blankWarn").slideUp();
 
 
 		var datePickerID = generateID();
@@ -360,14 +373,14 @@ $(function() {
 		}));
 
 		$cellHtml.find("#delete").click(function() {
-			// $cellHtml.animate({
-			// 	opacity: '0'
-			// });
 
 			$cellHtml.slideUp();
 
 			doActionAfterSecond(function(){
 				$cellHtml.remove();
+				var $cellList = $("#eventsList").find(".widget-box");
+				if ($cellList.length == 0)
+					$("#blankWarn").slideDown();
 			},.4);
 
 		});
