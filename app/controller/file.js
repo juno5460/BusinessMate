@@ -132,8 +132,26 @@ exports.download = function(req, res) {
 	console.log("download");
 };
 
+//删除文件
+exports.destroy=function(req,res){
+
+	console.log("destroy");
+	var getId = req.query.contractId;
+	var getName = req.query.fileName;
+	var getDir='./files/'+getId+'/'+getName;
+	fs.unlink(getDir,function(){
+		console.log("delete file success.");
+		res.send("delete file success.");
+	});
+};
 
 exports.test = function(req, res) {
 	console.log("test");
-
+    console.log("destroy");
+	var getId = '51ef3b16ff0e39ae05000006';
+	var getName = '1.jpg';
+	var getDir='./files/'+getId+'/'+getName;
+	fs.unlinkSync(getDir,function(){
+		console.log("delete file success.");
+	});
 };

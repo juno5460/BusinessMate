@@ -9,28 +9,19 @@ module.exports = function(app, passport, auth) {
 	var contract = require('../app/controller/contract');
 
 	app.get('/api/contracts', contract.index);
-
 	app.get('/api/contracts/:id', contract.show);
-
 	app.post('/api/contracts', contract.create);
-
 	app.put('/api/contracts/:id', contract.update);
-
 	app.del('/api/contracts/:id', contract.destroy);
-
 	app.get('/api/tests', contract.test);
 
 	///合同模版接口
 	var template = require('../app/controller/template');
 
 	app.get('/api/templates', template.index);
-
 	app.get('/api/templates/:id', template.show);
-
 	app.post('/api/templates', template.create);
-
 	app.put('/api/templates/:id', template.update);
-
 	app.del('/api/templates/:id', template.destroy);
 
 
@@ -38,17 +29,11 @@ module.exports = function(app, passport, auth) {
 	var task = require('../app/controller/task');
 
 	app.get('/api/tasks', task.index);
-
 	app.get('/api/tasks/:id', task.show);
-
 	app.get('/api/tasksGraph',task.graphics);
-
 	app.put('/api/tasks/:id', task.update);
-
 	app.get('/api/finishes', task.finish);
-
 	app.get('/api/dones', task.done);
-
 	app.get('/api/tests', task.count);
 	//业务测试接口
 
@@ -56,25 +41,19 @@ module.exports = function(app, passport, auth) {
 	var files = require('../app/controller/file');
 
 	app.get('/test', files.test);
-
 	app.get('/files/download', files.download);
-
 	app.get('/files/show/:id',files.show);
-
 	app.post('/files/upload',files.upload);
+	app.del('/files/destroy', files.destroy);
 	////////////用户 接口
+
 	var users = require('../app/controller/users');
 
 	app.get('/login', users.login);
-
 	app.get('/signup', users.signup);
-
 	app.get('/logout', users.logout);
-
 	app.post('/users', users.create);
-
 	app.post('/username', users.check);
-
 	app.post('/users/session', passport.authenticate('local', {
 
 		failureRedirect: '/login',
@@ -86,14 +65,12 @@ module.exports = function(app, passport, auth) {
 	app.get('/', auth.requiresLogin, function(req, res) {
 		res.redirect('/login');
 	});
-
 	app.get('/desktop', auth.requiresLogin, function(req, res) {
 
 		res.send(generator.generate('desktop', {
 			username: req.user.username
 		}));
 	});
-
 	app.get('/desktop/:id', auth.requiresLogin, function(req, res) {
 		console.info(req.params.id);
 		res.send(generator.generate('pieDetail', {
@@ -101,41 +78,35 @@ module.exports = function(app, passport, auth) {
 			username: req.user.username
 		}));
 	});
-
 	app.get('/fund', auth.requiresLogin, function(req, res) {
 
 		res.send(generator.generate('fund', {
 			username: req.user.username
 		}));
 	});
-
 	app.get('/fundWait', auth.requiresLogin, function(req, res) {
 
 		res.send(generator.generate('fundWait', {
 			username: req.user.username
 		}));
 	});
-
 	app.get('/fundShould', auth.requiresLogin, function(req, res) {
 
 		res.send(generator.generate('fundShould', {
 			username: req.user.username
 		}));
 	});
-
 	app.get('/contracts', auth.requiresLogin, function(req, res) {
 
 		res.send(generator.generate('contracts', {
 			username: req.user.username
 		}));
 	});
-
 	app.get('/contracts/new', auth.requiresLogin, function(req, res) {
 		res.send(generator.generate('addContract', {
 			username: req.user.username
 		}));
 	});
-
 	app.get('/contracts/:id/edit', auth.requiresLogin, function(req, res) {
 		console.info(req.params.id);
 		res.send(generator.generate('editContract', {
