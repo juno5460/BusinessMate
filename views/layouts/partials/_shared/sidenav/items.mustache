@@ -1,5 +1,5 @@
 <li{{#class}} class="{{class}}"{{/class}}>{{! print class name if it exists }}
-  <a href="{{#link}}{{#createLink}}{{link}}{{/createLink}}{{/link}}{{^link}}#{{/link}}"{{#submenu?}} class="dropdown-toggle"{{/submenu?}}>
+  <a href="/{{#link}}{{#createLink}}{{link}}{{/createLink}}{{/link}}{{^link}}#{{/link}}"{{#submenu?}} class="dropdown-toggle"{{/submenu?}}>
 	{{#icon}}<i class="{{icon}}"></i>{{/icon}}
 	{{#level-1}}
 	 <span>{{title}}</span>
