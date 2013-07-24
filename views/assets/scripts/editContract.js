@@ -136,6 +136,24 @@ $(function(){
 
 	});
 
+	$("#tab-price").click(function(){
+
+		$("#tab-content-price").html("");
+
+		var $tmp = $('#eventsList').clone().find("li");
+		$("#tab-content-price").append($tmp);
+		$tmp.each(function(index,item){
+			//若无价格选项则为自定义事件
+			var isCustom = $(item).find("#price").val() == undefined;
+			if(isCustom) {
+				$(item).remove();
+			}
+		});		
+
+		
+
+	});
+
 	var templateTmp = "<li><a hre='#' title='{{templateName}}'>{{templateName}}</a></li>";
 
 	$("#templateBtn").click(function(){
