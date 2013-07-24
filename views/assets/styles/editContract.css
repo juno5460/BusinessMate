@@ -259,6 +259,7 @@
 			list-style-type: none;
 			border-bottom: 1px dotted #d5d5d5;
 			font-size: 14px;
+			padding: 5px 0;
 		}
 
 		.files li a{
