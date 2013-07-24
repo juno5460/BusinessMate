@@ -81,17 +81,17 @@ $(function() {
 		function labelFormatter(label, series) {
 			var count = 0;
 			if (label == "已回款")
-				return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + allCount + "<br/>" + Math.round(series.percent) + "%</div>";
+				return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>￥" + allCount + "<br/>" + Math.round(series.percent) + "%</div>";
 			else if (label == "应回款")
-				return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + allUncount + "<br/>" + Math.round(series.percent) + "%</div>";
+				return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>￥" + allUncount + "<br/>" + Math.round(series.percent) + "%</div>";
 			else if (label == "待回款")
-				return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + waitCount + "<br/>" + Math.round(series.percent) + "%</div>";
+				return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>￥" + waitCount + "<br/>" + Math.round(series.percent) + "%</div>";
 			else {
 				$.each(data, function(i, contract) {
 					if (contract.partyAabbr == label || contract.partyBabbr == label)
 						count += contract.amount;
 				});
-				return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + count + "<br/>" + Math.round(series.percent) + "%</div>";
+				return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>￥" + count + "<br/>" + Math.round(series.percent) + "%</div>";
 			}
 		}
 
@@ -295,6 +295,7 @@ $(function() {
 				});
 
 				var $inputElement = $("#taskToFinish ul:eq(" + ulIndex + ")").find('input');
+				$inputElement.unbind("click");
 				$inputElement.bind('click', {
 					con: contract,
 					uI: ulIndex
@@ -311,42 +312,50 @@ $(function() {
 						remark: remark
 					};
 
-					$.ajax({
-						url: '/api/tasks/' + e.data.con.next.id,
-						type: 'put',
-						data: postData,
-						error: function() {
-							console.info('error');
-						},
-						success: function(result) {
-							console.info('success');
-							$.get("/api/tasks", function(data, status) {
-
-								$.each(data, function(i, contract) {
-
-									if (contract.name == tempName) {
-
-										templateModel(contract);
-										// console.info(contract);
-										if (zeroTitle) {
-											$tempObj.parent().parent().parent().fadeOut(1000);
-
-											var html = $('#taskToFinish').html();
-											if (html == "") {
-												template = "<div id='blankTask' style='margin-top:100px'><ul class='center' style='font-size:16px'>没有需要待办的任务.</ul></div>";
-												$('#taskToFinish').html(template);
-											}
-
-										} else {
-											$tempObj.parent().parent().parent().replaceWith(template).show(500);
-											// console.info("rollIn");
-											// console.info(e.data.uI);
-											bindModel(e.data.uI, contract);
-										}
-									}
-								});
-							});
+					bootbox.confirm("一经提交便无法修改，请确定是否提交！", function(result) {
+						if (!result) {
+							$tempObj.prop("checked", false);
+							return;
 						}
+
+						$.ajax({
+							url: '/api/tasks/' + e.data.con.next.id,
+							type: 'put',
+							data: postData,
+							error: function() {
+								console.info('error');
+							},
+							success: function(result) {
+								console.info('success');
+								$.get("/api/tasks", function(data, status) {
+
+									$.each(data, function(i, contract) {
+
+										if (contract.name == tempName) {
+
+											templateModel(contract);
+											// console.info(contract);
+											if (zeroTitle) {
+												$tempObj.parent().parent().parent().fadeOut(1000);
+
+												var html = $('#taskToFinish').html();
+												if (html == "") {
+													template = "<div id='blankTask' style='margin-top:100px'><ul class='center' style='font-size:16px'>没有需要待办的任务.</ul></div>";
+													$('#taskToFinish').html(template);
+												}
+
+											} else {
+												$tempObj.parent().parent().parent().replaceWith(template).show(500);
+												// console.info("rollIn");
+												// console.info(e.data.uI);
+												bindModel(e.data.uI, contract);
+											}
+										}
+									}); <!--each-->
+								}); <!--get-->
+							}
+						});
+
 					});
 				});
 			};
@@ -411,7 +420,7 @@ $(function() {
 
 				//定义插入模版
 				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label id='" + contract.undone[j].id + "'class='inline taskcell'><input type='checkbox'><span class='lbl'><span class='lbl'><a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
-				t3 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label><div class='pull-right'><button class='btn btn-mini btn-info'><i class='icon-edit bigger-123'></i></button></div></li></ul>";
+				t3 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label><span style=font-size:20px;color:red>！</span><div class='pull-right'><button class='btn btn-mini btn-info'><i class='icon-edit bigger-123'></i></button></div></li></ul>";
 
 				if (!contract.undone[j].invoiceDone) {
 					t2 = "<span style='color:red'>开发票</span>";
@@ -458,21 +467,28 @@ $(function() {
 						remark: remark
 					};
 
-					$.ajax({
-						url: '/api/tasks/' + undoneID,
-						type: 'put',
-						data: postData,
-						error: function() {
-							console.info('error');
-						},
-						success: function(result) {
-							$tempObj.parent().parent().parent().fadeOut(1000);
-							var html = $('#outOfDate').html();
-							if (html == "") {
-								template = "<div id='blankDate' style='margin-top:120px'><ul class='center' style='font-size:16px'>没有过期任务.</ul></div>";
-								$('#outOfDate').html(template);
-							}
+					bootbox.confirm("一经提交便无法修改，请确定是否提交！", function(result) {
+						if (!result) {
+							$tempObj.prop("checked", false);
+							return;
 						}
+
+						$.ajax({
+							url: '/api/tasks/' + undoneID,
+							type: 'put',
+							data: postData,
+							error: function() {
+								console.info('error');
+							},
+							success: function(result) {
+								$tempObj.parent().parent().parent().fadeOut(1000);
+								var html = $('#outOfDate').html();
+								if (html == "") {
+									template = "<div id='blankDate' style='margin-top:120px'><ul class='center' style='font-size:16px'>没有过期任务.</ul></div>";
+									$('#outOfDate').html(template);
+								}
+							}
+						});
 					});
 				});
 			};
