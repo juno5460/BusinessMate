@@ -14,7 +14,7 @@ $(function() {
 	}
 
 	$.get("/api/contracts", function(data, status) {
-console.info(data);
+		console.info(data);
 		$.each(data, function(i, contract) {
 
 			//这里找出id的所有合同并添加
@@ -28,10 +28,11 @@ console.info(data);
 				var tdata = {
 					name 		: 	contractName,
 					partyA 		: 	contract.partyAabbr,
-					partyB 		: 	contract.partyBbbr,
+					partyB 		: 	contract.partyBabbr,
 					amount 		: 	contract.amount,
 					state 		: 	contract.state
 				};
+				
 				if (stringToHex(contract.partyAabbr) == airline)
 					$("#detailValue").html(contract.partyB);
 				else 
