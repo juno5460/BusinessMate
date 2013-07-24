@@ -50,8 +50,11 @@ $(function() {
 					var easypieRatio3 = "<div style='margin:0px;padding:1px' class='progress' data-percent='"+curRatio3+"%'><div class='bar' style='width:"+curRatio3+"%;'></div></div>";
 					var template3 = "<tr><td  class='center' style='width:200px'>{{name}}</td><td class='hidden-480 center'>{{partyA}}</td><td class='hidden-480 center'>{{partyB}}</td><td class='center'>{{amount}}</td><td class='center'>{{returnAmount}}</td><td class='hidden-phone center'>"+easypieRatio3+"</td><td  class='center'>{{remark}}</td></tr>";
 
-					var html3 = Mustache.to_html(template3, t3data);
-					$('#table3').append(html3);
+					var $html = $(Mustache.to_html(template3, t3data));
+					$html.click(function(){
+						window.location.href = "/contracts/" + contract._id + "/edit";
+					});
+					$('#table3').append($html);
 
 					var oldie = $.browser.msie && $.browser.version < 9;
 					$('.easy-pie-chart3.percentage').each(function(){
