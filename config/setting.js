@@ -1,6 +1,7 @@
 var express = require('express'),
 	path = require('path'),
 	fs = require('fs'),
+	async = require('async'),
 	mongoStore = require('connect-mongo')(express),
 	flash = require('connect-flash'),
 	connectTimeout = require('connect-timeout');
@@ -72,6 +73,15 @@ module.exports = function function_name(app, config, passport, auth) {
 	fs.exists('./uploads', function(check) {
 		if (check) {
 			console.log("uploads dir have existed");
+			fs.readdir('./uploads', function(err, files) {
+				async.forEach(files, function(file, callback) {
+					var getDir = './uploads/' + file;
+					console.log(getDir);
+					fs.unlink(getDir, function() {
+						console.log("delete uploads-file success.");
+					});
+				});
+			});
 		} else {
 			fs.mkdir('./uploads', 0777, function(err) {
 				if (err != null)
