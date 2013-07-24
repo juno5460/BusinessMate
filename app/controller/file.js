@@ -15,11 +15,8 @@ var async = require('async'),
 //返回文件id
 exports.upload = function(req, res) {
 	console.log("upload");
-
 	var path = req.files.Filedata.path;
-	
-	var fileid = path.substring(path.length - 32 , path.length);
-
+	var fileid = path.substring(path.length - 32, path.length);
 	var temp = {
 		name: req.files.Filedata.name,
 		tempid: fileid
@@ -57,9 +54,7 @@ exports.show = function(req, res) {
 				});
 				res.send(get);
 			});
-		}
-		else
-		{
+		} else {
 			res.send("cannot get the file");
 		}
 	});
