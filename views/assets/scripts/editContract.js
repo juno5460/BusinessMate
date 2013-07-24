@@ -114,7 +114,7 @@ $(function(){
 			type:'GET',
 			success: function(data){
 
-				//$('.files').html("");
+				$('.files').html("");
 
 				$(data).each(function(index,item){
 					var tmp = "<li><span class='file-no'>[附件{{_no}}]:</span><a href='/files/download?contractId={{_cid}}&fileName={{_name}}'>{{_fileName}}</a><span class='file-size'>{{_size}}</span><i id='removeBtn' class='icon-remove'></i></li>";
