@@ -259,8 +259,8 @@ $(function() {
 
 				//合同名称过长则进行省略处理
 				var dataName = tdata.name;
-				if (dataName.length > 8) {
-					dataName = dataName.substring(0, 8) + "...";
+				if (dataName.length > 5) {
+					dataName = dataName.substring(0, 5) + "...";
 				}
 
 				//定义插入模版
@@ -420,8 +420,8 @@ $(function() {
 
 				//合同名称过长则进行省略处理
 				var dataName = tdata.name;
-				if (dataName.length > 6) {
-					dataName = dataName.substring(0, 6) + "...";
+				if (dataName.length > 5) {
+					dataName = dataName.substring(0, 5) + "...";
 				}
 
 				//定义插入模版
@@ -531,8 +531,8 @@ $(function() {
 
 				//合同名称过长则进行省略处理
 				var dataName = tdata.name;
-				if (dataName.length > 8) {
-					dataName = dataName.substring(0, 8) + "...";
+				if (dataName.length > 5) {
+					dataName = dataName.substring(0, 5) + "...";
 				}
 
 				//定义插入模版
