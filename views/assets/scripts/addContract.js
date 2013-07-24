@@ -102,11 +102,11 @@ $(function() {
 				$("#myId").val(data.myId);
 				$("#name").val(data.name);
 				$("#partyA").val(data.partyA);
-				$("partyAabbr").val(data.partyAabbr);
-				$("partyADept").val(data.partyADept);
+				$("#partyAabbr").val(data.partyAabbr);
+				$("#partyADept").val(data.partyADept);
 				$("#partyB").val(data.partyB);
-				$("partyBabbr").val(data.partyBabbr);
-				$("partyBDept").val(data.partyBDept);
+				$("#partyBabbr").val(data.partyBabbr);
+				$("#partyBDept").val(data.partyBDept);
 				$("#signPicker").val(data.signDate);
 				$("#beginPicker").val(data.beginDate);
 				$("#endPicker").val(data.endDate);
@@ -224,7 +224,7 @@ $(function() {
 		var $partyAabbr		= $("#partyAabbr").val();
 		var $partyADept		= $("#partyADept").val();
 		var $partyB 		= $("#partyB").val();
-		var $partyBabbr		= $("#partyAabbr").val();
+		var $partyBabbr		= $("#partyBabbr").val();
 		var $partyBDept		= $("#partyBDept").val();
 		var $signDate 	= $("#signPicker").val();
 		var $beginDate 	= $("#beginPicker").val();
