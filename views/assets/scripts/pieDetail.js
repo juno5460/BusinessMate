@@ -14,7 +14,7 @@ $(function() {
 	}
 
 	$.get("/api/contracts", function(data, status) {
-
+console.info(data);
 		$.each(data, function(i, contract) {
 
 			//这里找出id的所有合同并添加

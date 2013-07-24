@@ -135,6 +135,7 @@ ContractSchema.methods = {
 					if (check == true) {
 						console.log("yes");
 						fs.readFile(tempPath, function(err, data) {
+							console.log(data);
 							fs.writeFile(getName, data, function(err) {
 								console.log("success save");
 							});
@@ -143,6 +144,7 @@ ContractSchema.methods = {
 						fs.mkdir(getDir, 0777, function() {
 							console.log("no");
 							fs.readFile(tempPath, function(err, data) {
+								console.log(data);
 								fs.writeFile(getName, data, function(err) {
 									console.log("success save");
 								});
