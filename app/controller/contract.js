@@ -115,7 +115,11 @@ exports.update = function(req, res) {
 	var getNew = {
 		"myId": get.myId,
 		partyA: get.partyA,
+		partyAabbr: get.partyAabbr,
+		partyADept: get.partyADept,
 		partyB: get.partyB,
+		partyBabbr: get.partyBabbr,
+		partyBDept: get.partyBDept,
 		"name": get.name,
 		"beginDate": get.beginDate,
 		"endDate": get.endDate,
