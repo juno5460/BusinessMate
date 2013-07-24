@@ -165,53 +165,7 @@ exports.destroy = function(req, res) {
 	}
 };
 
-
-
 exports.test = function(req, res) {
-	console.log('login', req.user);
-	var occur = new Date();
-	console.log(occur);
-	var contract = new Contract();
-	var rdata = req.body;
-	var saveData = {
-		"uid": "20130609213326087",
-		"myId": "caiyidong007",
-		"partyA": "南航",
-		"partyB": "恒拓",
-		"amount": 1000000,
-		"signDate": "2013-07-01",
-		"name": "统一移动平台2014",
-		"beginDate": "2013-07-01",
-		"endDate": "2013-07-25",
-		"state": "首款",
-		"events": [{
-			"id": "C5C4EC7101C0000251601930F8501976",
-			"title": "竞标",
-			"date": "2013-07-01",
-			"price": -1,
-			"completed": false
-		}, {
-			"id": "C5C4EC7101C00002669D1E8235409DB0",
-			"title": "首款",
-			"date": "2013-07-15",
-			"price": 400000,
-			"completed": false,
-			"priceDate": "2013-07-17",
-			"invoiceDate": "2013-07-15", //发票日期
-			"invoiceDone": false //是否开发票标志
-		}, {
-			"id": "C5C4EC7101C00002C7BF1E5014E01D5F",
-			"title": "尾款",
-			"date": "2013-07-18",
-			"price": 600000,
-			"completed": false,
-			"priceDate": "2013-07-19",
-			"invoiceDate": "2013-07-18", //发票日期
-			"invoiceDone": false //是否开发票标志位
-		}]
-
-	};
-	console.log("start====");
-	contract.insertData(saveData, res);
+    console.log("test");
 	//	res.send("insert successfully");
 };
