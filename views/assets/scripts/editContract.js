@@ -114,16 +114,16 @@ $(function(){
 			type:'GET',
 			success: function(data){
 
-				$('#files').html("");
+				//$('.files').html("");
 
 				$(data).each(function(index,item){
-					var tmp = "<p>附件{{_no}}：<a href='/files/download?contractId={{_cid}}&fileName={{_name}}'>{{_fileName}}</a>{{_size}}</p>";
-					$('#files').append($(Mustache.to_html(tmp, {
-						_no: 1,
+					var tmp = "<li><span class='file-no'>[附件{{_no}}]:</span><a href='/files/download?contractId={{_cid}}&fileName={{_name}}'>{{_fileName}}</a><span class='file-size'>{{_size}}</span><i id='removeBtn' class='icon-remove'></i></li>";
+					$('.files').append($(Mustache.to_html(tmp, {
+						_no: index + 1,
 						_cid: getContractID(),
 						_fileName: item.name ,
 						_name: item.name,
-						_size: item.size < 1024 ? parseInt(item.size) + "KB"  : parseInt(item.size) / 1024 +"MB"
+						_size: item.size < 1024 ? parseInt(item.size) + "kb"  : parseInt(item.size) / 1024 +"mb"
 					})));
 				});
 
