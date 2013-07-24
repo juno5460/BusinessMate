@@ -242,6 +242,36 @@
 			background: #F5F5F5;
 		}
 
-		.file-list-info {
+		.file-size {
+			padding-left: 10px;
+			font-style: italic;
+		}
 
+		.file-no {
+			padding-right: 10px;
+		}
+
+		.files{
+			list-style-type: none;
+		}
+
+		.files li {
+			list-style-type: none;
+			border-bottom: 1px dotted #d5d5d5;
+			font-size: 14px;
+		}
+
+		.files li a{
+			text-decoration: underline;
+		}
+
+		.files #removeBtn{
+			margin-left: 15px;
+			display: none;
+			cursor: pointer;
+			color: #ee5f5b;
+		}
+
+		.files li:hover #removeBtn{
+			display: inline-block;
 		}
