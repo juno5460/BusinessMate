@@ -414,13 +414,13 @@ $(function() {
 
 				//合同名称过长则进行省略处理
 				var dataName = tdata.name;
-				if (dataName.length > 8) {
-					dataName = dataName.substring(0, 8) + "...";
+				if (dataName.length > 6) {
+					dataName = dataName.substring(0, 6) + "...";
 				}
 
 				//定义插入模版
 				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label id='" + contract.undone[j].id + "'class='inline taskcell'><input type='checkbox'><span class='lbl'><span class='lbl'><a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
-				t3 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label><span style=font-size:20px;color:red>！</span><div class='pull-right'><button class='btn btn-mini btn-info'><i class='icon-edit bigger-123'></i></button></div></li></ul>";
+				t3 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label><span style=font-size:18px;color:red>*</span><div class='pull-right'><button class='btn btn-mini btn-info'><i class='icon-edit bigger-123'></i></button></div></li></ul>";
 
 				if (!contract.undone[j].invoiceDone) {
 					t2 = "<span style='color:red'>开发票</span>";
