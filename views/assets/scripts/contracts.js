@@ -148,7 +148,14 @@ $(function(){
 
 		$('#contractsTbody').html("");
 		$.each(data,function(index,item){
-			var trTemplate = "<tr><td class='center hidden-480'>{{myId}}</td><td class='center row-title'>{{name}}</td><td class='center'>{{partyA}}</td><td class='center'>{{partyB}}</td><td class='center row-date'>{{beginDate}}</td><td class='center row-date'>{{endDate}}</td><td class='center hidden-480 row-date'>{{signDate}}</td><td class='center'>{{amount}}</td><td class='center'>{{state}}</td></tr>";
+			var titleLimitLength = 20;
+
+			item._name = item.name;
+
+			if(item.name.length > titleLimitLength){
+				item._name = item.name.substring(0,titleLimitLength) + "...";
+			}
+			var trTemplate = "<tr><td class='center hidden-480'>{{myId}}</td><td id='contract-title' class='center row-title' title='{{name}}'>{{_name}}</td><td class='center'>{{partyAabbr}}</td><td class='center'>{{partyBabbr}}</td><td class='center row-date'>{{beginDate}}</td><td class='center row-date'>{{endDate}}</td><td class='center hidden-480 row-date'>{{signDate}}</td><td class='center'>{{amount}}</td><td class='center'>{{state}}</td></tr>";
 			console.info(index,item);
 			var $trHtlm = $(Mustache.to_html(trTemplate, item));
 			$trHtlm.click(function(){
