@@ -122,35 +122,37 @@ ContractSchema.methods = {
 		console.log(getData);
 		var getDir = "./files/" + getFileID;
 		///async test
-		async.forEach(getData, function(item, callback) {
-			var tempPath = "./uploads/" + item.tempid;
-			var getName = "./files/" + getFileID + "/" + item.name;
-			console.log(tempPath);
-			console.log(getName);
-			fs.exists(getDir, function(check) {
-				console.log(check);
-				if (check == true) {
-					console.log("yes");
-					fs.readFile(tempPath, function(err, data) {
-						fs.writeFile(getName, data, function(err) {
-							console.log("success save");
-						});
-					});
-				} else {
-					fs.mkdir(getDir, 0777, function() {
-						console.log("no");
+		if (getData == undefined) {
+			callback("no file");
+		} else {
+			async.forEach(getData, function(item, callback) {
+				var tempPath = "./uploads/" + item.tempid;
+				var getName = "./files/" + getFileID + "/" + item.name;
+				console.log(tempPath);
+				console.log(getName);
+				fs.exists(getDir, function(check) {
+					console.log(check);
+					if (check == true) {
+						console.log("yes");
 						fs.readFile(tempPath, function(err, data) {
 							fs.writeFile(getName, data, function(err) {
 								console.log("success save");
 							});
 						});
-					});
-				}
+					} else {
+						fs.mkdir(getDir, 0777, function() {
+							console.log("no");
+							fs.readFile(tempPath, function(err, data) {
+								fs.writeFile(getName, data, function(err) {
+									console.log("success save");
+								});
+							});
+						});
+					}
 
+				});
 			});
-
-		});
-
+		}
 		callback("good");
 	},
 	//新建合同插入数据库
@@ -170,6 +172,7 @@ ContractSchema.methods = {
 			}, {
 				_id: 1
 			}, function(err, identify) {
+				console.log(identify);
 				callback(identify);
 			});
 
