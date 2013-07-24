@@ -6,7 +6,7 @@ $(function(){
 	var mounth = (today.getMonth() + 1)  < 10 ? "0" + (today.getMonth() + 1) : (today.getMonth() + 1);
 	var day = today.getDate()  < 10 ? "0" + today.getDate() : today.getDate();
 	var todayFormat = today.getFullYear() + "-" + mounth  + "-" + day;
-	console.info(todayFormat);
+
 	$('#beginDate').datepicker({
 		autoclose:true,
 		todayBtn:true,
@@ -130,7 +130,7 @@ $(function(){
 
 
 	var showList = function(data) {
-		console.info(data);
+		// console.info(data);
 
 		if(data == "") {
 			$('#tip').html("<div class='alert alert-warning'>未能搜索到相关合同信息</div>");
@@ -156,10 +156,10 @@ $(function(){
 				item._name = item.name.substring(0,titleLimitLength) + "...";
 			}
 			var trTemplate = "<tr><td class='center hidden-480'>{{myId}}</td><td id='contract-title' class='center row-title' title='{{name}}'>{{_name}}</td><td class='center'>{{partyAabbr}}</td><td class='center'>{{partyBabbr}}</td><td class='center row-date'>{{beginDate}}</td><td class='center row-date'>{{endDate}}</td><td class='center hidden-480 row-date'>{{signDate}}</td><td class='center'>{{amount}}</td><td class='center'>{{state}}</td></tr>";
-			console.info(index,item);
+			// console.info(index,item);
 			var $trHtlm = $(Mustache.to_html(trTemplate, item));
 			$trHtlm.click(function(){
-				console.info(item._id);
+				// console.info(item._id);
 				window.location.href = "/contracts/" + item._id + "/edit";
 			});
 			$('#contractsTbody').append($trHtlm);

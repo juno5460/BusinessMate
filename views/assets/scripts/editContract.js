@@ -41,7 +41,15 @@ $(function(){
 					data = JSON.parse(data);
 					uploadFilesInfo.push(data);
 					console.info(data);
-        }
+        		},
+        		'onCancel' : function(file){
+        			console.info("remove",file.name);
+        			for(var i = 0;i < uploadFilesInfo.length;i++){
+						if (file.name == uploadFilesInfo[i].name) {
+							uploadFilesInfo.splice(i, i + 1);
+						}
+        			}
+        		}
 			});
 
 	//初始化弹出框样式
@@ -118,13 +126,33 @@ $(function(){
 
 				$(data).each(function(index,item){
 					var tmp = "<li><span class='file-no'>[附件{{_no}}]:</span><a href='/files/download?contractId={{_cid}}&fileName={{_name}}'>{{_fileName}}</a><span class='file-size'>{{_size}}</span><i id='removeBtn' class='icon-remove'></i></li>";
-					$('.files').append($(Mustache.to_html(tmp, {
+					var $html = $(Mustache.to_html(tmp, {
 						_no: index + 1,
 						_cid: getContractID(),
 						_fileName: item.name ,
 						_name: item.name,
 						_size: item.size < 1024 ? parseInt(item.size) + "kb"  : parseInt(item.size / 1024) +"mb"
-					})));
+					}))
+					$html.find("#removeBtn").click(function(){
+
+						bootbox.confirm("是否删除文件\"" + item.name +"\"", function(result) {
+
+							if (result == false)
+								return;
+
+							$.ajax({
+								url: '/files/destroy?contractId=' + getContractID() + '&fileName=' + item.name,
+								type: 'DELETE',
+								success: function() {
+									$html.slideUp();
+								}
+							});
+
+						});
+
+					});
+
+					$('.files').append($html);
 				});
 
 			},
@@ -269,10 +297,10 @@ $(function(){
 							type: 'POST',
 							data: item,
 							success: function(result) {
-								showAlert("模板保存成功","success",2);
+								showAlert("模板保存成功","success",1);
 							},
 							error: function(result) {
-								showAlert("模板保存失败","error",2);
+								showAlert("模板保存失败","error",1);
 							}
 						});
 					}
@@ -295,13 +323,13 @@ $(function(){
 				data: item,
 				success: function(result) {
 					console.info(result);
-					showAlert("合同修改成功","success",2,
+					showAlert("合同修改成功","success",1,
 						doActionAfterSecond(function() {
 						window.location.href = "/contracts";
 					},2));
 				},
 				error: function(result) {
-					showAlert("编辑合同失败","err",2);
+					showAlert("编辑合同失败","err",1);
 				}
 			});
 		} else {
