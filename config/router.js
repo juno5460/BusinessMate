@@ -10,7 +10,7 @@ module.exports = function(app, passport, auth) {
 
 	app.get('/api/contracts', contract.index);
 	app.get('/api/contracts/:id', contract.show);
-	app.post('/api/contracts', contract.create);
+	app.post('/api/contracts', auth.record, contract.create);
 	app.put('/api/contracts/:id', contract.update);
 	app.del('/api/contracts/:id', contract.destroy);
 	app.get('/api/tests', contract.test);
@@ -30,7 +30,7 @@ module.exports = function(app, passport, auth) {
 
 	app.get('/api/tasks', task.index);
 	app.get('/api/tasks/:id', task.show);
-	app.get('/api/tasksGraph',task.graphics);
+	app.get('/api/tasksGraph', task.graphics);
 	app.put('/api/tasks/:id', task.update);
 	app.get('/api/finishes', task.finish);
 	app.get('/api/dones', task.done);
@@ -42,8 +42,8 @@ module.exports = function(app, passport, auth) {
 
 	app.get('/test', files.test);
 	app.get('/files/download', files.download);
-	app.get('/files/show/:id',files.show);
-	app.post('/files/upload',files.upload);
+	app.get('/files/show/:id', files.show);
+	app.post('/files/upload', files.upload);
 	app.del('/files/destroy', files.destroy);
 	////////////用户 接口
 

@@ -400,7 +400,7 @@ ContractSchema.methods = {
 			callback(getData);
 		});
 	},
-	//计算所有合同的事件在未来指定时间段内可回收的金额
+	//计算所有合同的事件在过去指定时间段内已回收的金额
 	/*
 	 *getTime:获取目标时间(从当前时间-目标时间,计算可回收金额)
 	 *calback:回调返回数据
@@ -423,7 +423,7 @@ ContractSchema.methods = {
 			docs.forEach(function(doc) {
 				console.log(doc.name);
 				for (var i = 0; i < doc.events.length; i++) { //遍历单个合同的事件数组
-					if (doc.events[i].price > 0 && (doc.events[i].date > getOccur || doc.events[i].date == getOccur) && (doc.events[i].date < getTime || doc.events[i].date == getTime)) {
+					if (doc.events[i].price > 0 && (doc.events[i].date < getOccur || doc.events[i].date == getOccur) && (doc.events[i].date > getTime || doc.events[i].date == getTime)) {
 						//在指定时间段内,假如是回款事件,将该事件列入统计之内
 						count = count + doc.events[i].price;
 						console.log(doc.events[i]);

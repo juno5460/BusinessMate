@@ -59,6 +59,7 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
 	console.log('login', req.user);
 	var occur = new Date();
+	// console.log(req);
 	console.log(occur);
 	var contract = new Contract();
 	var rdata = req.body;
@@ -166,6 +167,8 @@ exports.destroy = function(req, res) {
 };
 
 exports.test = function(req, res) {
+	console.log(req);
+	res.send(req);
     console.log("test");
 	//	res.send("insert successfully");
 };
