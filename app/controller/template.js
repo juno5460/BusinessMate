@@ -51,7 +51,11 @@ exports.create = function(req, res) {
 		uid: req.user.uid, //用户id,对应用户模型的uid
 		myId: rdata.myId, //合同编号
 		partyA: rdata.partyA, //签署甲方
+		partyAabbr: rdata.partyAabbr,
+		partyADept: rdata.partyADept,
 		partyB: rdata.partyB, //签署乙方
+		partyBabbr: rdata.partyBabbr,
+		partyBDept: rdata.partyBDept,
 		amount: rdata.amount, //金额
 		returnRatio: rdata.returnRatio, //回款比率
 		returnAmount: rdata.returnAmount, //回款金额
@@ -63,7 +67,8 @@ exports.create = function(req, res) {
 		endDate: rdata.endDate, //结束日期
 		events: rdata.events, //合同事件
 		state: rdata.state, //合同状态
-		next: rdata.next //待办任务
+		next: rdata.next, //待办任务
+		file: rdata.file
 	};
 	console.log("start====");
 	template.insertTemplate(saveData, res);
