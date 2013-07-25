@@ -3,14 +3,14 @@ var async = require('async'),
 	generator = require('../app/generator/generator');
 
 ////////contract-router
-module.exports = function(app, passport, auth) {
+module.exports = function(app, passport, auth, log) {
 
 	///合同操作接口
 	var contract = require('../app/controller/contract');
 
 	app.get('/api/contracts', contract.index);
 	app.get('/api/contracts/:id', contract.show);
-	app.post('/api/contracts', auth.record, contract.create);
+	app.post('/api/contracts', log.record, contract.create);
 	app.put('/api/contracts/:id', contract.update);
 	app.del('/api/contracts/:id', contract.destroy);
 	app.get('/api/tests', contract.test);

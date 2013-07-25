@@ -6,8 +6,6 @@ var express = require('express'),
 	auth = require('./config/middlewares/authorization'),
 	http = require('http');
 
-
-
 //引入配置文件
 var env = process.env.NODE_ENV || 'development',
 	config = require('./config/config')[env];
@@ -29,8 +27,12 @@ var app = express();
 
 //引入配置文件、环境设置
 var setting = require('./config/setting')(app, config, passport, auth);
+
+//记录日志中间件
+log = require('./config/middlewares/log');
+
 //引入路由
-var router = require('./config/router')(app, passport, auth);
+var router = require('./config/router')(app, passport, auth, log);
 
 
 //启动服务器
