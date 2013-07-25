@@ -400,6 +400,43 @@ ContractSchema.methods = {
 			callback(getData);
 		});
 	},
+	//计算所有合同的事件在未来指定时间段内可回收的金额
+	/*
+	 *getTime:获取目标时间(从当前时间-目标时间,计算可回收金额)
+	 *calback:回调返回数据
+	 */
+	countHadGotMoney: function(getTime, callback) {
+
+		var count = 0; //存储所有合同已回款总额
+		var allCount = 0; //存储所有合同总金额
+		var getData;
+		var occur = new Date();
+		var year = occur.getFullYear();
+		var month = occur.getMonth() + 1;
+		var day = occur.getDate(); ///
+		day = day < 10 ? "0" + day : day;
+		month = month < 10 ? "0" + month : month;
+		var getOccur = year + "-" + month + "-" + day;
+		Contract = this.model('Contract');
+
+		Contract.find({}, function(err, docs) {
+			docs.forEach(function(doc) {
+				console.log(doc.name);
+				for (var i = 0; i < doc.events.length; i++) { //遍历单个合同的事件数组
+					if (doc.events[i].price > 0 && (doc.events[i].date > getOccur || doc.events[i].date == getOccur) && (doc.events[i].date < getTime || doc.events[i].date == getTime)) {
+						//在指定时间段内,假如是回款事件,将该事件列入统计之内
+						count = count + doc.events[i].price;
+						console.log(doc.events[i]);
+					}
+				}
+				getData = {
+					"count": count
+				};
+			});
+			console.log(parseFloat(4 / 10));
+			callback(getData);
+		});
+	},
 	//计算单个合同的事件回收金额
 	/*
 	 *calback:回调返回数据
