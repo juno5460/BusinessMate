@@ -94,7 +94,7 @@ $(function() {
 							type:'DELETE',
 							url:'/api/templates/' + item._id,
 							success: function(result){
-								$cellHtml.slideUp();
+								$cellHtml.remove();
 							}
 						});
 					});
