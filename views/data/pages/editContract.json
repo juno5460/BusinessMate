@@ -5,7 +5,7 @@
  ,
  "no-header" : true
  ,
- "scripts" : ["jquery-ui" , "underscore" , "backbone" , "bootbox" , "validate" , "common" , "uploadifive"]
+ "scripts" : ["jquery-ui" , "underscore" , "backbone" , "bootbox" , "validate" , "common" , "uploadifive" , "maskedinput"]
  ,
  "styles" : ["jquery-ui" , "gritter" , "bootstrap-timepicker" , "datepicker" , "uploadifive"]
  ,

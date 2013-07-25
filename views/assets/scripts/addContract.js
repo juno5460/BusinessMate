@@ -333,7 +333,7 @@ $(function() {
 		data = data == null ? [] : data;
 
 		//消除事件列表空白的警告
-		$("#blankWarn").slideUp();
+		$("#blankWarn").hide();
 
 		var datePickerID = generateID();
 
@@ -372,7 +372,7 @@ $(function() {
 		data = data == null ? [] : data;
 
 		//消除事件列表空白的警告
-		$("#blankWarn").slideUp();
+		$("#blankWarn").hide();
 
 
 		var datePickerID = generateID();
