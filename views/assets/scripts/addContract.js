@@ -229,7 +229,7 @@ $(function() {
 	var buildModel = function() {
 		//从网页中提取已经输入的数据
 		var $myId 		= $("#myId").val();
-		var $name 		= $("#name").val();
+		var $name 		= isTemplateMode ? '' : $("#name").val();
 		var $partyA 		= $("#partyA").val();
 		var $partyAabbr		= $("#partyAabbr").val();
 		var $partyADept		= $("#partyADept").val();
