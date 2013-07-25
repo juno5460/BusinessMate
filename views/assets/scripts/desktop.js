@@ -127,21 +127,15 @@ $(function() {
 			});
 
 			if (toPushA) {
-				var nameA = partyAabbr[i];
-				if(nameA.length == 2)
-					nameA += "&nbsp;&nbsp";
 				pieData1.push({
-					label: nameA,
+					label: partyAabbr[i],
 					data: amountA,
 					color: color[i]
 				});
 			}
 			if (toPushB) {
-				var nameB = partyBabbr[i];
-				if(nameB.length == 2)
-					nameB += "&nbsp;&nbsp";
 				pieData2.push({
-					label: nameB,
+					label: partyBabbr[i],
 					data: amountB,
 					color: color[i + 3]
 				});

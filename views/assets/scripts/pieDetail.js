@@ -14,9 +14,10 @@ $(function() {
 	}
 
 	$.get("/api/contracts", function(data, status) {
-		console.info(data);
-		$.each(data, function(i, contract) {
 
+		$.each(data, function(i, contract) {
+				console.info("here");
+				console.info(stringToHex(contract.partyAabbr));
 			//这里找出id的所有合同并添加
 			if (stringToHex(contract.partyAabbr) == airline || stringToHex(contract.partyBabbr) == airline) {
 				//合同名称过长则进行省略处理
@@ -26,13 +27,13 @@ $(function() {
 				}
 
 				var tdata = {
-					name 		: 	contractName,
+					name 			: 	contractName,
 					partyA 		: 	contract.partyAabbr,
 					partyB 		: 	contract.partyBabbr,
 					amount 		: 	contract.amount,
 					state 		: 	contract.state
 				};
-				
+
 				if (stringToHex(contract.partyAabbr) == airline)
 					$("#detailValue").html(contract.partyB);
 				else 
