@@ -182,7 +182,7 @@ $(function(){
 
 	});
 
-	var templateTmp = "<li><a hre='#' title='{{templateName}}'>{{templateName}}</a></li>";
+	var templateTmp = "<li><a hre='#' title='{{templateName}}'>{{templateName}}</a><i id='deleteTemp' class='icon-remove'></i></li>";
 
 	$("#templateBtn").click(function(){
 
@@ -200,6 +200,15 @@ $(function(){
 					}
 
 					var $cellHtml = $(Mustache.to_html(templateTmp, {templateName:item.tName}));
+					$cellHtml.find("#deleteTemp").click(function(){
+						$.ajax({
+							type:'DELETE',
+							url:'/api/templates/' + item._id,
+							success: function(result){
+								$cellHtml.slideUp();
+							}
+						});
+					});
 
 					$cellHtml.click(function(){
 
@@ -210,9 +219,12 @@ $(function(){
 					$("#templateList").append($cellHtml);
 				});
 
-				if($('#templateList').text() == "") {
-			$('#templateList').append($(Mustache.to_html(templateTmp, {templateName: '当前无可用模板'})));
-		}
+				if ($('#templateList').text() == "") {
+					var tmp = "<li><a hre='#' title='{{templateName}}'>{{templateName}}</a></li>";
+					$('#templateList').append($(Mustache.to_html(tmp, {
+						templateName: '当前无可用模板'
+					})));
+				}
 			}
 		});
 	});

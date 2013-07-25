@@ -281,3 +281,23 @@
 		.files li:hover #removeBtn{
 			display: inline-block;
 		}
+
+		#templateList li{
+			position: relative;
+		}
+
+		#templateList #deleteTemp{
+			right: 5px;
+			top: 5px;
+			color: white;
+			cursor: pointer;
+			position: absolute;
+			display: none;
+		}
+
+		
+		#templateList li:hover #deleteTemp{
+			display: inline-block;
+			color: #dd5a43;
+		}
+

@@ -242,3 +242,22 @@
 			border:1px solid #d5d5d5;
 			background: #F5F5F5;
 		}
+
+		#templateList li{
+			position: relative;
+		}
+
+		#templateList #deleteTemp{
+			right: 5px;
+			top: 5px;
+			color: white;
+			cursor: pointer;
+			position: absolute;
+			display: none;
+		}
+
+		
+		#templateList li:hover #deleteTemp{
+			display: inline-block;
+			color: #dd5a43;
+		}
