@@ -29,6 +29,14 @@ LogSchema.methods = {
 		var log = new Log(logData);
 		log.save();
 		callback("insertRecord successfully.");
+	},
+	findAll: function(callback) {
+
+		this.model('Log').find({}, function(err, docs) {
+			console.log("====show===");
+			console.log(docs);
+			callback(docs);
+		});
 	}
 };
 

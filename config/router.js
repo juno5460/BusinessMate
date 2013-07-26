@@ -11,8 +11,8 @@ module.exports = function(app, passport, auth, log) {
 	app.get('/api/contracts', contract.index);
 	app.get('/api/contracts/:id', contract.show);
 	app.post('/api/contracts', log.record, contract.create);
-	app.put('/api/contracts/:id', contract.update);
-	app.del('/api/contracts/:id', contract.destroy);
+	app.put('/api/contracts/:id', log.record, contract.update);
+	app.del('/api/contracts/:id', log.record, contract.destroy);
 	app.get('/api/tests', contract.test);
 
 	///合同模版接口
@@ -20,9 +20,9 @@ module.exports = function(app, passport, auth, log) {
 
 	app.get('/api/templates', template.index);
 	app.get('/api/templates/:id', template.show);
-	app.post('/api/templates', template.create);
-	app.put('/api/templates/:id', template.update);
-	app.del('/api/templates/:id', template.destroy);
+	app.post('/api/templates', log.record, template.create);
+	app.put('/api/templates/:id', log.record, template.update);
+	app.del('/api/templates/:id', log.record, template.destroy);
 
 
 	///待办任务处理接口
@@ -31,7 +31,7 @@ module.exports = function(app, passport, auth, log) {
 	app.get('/api/tasks', task.index);
 	app.get('/api/tasks/:id', task.show);
 	app.get('/api/tasksGraph', task.graphics);
-	app.put('/api/tasks/:id', task.update);
+	app.put('/api/tasks/:id', log.record, task.update);
 	app.get('/api/finishes', task.finish);
 	app.get('/api/dones', task.done);
 	app.get('/api/tests', task.count);
@@ -43,8 +43,8 @@ module.exports = function(app, passport, auth, log) {
 	app.get('/test', files.test);
 	app.get('/files/download', files.download);
 	app.get('/files/show/:id', files.show);
-	app.post('/files/upload', files.upload);
-	app.del('/files/destroy', files.destroy);
+	app.post('/files/upload', log.record, files.upload);
+	app.del('/files/destroy', log.record, files.destroy);
 	////////////用户 接口
 
 	var users = require('../app/controller/users');
@@ -61,6 +61,9 @@ module.exports = function(app, passport, auth, log) {
 
 	}), users.session);
 
+	/////////日志接口
+	var logs = require('../app/controller/log');
+	app.get('/api/log', logs.record);
 
 	app.get('/', auth.requiresLogin, function(req, res) {
 		res.redirect('/login');

@@ -9,8 +9,9 @@ exports.record = function(req, res, next) {
   console.log("recording...");
   var logger = new Log();
   var contract = new Contract();
+  console.log(req);
   var logData = {
-    resource: req.route.path, //操作对象
+    resource: req._parsedUrl.path,
     user: req.user.username, //用户名
     time: req._startTime, //时间
     operation: req.route.method, //操作类型
