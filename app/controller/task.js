@@ -49,6 +49,7 @@ exports.update = function(req, res) { //修改待办任务完成标志位
 	var id = get._id;
 	var eventId = get.id;
 	var eventName = get.title;
+	var newDate = get.newDate;
 	var checkValue;
 	if ('true' == get.completed)
 		checkValue = true;
@@ -56,27 +57,14 @@ exports.update = function(req, res) { //修改待办任务完成标志位
 		checkValue = false;
 	var remark = get.remark;
 
-	//updateSymble: function(id, eventId, eventName, callback)
-	var getNew = {
-		"myId": get.myId,
-		partyA: get.partyA,
-		partyB: get.partyB,
-		"name": get.name,
-		"beginDate": get.beginDate,
-		"endDate": get.endDate,
-		"state": get.state,
-		"events": get.events
-	};
-	if (getNew.events == null) {
-		getNew.events = [];
-	}
 	console.log(get);
 	console.log(id);
 	console.log(eventId);
 	console.log(eventName);
 	console.log(checkValue);
 	console.log(remark);
-	contract.updateSymble(id, eventId, checkValue, remark, eventName, function(data) {
+	console.log(newDate);
+	contract.updateSymbol(id, eventId, checkValue, remark, eventName, newDate, function(data) {
 		console.log(data);
 		res.send(data);
 	});

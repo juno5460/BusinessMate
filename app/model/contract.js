@@ -278,7 +278,7 @@ ContractSchema.methods = {
 	 * eventName:事件名称 (或是状态名称,方便跟踪合同状态)
 	 * callback:回调返回数据
 	 */
-	updateSymble: function(id, eventId, checkValue, remark, eventName, callback) {
+	updateSymbol: function(id, eventId, checkValue, remark, eventName, newDate, callback) {
 
 		console.log('updateSymble');
 		console.log(checkValue);
@@ -296,6 +296,7 @@ ContractSchema.methods = {
 							}, {
 								"$set": {
 									"events.$.invoiceDone": checkValue,
+									"events.$.invoiceDate": newDate,
 									state: eventName,
 									"events.$.date": result.events[i].priceDate
 								}
@@ -315,6 +316,7 @@ ContractSchema.methods = {
 							}, {
 								"$set": {
 									"events.$.completed": checkValue,
+									"events.$.priceDate": newDate,
 									state: eventName
 								}
 							}, function() {
