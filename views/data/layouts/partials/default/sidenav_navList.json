@@ -11,5 +11,8 @@
 		{ "link" : "fundWait", "title" : "待回款"} ,
 		{ "link" : "fundShould", "title" : "应收款"} 
 		]
-	}
+	},
+
+	{"link": "logCheck", "title":"查看日志", "icon": "icon-search"}
+
 ]
