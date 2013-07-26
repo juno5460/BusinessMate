@@ -13,7 +13,6 @@ exports.show = function(req, res, next) {
   console.log("recording...");
   var logger = new Log();
   var contract = new Contract();
-  console.log(req);
   var logData = {
     resource: req._parsedUrl.path,
     user: req.user.username, //用户名
@@ -21,8 +20,6 @@ exports.show = function(req, res, next) {
     operation: req.route.method, //操作类型
     data: req.body
   };
-  console.log(logData);
-  console.log(logData.data.events);
   logger.insertRecord(logData,function(data){
     console.log(data);
   });
