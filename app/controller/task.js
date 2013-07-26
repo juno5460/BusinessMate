@@ -38,14 +38,20 @@ exports.show = function(req, res) { //返回指定合同业务数据
 };
 
 exports.update = function(req, res) { //修改待办任务完成标志位
-	var occur = new Date();
-	console.log(occur);
+
 	var contract = new Contract();
 	console.log("update");
-	/*var getId = {
-		_id: req.params['tests']
-	};*/
+	var occur = new Date();
+	var year = occur.getFullYear();
+	var month = occur.getMonth() + 1;
+	var day = occur.getDate(); ///
+	day = day < 10 ? "0" + day : day;
+	month = month < 10 ? "0" + month : month;
+	var getOccur = year + "-" + month + "-" + day;
 	var get = req.body;
+	if (get.newDate == "") {
+		get.newDate = getOccur;
+	}
 	var id = get._id;
 	var eventId = get.id;
 	var eventName = get.title;
