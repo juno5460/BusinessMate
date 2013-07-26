@@ -10,9 +10,9 @@ module.exports = function(app, passport, auth, log) {
 
 	app.get('/api/contracts', contract.index);
 	app.get('/api/contracts/:id', contract.show);
-	app.post('/api/contracts', log.record, contract.create);
-	app.put('/api/contracts/:id', log.record, contract.update);
-	app.del('/api/contracts/:id', log.record, contract.destroy);
+	app.post('/api/contracts', log.show, contract.create);
+	app.put('/api/contracts/:id', log.show, contract.update);
+	app.del('/api/contracts/:id', log.show, contract.destroy);
 	app.get('/api/tests', contract.test);
 
 	///合同模版接口
@@ -20,9 +20,9 @@ module.exports = function(app, passport, auth, log) {
 
 	app.get('/api/templates', template.index);
 	app.get('/api/templates/:id', template.show);
-	app.post('/api/templates', log.record, template.create);
-	app.put('/api/templates/:id', log.record, template.update);
-	app.del('/api/templates/:id', log.record, template.destroy);
+	app.post('/api/templates', log.show, template.create);
+	app.put('/api/templates/:id', log.show, template.update);
+	app.del('/api/templates/:id', log.show, template.destroy);
 
 
 	///待办任务处理接口
@@ -31,7 +31,7 @@ module.exports = function(app, passport, auth, log) {
 	app.get('/api/tasks', task.index);
 	app.get('/api/tasks/:id', task.show);
 	app.get('/api/tasksGraph', task.graphics);
-	app.put('/api/tasks/:id', log.record, task.update);
+	app.put('/api/tasks/:id', log.show, task.update);
 	app.get('/api/finishes', task.finish);
 	app.get('/api/dones', task.done);
 	app.get('/api/tests', task.count);
@@ -43,8 +43,8 @@ module.exports = function(app, passport, auth, log) {
 	app.get('/test', files.test);
 	app.get('/files/download', files.download);
 	app.get('/files/show/:id', files.show);
-	app.post('/files/upload', log.record, files.upload);
-	app.del('/files/destroy', log.record, files.destroy);
+	app.post('/files/upload', log.show, files.upload);
+	app.del('/files/destroy', log.show, files.destroy);
 	////////////用户 接口
 
 	var users = require('../app/controller/users');
