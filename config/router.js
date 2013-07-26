@@ -43,10 +43,8 @@ module.exports = function(app, passport, auth, log) {
 	app.get('/test', files.test);
 	app.get('/files/download', files.download);
 	app.get('/files/show/:id', files.show);
-	app.post('/files/upload', log.show, files.upload);
-	app.del('/files/destroy', log.show, files.destroy);
+	app.post('/files/upload', files.upload);
 	////////////用户 接口
-
 	var users = require('../app/controller/users');
 
 	app.get('/login', users.login);
@@ -61,9 +59,6 @@ module.exports = function(app, passport, auth, log) {
 
 	}), users.session);
 
-	/////////日志接口
-	var logs = require('../app/controller/log');
-	app.get('/api/log', logs.show);
 
 	app.get('/', auth.requiresLogin, function(req, res) {
 		res.redirect('/login');
@@ -117,11 +112,10 @@ module.exports = function(app, passport, auth, log) {
 			username: req.user.username
 		}));
 	});
-
 	app.get('/logCheck', auth.requiresLogin, function(req, res) {
-
 		res.send(generator.generate('logCheck', {
 			username: req.user.username
 		}));
 	});
+
 };
