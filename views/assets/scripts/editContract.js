@@ -58,6 +58,7 @@ $(function(){
 	};
 
 	var isTemplateMode = false;
+	var nextEvent;
 
 
 	var initialize = function(){
@@ -90,6 +91,9 @@ $(function(){
 					}
 				});
 
+				//对当前要执行的任务进行着色
+				highLightCurrentTask(id);
+
 			} else {
 				alert("拉取合同信息失败.");
 			}
@@ -98,6 +102,23 @@ $(function(){
 
 	//从服务器拉取数据并初始化网页数据
 	initialize();
+
+
+	function highLightCurrentTask(id){
+		$.get('/api/task/' + id,function(data,status){
+				
+			console.log('currentTask',status);
+
+			if(status == 'success'){
+				$("input#id").each(function(index,item){
+					if(item.value == data.next.id){
+						$(item).parent().parent().parent().css("border","2px solid rgba(255,0,0,.2)");
+						return;
+					}
+				});
+			}
+		})
+	}
 
 	// var customEventTmp 	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input id='id' type='hidden' value='{{id}}'><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remark' class='span12 cellremark' placeholder='请输入备注信息'>{{remark}}</textarea><input type='hidden' id='completed' value={{completed}}></div></div></div>";
 	// var priceEventTmp	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input id='id' type='hidden' value='{{id}}'><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>回款金额：</span><span><input id='price' class='hiddenInput' id='price' value='{{price}}'></span><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remak' class='span12 cellremark' placeholder='请输入备注信息'>{{remark}}</textarea><input type='hidden' id='completed' value={{completed}}></div></div></div>";
@@ -397,6 +418,15 @@ $(function(){
 
 		});
 
+		//判断当前事件的完成程度基于颜色表示。绿色表示已经完成，红色表示当前执行的时间。
+
+		if(data){
+			if(data.completed) {
+				console.info('green');
+				$cellHtml.css('border','2px solid rgba(0,255,0,.2)');
+			}
+		}
+
 		$cellHtml.hide();
 		$('#eventsList').append($cellHtml);
 		$cellHtml.slideDown();
@@ -442,6 +472,15 @@ $(function(){
 			}, 0.4);
 
 		});
+
+		//判断当前事件的完成程度基于颜色表示。绿色表示已经完成，红色表示当前执行的时间。
+
+		if(data){
+			if(data.completed) {
+				console.info('green');
+				$cellHtml.css('border','2px solid rgba(0,255,0,.2)');
+			}
+		}
 
 		$cellHtml.hide();
 		$('#eventsList').append($cellHtml);
