@@ -112,7 +112,7 @@ $(function(){
 			if(status == 'success'){
 				$("input#id").each(function(index,item){
 					if(item.value == data.next.id){
-						$(item).parent().parent().parent().css("border","2px solid rgba(255,0,0,.2)");
+						$(item).parent().parent().parent().css("border","2px solid rgba(0,0,255,.3)");
 						return;
 					}
 				});
@@ -420,10 +420,11 @@ $(function(){
 
 		//判断当前事件的完成程度基于颜色表示。绿色表示已经完成，红色表示当前执行的时间。
 
-		if(data){
+		if(data.length != 0){
 			if(data.completed) {
-				console.info('green');
 				$cellHtml.css('border','2px solid rgba(0,255,0,.2)');
+			} else {
+				$cellHtml.css('border','2px solid rgba(255,0,0,.2)');
 			}
 		}
 
@@ -475,10 +476,12 @@ $(function(){
 
 		//判断当前事件的完成程度基于颜色表示。绿色表示已经完成，红色表示当前执行的时间。
 
-		if(data){
+		if(data.length != 0){
 			if(data.completed) {
 				console.info('green');
 				$cellHtml.css('border','2px solid rgba(0,255,0,.2)');
+			} else {
+				$cellHtml.css('border','2px solid rgba(255,0,0,.2)');
 			}
 		}
 
