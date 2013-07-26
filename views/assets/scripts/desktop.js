@@ -307,13 +307,7 @@ $(function() {
 					var newDate = '';
 
 					bootbox.prompt("请确定是否提交,若代办任务时间有变化，请按形如(1990-01-03)格式填写", function(result) {
-						// $("div[class^='widget-boxx']").find("input").attr('id', 'datetest');
-						// $('#datetest').datepicker({
-						// 	autoclose: true
-						// });
-						// $('#datetest').datepicker().on('changeDate', function(env) {
-						// 	$('#datetest').datepicker('hide');
-						// });
+
 
 						if (result == null) {
 							$tempObj.prop("checked", false);
@@ -369,6 +363,20 @@ $(function() {
 							}
 						});
 
+					});
+					
+					var $dataPicker = $("div[class^='widget-boxx']").find("input");
+					$dataPicker.attr('id', 'datetest');
+					$dataPicker.removeClass("span12");
+					$dataPicker.addClass('hiddenInput');
+					$dataPicker.attr('data-date-format', 'yyyy-mm-dd');
+					$dataPicker.attr('readonly', 'true');
+					
+					$('#datetest').datepicker({
+						autoclose: true
+					});
+					$('#datetest').datepicker().on('changeDate', function(env) {
+						$('#datetest').datepicker('hide');
 					});
 				});
 			};
@@ -494,6 +502,8 @@ $(function() {
 								console.info('error');
 							},
 							success: function(result) {
+							console.info("here");
+							console.info(result);
 								$tempObj.parent().parent().parent().fadeOut(1000);
 								var html = $('#outOfDate').html();
 								if (html == "") {
