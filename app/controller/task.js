@@ -56,7 +56,7 @@ exports.update = function(req, res) { //修改待办任务完成标志位
 	month = month < 10 ? "0" + month : month;
 	var getOccur = year + "-" + month + "-" + day;
 	var get = req.body;
-	if (get.newDate == "") {
+	if (get.newDate == "" || get.newDate==undefined) {
 		get.newDate = getOccur;
 	}
 	var id = get._id;
