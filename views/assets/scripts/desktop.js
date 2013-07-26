@@ -306,11 +306,11 @@ $(function() {
 					var newDate = '';
 
 					bootbox.prompt("请确定是否提交,若代办任务时间有变化，请按形如(1990-01-03)格式填写", function(result) {
-						if (!result) {
+						if (result == null) {
 							$tempObj.prop("checked", false);
 							return;
 						}
-
+						
 						newDate = result;
 
 						var postData = {
@@ -321,7 +321,7 @@ $(function() {
 							remark	 :  remark,
 							newDate  :  newDate
 						};
-						
+
 						$.ajax({
 							url: '/api/tasks/' + e.data.con.next.id,
 							type: 'put',
