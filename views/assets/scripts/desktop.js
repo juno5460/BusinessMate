@@ -258,8 +258,8 @@ $(function() {
 				}
 
 				//定义插入模版
-				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label class='inline taskcell'><input type='checkbox'><span class='lbl'><span class='lbl'><a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
-				t3 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label><div class='pull-right'><button class='btn btn-mini btn-info'><i class='icon-edit bigger-123'></i></button></div></li></ul>";
+				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label class='inline'><input type='checkbox'><span class='lbl'><span class='lbl'>" + tdata.title;
+				t3 = "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'><span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></a></span></label><div class='pull-right'><button class='btn btn-mini btn-info'><i class='icon-edit bigger-123'></i></button></div></li></ul>";
 
 				if (contract.next.title == 0) {
 					template = null;
@@ -287,6 +287,7 @@ $(function() {
 				$buttonElement.click(function() {
 
 					bootbox.prompt("提示（填写备注信息）", function(result) {
+
 						if (result == null)
 							return;
 
@@ -306,20 +307,28 @@ $(function() {
 					var newDate = '';
 
 					bootbox.prompt("请确定是否提交,若代办任务时间有变化，请按形如(1990-01-03)格式填写", function(result) {
+						// $("div[class^='widget-boxx']").find("input").attr('id', 'datetest');
+						// $('#datetest').datepicker({
+						// 	autoclose: true
+						// });
+						// $('#datetest').datepicker().on('changeDate', function(env) {
+						// 	$('#datetest').datepicker('hide');
+						// });
+
 						if (result == null) {
 							$tempObj.prop("checked", false);
 							return;
 						}
-						
+
 						newDate = result;
 
 						var postData = {
-							_id 		 : 	e.data.con._id,
-							id 			 :  e.data.con.next.id,
-							title 	 :  e.data.con.next.title,
-							completed:  checkValue,
-							remark	 :  remark,
-							newDate  :  newDate
+							_id: e.data.con._id,
+							id: e.data.con.next.id,
+							title: e.data.con.next.title,
+							completed: checkValue,
+							remark: remark,
+							newDate: newDate
 						};
 
 						$.ajax({
@@ -423,10 +432,10 @@ $(function() {
 				}
 
 				//定义插入模版
-				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label id='" + contract.undone[j].id + "'class='inline taskcell'><input type='checkbox'><span class='lbl'><span class='lbl'><a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'>" + tdata.title;
-				t3 = "</a></span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></span></label><span style=font-size:18px;color:red>*</span><div class='pull-right'><button class='btn btn-mini btn-info'><i class='icon-edit bigger-123'></i></button></div></li></ul>";
+				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label id='" + contract.undone[j].id + "'class='inline taskcell'><input type='checkbox'><span class='lbl'><span class='lbl'>" + tdata.title;
+				t3 = "</span>&nbsp;&nbsp;<span class='lbl' style='color:silver'>" + tdata.date + "</span>&nbsp;&nbsp;<a href='" + "/contracts/" + tdata.id + "/edit' class='lbl' style='color:black'><span class='lbl' style='color:silver' title='" + tdata.name + "'>【" + dataName + "】</span></a></span></label><span style=font-size:18px;color:red>*</span><div class='pull-right'><button class='btn btn-mini btn-info'><i class='icon-edit bigger-123'></i></button></div></li></ul>";
 
-				if (!contract.undone[j].invoiceDone) {
+				if ((!contract.undone[j].invoiceDone) && (contract.undone[j].price > 0)) {
 					t2 = "<span style='color:red'>开发票</span>";
 					template = t1 + t2 + t3;
 				} else

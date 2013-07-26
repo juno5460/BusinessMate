@@ -7,5 +7,7 @@
  ,
  "scripts" : ["jquery-ui" , "slimscroll" , "easy-pie-chart" , "sparkline" , "flot" , "flot.pie" , "flot.resize"]
  ,
+ "styles" : ["bootstrap-timepicker" , "datepicker"]
+ ,
  "ie_scripts" : [{"version":8, "name":"excanvas"}]
 }
