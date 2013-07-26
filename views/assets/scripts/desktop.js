@@ -303,21 +303,25 @@ $(function() {
 					var $tempObj = $(this);
 					var tempName = e.data.con.name;
 					var checkValue = true;
+					var newDate = '';
 
-					var postData = {
-						_id: e.data.con._id,
-						id: e.data.con.next.id,
-						title: e.data.con.next.title,
-						completed: checkValue,
-						remark: remark
-					};
-
-					bootbox.confirm("一经提交便无法修改，请确定是否提交！", function(result) {
+					bootbox.prompt("请确定是否提交,若代办任务时间有变化，请按形如(1990-01-03)格式填写", function(result) {
 						if (!result) {
 							$tempObj.prop("checked", false);
 							return;
 						}
 
+						newDate = result;
+
+						var postData = {
+							_id 		 : 	e.data.con._id,
+							id 			 :  e.data.con.next.id,
+							title 	 :  e.data.con.next.title,
+							completed:  checkValue,
+							remark	 :  remark,
+							newDate  :  newDate
+						};
+						
 						$.ajax({
 							url: '/api/tasks/' + e.data.con.next.id,
 							type: 'put',

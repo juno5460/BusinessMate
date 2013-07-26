@@ -118,4 +118,10 @@ module.exports = function(app, passport, auth, log) {
 		}));
 	});
 
+	app.get('/logCheck', auth.requiresLogin, function(req, res) {
+
+		res.send(generator.generate('logCheck', {
+			username: req.user.username
+		}));
+	});
 };
