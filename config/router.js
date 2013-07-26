@@ -30,6 +30,7 @@ module.exports = function(app, passport, auth, log) {
 
 	app.get('/api/tasks', task.index);
 	app.get('/api/tasks/:id', task.show);
+	app.get('/api/task/:id',task.showOne);
 	app.get('/api/tasksGraph', task.graphics);
 	app.put('/api/tasks/:id', log.show, task.update);
 	app.get('/api/finishes', task.finish);
