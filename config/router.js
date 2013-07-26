@@ -63,7 +63,7 @@ module.exports = function(app, passport, auth, log) {
 
 	/////////日志接口
 	var logs = require('../app/controller/log');
-	app.get('/api/log', logs.record);
+	app.get('/api/log', logs.show);
 
 	app.get('/', auth.requiresLogin, function(req, res) {
 		res.redirect('/login');

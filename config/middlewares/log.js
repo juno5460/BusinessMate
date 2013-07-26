@@ -1,3 +1,7 @@
+/*
+ *  Generic require log routing middleware
+ */
+
 var async = require('async'),
   mongoose = require('mongoose'),
   Contract = mongoose.model('Contract'),
@@ -5,7 +9,7 @@ var async = require('async'),
 
 
 
-exports.record = function(req, res, next) {
+exports.show = function(req, res, next) {
   console.log("recording...");
   var logger = new Log();
   var contract = new Contract();
