@@ -151,29 +151,29 @@ exports.update = function(req, res) {
 	console.log(getId);
 	console.log(get);
 	////////
-	business.findVersionId(req.params['id'],function(versionId){
+	business.findVersionId(req.params['id'], function(versionId) {
 		console.log(versionId);
 		business.findBusiness(versionId[0]._id, function(data) {
-		var get = {
-			contractId: getId._id,
-			contractName: getNew.name,
-			time: occur,
-			getNew: data[0].getNew + 1,
-			data: getNew
-		};
-		console.log(get);
-		business.insertBusiness(get, function() {
-			console.log("update Version...");
-			contract.updateIdData(getId, getNew, function(data) {
-				console.log("starting....");
-				var contract = new Contract();
-				contract.upload(getNew.file, req.params['id'], function(data1) {
-					console.log(data1);
+			var get = {
+				contractId: getId._id,
+				contractName: getNew.name,
+				time: occur,
+				getNew: data[0].getNew + 1,
+				data: getNew
+			};
+			console.log(get);
+			business.insertBusiness(get, function() {
+				console.log("update Version...");
+				contract.updateIdData(getId, getNew, function(data) {
+					console.log("starting....");
+					var contract = new Contract();
+					contract.upload(getNew.file, req.params['id'], function(data1) {
+						console.log(data1);
+					});
+					res.send(data);
 				});
-				res.send(data);
 			});
 		});
-	});
 	});
 	////////
 	// contract.updateIdData(getId, getNew, function(data) {
