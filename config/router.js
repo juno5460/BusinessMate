@@ -13,7 +13,7 @@ module.exports = function(app, passport, auth, log) {
 	app.post('/api/contracts', log.show, contract.create);
 	app.put('/api/contracts/:id', log.show, contract.update);
 	app.del('/api/contracts/:id', log.show, contract.destroy);
-	app.get('/api/tests', contract.test);
+	app.get('/api/conTests', contract.test);
 
 	///合同模版接口
 	var template = require('../app/controller/template');
@@ -35,7 +35,7 @@ module.exports = function(app, passport, auth, log) {
 	app.put('/api/tasks/:id', log.show, task.update);
 	app.get('/api/finishes', task.finish);
 	app.get('/api/dones', task.done);
-	app.get('/api/tests', task.count);
+	app.get('/api/taskTests', task.count);
 	//业务测试接口
 
 	//文件操作接口

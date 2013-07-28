@@ -22,7 +22,7 @@ LogSchema.methods = {
 	test: function() {
 		console.info("=======test");
 	},
-	insertRecord: function(logData,callback) {
+	insertRecord: function(logData, callback) {
 
 		Log = this.model('Log');
 		console.log("insert");
@@ -39,6 +39,8 @@ LogSchema.methods = {
 		});
 	}
 };
+
+
 
 
 mongoose.model('Log', LogSchema); //创建新文件对象,并关联到模型
