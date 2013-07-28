@@ -29,7 +29,7 @@ BusinessSchema.methods = {
 		business.save();
 		callback("insertBusiness successfully.");
 	},
-	findBusiness: function(getId, callback) { ///传入合同id,组建新版本
+	findBusiness: function(getId, callback) { ///传入版本id,组建新版本
 		Business = this.model('Business');
 		Business.find({
 			_id: getId
@@ -39,6 +39,16 @@ BusinessSchema.methods = {
 			time: 1,
 			getNew: 1,
 			data: 1
+		}, function(err, ver) {
+			callback(ver);
+		});
+	},
+	findVersionId: function(getId, callback) { ///传入合同id,返回版本id
+		Business = this.model('Business');
+		Business.find({
+			contractId: getId
+		}, {
+			_id: 1
 		}, function(err, ver) {
 			callback(ver);
 		});

@@ -63,6 +63,7 @@ exports.create = function(req, res) {
 	// console.log(req);
 	console.log(occur);
 	var contract = new Contract();
+	var business = new Business();
 	var rdata = req.body;
 	var saveData = {
 		uid: req.user.uid, //用户id,对应用户模型的uid
@@ -96,17 +97,16 @@ exports.create = function(req, res) {
 		var contract = new Contract();
 		contract.upload(saveData.file, identify[0]._id, function(data) {
 			console.log(data);
-			business = new Business();
 			var occur = new Date();
 			var get = {
 				contractName: saveData.name,
 				contractId: identify[0]._id, //合同id
 				time: occur, //时间
-				version: "0", //版本
+				getNew: 0, //版本
 				data: saveData
 			};
-			console.log(get);
-			business.insertBusiness(get, function() {
+			business.insertBusiness(get, function(data) {
+				console.log(data);
 				res.send({
 					hello: "success insert"
 				});
@@ -122,6 +122,7 @@ exports.update = function(req, res) {
 	var occur = new Date();
 	console.log(occur);
 	var contract = new Contract();
+	var business = new Business();
 	console.log("update");
 	var getId = {
 		_id: req.params['id']
@@ -149,14 +150,40 @@ exports.update = function(req, res) {
 	}
 	console.log(getId);
 	console.log(get);
-	contract.updateIdData(getId, getNew, function(data) {
-		console.log("starting....");
-		var contract = new Contract();
-		contract.upload(getNew.file, req.params['id'], function(data1) {
-			console.log(data1);
+	////////
+	business.findVersionId(req.params['id'],function(versionId){
+		console.log(versionId);
+		business.findBusiness(versionId[0]._id, function(data) {
+		var get = {
+			contractId: getId._id,
+			contractName: getNew.name,
+			time: occur,
+			getNew: data[0].getNew + 1,
+			data: getNew
+		};
+		console.log(get);
+		business.insertBusiness(get, function() {
+			console.log("update Version...");
+			contract.updateIdData(getId, getNew, function(data) {
+				console.log("starting....");
+				var contract = new Contract();
+				contract.upload(getNew.file, req.params['id'], function(data1) {
+					console.log(data1);
+				});
+				res.send(data);
+			});
 		});
-		res.send(data);
 	});
+	});
+	////////
+	// contract.updateIdData(getId, getNew, function(data) {
+	// 	console.log("starting....");
+	// 	var contract = new Contract();
+	// 	contract.upload(getNew.file, req.params['id'], function(data1) {
+	// 		console.log(data1);
+	// 	});
+	// 	res.send(data);
+	// });
 };
 
 
@@ -233,7 +260,6 @@ exports.test = function(req, res) {
 		getNew.events = [];
 	}
 	console.log(getId);
-	var versionId = "51f49c475f09ba2c09000008";
 	business.findBusiness(versionId, function(data) {
 		var get = {
 			contractId: getId._id,
