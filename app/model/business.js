@@ -64,6 +64,14 @@ BusinessSchema.methods = {
 			console.log(returnId);
 			callback(returnId);
 		});
+	},
+	findAllBusiness: function(callback) {
+
+		this.model('Business').find({}, function(err, docs) {
+			console.log("====show===");
+			console.log(docs);
+			callback(docs);
+		});
 	}
 };
 

@@ -60,6 +60,11 @@ module.exports = function(app, passport, auth, log) {
 
 	}), users.session);
 
+	/////////日志接口
+	var logger = require('../app/controller/log');
+	app.get('/api/userlog',logger.userShow);
+	app.get('/api/businesslog',logger.businessShow);
+
 
 	app.get('/', auth.requiresLogin, function(req, res) {
 		res.redirect('/login');
