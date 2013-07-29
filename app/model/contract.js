@@ -74,6 +74,7 @@ ContractSchema.methods = {
 			beginDate: 1,
 			endDate: 1,
 			events: 1,
+			getNew:1,
 			state: 1,
 			next: 1
 		}, function(err, docs) {
