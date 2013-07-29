@@ -95,6 +95,7 @@ exports.update = function(req, res) { //修改待办任务完成标志位
 				console.log(get);
 				business.insertBusiness(get, function() {
 					console.log("update Version...");
+					res.send(newData);
 				});
 			});
 		});
