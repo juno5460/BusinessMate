@@ -7,6 +7,7 @@
 var async = require('async'),
 	mongoose = require('mongoose'),
 	Contract = mongoose.model('Contract'),
+	Business = mongoose.model('Business'),
 	Template = mongoose.model('Template');
 
 exports.index = function(req, res) { //返回所有待办任务
@@ -47,6 +48,7 @@ exports.show = function(req, res) { //返回指定合同业务数据
 exports.update = function(req, res) { //修改待办任务完成标志位
 
 	var contract = new Contract();
+	var business = new Business();
 	console.log("update");
 	var occur = new Date();
 	var year = occur.getFullYear();
@@ -56,10 +58,10 @@ exports.update = function(req, res) { //修改待办任务完成标志位
 	month = month < 10 ? "0" + month : month;
 	var getOccur = year + "-" + month + "-" + day;
 	var get = req.body;
-	if (get.newDate == "" || get.newDate==undefined) {
+	if (get.newDate == "" || get.newDate == undefined) {
 		get.newDate = getOccur;
 	}
-	var id = get._id;
+	var id = get._id; //合同id
 	var eventId = get.id;
 	var eventName = get.title;
 	var newDate = get.newDate;
@@ -77,10 +79,32 @@ exports.update = function(req, res) { //修改待办任务完成标志位
 	console.log(checkValue);
 	console.log(remark);
 	console.log(newDate);
-	contract.updateSymbol(id, eventId, checkValue, remark, eventName, newDate, function(data) {
-		console.log(data);
-		res.send(data);
+	////////
+	business.findVersionId(id, function(versionId) {
+		console.log(versionId);
+		contract.updateSymbol(id, eventId, checkValue, remark, eventName, newDate, function(newData) {
+			console.log(newData);
+			business.findBusiness(versionId[0]._id, function(data) {
+				var get = {
+					contractId: id,
+					contractName: data[0].name,
+					time: occur,
+					getNew: data[0].getNew + 1,
+					data: newData
+				};
+				console.log(get);
+				business.insertBusiness(get, function() {
+					console.log("update Version...");
+				});
+			});
+		});
 	});
+
+	////////
+	// contract.updateSymbol(id, eventId, checkValue, remark, eventName, newDate, function(data) {
+	// 	console.log(data);
+	// 	res.send(data);
+	// });
 };
 
 

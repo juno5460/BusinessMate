@@ -3,6 +3,7 @@
  */
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
+	async = require('async'),
 	fs = require('fs'),
 	Repository = require('./repository');
 
@@ -43,14 +44,24 @@ BusinessSchema.methods = {
 			callback(ver);
 		});
 	},
-	findVersionId: function(getId, callback) { ///传入合同id,返回版本id
+	findVersionId: function(getId, callback) { ///传入合同id,找到版本最大的合同,返回版本id
+		console.log("findVersionId");
 		Business = this.model('Business');
+		var max = 0;
+		var returnId = "";
 		Business.find({
 			contractId: getId
 		}, {
-			_id: 1
-		}, function(err, ver) {
-			callback(ver);
+			_id: 1,
+			getNew: 1
+		}, function(err, vers) {
+			async.forEach(vers, function(ver) {
+				if (ver.getNew > max) {
+					returnId = ver._id;
+				}
+			});
+			console.log(returnId);
+			callback(returnId);
 		});
 	}
 };

@@ -152,8 +152,7 @@ exports.update = function(req, res) {
 	console.log(get);
 	////////
 	business.findVersionId(req.params['id'], function(versionId) {
-		console.log(versionId);
-		business.findBusiness(versionId[0]._id, function(data) {
+		business.findBusiness(versionId, function(data) {
 			var get = {
 				contractId: getId._id,
 				contractName: getNew.name,
