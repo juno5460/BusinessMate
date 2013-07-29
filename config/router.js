@@ -45,6 +45,7 @@ module.exports = function(app, passport, auth, log) {
 	app.get('/files/download', files.download);
 	app.get('/files/show/:id', files.show);
 	app.post('/files/upload', files.upload);
+	app.del('/files/destroy',files.destroy);
 	////////////用户 接口
 	var users = require('../app/controller/users');
 
