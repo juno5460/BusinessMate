@@ -327,7 +327,7 @@ $(function() {
 							remark: remark,
 							newDate: newDate
 						};
-
+						console.info(postData);
 						$.ajax({
 							url: '/api/tasks/' + e.data.con.next.id,
 							type: 'put',

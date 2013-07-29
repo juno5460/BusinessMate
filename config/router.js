@@ -113,8 +113,13 @@ module.exports = function(app, passport, auth, log) {
 			username: req.user.username
 		}));
 	});
-	app.get('/logCheck', auth.requiresLogin, function(req, res) {
-		res.send(generator.generate('logCheck', {
+	app.get('/businessLog', auth.requiresLogin, function(req, res) {
+		res.send(generator.generate('businessLog', {
+			username: req.user.username
+		}));
+	});
+	app.get('/userLog', auth.requiresLogin, function(req, res) {
+		res.send(generator.generate('userLog', {
 			username: req.user.username
 		}));
 	});

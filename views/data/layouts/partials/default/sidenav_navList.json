@@ -13,6 +13,13 @@
 		]
 	},
 
-	{"link": "logCheck", "title":"查看日志", "icon": "icon-search"}
+	{
+		"link": null, "title":"查看日志", "icon": "icon-search",
+		"submenu" :
+		[
+		{ "link" : "businessLog", "title" : "业务日志"},
+		{ "link" : "userLog", "title" : "用户日志"} 
+		]
+	}
 
 ]
