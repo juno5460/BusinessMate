@@ -301,3 +301,7 @@
 			color: #dd5a43;
 		}
 
+		#partyAabbr,#partyBabbr{
+			margin-left: 5px;
+		}
+

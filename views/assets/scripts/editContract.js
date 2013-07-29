@@ -83,8 +83,25 @@ $(function(){
 				$("#state").val(data.state);
 
 				var $events = $(data.events);
-				$events.each(function(index,item){
-					if(item.price == -1){
+			
+				//对事件列表进行排序
+				for(var i=0;i < $events.length;i++){
+					for(var j=i;j < $events.length;j++){
+						var aDate = $events[i].date == null ? $events[i].priceDate : $events[i].date;
+						var bDate = $events[j].date == null ? $events[j].priceDate : $events[j].date;
+
+						if(bDate.replace(/-/g, "") < aDate.replace(/-/g, "")){
+							$tmpEvent = $events[i];
+							$events[i] = $events[j];
+							$events[j] = $tmpEvent;
+							break;
+						}
+					}
+
+				}
+
+				$events.each(function(index, item) {
+					if (item.price == -1) {
 						addCustomEvent(item);
 					} else {
 						addPriceEvent(item);
@@ -118,6 +135,46 @@ $(function(){
 				});
 			}
 		})
+	}
+
+	function sortEventList(){
+
+		var $events = $(buildEventsModel());
+
+		console.info('before sort');
+		console.info($events);
+
+		//对事件列表进行排序
+		for (var i = 0; i < $events.length; i++) {
+			for (var j = i; j < $events.length; j++) {
+				var aDate = $events[i].date == null ? $events[i].priceDate : $events[i].date;
+				var bDate = $events[j].date == null ? $events[j].priceDate : $events[j].date;
+
+				if (bDate.replace(/-/g, "") < aDate.replace(/-/g, "")) {
+					$tmpEvent = $events[i];
+					$events[i] = $events[j];
+					$events[j] = $tmpEvent;
+					break;
+				}
+			}
+
+		}
+
+		// console.info('after sort');
+		// console.info($events);
+
+		var $cellList 	= $("#eventsList");
+		$cellList.html("");
+		$events.each(function(index, item) {
+			if (item.price == -1) {
+				addCustomEvent(item);
+			} else {
+				addPriceEvent(item);
+			}
+		});
+
+		scrollToBottom();
+
 	}
 
 	// var customEventTmp 	= "<div id='eventCell' class='widget-box'><div class='widget-header widget-header-flat widget-header-small'><div class='event-name'><span class='celltitle'>事件名称：</span><span><input id='id' type='hidden' value='{{id}}'><input  id='title' class='hiddenInput' placeholder='' value='{{title}}'></span></div><div class='widget-toolbar event-date'><span class='celltitle'>执行时间：</span><span><input id='date{{dateID}}' class='hiddenInput' id='completedTime' data-date-format='yyyy-mm-dd' value='{{date}}' readonly='true'></span><button class='btn btn-danger btn-mini' id='delete'><i class='icon-remove  bigger-120 icon-only'>&nbsp;删除</i></button></div></div><div class='widget-body'><div class='widget-main'><textarea id='remark' class='span12 cellremark' placeholder='请输入备注信息'>{{remark}}</textarea><input type='hidden' id='completed' value={{completed}}></div></div></div>";
@@ -194,6 +251,7 @@ $(function(){
 		$tmp.each(function(index,item){
 			//若无价格选项则为自定义事件
 			var isCustom = $(item).find("#price").val() == undefined;
+			$(item).find("input").attr("readonly",true);
 			if(isCustom) {
 				$(item).remove();
 			}
@@ -421,9 +479,12 @@ $(function(){
 		//判断当前事件的完成程度基于颜色表示。绿色表示已经完成，红色表示当前执行的时间。
 
 		if(data.length != 0){
+			//console.info(data.title,data.completed);
 			if(data.completed) {
+				console.info(data.completed,"green");
 				$cellHtml.css('border','2px solid rgba(0,255,0,.2)');
 			} else {
+				console.info(data.completed,"red");
 				$cellHtml.css('border','2px solid rgba(255,0,0,.2)');
 			}
 		}
@@ -437,6 +498,7 @@ $(function(){
 		});
 		$('#date' + datePickerID).datepicker().on('changeDate',function(env){
 			$('#date' + datePickerID).datepicker('hide');
+			sortEventList();
 		});
 
 	}
@@ -477,10 +539,12 @@ $(function(){
 		//判断当前事件的完成程度基于颜色表示。绿色表示已经完成，红色表示当前执行的时间。
 
 		if(data.length != 0){
+			//console.info(data.title,data.completed);
 			if(data.completed) {
-				console.info('green');
+				console.info(data.completed,"green");
 				$cellHtml.css('border','2px solid rgba(0,255,0,.2)');
 			} else {
+				console.info(data.completed,"red");
 				$cellHtml.css('border','2px solid rgba(255,0,0,.2)');
 			}
 		}
@@ -492,11 +556,13 @@ $(function(){
 		$('#date' + datePickerID).datepicker({
 			autoclose:true,
 		});
-		$('#date' + datePickerID).datepicker().on('changeDate',function(env){
-			$('#date' + datePickerID).datepicker('hide');
-		});
+
 		$('#invoiceDate' + datePickerID).datepicker({
 			autoclose:true,
+		});
+		$('#invoiceDate' + datePickerID).datepicker().on('changeDate',function(env){
+			$('#invoiceDate' + datePickerID).datepicker('hide');
+			sortEventList();
 		});
 	}
 
@@ -559,7 +625,8 @@ $(function(){
 			}
 			$event.price 	= isTemplateMode ? tPrice : $cell.find("#price").val() == undefined ? -1 : $(element).find("#price").val();
 			$event.remark 	= $cell.find("#remark").val();
-			$event.completed = isTemplateMode ? false : $cell.find("#completed").val();
+			$event.completed = isTemplateMode ? false : $cell.find("#completed").val() == "true" ? true : false;
+
 
 			var $invoiceDate = isTemplateMode ? '' :$cell.find("input[id^='invoiceDate']").val();
 			var $invoiceDone = isTemplateMode ? false :$cell.find("#invoiceDone").val();
