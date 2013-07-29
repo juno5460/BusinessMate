@@ -256,6 +256,9 @@ $(function() {
 				if (dataName.length > 5) {
 					dataName = dataName.substring(0, 5) + "...";
 				}
+				if (tdata.title.length > 12) {
+					dataName = dataName.substring(0, 3) + "...";
+				}
 
 				//定义插入模版
 				t1 = "<ul style='height:100%' class='item-list'><li class='" + liColor[idIndex] + "'><label class='inline'><input type='checkbox'><span class='lbl'><span class='lbl'>" + tdata.title;
@@ -437,6 +440,9 @@ $(function() {
 				var dataName = tdata.name;
 				if (dataName.length > 5) {
 					dataName = dataName.substring(0, 5) + "...";
+				}
+				if (tdata.title.length > 12) {
+					dataName = dataName.substring(0, 3) + "...";
 				}
 
 				//定义插入模版
