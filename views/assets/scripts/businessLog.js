@@ -1,16 +1,19 @@
 $(function() {
 	$.get('/api/businesslog', function(data, status) {
 		$.each(data, function(i, log) {
+			var cname = log.contractName;
+			if(cname.length > 20)
+				cname = cname.substring(0, 19) + "...";
 			var tdata = {
 				time: log.time,
-				cname: log.contractName,
+				cname: cname,
 				version: log.getNew,
 				deptA: log.data.partADept,
 				deptB: log.data.partBDept,
 				state: log.data.state
 			};
 			console.info(tdata.state);
-			var template = "<div id='blog' class='span12'><div id='box' class='widget-box collapsed'><div class='widget-header widget-header-small'><h6>{{time}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{cname}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;版本:{{version}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{deptA}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{deptB}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{state}}</h6><div class='widget-toolbar'><a href='#' data-action='collapse'> <i id='iClick' class='icon-chevron-down'></i></a></div></div><div class='widget-body'><div class='widget-body-inner' style='display: block;'><div class='widget-main'><table style='width:100%'><thead><tr><th class='center'>事件名称</th><th class='center'>事件类型</th><th class='center'>发票日期</th><th class='center'>执行时间</th><th class='center'>回款金额</th></tr></thead><tbody></tbody></table></div></div></div></div></div>";
+			var template = "<div id='blog' class='span12'><div id='box' class='widget-box collapsed'><div class='widget-header widget-header-small'><h6>{{time}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span title={{cname}}>{{cname}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;版本:{{version}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{deptA}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{deptB}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{state}}</h6><div class='widget-toolbar'><a href='#' data-action='collapse'> <i id='iClick' class='icon-chevron-down'></i></a></div></div><div class='widget-body'><div class='widget-body-inner' style='display: block;'><div class='widget-main'><table style='width:100%'><thead><tr><th class='center'>事件名称</th><th class='center'>事件类型</th><th class='center'>发票日期</th><th class='center'>执行时间</th><th class='center'>回款金额</th></tr></thead><tbody></tbody></table></div></div></div></div></div>";
 			var $templateHtml = $(Mustache.to_html(template, tdata));
 
 			$("#businesslog").append($templateHtml);

@@ -1,9 +1,12 @@
 $(function() {
 	$.get('/api/businesslog', function(data, status) {
 		$.each(data, function(i, log) {
+			var cname = log.contractName;
+			if(cname.length > 20)
+				cname = cname.substring(0, 19) + "...";
 			var tdata = {
 				time: log.time,
-				cname: log.contractName,
+				cname: cname,
 				version: log.getNew,
 				deptA: log.data.partADept,
 				deptB: log.data.partBDept,
