@@ -56,7 +56,7 @@ BusinessSchema.methods = {
 			getNew: 1
 		}, function(err, vers) {
 			async.forEach(vers, function(ver) {
-				if (ver.getNew > max) {
+				if (ver.getNew > max || ver.getNew == max) {
 					returnId = ver._id;
 				}
 			});
