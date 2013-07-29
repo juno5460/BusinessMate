@@ -494,11 +494,14 @@ $(function() {
 						remark: remark
 					};
 
-					bootbox.confirm("一经提交便无法修改，请确定是否提交！", function(result) {
-						if (!result) {
+					bootbox.prompt("请确定是否提交,若代办任务时间有变化，请按形如(1990-01-03)格式填写", function(result) {
+
+						if (result == null) {
 							$tempObj.prop("checked", false);
 							return;
 						}
+
+						newDate = result;
 
 						$.ajax({
 							url: '/api/tasks/' + undoneID,
@@ -518,6 +521,20 @@ $(function() {
 								}
 							}
 						});
+					});
+
+					var $dataPicker = $("div[class^='widget-boxx']").find("input");
+					$dataPicker.attr('id', 'datetest1');
+					$dataPicker.removeClass("span12");
+					$dataPicker.addClass('hiddenInput');
+					$dataPicker.attr('data-date-format', 'yyyy-mm-dd');
+					$dataPicker.attr('readonly', 'true');
+					
+					$('#datetest1').datepicker({
+						autoclose: true
+					});
+					$('#datetest1').datepicker().on('changeDate', function(env) {
+						$('#datetest1').datepicker('hide');
 					});
 				});
 			};
