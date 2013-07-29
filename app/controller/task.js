@@ -84,7 +84,7 @@ exports.update = function(req, res) { //修改待办任务完成标志位
 		console.log(versionId);
 		contract.updateSymbol(id, eventId, checkValue, remark, eventName, newDate, function(newData) {
 			console.log(newData);
-			business.findBusiness(versionId[0]._id, function(data) {
+			business.findBusiness(versionId, function(data) {
 				var get = {
 					contractId: id,
 					contractName: data[0].name,
