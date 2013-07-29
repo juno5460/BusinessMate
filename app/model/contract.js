@@ -154,8 +154,8 @@ ContractSchema.methods = {
 
 				});
 			});
+			callback("good");
 		}
-		callback("good");
 	},
 	//新建合同插入数据库
 	/*
