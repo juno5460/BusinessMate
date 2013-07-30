@@ -141,7 +141,12 @@ $(function() {
 				});
 			}
 		}
-
+		$("#loading").removeClass("position-relative");
+		$("#loadbox").remove();
+		$("#loading1").removeClass("position-relative");
+		$("#loadbox1").remove();
+		$("#loading2").removeClass("position-relative");
+		$("#loadbox2").remove();
 		var placeholder1 = $('#placeholder1').css({
 			'width': '100%',
 			'min-height': '160px'
@@ -367,14 +372,14 @@ $(function() {
 						});
 
 					});
-					
+
 					var $dataPicker = $("div[class^='widget-boxx']").find("input");
 					$dataPicker.attr('id', 'datetest');
 					$dataPicker.removeClass("span12");
 					$dataPicker.addClass('hiddenInput');
 					$dataPicker.attr('data-date-format', 'yyyy-mm-dd');
 					$dataPicker.attr('readonly', 'true');
-					
+
 					$('#datetest').datepicker({
 						autoclose: true
 					});
@@ -511,8 +516,8 @@ $(function() {
 								console.info('error');
 							},
 							success: function(result) {
-							console.info("here");
-							console.info(result);
+								console.info("here");
+								console.info(result);
 								$tempObj.parent().parent().parent().fadeOut(1000);
 								var html = $('#outOfDate').html();
 								if (html == "") {
@@ -529,7 +534,7 @@ $(function() {
 					$dataPicker.addClass('hiddenInput');
 					$dataPicker.attr('data-date-format', 'yyyy-mm-dd');
 					$dataPicker.attr('readonly', 'true');
-					
+
 					$('#datetest1').datepicker({
 						autoclose: true
 					});
