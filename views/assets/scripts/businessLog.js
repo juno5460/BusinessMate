@@ -3,8 +3,8 @@ $(function() {
 		$.each(data, function(i, log) {
 		console.info(log);
 			var cname = log.contractName;
-			if(cname.length > 10)
-				cname = cname.substring(0, 9) + "...";
+			if(cname.length > 8)
+				cname = cname.substring(0, 7) + "...";
 			var tdata = {
 				time: log.time,
 				cname: cname,
