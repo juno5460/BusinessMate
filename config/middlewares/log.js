@@ -14,13 +14,14 @@ exports.show = function(req, res, next) {
   var logger = new Log();
   var contract = new Contract();
   var logData = {
-    resource: req._parsedUrl.path,
+    url: req._parsedUrl.path, //完整的URL
     user: req.user.username, //用户名
     time: req._startTime, //时间
     operation: req.route.method, //操作类型
-    data: req.body
+    data: req.body, //操作数据
+    resource: req.route.path //资源路径
   };
-  logger.insertRecord(logData,function(data){
+  logger.insertRecord(logData, function(data) {
     console.log(data);
   });
   next();
