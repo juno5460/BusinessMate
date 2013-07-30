@@ -86,7 +86,7 @@ BusinessSchema.methods = {
 				minute = minute < 10 ? "0" + minute : minute;
 				second = second < 10 ? "0" + second : second;
 				millSecond = millSecond < 100 ? (millSecond < 10 ? "00" + millSecond : "0" + millSecond) : millSecond;
-				var uniqueNum = year +"-"+ month +"-"+ day +" "+ hour +":"+ minute +":"+ second +":"+ millSecond;
+				var uniqueNum = year +"-"+ month +"-"+ day +" "+ hour +":"+ minute +":"+ second;
 				var get = {
 
 					contractId: doc.contractId,
