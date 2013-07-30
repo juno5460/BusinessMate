@@ -83,27 +83,15 @@ exports.update = function(req, res) {
 		_id: req.params['id']
 	};
 	var get = req.body;
-	/*	var getNew = { //重新构造对象是为了让可编辑字段去掉主键:_id
+	var getNew = {
 		myId: get.myId,
 		partyA: get.partyA,
 		partyB: get.partyB,
-		amount: get.amount,
-		signDate: get.sigDate,
 		name: get.name,
 		beginDate: get.beginDate,
 		endDate: get.endDate,
 		state: get.state,
 		events: get.events
-	};*/
-	var getNew = {
-		"myId": get.myId,
-		partyA: get.partyA,
-		partyB: get.partyB,
-		"name": get.name,
-		"beginDate": get.beginDate,
-		"endDate": get.endDate,
-		"state": get.state,
-		"events": get.events
 	};
 	if (getNew.events == null) {
 		getNew.events = [];
@@ -120,15 +108,9 @@ exports.destroy = function(req, res) {
 	console.log(occur);
 	var template = new Template();
 	console.log("template destroy");
-	//	var getId = "17979181781105635000";
 	var getId = {
 		_id: req.params['id']
 	};
-	/*
-	template.removeData(getId, function(data) {
-		res.send(data);
-	});
-*/
 	template.removeTemplate(getId, function(data) {
 		res.send(data);
 	});
