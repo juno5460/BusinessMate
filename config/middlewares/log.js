@@ -13,6 +13,7 @@ exports.show = function(req, res, next) {
   console.log("recording...");
   var logger = new Log();
   var contract = new Contract();
+  console.log(req);
   var logData = {
     url: req._parsedUrl.path, //完整的URL
     user: req.user.username, //用户名

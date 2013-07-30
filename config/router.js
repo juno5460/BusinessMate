@@ -12,7 +12,7 @@ module.exports = function(app, passport, auth, log) {
 	app.get('/api/contracts/:id', contract.show);
 	app.post('/api/contracts', log.show, contract.create);
 	app.put('/api/contracts/:id', log.show, contract.update);
-	app.del('/api/contracts/:id', log.show, contract.destroy);
+	app.del('/api/contracts/:id', contract.destroy);  //删除操作不用中间件,而是进入接口获取信息
 	app.get('/api/conTests', contract.test);
 
 	///合同模版接口
@@ -20,9 +20,9 @@ module.exports = function(app, passport, auth, log) {
 
 	app.get('/api/templates', template.index);
 	app.get('/api/templates/:id', template.show);
-	app.post('/api/templates', log.show, template.create);
-	app.put('/api/templates/:id', log.show, template.update);
-	app.del('/api/templates/:id', log.show, template.destroy);
+	app.post('/api/templates', template.create);
+	app.put('/api/templates/:id', template.update);
+	app.del('/api/templates/:id', template.destroy);
 
 
 	///待办任务处理接口

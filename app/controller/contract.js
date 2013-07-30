@@ -8,6 +8,7 @@ var async = require('async'),
 	mongoose = require('mongoose'),
 	Contract = mongoose.model('Contract'),
 	Business = mongoose.model('Business'),
+	Log = mongoose.model('Log'),
 	fs = require('fs'),
 	path = require('path'),
 	File = mongoose.model('File');
@@ -191,19 +192,27 @@ exports.destroy = function(req, res) {
 	var occur = new Date();
 	console.log(occur);
 	var contract = new Contract();
+	var log = new Log();
 	console.log("destroy");
 	var getId = {
 		_id: req.params['id']
 	};
-	if (req.params['id'] != 'fuck') {
-		contract.removeData(getId, function(data) {
-			res.send(data);
+	contract.checkIdData(getId, function(info) {
+		var logData = {
+			url: req._parsedUrl.path, //完整的URL
+			user: req.user.username, //用户名
+			time: req._startTime, //时间
+			operation: req.route.method, //操作类型
+			data: info[0], //操作数据
+			resource: req.route.path //资源路径
+		};
+		log.insertRecord(logData, function(result) {
+			console.log(result);
+			contract.removeData(getId, function(data) {
+				res.send(data);
+			});
 		});
-	} else {
-		contract.removeAllData(function(data) {
-			res.send(data);
-		});
-	}
+	});
 };
 
 exports.test = function(req, res) {
