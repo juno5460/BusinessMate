@@ -67,10 +67,40 @@ BusinessSchema.methods = {
 	},
 	findAllBusiness: function(callback) {
 
+		var send = [];
+		var i = 0;
+
 		this.model('Business').find({}, function(err, docs) {
-			console.log("====show===");
-			console.log(docs);
-			callback(docs);
+			docs.forEach(function(doc) {
+				var myDate = new Date(doc.time);
+				var year = myDate.getFullYear(); //获取完整的年份(4位,1970-????)
+				var month = myDate.getMonth(); //获取当前月份(0-11,0代表1月)
+				var day = myDate.getDate(); //获取当前日(1-31)
+				var hour = myDate.getHours(); //获取当前小时数(0-23)
+				var minute = myDate.getMinutes(); //获取当前分钟数(0-59)
+				var second = myDate.getSeconds(); //获取当前秒数(0-59)
+				var millSecond = myDate.getMilliseconds(); //获取当前毫秒数(0-999)
+				month = month < 10 ? "0" + month : month;
+				day = day < 10 ? "0" + day : day;
+				hour = hour < 10 ? "0" + hour : hour;
+				minute = minute < 10 ? "0" + minute : minute;
+				second = second < 10 ? "0" + second : second;
+				millSecond = millSecond < 100 ? (millSecond < 10 ? "00" + millSecond : "0" + millSecond) : millSecond;
+				var uniqueNum = year +"-"+ month +"-"+ day +" "+ hour +":"+ minute +":"+ second +":"+ millSecond;
+				var get = {
+
+					contractId: doc.contractId,
+					contractName: doc.contractName,
+					time: uniqueNum,
+					getNew: doc.getNew,
+					data: doc.data
+
+				};
+				send[i]=get;
+				i++;
+			});
+			console.log("....=="+send);
+			callback(send);
 		});
 	}
 };
